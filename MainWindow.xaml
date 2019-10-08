@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MCAddonSetupManager"
-        xmlns:Properties="clr-namespace:MCAddonSetupManager.Properties" x:Class="MCAddonSetupManager.MainWindow"
+        x:Class="MCAddonSetupManager.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <DockPanel>
@@ -18,7 +18,7 @@
             <TabControl Margin="10,10,10,0" Height="371" >
                 <TabItem Header="item1" IsSelected="True" IsHitTestVisible="False">
                     <TabItem.Content>
-                        <local:Editor/>
+                        <local:Editor Text="testmessage"  Value="{Binding Text1}"/>
                     </TabItem.Content>
                 </TabItem>
                 <TabItem Header="item2">
