@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MCAddonSetupManager.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace MCAddonSetupManager
         public MainWindow()
         {
             InitializeComponent();
+
+            this.DataContext = new Editor();
         }
     }
 }
