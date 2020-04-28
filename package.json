@@ -24,6 +24,9 @@
   },
   "homepage": "https://github.com/toka7290/MCAddonSetupManager#readme",
   "devDependencies": {
-    "electron": "^7.0.0"
+    "electron": "^7.2.3"
+  },
+  "dependencies": {
+    "minimist": ">=0.2.1"
   }
 }
