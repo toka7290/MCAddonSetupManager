@@ -2,12 +2,30 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>MCaddonSetupManager</title>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" src="js/ui.js"></script>
+    <script src="lib/prism.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/prism.css">
   </head>
   <body>
     <div class="header">
     </div>
     <div class="content">
+      <div></div>
+      <div class="editor">
+        <iframe src="page/editor_manifest.html" frameborder="0"></iframe>
+      </div>
+      <div class="separator"></div>
+      <div class="preview">
+        <pre class="language-json">
+          <code class="language-json">
+            <span>{"json":6}</span>
+          </code>
+        </pre>
+      </div>
     </div>
     <div class="footer">
       <span></span>

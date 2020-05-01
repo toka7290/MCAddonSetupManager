@@ -1,0 +1,189 @@
+<span>
+    <link rel="stylesheet" href="../css/editor.css">
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="../js/editor_manifest.js"></script>
+    <form name="editor_manifest">
+        <fieldset class="basic">
+            <label for="format_version">フォーマットバージョン</label>
+            <input type="number" name="format_version" id="format_version" value="2">
+        </fieldset>
+        <fieldset class="header">
+            <legend>Header</legend>
+            <div>
+                <label for="header_pack_name">名前</label>
+                <input type="text" name="pack_name" id="header_pack_name">
+            </div>
+            <div>
+                <label for="header_description">説明</label>
+                <textarea type="text" name="description" id="header_description"></textarea>
+            </div>
+            <div>
+                <label for="header_version">バージョン</label>
+                <span id="header_version">
+                    <input type="number" name="" id="header_version_major" value="1">
+                    <span>.</span>
+                    <input type="number" name="" id="header_version_minor" value="0">
+                    <span>.</span>
+                    <input type="number" name="" id="header_version_patch" value="0">
+                </span>
+            </div>
+            <div>
+                <label for="header_min_engine_version">最小エンジンバージョン</label>
+                <span id="header_min_engine_version">
+                    <input type="number" name="" id="header_min_engine_version_major" value="1">
+                    <span>.</span>
+                    <input type="number" name="" id="header_min_engine_version_minor" value="0">
+                    <span>.</span>
+                    <input type="number" name="" id="header_min_engine_version_patch" value="0">
+                </span>
+            </div>
+            <div>
+                <label for="header_uuid">UUID</label>
+                <input type="text" name="uuid" id="header_uuid">
+                <input type="button" value="Generate">
+            </div>
+        </fieldset>
+        <fieldset class="modules">
+            <legend>Modules</legend>
+            <div class="modules_controls">
+                <div class="modules_controls_bar">
+                    <ul class="modules_controls_tab">
+                        <li class="selected_tab">0</li>
+                        <li>1</li>
+                    </ul>
+                    <span class="modules_controls_addtab">+</span>
+                </div>
+            </div>
+            <div class="modules_contents">
+                <div class="selected_tab_content">
+                    <div>
+                        <label for="modules_type">タイプ</label>
+                        <select name="modules_type" id="modules_type" required>
+                            <option value="">選択してください</option>
+                            <option value="resources">resources</option>
+                            <option value="data">data</option>
+                            <option value="client_data">client_data</option>
+                            <option value="interface">interface</option>
+                            <option value="world_template">world_template</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="modules_description">説明</label>
+                        <textarea type="text" name="description" id="modules_description"></textarea>
+                    </div>
+                    <div>
+                        <label for="modules_version">バージョン</label>
+                        <span id="modules_version">
+                            <input type="number" name="" id="modules_version_major" value="1">
+                            <span>.</span>
+                            <input type="number" name="" id="modules_version_minor" value="0">
+                            <span>.</span>
+                            <input type="number" name="" id="modules_version_patch" value="0">
+                        </span>
+                    </div>
+                    <div>
+                        <label for="modules_uuid">UUID</label>
+                        <input type="text" name="uuid" id="modules_uuid">
+                        <input type="button" value="Generate">
+                    </div>
+                </div>
+                <div class="modules_content_1">
+                    <div>
+                        <label for="modules_type">タイプ</label>
+                        <select name="modules_type" id="modules_type" required>
+                            <option value="">選択してください</option>
+                            <option value="resources">resources</option>
+                            <option value="data">data</option>
+                            <option value="client_data">client_data</option>
+                            <option value="interface">interface</option>
+                            <option value="world_template">world_template</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="modules_description">説明</label>
+                        <textarea type="text" name="description" id="modules_description"></textarea>
+                    </div>
+                    <div>
+                        <label for="modules_version">バージョン</label>
+                        <span id="modules_version">
+                            <input type="number" name="" id="modules_version_major" value="1">
+                            <span>.</span>
+                            <input type="number" name="" id="modules_version_minor" value="0">
+                            <span>.</span>
+                            <input type="number" name="" id="modules_version_patch" value="0">
+                        </span>
+                    </div>
+                    <div>
+                        <label for="modules_uuid">UUID</label>
+                        <input type="text" name="uuid" id="modules_uuid">
+                        <input type="button" value="Generate">
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="dependencies">
+            <legend>Dependencies</legend>
+            <div class="dependencies_controls">
+                <span class="dependencies_controls_tab">
+                    <input type="radio" name="dependencies_tab" class="dependencies_tab" id="dependencies_tab0"
+                        checked="checked"><label class="tab" for="dependencies_tab0">0</label>
+                </span>
+                <span class="dependencies_controls_addtab">
+                    <input type="button" value="+">
+                </span>
+            </div>
+            <div class="dependencies_contents">
+                <div class="dependencies_content_0">
+                    <div>
+                        <label for="dependencies_uuid">UUID</label>
+                        <input type="text" name="uuid" id="dependencies_uuid">
+                    </div>
+                    <div>
+                        <label for="dependencies_version">バージョン</label>
+                        <span id="dependencies_version">
+                            <input type="number" name="" id="dependencies_version_major" value="1">
+                            <span>.</span>
+                            <input type="number" name="" id="dependencies_version_minor" value="0">
+                            <span>.</span>
+                            <input type="number" name="" id="dependencies_version_patch" value="0">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Capabilities</legend>
+            <div class="capabilities_list">
+                <div class="capabilities_adder">
+                    <select name="capabilities_select" id="capabilities_select">
+                        <option value="">選択してください</option>
+                        <option value="resources">resources</option>
+                        <option value="data">data</option>
+                        <option value="client_data">client_data</option>
+                    </select>
+                    <input type="button" value="Add">
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="metadata">
+            <legend>Metadata</legend>
+            <div>
+                <label for="metadata_authors">作者</label>
+                <div class="metadata_author_list">
+                    <div class="metadata_author_adder">
+                        <input type="text" name="metadata_author" id="metadata_author">
+                        <input type="button" value="Add">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label for="metadata_url">URL</label>
+                <input type="url" name="metadata_url" id="metadata_url">
+            </div>
+            <div>
+                <label for="metadata_license">ライセンス</label>
+                <input type="text" name="metadata_license" id="metadata_license">
+            </div>
+        </fieldset>
+    </form>
+</span>

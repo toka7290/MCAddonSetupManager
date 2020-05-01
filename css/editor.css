@@ -1,0 +1,54 @@
+input[type="number"]{
+    width: 3em;
+}
+fieldset div{
+    display: flex;
+    align-items: center;
+}
+div label+*{
+    margin: 0;
+    margin-left: 1em;
+}
+/* タブ */
+div.modules_controls_bar{
+    position: relative;
+    top: 2px;
+    left: 2px;
+}
+ul.modules_controls_tab{
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+ul.modules_controls_tab li{
+    border: 2px solid gray;
+    padding: 0 1em;
+    list-style: none;
+    border-bottom: none;
+}
+ul.modules_controls_tab li+li{
+    border-left: none;
+}
+ul.modules_controls_tab li:hover{
+    cursor: pointer;
+}
+ul.modules_controls_tab li.selected_tab{
+    border-bottom: 2px solid white;
+}
+div.modules_contents > div{
+    display: none;
+    border: 2px solid gray;
+    padding: 0.5em;
+}
+div.modules_contents div.selected_tab_content{
+    display: block;
+}
+span.modules_controls_addtab{
+    border: 2px solid gray;
+    border-left: none;
+    padding: 0 0.5em;
+}
+/* Metadata */
+fieldset.metadata div{
+    display: flex;
+}
