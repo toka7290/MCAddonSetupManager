@@ -202,5 +202,6 @@ $(function(){
         $("pre.language-json code.language-json", parent.document).remove();
         content = '<code class="language-json">'+json_code+'</code>';
         $("pre.language-json", parent.document).append(content)
+        Prism.highlightAll();
     }
 });
