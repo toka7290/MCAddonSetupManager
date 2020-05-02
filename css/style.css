@@ -32,7 +32,7 @@ div.editor{
     width: 100%;
     height: 100%;
 }
-div.editor iframe{
+div.editor form{
     width: 100%;
     height: 100%;
     padding: 1em;

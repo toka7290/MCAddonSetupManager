@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>MCaddonSetupManager</title>
+    <!-- lib -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="js/ui.js"></script>
     <script src="lib/prism.js"></script>
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/prism.css">
+    <!-- js -->
+    <script type="text/javascript" src="js/ui.js"></script>
+    <script type="text/javascript" src="js/editor_manifest.js"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/editor.css">
   </head>
   <body>
     <div class="header">
@@ -16,7 +21,153 @@
     <div class="content">
       <div></div>
       <div class="editor">
-        <iframe src="page/editor_manifest.html" frameborder="0"></iframe>
+        <form name="editor_manifest">
+            <fieldset class="basic">
+                <label for="format_version">フォーマットバージョン</label>
+                <input type="number" min="0" name="format_version" id="format_version" value="2">
+            </fieldset>
+            <fieldset class="header">
+                <legend>Header</legend>
+                <div>
+                    <label for="header_pack_name">名前</label>
+                    <input type="text" name="pack_name" id="header_pack_name">
+                </div>
+                <div>
+                    <label for="header_description">説明</label>
+                    <textarea type="text" name="description" id="header_description"></textarea>
+                </div>
+                <div>
+                    <label for="header_version">バージョン</label>
+                    <span id="header_version">
+                        <input type="number" min="0" name="" id="header_version_major" value="1">
+                        <span>.</span>
+                        <input type="number" min="0" name="" id="header_version_minor" value="0">
+                        <span>.</span>
+                        <input type="number" min="0" name="" id="header_version_patch" value="0">
+                    </span>
+                </div>
+                <div>
+                    <label for="header_min_engine_version">最小エンジンバージョン</label>
+                    <span id="header_min_engine_version">
+                        <input type="number" min="0" name="" id="header_min_engine_version_major" value="1">
+                        <span>.</span>
+                        <input type="number" min="0" name="" id="header_min_engine_version_minor" value="0">
+                        <span>.</span>
+                        <input type="number" min="0" name="" id="header_min_engine_version_patch" value="0">
+                    </span>
+                </div>
+                <div>
+                    <label for="header_uuid">UUID</label>
+                    <input type="text" name="uuid" id="header_uuid">
+                    <input type="button" value="Generate" id="generate_uuid">
+                </div>
+            </fieldset>
+            <fieldset class="modules">
+                <legend>Modules</legend>
+                <div class="modules_controls">
+                    <div class="modules_controls_bar">
+                        <ul class="modules_controls_tab">
+                            <li class="selected_tab">0</li>
+                        </ul>
+                        <span class="modules_controls_addtab">+</span>
+                    </div>
+                </div>
+                <div class="modules_contents">
+                    <div class="selected_tab_content">
+                        <div>
+                            <label for="modules_type">タイプ</label>
+                            <select name="modules_type" id="modules_type" required>
+                                <option value="resources">resources</option>
+                                <option value="data">data</option>
+                                <option value="client_data">client_data</option>
+                                <option value="interface">interface</option>
+                                <option value="world_template">world_template</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="modules_description">説明</label>
+                            <textarea type="text" name="description" id="modules_description"></textarea>
+                        </div>
+                        <div>
+                            <label for="modules_version">バージョン</label>
+                            <span id="modules_version">
+                                <input type="number" min="0" name="" id="modules_version_major" value="1">
+                                <span>.</span>
+                                <input type="number" min="0" name="" id="modules_version_minor" value="0">
+                                <span>.</span>
+                                <input type="number" min="0" name="" id="modules_version_patch" value="0">
+                            </span>
+                        </div>
+                        <div>
+                            <label for="modules_uuid">UUID</label>
+                            <input type="text" name="uuid" id="modules_uuid">
+                            <input type="button" value="Generate" id="generate_uuid">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="dependencies">
+                <legend><input type="checkbox" name="dependencies" id="dependencies_enable">Dependencies</legend>
+                <div class="dependencies_controls">
+                    <div class="dependencies_controls_bar">
+                        <ul class="dependencies_controls_tab">
+                            <li class="selected_tab">0</li>
+                        </ul>
+                        <span class="dependencies_controls_addtab disabled">+</span>
+                    </div>
+                </div>
+                <div class="dependencies_contents">
+                    <div class="selected_tab_content">
+                        <div>
+                            <label for="dependencies_uuid">UUID</label>
+                            <input type="text" name="uuid" id="dependencies_uuid" disabled>
+                        </div>
+                        <div>
+                            <label for="dependencies_version">バージョン</label>
+                            <span id="dependencies_version">
+                                <input type="number" min="0" name="" id="dependencies_version_major" value="1" disabled>
+                                <span>.</span>
+                                <input type="number" min="0" name="" id="dependencies_version_minor" value="0" disabled>
+                                <span>.</span>
+                                <input type="number" min="0" name="" id="dependencies_version_patch" value="0" disabled>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="capabilities">
+                <legend><input type="checkbox" name="capabilities" id="capabilities_enable">Capabilities</legend>
+                <div class="capabilities_list">
+                    <div><input type="checkbox" name="experimental_custom_ui" id="experimental_custom_ui" disabled><label for="experimental_custom_ui">experimental_custom_ui</label></div>
+                    <div><input type="checkbox" name="chemistry" id="chemistry" disabled><label for="chemistry">chemistry</label></div>
+                    <div><input type="checkbox" name="raytracing" id="raytracing" disabled><label for="raytracing">raytracing</label></div>
+                </div>
+            </fieldset>
+            <fieldset class="metadata">
+                <legend><input type="checkbox" name="metadata" id="metadata_enable">Metadata</legend>
+                <div class="metadata_list">
+                    <div>
+                        <label for="metadata_authors">作者</label>
+                        <div class="metadata_authors">
+                            <div class="metadata_author_list">
+                            </div>
+                            <div class="metadata_author_adder">
+                                <input type="text" name="metadata_author" id="metadata_author" disabled>
+                                <input type="button" value="Add" id="metadata_author_add" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="metadata_url">URL</label>
+                        <input type="url" name="metadata_url" id="metadata_url" disabled>
+                    </div>
+                    <div>
+                        <label for="metadata_license">ライセンス</label>
+                        <input type="text" name="metadata_license" id="metadata_license" disabled>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
       </div>
       <div class="separator"></div>
       <div class="preview">

@@ -190,10 +190,14 @@ $(function(){
             json.metadata = new Object();
             loop = 1;
             json.metadata.authors = new Array();
-            json.metadata.authors.push($('div.metadata_author_list > div:nth-child('+loop+') > span.name').text());
-            while(loop != $("div.metadata_author_list > div").length){
-                loop++;
+            if($('div.metadata_author_list > div:nth-child('+loop+') > span.name')[0]){
                 json.metadata.authors.push($('div.metadata_author_list > div:nth-child('+loop+') > span.name').text());
+                while(loop != $("div.metadata_author_list > div").length){
+                    loop++;
+                    json.metadata.authors.push($('div.metadata_author_list > div:nth-child('+loop+') > span.name').text());
+                }
+            }else{
+                json.metadata.authors.push("");
             }
             json.metadata.url = $('#metadata_url').val();
             json.metadata.license = $('#metadata_license').val();
