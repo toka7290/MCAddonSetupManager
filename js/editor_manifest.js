@@ -2,15 +2,15 @@ $(function(){
     var is_dependencies_enable = false;
     var is_capabilities_enable = false;
     var is_metadata_enable = false;
-    // 入力
-    $('input[type="number"]').change(function(){
-        /*
-        value_num = $(this).val();
-        while(value_num<0){
-            value_num++;
-        }
-        $(this).val(value_num);
-        */
+    onChangedJSON()
+    // 変更
+    $('input').change(function(){
+       onChangedJSON();
+    });
+    $('textarea').change(function(){
+       onChangedJSON();
+    });
+    $('select').change(function(){
        onChangedJSON();
     });
     // チェックボックス操作
@@ -199,7 +199,8 @@ $(function(){
             json.metadata.license = $('#metadata_license').val();
         }
         json_code = JSON.stringify(json,null,'  ')
-        $("code.language-json", parent.document).text(json_code);
-        Prism.highlightAll();
+        $("pre.language-json code.language-json", parent.document).remove();
+        content = '<code class="language-json">'+json_code+'</code>';
+        $("pre.language-json", parent.document).append(content)
     }
 });
