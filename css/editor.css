@@ -1,54 +1,145 @@
+input,textarea,select{
+    font: inherit;
+    padding: 2px;
+    border: 1px solid lightslategray;
+}
+input[type="text"]{
+    width: 50%;
+    height: 1.5rem;
+}
 input[type="number"]{
     width: 3em;
+    height: 1.5rem;
+}
+input[type="url"]{
+    width: 50%;
+    height: 1.5rem;
+}
+input[type="button"]{
+    height: 1.5rem;
+    vertical-align: middle;
+    padding: 0 2px;
+}
+input[type="checkbox"]{
+    width: 1rem;
+    height: 1rem;
+    vertical-align: middle;
+}
+textarea{
+    width: 50%;
+}
+select{
+    height: 1.5rem;
+    padding: 0 2px;
 }
 fieldset div{
     display: flex;
     align-items: center;
+    margin: 2px 0;
+}
+div label{
+    margin-right: 1em;
+    word-break: keep-all;
 }
 div label+*{
     margin: 0;
-    margin-left: 1em;
 }
 /* タブ */
-div.modules_controls_bar{
+div.modules_controls,
+div.dependencies_controls,
+div.modules_contents,
+div.dependencies_contents{
+    margin: 0;
+}
+div.modules_controls_bar,
+div.dependencies_controls_bar{
     position: relative;
     top: 2px;
     left: 2px;
+    margin: 0;
+
 }
-ul.modules_controls_tab{
+ul.modules_controls_tab,
+ul.dependencies_controls_tab{
     display: flex;
     padding: 0;
     margin: 0;
 }
-ul.modules_controls_tab li{
+ul.modules_controls_tab li,
+ul.dependencies_controls_tab li{
     border: 2px solid gray;
     padding: 0 1em;
     list-style: none;
-    border-bottom: none;
 }
-ul.modules_controls_tab li+li{
+ul.modules_controls_tab li+li,
+ul.dependencies_controls_tab li+li{
     border-left: none;
 }
-ul.modules_controls_tab li:hover{
+ul.modules_controls_tab li:hover,
+ul.dependencies_controls_tab li:hover,
+span.modules_controls_addtab:hover,
+span.dependencies_controls_addtab:hover{
     cursor: pointer;
 }
-ul.modules_controls_tab li.selected_tab{
+span.dependencies_controls_addtab.disabled:hover{
+    cursor: auto;
+}
+ul.modules_controls_tab li.selected_tab,
+ul.dependencies_controls_tab li.selected_tab{
     border-bottom: 2px solid white;
 }
-div.modules_contents > div{
+div.modules_contents > div,
+div.dependencies_contents > div{
     display: none;
     border: 2px solid gray;
     padding: 0.5em;
+    margin: 0;
+    width: 100%;
 }
-div.modules_contents div.selected_tab_content{
+div.modules_contents div.selected_tab_content,
+div.dependencies_contents div.selected_tab_content{
     display: block;
 }
-span.modules_controls_addtab{
+span.modules_controls_addtab,
+span.dependencies_controls_addtab{
     border: 2px solid gray;
     border-left: none;
     padding: 0 0.5em;
+    margin-right: 0.5em;
+}
+/* Capabilities */
+div.capabilities_list{
+    display: block;
+}
+dl.capabilities_list{
+    margin: 0.5em;
+}
+dl.capabilities_list dd{
+    margin: 0;
 }
 /* Metadata */
-fieldset.metadata div{
-    display: flex;
+div.metadata_list{
+    display: block;
+}
+div.metadata_authors{
+    display: block;
+}
+div.metadata_author_list{
+    display: block;
+}
+span.name{
+    padding: 0 2px;
+    vertical-align: middle;
+}
+span.metadata_remove_author{
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+    font-weight: bold;
+    border: 1px solid red;
+    background-color: red;
+    border-radius: 6px;
 }
