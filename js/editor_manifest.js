@@ -200,5 +200,6 @@ $(function(){
         }
         json_code = JSON.stringify(json,null,'  ')
         $("code.language-json", parent.document).text(json_code);
+        Prism.highlightAll();
     }
 });
