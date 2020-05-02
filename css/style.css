@@ -18,7 +18,7 @@ div.content{
 /* プレビュー */
 div.preview{
     display: block;
-    width: 420px;
+    width: 80%;
     height: 100%;
     padding: 1em;
     box-sizing: border-box;
