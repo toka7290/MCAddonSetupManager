@@ -24,7 +24,10 @@
         <form name="editor_manifest">
             <fieldset class="basic">
                 <label for="format_version">フォーマットバージョン</label>
-                <input type="number" min="0" name="format_version" id="format_version" value="2">
+                <select name="format_version" id="format_version">
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
             </fieldset>
             <fieldset class="header">
                 <legend>Header</legend>
@@ -61,13 +64,31 @@
                     <input type="text" name="uuid" id="header_uuid">
                     <input type="button" value="Generate" id="generate_uuid">
                 </div>
+                <div>
+                    <label for="platform_locked">プラットフォーム固定</label>
+                    <input type="checkbox" name="platform_locked" id="platform_locked">
+                </div>
+                <div>
+                    <label for="base_game_version">基本ゲームバージョン</label>
+                    <span id="header_base_game_version">
+                        <input type="number" min="0" name="" id="header_base_game_version_major" value="1">
+                        <span>.</span>
+                        <input type="number" min="0" name="" id="header_base_game_version_minor" value="0">
+                        <span>.</span>
+                        <input type="number" min="0" name="" id="header_base_game_version_patch" value="0">
+                    </span>
+                </div>
+                <div>
+                    <label for="lock_template_options">テンプレートオプションロック</label>
+                    <input type="checkbox" name="lock_template_options" id="lock_template_options">
+                </div>
             </fieldset>
             <fieldset class="modules">
                 <legend>Modules</legend>
                 <div class="modules_controls">
                     <div class="modules_controls_bar">
                         <ul class="modules_controls_tab">
-                            <li class="selected_tab">0</li>
+                            <li class="selected_tab">0<span class="delete_tab">×</span></li>
                         </ul>
                         <span class="modules_controls_addtab">+</span>
                     </div>
@@ -111,7 +132,7 @@
                 <div class="dependencies_controls">
                     <div class="dependencies_controls_bar">
                         <ul class="dependencies_controls_tab">
-                            <li class="selected_tab">0</li>
+                            <li class="selected_tab">0<span class="delete_tab">×</span></li>
                         </ul>
                         <span class="dependencies_controls_addtab disabled">+</span>
                     </div>

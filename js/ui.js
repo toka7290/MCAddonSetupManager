@@ -14,7 +14,6 @@ $(function(){
         $('iframe').css("pointer-events","auto");
     });
     function separatorMove(ev){
-        console.log(is_separator_drag);
         if(is_separator_drag){
             $("html").css("cursor","e-resize");
             $('iframe').css("pointer-events","none");

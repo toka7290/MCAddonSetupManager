@@ -15,6 +15,33 @@ div.content{
     width: 100%;
     height: 100%;
 }
+::-webkit-scrollbar {
+    width: 0.8rem;
+}
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 50, .5);
+  border-radius: 10px;
+  box-shadow:0 0 0 1px rgba(255, 255, 255, .3);
+}
+/* エディタ */
+div.editor{
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: white #9aa3b8;
+}
+div.editor form{
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    box-sizing: border-box;
+}
 /* プレビュー */
 div.preview{
     display: block;
@@ -22,21 +49,12 @@ div.preview{
     height: 100%;
     padding: 1em;
     box-sizing: border-box;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: white #9aa3b8;
 }
-div.codepreview{
-    background-color: dimgray;
-}
-/* エディタ */
-div.editor{
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-div.editor form{
-    width: 100%;
-    height: 100%;
-    padding: 1em;
-    box-sizing: border-box;
+div.preview pre{
+    white-space: initial;
 }
 /* セパレータ */
 div.separator{

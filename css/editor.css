@@ -18,7 +18,7 @@ input[type="url"]{
 input[type="button"]{
     height: 1.5rem;
     vertical-align: middle;
-    padding: 0 2px;
+    box-sizing: content-box;
 }
 input[type="checkbox"]{
     width: 1rem;
@@ -68,7 +68,7 @@ ul.dependencies_controls_tab{
 ul.modules_controls_tab li,
 ul.dependencies_controls_tab li{
     border: 2px solid gray;
-    padding: 0 1em;
+    padding: 0 0.5em;
     list-style: none;
 }
 ul.modules_controls_tab li+li,
@@ -81,12 +81,37 @@ span.modules_controls_addtab:hover,
 span.dependencies_controls_addtab:hover{
     cursor: pointer;
 }
-span.dependencies_controls_addtab.disabled:hover{
-    cursor: auto;
-}
 ul.modules_controls_tab li.selected_tab,
 ul.dependencies_controls_tab li.selected_tab{
     border-bottom: 2px solid white;
+}
+li:first-child span.delete_tab,
+li:first-child li:first-child span.delete_tab{
+    display: none;
+}
+span.delete_tab,
+span.metadata_remove_author{
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    box-sizing: content-box;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.1rem;
+    color: gray;
+    margin-left: 0.5rem;
+    border: 1px solid white;
+    border-radius: 1rem;
+}
+span.delete_tab:hover,
+span.metadata_remove_author:hover{
+    cursor: pointer;
+    border: 1px solid lightgray;
+    border-radius: 1rem;
+    background: lightgray;
+}
+span.dependencies_controls_addtab.disabled:hover{
+    cursor: auto;
 }
 div.modules_contents > div,
 div.dependencies_contents > div{
@@ -130,16 +155,4 @@ div.metadata_author_list{
 span.name{
     padding: 0 2px;
     vertical-align: middle;
-}
-span.metadata_remove_author{
-    display: inline-block;
-    width: 1.5rem;
-    height: 1.5rem;
-    text-align: center;
-    vertical-align: middle;
-    color: white;
-    font-weight: bold;
-    border: 1px solid red;
-    background-color: red;
-    border-radius: 6px;
 }
