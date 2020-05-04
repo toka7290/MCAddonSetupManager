@@ -1,7 +1,15 @@
 input,textarea,select{
     font: inherit;
     padding: 2px;
-    border: 1px solid lightslategray;
+    border: 1px solid #519657;
+    background-color: #fbfffc;
+    border-radius: 4px;
+}
+input:focus,
+textarea:focus,
+select:focus{
+    outline: thin solid #388e3c;
+    -moz-outline-radius: 4px;
 }
 input[type="text"]{
     width: 50%;
@@ -19,11 +27,25 @@ input[type="button"]{
     height: 1.5rem;
     vertical-align: middle;
     box-sizing: content-box;
+    padding: 2px 0.5em;
+}
+input[type="button"]:hover{
+    cursor: pointer;
+    background-color: #c8e6c9;
+}
+input[type="button"]:active{
+    background-color: #81c784;
 }
 input[type="checkbox"]{
     width: 1rem;
     height: 1rem;
     vertical-align: middle;
+}
+input[type="checkbox"]:hover{
+    cursor: pointer;
+}
+input[type="checkbox"]:focus{
+    outline: none;
 }
 textarea{
     width: 50%;
@@ -31,6 +53,9 @@ textarea{
 select{
     height: 1.5rem;
     padding: 0 2px;
+}
+select:hover{
+    cursor: pointer;
 }
 fieldset div{
     display: flex;
@@ -67,9 +92,10 @@ ul.dependencies_controls_tab{
 }
 ul.modules_controls_tab li,
 ul.dependencies_controls_tab li{
-    border: 2px solid gray;
+    border: 2px solid #75a478;
     padding: 0 0.5em;
     list-style: none;
+    border-radius: 4px;
 }
 ul.modules_controls_tab li+li,
 ul.dependencies_controls_tab li+li{
@@ -83,7 +109,7 @@ span.dependencies_controls_addtab:hover{
 }
 ul.modules_controls_tab li.selected_tab,
 ul.dependencies_controls_tab li.selected_tab{
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid #e8f5e9;
 }
 li:first-child span.delete_tab,
 li:first-child li:first-child span.delete_tab{
@@ -98,17 +124,17 @@ span.metadata_remove_author{
     text-align: center;
     vertical-align: middle;
     line-height: 1.1rem;
-    color: gray;
+    color: #519657;
     margin-left: 0.5rem;
-    border: 1px solid white;
+    border: 1px solid #e8f5e9;
     border-radius: 1rem;
 }
 span.delete_tab:hover,
 span.metadata_remove_author:hover{
     cursor: pointer;
-    border: 1px solid lightgray;
+    border: 1px solid #b2fab4;
     border-radius: 1rem;
-    background: lightgray;
+    background: #b2fab4;
 }
 span.dependencies_controls_addtab.disabled:hover{
     cursor: auto;
@@ -116,10 +142,11 @@ span.dependencies_controls_addtab.disabled:hover{
 div.modules_contents > div,
 div.dependencies_contents > div{
     display: none;
-    border: 2px solid gray;
+    border: 2px solid #75a478;
     padding: 0.5em;
     margin: 0;
     width: 100%;
+    border-radius: 4px;
 }
 div.modules_contents div.selected_tab_content,
 div.dependencies_contents div.selected_tab_content{
@@ -127,10 +154,11 @@ div.dependencies_contents div.selected_tab_content{
 }
 span.modules_controls_addtab,
 span.dependencies_controls_addtab{
-    border: 2px solid gray;
+    border: 2px solid #75a478;
     border-left: none;
     padding: 0 0.5em;
     margin-right: 0.5em;
+    border-radius: 4px;
 }
 /* Capabilities */
 div.capabilities_list{

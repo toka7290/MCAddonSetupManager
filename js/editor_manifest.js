@@ -54,19 +54,17 @@ $(function(){
     $(document).on("click",".modules_controls_tab li span.delete_tab",function(event){
         selectedindex = $(this).parent().index();
         $(this).parent().remove();
-        $(".dependencies_contents > div").eq(selectedindex).remove();
+        $(".modules_contents > div").eq(selectedindex).remove();
         for(i=0;i<$(".modules_controls_tab li").length;i++){
-            console.log(i);
-            $(".modules_controls_tab li").eq(i).text(i);
+            $(".modules_controls_tab li").eq(i).html(i+'<span class="delete_tab">×</span>');
         }
-        console.log(selectedindex);
+        onChangedJSON();
         event.stopPropagation();
     });
     //Modules tab追加
     $(".modules_controls_addtab").on("click",function(){
         num = $(".modules_controls_tab li").length;
         addtab = '<li>'+num+'<span class="delete_tab">×</span></li>';
-        console.log( addtab);
         $(".modules_controls_tab").append(addtab);
         content = $(".modules_contents > div:first-child").clone();
         content.removeClass('selected_tab_content');
@@ -76,7 +74,6 @@ $(function(){
     //Dependencies tab変更
     $(document).on("click",".dependencies_controls_tab li",function(){
         if(is_dependencies_enable){
-            console.log("tab");
             selectedindex = $(".dependencies_controls_tab li").index(this);
             $(".dependencies_controls_tab li").removeClass('selected_tab');
             $(".dependencies_controls_tab li").eq(selectedindex).addClass('selected_tab');
@@ -88,9 +85,14 @@ $(function(){
     $(document).on("click",".dependencies_controls_tab li span.delete_tab",function(event){
         if(is_dependencies_enable){
             selectedindex = $(this).parent().index();
-            console.log("delete");
-            event.stopPropagation();
+            $(this).parent().remove();
+            $(".dependencies_contents > div").eq(selectedindex).remove();
+            for(i=0;i<$(".dependencies_controls_tab li").length;i++){
+                $(".dependencies_controls_tab li").eq(i).html(i+'<span class="delete_tab">×</span>');
+            }
+            onChangedJSON();
         }
+        event.stopPropagation();
     });
     //Dependencies tab追加
     $(".dependencies_controls_addtab").on("click",function(){
@@ -136,11 +138,11 @@ $(function(){
     }
     // 更新処理
     function onChangedJSON(){
-        checkJSONWarning()
+        checkIssue();
         json_code = exportJSON();
-        $("pre.language-json code.language-json", parent.document).remove();
+        $("pre.language-json code.language-json").remove();
         content = '<code class="language-json">'+json_code+'</code>';
-        $("pre.language-json", parent.document).append(content)
+        $("pre.language-json").append(content)
         Prism.highlightAll();
     }
     // json 出力
@@ -250,13 +252,27 @@ $(function(){
         }
         return string_raw;
     }
+    function checkIssue(){
+        // イシュー削除
+        $("ul.issue_list li").remove();
+        error_num = checkJSONError();
+        warning_num = checkJSONWarning();
+        $("span.issue_warning_num").text("警告:"+warning_num);
+        $("span.issue_error_num").text("エラー:"+error_num);
+        if(warning_num<=0&&error_num<=0){
+            $("ul.issue_list").append('<li>問題はありません</li>');
+        }
+    }
     function checkJSONWarning(){
+        warning_num = 0;
         // format_version固有
         switch(Number($('#format_version').val())){
             case 1:
                 if(Number($('#header_min_engine_version_major').val())>1||
-                Number($('#header_min_engine_version_minor').val())>13){
+                Number($('#header_min_engine_version_minor').val())>=13){
                     //1.13以上は警告
+                    addIssue('warning',"[Header:min engine version] フォーマットバージョン1では1.13より低いバージョンに設定する必要があります。これより高いバージョンはフォーマットバージョン2でサポートしています。");
+                    warning_num++;
                 };
                 break;
             case 2:
@@ -264,42 +280,60 @@ $(function(){
         }
         if($('#header_pack_name').val()==""){
             //名前がありません
+            addIssue('warning',"[Header:neme] 名前が空です。名前が空の場合、\"名前がありません\"と表示されます。");
+            warning_num++;
         }
         if($('#header_description').val()==""){
             //説明がありません
+            addIssue('warning',"[Header:description] 説明がありません。説明が空の場合、\"不明なパックの説明\"と表示されます。");
+            warning_num++;
         }
         for(i=0;i<$(".modules_controls_tab li").length;i++){
             child_num = i + 1;
-            if(!isUUID($('div.modules_contents > div:nth-child('+child_num+') #modules_uuid').val())){
+            if($('div.modules_contents > div:nth-child('+child_num+') #modules_description').val()==""){
                 //UUIDではありません
+                addIssue('warning',"[Modules:"+i+":description] 説明がありません。");
+                warning_num++;
             }
         }
         if(is_capabilities_enable){
-            if($('#experimental_custom_ui').is(':checked')
-            &&$('#chemistry').is(':checked')
-            &&$('#raytracing').is(':checked')){
+            if(!$('#experimental_custom_ui').is(':checked')
+            &&!$('#chemistry').is(':checked')
+            &&!$('#raytracing').is(':checked')){
                 //空です
+                addIssue('warning',"[Capabilities] 項目が一つも選択されていません。");
+                warning_num++;
             }
         }
         if(is_metadata_enable){
             if($('div.metadata_author_list > div')[0]){
                 for(i=1;i<=$("div.metadata_author_list > div").length;i++){
                     if($('div.metadata_author_list > div:nth-child('+i+') > span.name').text()==""){
-                        //URLがありません
+                        //名前がありません
+                        addIssue('warning',"[Metadata:author] 空の名前が存在しています。");
+                        warning_num++;
                     }
                 }
             }else{
                 // 名前がありません
+                addIssue('warning',"[Metadata:author] 名前が入力されていません。");
+                warning_num++;
             }
             if($('#metadata_url').val()==""){
                 //URLがありません
+                addIssue('warning',"[Metadata:url] URLが入力されていません。");
+                warning_num++;
             }
             if($('#metadata_license').val()==""){
                 //Licenseがありません
+                addIssue('warning',"[Metadata:license] ライセンスが入力されていません。");
+                warning_num++;
             }
         }
+        return warning_num;
     }
     function checkJSONError(){
+        error_num = 0;
         switch(Number($('#format_version').val())){
             case 1:
                 break;
@@ -307,16 +341,22 @@ $(function(){
                 if(Number($('#header_min_engine_version_major').val())<=1&&
                 Number($('#header_min_engine_version_minor').val())<13){
                     // 1.12以下はエラー
+                    addIssue('error',"[Header:min engine version] version1.12以下を指定することはできません。");
+                    error_num++;
                 };
                 break;
         }
         if(!isUUID($('#header_uuid').val())){
             //UUIDではありません
+            addIssue('error',"[Header:uuid] 入力されている文字列は有効なUUIDではありません。");
+            error_num++;
         }
         for(i=0;i<$(".modules_controls_tab li").length;i++){
             child_num = i + 1;
             if(!isUUID($('div.modules_contents > div:nth-child('+child_num+') #modules_uuid').val())){
                 //UUIDではありません
+                addIssue('error',"[Modules:"+i+":uuid] 入力されている文字列は有効なUUIDではありません。");
+                error_num++;
             }
         }
         if(is_dependencies_enable){
@@ -324,9 +364,12 @@ $(function(){
                 child_num = i + 1;
                 if(!isUUID($('div.dependencies_contents > div:nth-child('+child_num+') #dependencies_uuid').val())){
                     //UUIDではありません
+                    addIssue('error',"[Dependencies:"+i+":uuid] 入力されている文字列は有効なUUIDではありません。");
+                    error_num++;
                 }
             }
         }
+        return error_num;
     }
     function isUUID ( uuid ) {
         let s = "" + uuid;
@@ -336,5 +379,15 @@ $(function(){
         return false;
         }
         return true;
+    }
+    // イシュー更新
+    function addIssue(type,issue_content){
+        content = '';
+        if(type=='warning'){
+            content = '<li><img src="img/warning.svg" alt=""><p>'+issue_content+'</p></li>';
+        }else if(type=='error'){
+            content = '<li><img src="img/error.svg" alt=""><p>'+issue_content+'</p></li>';
+        }
+        $("ul.issue_list").append(content);
     }
 });

@@ -4,7 +4,8 @@ html{
     height: 100%;
 }
 body{
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     margin: 0;
@@ -12,20 +13,59 @@ body{
 }
 div.content{
     display: flex;
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: auto;
+    overflow: auto;
 }
 ::-webkit-scrollbar {
-    width: 0.8rem;
-}
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
+    height: 8px;
+    width: 8px;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 50, .5);
-  border-radius: 10px;
-  box-shadow:0 0 0 1px rgba(255, 255, 255, .3);
+  background-color: #1b5e20;
+  border-radius: 4px;
+}
+/* Color */
+html{
+    background-color: #e8f5e9;
+}
+fieldset{
+    border-color: #519657;
+    border-radius: 4px;
+}
+/* ヘッダー */
+header{
+    color: white;
+    background-color: #2e7d32;
+    position: relative;
+}
+div.title{
+    display: inline-block;
+}
+div.title h1{
+    display: inline;
+    padding: 0 0.5em;
+    margin: 0;
+}
+div.title p{
+    display: inline;
+    margin: 0;
+}
+div.external_link{
+    display: inline-flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+div.external_link a{
+    display: inline-block;
+    line-height: 0;
+    margin: 0.5rem;
+}
+div.external_link img{
+    width: 2rem;
 }
 /* エディタ */
 div.editor{
@@ -34,7 +74,7 @@ div.editor{
     height: 100%;
     overflow-y: scroll;
     scrollbar-width: thin;
-    scrollbar-color: white #9aa3b8;
+    scrollbar-color: #1b5e20 transparent;
 }
 div.editor form{
     width: 100%;
@@ -42,19 +82,102 @@ div.editor form{
     padding: 1em;
     box-sizing: border-box;
 }
-/* プレビュー */
-div.preview{
-    display: block;
+/* データチェック */
+div.data_check{
+    display: flex;
+    flex-direction: column;
     width: 80%;
     height: 100%;
-    padding: 1em;
     box-sizing: border-box;
+    overflow-y: hidden;
+}
+/* プレビュー */
+div.preview{
+    padding: 1rem;
     overflow-y: scroll;
     scrollbar-width: thin;
-    scrollbar-color: white #9aa3b8;
+    scrollbar-color: #1b5e20 transparent;
+    flex-grow: 1;
 }
 div.preview pre{
     white-space: initial;
+    scrollbar-width: thin;
+    scrollbar-color: #1b5e20 transparent;
+}
+/* イシュー */
+div.issue{
+    bottom: 0;
+    width: 100%;
+}
+div.issue_contlrol_bar{
+    display: flex;
+    background-color: #66bb6a;
+    padding: 2px;
+    vertical-align: middle;
+}
+div.issue_contlrol_bar:hover{
+    cursor: pointer;
+}
+div.issue_contlrol_label img{
+    width: 1.5rem;
+    transition: 0.5s;
+    vertical-align: middle;
+}
+div.issue_contlrol_label img.open{
+    transform-origin: center;
+    transform: rotate(180deg);
+}
+div.issue_contlrol_label span{
+    vertical-align: middle;
+}
+div.issue_contlrol_num{
+    display: flex;
+}
+div.issue_contlrol_num div{
+    padding: 0 0.5rem;
+    line-height: 0;
+    font-size: 0;
+    display: flex;
+}
+div.issue_contlrol_num div *{
+    line-height: normal;
+    font-size: medium;
+}
+div.issue_contlrol_num div+div{
+    padding-left: 0;
+}
+div.issue_contlrol_warning span,
+div.issue_contlrol_error span{
+    align-self: center;
+}
+div.issue_contlrol_warning img,
+div.issue_contlrol_error img{
+    width: 1.2rem;
+    vertical-align: middle;
+}
+ul.issue_list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 20em;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: #1b5e20 transparent;
+}
+ul.issue_list li{
+    padding: 2px;
+}
+ul.issue_list li:nth-child(2n){
+    background-color: #c8e6c9;
+}
+ul.issue_list li img{
+    width: 1.2rem;
+    vertical-align: middle;
+}
+ul.issue_list li p{
+    display: inline;
+    margin: 0;
+    padding: 2px;
 }
 /* セパレータ */
 div.separator{

@@ -1,0 +1,14 @@
+html:#e8f5e9
+html_2:#c8e6c9
+toolbar:#66bb6a
+boader:#519657
+boader2:#75a478
+
+input_boader:#519657
+input_background:#fbfffc
+input_focus:#388e3c
+
+button_hover:#c8e6c9
+button_active:#81c784
+
+scrollbar-track:#1b5e20
