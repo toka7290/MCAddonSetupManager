@@ -12,3 +12,5 @@ button_hover:#c8e6c9
 button_active:#81c784
 
 scrollbar-track:#1b5e20
+
+a_back_hover:#1faa00

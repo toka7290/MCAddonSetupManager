@@ -62,7 +62,12 @@ div.external_link{
 div.external_link a{
     display: inline-block;
     line-height: 0;
-    margin: 0.5rem;
+    padding: 0.5rem;
+    transition: 0.5s;
+}
+div.external_link a:hover{
+    transition: 0.5s;
+    background-color: #1faa00;
 }
 div.external_link img{
     width: 2rem;
