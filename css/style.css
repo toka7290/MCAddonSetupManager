@@ -11,28 +11,6 @@ body{
     margin: 0;
     padding: 0;
 }
-div.content{
-    display: flex;
-    width: auto;
-    height: auto;
-    overflow: auto;
-}
-::-webkit-scrollbar {
-    height: 8px;
-    width: 8px;
-}
-::-webkit-scrollbar-thumb {
-  background-color: #1b5e20;
-  border-radius: 4px;
-}
-/* Color */
-html{
-    background-color: #e8f5e9;
-}
-fieldset{
-    border-color: #519657;
-    border-radius: 4px;
-}
 /* ヘッダー */
 header{
     color: white;
@@ -72,14 +50,42 @@ div.external_link a:hover{
 div.external_link img{
     width: 2rem;
 }
+div.content{
+    display: flex;
+    width: auto;
+    height: auto;
+    overflow: auto;
+}
+::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #1b5e20;
+  border-radius: 4px;
+}
+/* Color */
+html{
+    background-color: #e8f5e9;
+}
+fieldset{
+    border-color: #519657;
+    border-radius: 4px;
+}
 /* エディタ */
 div.editor{
     display: block;
-    width: 100%;
+    flex-basis: 100%;
     height: 100%;
     overflow-y: scroll;
     scrollbar-width: thin;
     scrollbar-color: #1b5e20 transparent;
+}
+div.editor.drag_lock{
+    user-select: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
 }
 div.editor form{
     width: 100%;
@@ -91,10 +97,15 @@ div.editor form{
 div.data_check{
     display: flex;
     flex-direction: column;
-    width: 80%;
     height: 100%;
     box-sizing: border-box;
     overflow-y: hidden;
+}
+div.data_check.drag_lock{
+    user-select: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
 }
 /* プレビュー */
 div.preview{
@@ -164,7 +175,7 @@ ul.issue_list{
     list-style: none;
     padding: 0;
     margin: 0;
-    max-height: 20em;
+    max-height: 40vh;
     overflow-y: scroll;
     scrollbar-width: thin;
     scrollbar-color: #1b5e20 transparent;

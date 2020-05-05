@@ -11,26 +11,26 @@ $(function(){
     $(document).on("mouseup",function(){
         is_separator_drag = false;
         $("html").css("cursor","auto");
-        $(".separator").prev().css("user-select","auto");
-        $(".separator").next().css("user-select","auto");
+        $(".separator").prev().removeClass('drag_lock');
+        $(".separator").next().removeClass('drag_lock');
     });
     function separatorMove(ev){
         if(is_separator_drag){
             $("html").css("cursor","e-resize");
-            $(".separator").prev().css("user-select","none");
-            $(".separator").next().css("user-select","none");
+            $(".separator").prev().addClass('drag_lock');
+            $(".separator").next().addClass('drag_lock');
             var maxwidth = $("html").width()-5;
             var nextwidth = maxwidth-ev.clientX;
             var prevwidth = maxwidth-nextwidth;
-            $(".separator").prev().width(prevwidth);
-            $(".separator").next().width(nextwidth);
+            $(".separator").prev().css("flex-basis",prevwidth);
+            $(".separator").next().css("flex-basis",nextwidth);
         }
     };
     $(window).on("mousemove",separatorMove);
     $('iframe').on('load', function () {
         $(this).contents().on("mousemove",separatorMove);
     });
-    // イシュー開閉
+    // イシューリスト開閉
     $("div.issue_contlrol_bar").on("click",function(){
         if($("div.issue_contlrol_bar img").attr("class")=="close"){
             // 開く
