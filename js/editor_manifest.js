@@ -1,7 +1,9 @@
 $(function(){
+    // 初期処理
     var is_dependencies_enable = false;
     var is_capabilities_enable = false;
     var is_metadata_enable = false;
+    var is_world_template = false;
     onChangedJSON()
     // 変更
     $(document).on("change",'input',function(){
@@ -37,6 +39,10 @@ $(function(){
         }
         onChangedJSON();
     });
+    // モジュールタイプ変更操作
+    $(document).on("change","#modules_type",function(){
+        onChangedJSON();
+    });
     //UUID生成
     $(document).on("click",'input[type="button"]#generate_uuid',function(){
         $(this).prev().val(getUuid_v4);
@@ -54,9 +60,14 @@ $(function(){
     $(document).on("click",".modules_controls_tab li span.delete_tab",function(event){
         selectedindex = $(this).parent().index();
         $(this).parent().remove();
+        $(".modules_controls_tab li").eq(selectedindex-1).addClass('selected_tab');
+        $(".modules_contents > div").eq(selectedindex-1).addClass('selected_tab_content');
         $(".modules_contents > div").eq(selectedindex).remove();
         for(i=0;i<$(".modules_controls_tab li").length;i++){
             $(".modules_controls_tab li").eq(i).html(i+'<span class="delete_tab">×</span>');
+        }
+        if($(".modules_controls_tab li").length<=1){
+            $(".modules_controls_addtab").show();
         }
         onChangedJSON();
         event.stopPropagation();
@@ -69,6 +80,9 @@ $(function(){
         content = $(".modules_contents > div:first-child").clone();
         content.removeClass('selected_tab_content');
         $(".modules_contents").append(content);
+        if(0<num){
+            $(".modules_controls_addtab").hide();
+        }
         onChangedJSON();
     });
     //Dependencies tab変更
@@ -85,6 +99,8 @@ $(function(){
     $(document).on("click",".dependencies_controls_tab li span.delete_tab",function(event){
         if(is_dependencies_enable){
             selectedindex = $(this).parent().index();
+            $(".dependencies_controls_tab li").eq(selectedindex-1).addClass('selected_tab');
+            $(".dependencies_contents > div").eq(selectedindex-1).addClass('selected_tab_content');
             $(this).parent().remove();
             $(".dependencies_contents > div").eq(selectedindex).remove();
             for(i=0;i<$(".dependencies_controls_tab li").length;i++){
@@ -122,6 +138,68 @@ $(function(){
         }
         onChangedJSON();
     });
+    // モジュールタイプ変更
+    function type_changed(){
+        is_world_template = false;
+        $("#header_base_game_version *").prop('disabled', true);
+        $("#header_lock_template_options").prop('disabled', true);
+        for(i=1;i<=$(".modules_controls_tab li").length;i++){
+            $('div.modules_contents > div:nth-child('+i+') #modules_type option').prop('disabled', false);
+            switch($('div.modules_contents > div:nth-child('+i+') #modules_type').val()){
+                case "resources":
+                    $(".modules_controls_addtab").hide();
+                    type_prevention(i,"resources");
+                    break;
+                case "data":
+                    if($(".modules_controls_tab li").length<=1){
+                        $(".modules_controls_addtab").show();
+                    }
+                    type_prevention(i,"data");
+                    break;
+                case "client_data":
+                    if($(".modules_controls_tab li").length<=1){
+                        $(".modules_controls_addtab").show();
+                    }
+                    type_prevention(i,"client_data");
+                    break;
+                case "interface":
+                    $(".modules_controls_addtab").hide();
+                    type_prevention(i,"interface");
+                    break;
+                case "world_template":
+                    $(".modules_controls_addtab").hide();
+                    type_prevention(i,"world_template");
+                    is_world_template = true;
+                    $("#header_base_game_version *").prop('disabled', false);
+                    $("#header_lock_template_options").prop('disabled', false);
+                    break;
+            }
+        }
+    }
+    // 別モジュールの選択制限
+    function type_prevention(index,selected_type){
+        for(i=1;i<=$(".modules_controls_tab li").length;i++){
+            if(index!=i){
+                switch(selected_type){
+                    case "resources":
+                        break;
+                    case "data":
+                        $('div.modules_contents > div:nth-child('+i+') #modules_type option').prop('disabled', true);
+                        $('div.modules_contents > div:nth-child('+i+') #modules_type option[value="client_data"]').prop('disabled', false);
+                        break;
+                    case "client_data":
+                        $('div.modules_contents > div:nth-child('+i+') #modules_type option').prop('disabled', true);
+                        $('div.modules_contents > div:nth-child('+i+') #modules_type option[value="client_data"]').prop('disabled', false);
+                        break;
+                    case "interface":
+                        break;
+                    case "world_template":
+                        break;
+                }
+            }
+        }
+    };
+    // UUID生成
     function getUuid_v4() {
         let chars = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".split("");
         for (let i = 0, len = chars.length; i < len; i++) {
@@ -136,15 +214,6 @@ $(function(){
         }
         return chars.join("");
     }
-    // 更新処理
-    function onChangedJSON(){
-        checkIssue();
-        json_code = exportJSON();
-        $("pre.language-json code.language-json").remove();
-        content = '<code class="language-json">'+json_code+'</code>';
-        $("pre.language-json").append(content)
-        Prism.highlightAll();
-    }
     // json 出力
     function exportJSON(){
         json_raw = new Object();
@@ -156,11 +225,13 @@ $(function(){
         json_raw.header.version = "replace_header_version";
         json_raw.header.min_engine_version = "replace_header_min_engine_version";
         json_raw.header.uuid = $('#header_uuid').val();
-        if($('#platform_locked').is(':checked')){
+        if($('#header_platform_locked').is(':checked')){
             json_raw.header.platform_locked = true;
         }
-        json_raw.header.base_game_version = "replace_base_game_version";
-        if($('#lock_template_options').is(':checked')){
+        if(is_world_template){
+            json_raw.header.base_game_version = "replace_base_game_version";
+        }
+        if($('#header_lock_template_options').is(':checked')){
             json_raw.header.lock_template_options = true;
         }
 
@@ -211,6 +282,7 @@ $(function(){
         
         return jsonVersionReplacer(json_string_raw);
     }
+    // json バージョン置き換え
     function jsonVersionReplacer(string_raw) {
         header_version = JSON.stringify([
             Number($('#header_version_major').val()), 
@@ -252,6 +324,7 @@ $(function(){
         }
         return string_raw;
     }
+    // イシューチェック
     function checkIssue(){
         // イシュー削除
         $("ul.issue_list li").remove();
@@ -263,6 +336,27 @@ $(function(){
             $("ul.issue_list").append('<li>問題はありません</li>');
         }
     }
+    // イシュー更新
+    function addIssue(type,issue_content){
+        content = '';
+        if(type=='warning'){
+            content = '<li><img src="img/warning.svg" alt=""><p>'+issue_content+'</p></li>';
+        }else if(type=='error'){
+            content = '<li><img src="img/error.svg" alt=""><p>'+issue_content+'</p></li>';
+        }
+        $("ul.issue_list").append(content);
+    }
+    // UUIDチェック
+    function isUUID ( uuid ) {
+        let s = "" + uuid;
+
+        s = s.match('^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$');
+        if (s === null) {
+        return false;
+        }
+        return true;
+    }
+    // 警告検査
     function checkJSONWarning(){
         warning_num = 0;
         // format_version固有
@@ -332,6 +426,7 @@ $(function(){
         }
         return warning_num;
     }
+    // エラー検査
     function checkJSONError(){
         error_num = 0;
         switch(Number($('#format_version').val())){
@@ -353,6 +448,10 @@ $(function(){
         }
         for(i=0;i<$(".modules_controls_tab li").length;i++){
             child_num = i + 1;
+            if($('div.modules_contents > div:nth-child('+child_num+') #modules_type').val()==null){
+                addIssue('error',"[Modules:"+i+":type] typeがnullになっています。typeを選択してください。");
+                error_num++;
+            }
             if(!isUUID($('div.modules_contents > div:nth-child('+child_num+') #modules_uuid').val())){
                 //UUIDではありません
                 addIssue('error',"[Modules:"+i+":uuid] 入力されている文字列は有効なUUIDではありません。");
@@ -371,23 +470,14 @@ $(function(){
         }
         return error_num;
     }
-    function isUUID ( uuid ) {
-        let s = "" + uuid;
-
-        s = s.match('^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$');
-        if (s === null) {
-        return false;
-        }
-        return true;
-    }
-    // イシュー更新
-    function addIssue(type,issue_content){
-        content = '';
-        if(type=='warning'){
-            content = '<li><img src="img/warning.svg" alt=""><p>'+issue_content+'</p></li>';
-        }else if(type=='error'){
-            content = '<li><img src="img/error.svg" alt=""><p>'+issue_content+'</p></li>';
-        }
-        $("ul.issue_list").append(content);
+    // 更新処理
+    function onChangedJSON(){
+        type_changed();
+        checkIssue();
+        json_code = exportJSON();
+        $("pre.language-json code.language-json").remove();
+        content = '<code class="language-json">'+json_code+'</code>';
+        $("pre.language-json").append(content)
+        Prism.highlightAll();
     }
 });

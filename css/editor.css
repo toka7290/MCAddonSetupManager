@@ -11,6 +11,12 @@ select:focus{
     outline: thin solid #388e3c;
     -moz-outline-radius: 4px;
 }
+input:disabled,
+textarea:disabled,
+select:disabled{
+    border: 1px solid #80e27e;
+    border-radius: 4px;
+}
 input[type="text"]{
     width: 50%;
     height: 1.5rem;
@@ -51,7 +57,6 @@ textarea{
     width: 50%;
 }
 select{
-    height: 1.5rem;
     padding: 0 2px;
 }
 select:hover{
@@ -62,6 +67,10 @@ fieldset div{
     align-items: center;
     margin: 2px 0;
 }
+fieldset div img{
+    width: 1.5rem;
+    padding: 0 1rem;
+}
 div label{
     margin-right: 1em;
     word-break: keep-all;
@@ -69,6 +78,7 @@ div label{
 div label+*{
     margin: 0;
 }
+
 /* タブ */
 div.modules_controls,
 div.dependencies_controls,

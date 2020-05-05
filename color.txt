@@ -17,3 +17,9 @@ button_active:#81c784
 scrollbar-track:#1b5e20
 
 a_back_hover:#1faa00
+
+prism_symbol:#b3e5fc
+prism_boolean:#1e88e5
+prism_number:#aed581
+prism_string:#ff9e80
+prism_keyword:#e91e63

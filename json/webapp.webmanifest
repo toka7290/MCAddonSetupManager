@@ -1,6 +1,6 @@
 {
   "background_color": "#e8f5e9",
-  "display": "minimal-ui",
+  "display": "standalone",
   "icons": [
     {
       "src": "../favicon.ico",

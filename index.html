@@ -2,9 +2,11 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>MCaddonSetupManager</title>
+        <title>とかさんのManifestGenelator</title>
         <!-- metadata -->
         <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="keywords" content="とかさん,Minecraft,マインクラフト,manifest,マニフェスト,manifest.json,Genelator,tool,ツール,Addon,アドオン">
+        <meta http-equiv="content-language" content="ja">
         <link rel="icon" href="favicon.ico">
         <link rel="manifest" href="json/webapp.webmanifest">
         <script type="application/ld+json">
@@ -16,6 +18,11 @@
                 "applicationSubCategory": "Minecraft Manifest json",
                 "image": "../favicon.ico",
                 "about": "マインクラフトのAdd-on使用するmanifest.jsonを作成するツールです。",
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "5",
+                    "ratingCount": "8864"
+                },
                 "creator": {
                     "@type": "Person",
                     "name": "とかさん",
@@ -44,12 +51,13 @@
         <header class="header">
             <div class="title">
                 <h1>とかさんのManifestGenelator</h1>
-                <p>version.0.2.0</p>
+                <p>version.0.3.0</p>
             </div>
             <div class="external_link">
-                <a href="http://tokamcwin10.blog.jp/" target="_blank"><img src="img/homepage.svg" alt=""></a>
-                <a href="https://twitter.com/toka7290" target="_blank"><img src="img/twitter.svg" alt=""></a>
-                <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank"><img src="img/github.svg" alt=""></a>
+                <a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ"><img src="img/homepage.svg" alt=""></a>
+                <a href="https://twitter.com/toka7290" target="_blank" title="Twitter"><img src="img/twitter.svg" alt=""></a>
+                <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github"><img src="img/github.svg" alt=""></a>
+                <a href="http://tokamcwin10.blog.jp/archives/38495158.html" target="_blank" title="manifest.jsonの解説ページに飛びます。"><img src="img/help.svg" alt=""></a>
             </div>
         </header>
         <div class="content">
@@ -98,22 +106,22 @@
                             <input type="button" value="Generate" id="generate_uuid">
                         </div>
                         <div>
-                            <label for="platform_locked">プラットフォーム固定</label>
-                            <input type="checkbox" name="platform_locked" id="platform_locked">
+                            <label for="header_platform_locked">プラットフォームロック</label>
+                            <input type="checkbox" name="header_platform_locked" id="header_platform_locked">
                         </div>
                         <div>
                             <label for="base_game_version">基本ゲームバージョン</label>
                             <span id="header_base_game_version">
-                                <input type="number" min="0" name="" id="header_base_game_version_major" value="1">
+                                <input type="number" min="0" name="" id="header_base_game_version_major" value="1" disabled>
                                 <span>.</span>
-                                <input type="number" min="0" name="" id="header_base_game_version_minor" value="0">
+                                <input type="number" min="0" name="" id="header_base_game_version_minor" value="0" disabled>
                                 <span>.</span>
-                                <input type="number" min="0" name="" id="header_base_game_version_patch" value="0">
+                                <input type="number" min="0" name="" id="header_base_game_version_patch" value="0" disabled>
                             </span>
                         </div>
                         <div>
-                            <label for="lock_template_options">テンプレートオプションロック</label>
-                            <input type="checkbox" name="lock_template_options" id="lock_template_options">
+                            <label for="header_lock_template_options">テンプレートオプションロック</label>
+                            <input type="checkbox" name="header_lock_template_options" id="header_lock_template_options" disabled>
                         </div>
                     </fieldset>
                     <fieldset class="modules">
