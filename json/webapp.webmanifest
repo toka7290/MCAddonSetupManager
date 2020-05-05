@@ -1,0 +1,13 @@
+{
+  "background_color": "#e8f5e9",
+  "display": "minimal-ui",
+  "icons": [
+    {
+      "src": "../favicon.ico",
+      "sizes": "256x256"
+    }
+  ],
+  "name": "とかさんのManifestGenelator",
+  "short_name": "ManifestGenelator",
+  "theme_color": "#2e7d32"
+} 

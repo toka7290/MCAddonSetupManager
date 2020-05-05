@@ -1,5 +1,8 @@
+theme_color:#2e7d32
 html:#e8f5e9
 html_2:#c8e6c9
+header:#2e7d32
+header_hover:#1faa00
 toolbar:#66bb6a
 boader:#519657
 boader2:#75a478
