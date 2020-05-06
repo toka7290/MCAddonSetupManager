@@ -27,9 +27,6 @@ $(function(){
         }
     };
     $(window).on("mousemove",separatorMove);
-    $('iframe').on('load', function () {
-        $(this).contents().on("mousemove",separatorMove);
-    });
     // イシューリスト開閉
     $("div.issue_contlrol_bar").on("click",function(){
         if($("div.issue_contlrol_bar img").attr("class")=="close"){

@@ -1,0 +1,13 @@
+div.content{
+    flex-direction: column;
+}
+div.content{
+    overflow-y: hidden;
+}
+div.data_check{
+    overflow-y: unset;
+    height: auto;
+}
+div.separator{
+    display: none;
+}
