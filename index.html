@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <meta name="keywords" content="とかさん,Minecraft,マインクラフト,manifest,マニフェスト,manifest.json,Genelator,tool,ツール,Addon,アドオン">
         <meta http-equiv="content-language" content="ja">
-        <link rel="icon" href="favicon.ico">
+        <link rel="icon" href="img/icon.png">
         <link rel="manifest" href="json/webapp.webmanifest">
         <script type="application/ld+json">
             {
@@ -16,8 +16,8 @@
                 "name": "とかさんのManifestGenelator",
                 "applicationCategory": "DeveloperApplication",
                 "applicationSubCategory": "Minecraft Manifest json",
-                "image": "../favicon.ico",
-                "about": "マインクラフトのAdd-on使用するmanifest.jsonを作成するツールです。",
+                "image": "img/icon.png",
+                "about": "Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。",
                 "aggregateRating": {
                     "@type": "AggregateRating",
                     "ratingValue": "5",
@@ -36,6 +36,11 @@
                 "operatingSystem": "Any. It is a Web Application"
             }
         </script>
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@toka7290">
+        <meta name="twitter:title" content="とかさんのManifestGenelator">
+        <meta name="twitter:description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。">
+        <meta name="twitter:image" content="img/icon.png">
         <!-- lib -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="lib/prism.js"></script>
@@ -45,19 +50,40 @@
         <!-- css -->
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/prism.css">
-        <link rel="stylesheet" href="css/phone.css">
+        <link rel="stylesheet" href="css/phone.css" media="(max-aspect-ratio: 1/1) and (min-aspect-ratio: 1/30)">
     </head>
     <body>
         <header class="header">
-            <div class="title">
-                <h1>とかさんのManifestGenelator</h1>
-                <p>version.0.3.1</p>
+            <div class="header_main">
+                <div class="title">
+                    <h1>とかさんのManifestGenelator</h1>
+                    <p>version:0.3.1</p>
+                </div>
+                <div class="header_menu">
+                    <p id="show_preview">preview</p>
+                    <p id="open_about">about</p>
+                </div>
+                <div class="external_link">
+                    <a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ"><img src="img/homepage.svg" alt=""></a>
+                    <a href="https://twitter.com/toka7290" target="_blank" title="Twitter"><img src="img/twitter.svg" alt=""></a>
+                    <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github"><img src="img/github.svg" alt=""></a>
+                    <a href="http://tokamcwin10.blog.jp/archives/38495158.html" target="_blank" title="manifest.jsonの解説ページに飛びます。"><img src="img/help.svg" alt=""></a>
+                </div>
             </div>
-            <div class="external_link">
-                <a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ"><img src="img/homepage.svg" alt=""></a>
-                <a href="https://twitter.com/toka7290" target="_blank" title="Twitter"><img src="img/twitter.svg" alt=""></a>
-                <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github"><img src="img/github.svg" alt=""></a>
-                <a href="http://tokamcwin10.blog.jp/archives/38495158.html" target="_blank" title="manifest.jsonの解説ページに飛びます。"><img src="img/help.svg" alt=""></a>
+            <div class="page_about">
+                <div class="close_about">
+                    <img src="img/close.svg" alt="">
+                </div>
+                <div class="about_content">
+                    <h2>とかさんのManifestGenelator</h2>
+                    <p>version:0.3.1</p>
+                    <div class="about_external_link">
+                        <a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ"><img src="img/homepage.svg" alt=""></a>
+                        <a href="https://twitter.com/toka7290" target="_blank" title="Twitter"><img src="img/twitter.svg" alt=""></a>
+                        <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github"><img src="img/github.svg" alt=""></a>
+                        <a href="http://tokamcwin10.blog.jp/archives/38495158.html" target="_blank" title="manifest.jsonの解説ページに飛びます。"><img src="img/help.svg" alt=""></a>
+                    </div>
+                </div>
             </div>
         </header>
         <div class="content">
@@ -235,8 +261,7 @@
             <div class="data_check">
                 <div class="preview">
                     <pre class="language-json">
-                        <code class="language-json">
-                        </code>
+                        <code class="language-json"></code>
                     </pre>
                 </div>
                 <div class="issue">

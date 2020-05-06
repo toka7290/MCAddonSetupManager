@@ -134,14 +134,30 @@ label{
 label+*{
     margin: 0;
 }
+::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color_scrollbar-track);
+  border-radius: 4px;
+}
 /* ヘッダー */
 header{
+    max-height: 3rem;
     color: var(--color_header_text);
     background-color: var(--color_header);
+}
+div.header_main{
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
     position: relative;
 }
 div.title{
-    display: inline-block;
+    font-size: clamp(10px,1.5vw,16px);
+    display: flex;
+    align-items: center;
 }
 div.title h1{
     display: inline;
@@ -150,15 +166,31 @@ div.title h1{
 }
 div.title p{
     display: inline;
+    margin: 0.5em;
+    align-self: flex-end;
+}
+div.header_menu{
+    display: none;
+    text-align: end;
+}
+div.header_menu p{
+    display: inline-block;
     margin: 0;
+    padding: 0.5em;
+    transition: 0.5s;
+}
+div.header_menu p:hover{
+    background-color: var(--color_header_hover);
+}
+div.header_menu p.active{
+    background-color: var(--color_header_preview);
+}
+div.header_menu p.active:hover{
+    background-color: var(--color_header_preview_hover);
 }
 div.external_link{
     display: inline-flex;
     align-items: center;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
 }
 div.external_link a{
     display: inline-block;
@@ -170,22 +202,56 @@ div.external_link a:hover{
     transition: 0.5s;
     background-color: var(--color_header_hover);
 }
-div.external_link img{
+div.external_link img,
+div.about_external_link img{
     width: 2rem;
 }
+div.page_about{
+    display: none;
+    z-index: 2;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--color_header_2);
+}
+div.close_about{
+    text-align: end;
+}
+div.close_about img{
+    border-radius: 1em;
+}
+div.close_about img:hover{
+    cursor: pointer;
+    transition: 0.5s;
+    background-color: var(--color_header_hover);
+}
+div.about_content{
+    text-align: center;
+}
+div.about_external_link{
+    display: block;
+}
+div.about_external_link a{
+    display: inline-block;
+    line-height: 0;
+    padding: 0.5rem;
+    transition: 0.5s;
+    border-radius: 1em;
+}
+div.about_external_link a:hover{
+    transition: 0.5s;
+    background-color: var(--color_header_hover);
+}
+/* コンテンツ */
 div.content{
     display: flex;
     width: auto;
     height: auto;
     overflow: auto;
-}
-::-webkit-scrollbar {
-    height: 8px;
-    width: 8px;
-}
-::-webkit-scrollbar-thumb {
-  background-color: var(--color_scrollbar-track);
-  border-radius: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color_scrollbar-track) transparent;
 }
 /* エディタ */
 div.editor{
@@ -204,7 +270,6 @@ div.editor.drag_lock{
 }
 div.editor form{
     width: 100%;
-    height: 100%;
     padding: 1em;
     box-sizing: border-box;
 }
@@ -326,9 +391,12 @@ div.metadata_author_list span.name{
 div.data_check{
     display: flex;
     flex-direction: column;
+    flex-basis: 100%;
     height: 100%;
     box-sizing: border-box;
     overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color_scrollbar-track) transparent;
     background-color: var(--color_background);
 }
 div.data_check.drag_lock{
@@ -344,6 +412,7 @@ div.preview{
     scrollbar-width: thin;
     scrollbar-color: var(--color_scrollbar-track) transparent;
     flex-grow: 1;
+    background-color: var(--color_background_2);
 }
 div.preview pre{
     white-space: initial;

@@ -27,6 +27,26 @@ $(function(){
         }
     };
     $(window).on("mousemove",separatorMove);
+    // プレビュー表示切替
+    $("p#show_preview").on("click",function(){
+        $("div.preview").slideToggle();
+        if($("p#show_preview").attr("class")=="active"){
+            $("p#show_preview").removeClass('active');
+        }else{
+            $("p#show_preview").addClass('active');
+        }
+    });
+    $(window).resize(function(){
+        $("div.preview").css('display', '')
+    });
+    // about開く
+    $("p#open_about").on("click",function(){
+        $("div.page_about").fadeIn();
+    });
+    // about閉じる
+    $("div.close_about").on("click",function(){
+        $("div.page_about").fadeOut();
+    });
     // イシューリスト開閉
     $("div.issue_contlrol_bar").on("click",function(){
         if($("div.issue_contlrol_bar img").attr("class")=="close"){
