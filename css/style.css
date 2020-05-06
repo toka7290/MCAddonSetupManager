@@ -174,12 +174,13 @@ div.header_menu{
     text-align: end;
 }
 div.header_menu p{
+    transition: 0.5s;
     display: inline-block;
     margin: 0;
     padding: 0.5em;
-    transition: 0.5s;
 }
 div.header_menu p:hover{
+    cursor: pointer;
     background-color: var(--color_header_hover);
 }
 div.header_menu p.active{
@@ -407,14 +408,28 @@ div.data_check.drag_lock{
 }
 /* プレビュー */
 div.preview{
-    padding: 1rem;
-    overflow-y: scroll;
+    overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--color_scrollbar-track) transparent;
     flex-grow: 1;
     background-color: var(--color_background_2);
 }
+div.preview_contlrol_bar{
+    display: flex;
+    justify-content: flex-end;
+    background-color: var(--color_toolbar);
+}
+div.preview_contlrol_bar p{
+    margin: 0;
+    padding: 0.5em;
+}
+div.preview_contlrol_bar p:hover{
+    cursor: pointer;
+    transition: 0.5s;
+    background-color: var(--color_toolbar_hover);
+}
 div.preview pre{
+    margin: 1rem;
     white-space: initial;
     scrollbar-width: thin;
     scrollbar-color: var(--color_scrollbar-track) transparent;
