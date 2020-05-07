@@ -1,0 +1,34 @@
+:root{
+    --color_theme_color: #2e7d32;
+    --color_background: #e8f5e9;
+    --color_background_2: #c8e6c9;
+    --color_header: #2e7d32;
+    --color_header_2: #60ad5e;
+    --color_header_text: #fff;
+    --color_header_hover: #1faa00;
+    --color_header_preview: #004d40;
+    --color_header_preview_hover: #1b5e20;
+    --color_toolbar: #66bb6a;
+    --color_boader: #519657;
+    --color_boader_2: #75a478;
+    
+    --color_input_boader: #519657;
+    --color_input_background: #fbfffc;
+    --color_input_focus: #388e3c;
+    --color_input_disabled: #80e27e;
+    
+    --color_button_hover: #c8e6c9;
+    --color_button_active: #81c784;
+    
+    --color_scrollbar-track: #1b5e20;
+    --color_separator: #a5d6a7;
+    
+    --color_delete_icon: #519657;
+    --color_delete_hover: #b2fab4;
+    
+    --color_prism_symbol: #b3e5fc;
+    --color_prism_boolean: #1e88e5;
+    --color_prism_number: #aed581;
+    --color_prism_string: #ff9e80;
+    --color_prism_keyword: #e91e63;
+}

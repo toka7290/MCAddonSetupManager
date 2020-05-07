@@ -1,7 +1,10 @@
+@import url('color.css');
+
 html{
     display: block;
     width: 100%;
     height: 100%;
+    background-color: var(--color_background);
 }
 body{
     display: flex;
@@ -11,36 +14,150 @@ body{
     margin: 0;
     padding: 0;
 }
-div.content{
-    display: flex;
-    width: auto;
-    height: auto;
-    overflow: auto;
+fieldset{
+    border-color: var(--color_boader);
+    border-radius: 4px;
+}
+input,textarea,select{
+    font: inherit;
+    padding: 2px;
+    border: 1px solid var(--color_input_boader);
+    background-color: var(--color_input_background);
+    border-radius: 4px;
+}
+input:focus,
+textarea:focus,
+select:focus{
+    outline: thin solid var(--color_input_focus);
+    -moz-outline-radius: 4px;
+}
+input:disabled,
+textarea:disabled,
+select:disabled{
+    border: 1px solid var(--color_input_disabled);
+    border-radius: 4px;
+}
+input[type="text"]{
+    width: 50%;
+    height: 1.5rem;
+}
+input[type="number"]{
+    width: 3em;
+    height: 1.5rem;
+}
+input[type="url"]{
+    width: 50%;
+    height: 1.5rem;
+}
+input[type="button"]{
+    height: 1.5rem;
+    vertical-align: middle;
+    box-sizing: content-box;
+    padding: 2px 0.5em;
+}
+input[type="button"]:hover{
+    cursor: pointer;
+    background-color: var(--color_button_hover);
+}
+input[type="button"]:active{
+    background-color: var(--color_button_active);
+}
+input[type="checkbox"]{
+    width: 1rem;
+    height: 1rem;
+    vertical-align: middle;
+}
+input[type="checkbox"]:hover{
+    cursor: pointer;
+}
+input[type="checkbox"]:focus{
+    outline: none;
+}
+textarea{
+    width: 50%;
+}
+select{
+    padding: 0 2px;
+}
+select:hover{
+    cursor: pointer;
+}
+input[type="text"]{
+    width: 50%;
+    height: 1.5rem;
+}
+input[type="number"]{
+    width: 3em;
+    height: 1.5rem;
+}
+input[type="url"]{
+    width: 50%;
+    height: 1.5rem;
+}
+input[type="button"]{
+    height: 1.5rem;
+    vertical-align: middle;
+    box-sizing: content-box;
+    padding: 2px 0.5em;
+}
+input[type="button"]:hover{
+    cursor: pointer;
+    background-color: var(--color_button_hover);
+}
+input[type="button"]:active{
+    background-color: var(--color_button_active);
+}
+input[type="checkbox"]{
+    width: 1rem;
+    height: 1rem;
+    vertical-align: middle;
+}
+input[type="checkbox"]:hover{
+    cursor: pointer;
+}
+input[type="checkbox"]:focus{
+    outline: none;
+}
+textarea{
+    width: 50%;
+}
+select{
+    padding: 0 2px;
+}
+select:hover{
+    cursor: pointer;
+}
+label{
+    margin-right: 1em;
+    word-break: keep-all;
+}
+label+*{
+    margin: 0;
 }
 ::-webkit-scrollbar {
     height: 8px;
     width: 8px;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #1b5e20;
+  background-color: var(--color_scrollbar-track);
   border-radius: 4px;
-}
-/* Color */
-html{
-    background-color: #e8f5e9;
-}
-fieldset{
-    border-color: #519657;
-    border-radius: 4px;
 }
 /* ヘッダー */
 header{
-    color: white;
-    background-color: #2e7d32;
+    max-height: 3rem;
+    color: var(--color_header_text);
+    background-color: var(--color_header);
+}
+div.header_main{
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
     position: relative;
 }
 div.title{
-    display: inline-block;
+    font-size: clamp(10px,1.5vw,16px);
+    display: flex;
+    align-items: center;
 }
 div.title h1{
     display: inline;
@@ -49,15 +166,31 @@ div.title h1{
 }
 div.title p{
     display: inline;
+    margin: 0.5em;
+    align-self: flex-end;
+}
+div.header_menu{
+    display: none;
+    text-align: end;
+}
+div.header_menu p{
+    display: inline-block;
     margin: 0;
+    padding: 0.5em;
+    transition: 0.5s;
+}
+div.header_menu p:hover{
+    background-color: var(--color_header_hover);
+}
+div.header_menu p.active{
+    background-color: var(--color_header_preview);
+}
+div.header_menu p.active:hover{
+    background-color: var(--color_header_preview_hover);
 }
 div.external_link{
     display: inline-flex;
     align-items: center;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
 }
 div.external_link a{
     display: inline-block;
@@ -67,47 +200,224 @@ div.external_link a{
 }
 div.external_link a:hover{
     transition: 0.5s;
-    background-color: #1faa00;
+    background-color: var(--color_header_hover);
 }
-div.external_link img{
+div.external_link img,
+div.about_external_link img{
     width: 2rem;
+}
+div.page_about{
+    display: none;
+    z-index: 2;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--color_header_2);
+}
+div.close_about{
+    text-align: end;
+}
+div.close_about img{
+    border-radius: 1em;
+}
+div.close_about img:hover{
+    cursor: pointer;
+    transition: 0.5s;
+    background-color: var(--color_header_hover);
+}
+div.about_content{
+    text-align: center;
+}
+div.about_external_link{
+    display: block;
+}
+div.about_external_link a{
+    display: inline-block;
+    line-height: 0;
+    padding: 0.5rem;
+    transition: 0.5s;
+    border-radius: 1em;
+}
+div.about_external_link a:hover{
+    transition: 0.5s;
+    background-color: var(--color_header_hover);
+}
+/* コンテンツ */
+div.content{
+    display: flex;
+    width: auto;
+    height: auto;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color_scrollbar-track) transparent;
 }
 /* エディタ */
 div.editor{
     display: block;
-    width: 100%;
+    flex-basis: 100%;
     height: 100%;
     overflow-y: scroll;
     scrollbar-width: thin;
-    scrollbar-color: #1b5e20 transparent;
+    scrollbar-color: var(--color_scrollbar-track) transparent;
+}
+div.editor.drag_lock{
+    user-select: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
 }
 div.editor form{
     width: 100%;
-    height: 100%;
     padding: 1em;
     box-sizing: border-box;
+}
+fieldset div{
+    display: flex;
+    align-items: center;
+    margin: 2px 0;
+}
+/* タブ */
+div.modules_controls,
+div.dependencies_controls,
+div.modules_contents,
+div.dependencies_contents{
+    margin: 0;
+}
+div.modules_controls_bar,
+div.dependencies_controls_bar{
+    position: relative;
+    top: 2px;
+    left: 2px;
+    margin: 0;
+
+}
+ul.modules_controls_tab,
+ul.dependencies_controls_tab{
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+ul.modules_controls_tab li,
+ul.dependencies_controls_tab li{
+    border: 2px solid var(--color_boader_2);
+    padding: 0 0.5em;
+    list-style: none;
+    border-radius: 4px;
+}
+ul.modules_controls_tab li+li,
+ul.dependencies_controls_tab li+li{
+    border-left: none;
+}
+ul.modules_controls_tab li:hover,
+ul.dependencies_controls_tab li:hover,
+span.modules_controls_addtab:hover,
+span.dependencies_controls_addtab:hover{
+    cursor: pointer;
+}
+ul.modules_controls_tab li.selected_tab,
+ul.dependencies_controls_tab li.selected_tab{
+    border-bottom: 2px solid var(--color_background);
+}
+li:first-child span.delete_tab,
+li:first-child li:first-child span.delete_tab{
+    display: none;
+}
+span.delete_tab,
+span.metadata_delete_author{
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    box-sizing: content-box;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.1rem;
+    color: var(--color_delete_icon);
+    margin-left: 0.5rem;
+    border: 1px solid var(--color_background);
+    border-radius: 1rem;
+}
+span.delete_tab:hover,
+span.metadata_delete_author:hover{
+    cursor: pointer;
+    border: 1px solid var(--color_delete_hover);
+    border-radius: 1rem;
+    background: var(--color_delete_hover);
+}
+span.dependencies_controls_addtab.disabled:hover{
+    cursor: auto;
+}
+div.modules_contents > div,
+div.dependencies_contents > div{
+    display: none;
+    border: 2px solid var(--color_boader_2);
+    padding: 0.5em;
+    margin: 0;
+    width: 100%;
+    border-radius: 4px;
+}
+div.modules_contents div.selected_tab_content,
+div.dependencies_contents div.selected_tab_content{
+    display: block;
+}
+span.modules_controls_addtab,
+span.dependencies_controls_addtab{
+    border: 2px solid var(--color_boader_2);
+    border-left: none;
+    padding: 0 0.5em;
+    margin-right: 0.5em;
+    border-radius: 4px;
+}
+/* Capabilities */
+div.capabilities_list{
+    display: block;
+}
+/* Metadata */
+div.metadata_list{
+    display: block;
+}
+div.metadata_authors{
+    display: block;
+}
+div.metadata_author_list{
+    display: block;
+}
+div.metadata_author_list span.name{
+    padding: 0 2px;
+    vertical-align: middle;
 }
 /* データチェック */
 div.data_check{
     display: flex;
     flex-direction: column;
-    width: 80%;
+    flex-basis: 100%;
     height: 100%;
     box-sizing: border-box;
     overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color_scrollbar-track) transparent;
+    background-color: var(--color_background);
+}
+div.data_check.drag_lock{
+    user-select: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
 }
 /* プレビュー */
 div.preview{
     padding: 1rem;
     overflow-y: scroll;
     scrollbar-width: thin;
-    scrollbar-color: #1b5e20 transparent;
+    scrollbar-color: var(--color_scrollbar-track) transparent;
     flex-grow: 1;
+    background-color: var(--color_background_2);
 }
 div.preview pre{
     white-space: initial;
     scrollbar-width: thin;
-    scrollbar-color: #1b5e20 transparent;
+    scrollbar-color: var(--color_scrollbar-track) transparent;
 }
 /* イシュー */
 div.issue{
@@ -116,7 +426,7 @@ div.issue{
 }
 div.issue_contlrol_bar{
     display: flex;
-    background-color: #66bb6a;
+    background-color: var(--color_toolbar);
     padding: 2px;
     vertical-align: middle;
 }
@@ -164,16 +474,17 @@ ul.issue_list{
     list-style: none;
     padding: 0;
     margin: 0;
-    max-height: 20em;
+    max-height: 40vh;
     overflow-y: scroll;
     scrollbar-width: thin;
-    scrollbar-color: #1b5e20 transparent;
+    scrollbar-color: var(--color_scrollbar-track) transparent;
 }
 ul.issue_list li{
     padding: 2px;
+    background-color: var(--color_background);
 }
 ul.issue_list li:nth-child(2n){
-    background-color: #c8e6c9;
+    background-color: var(--color_background_2);
 }
 ul.issue_list li img{
     width: 1.2rem;
@@ -189,7 +500,7 @@ div.separator{
     display: block;
     width: 5px;
     height: 100%;
-    background-color: gainsboro;
+    background-color: var(--color_separator);
 }
 div.separator:hover{
     cursor: e-resize;

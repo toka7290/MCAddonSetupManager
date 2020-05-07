@@ -126,13 +126,13 @@ $(function(){
     $("#metadata_author_add").on("click",function(){
         if(is_metadata_enable){
             author = $("#metadata_author").val();
-            author_list_child = '<div><span class="name">'+author+'</span><span class="metadata_remove_author">×</span></div>';
+            author_list_child = '<div><span class="name">'+author+'</span><span class="metadata_delete_author">×</span></div>';
             $(".metadata_author_list").append(author_list_child);
         }
         onChangedJSON();
     });
     //author削除
-    $(document).on("click","span.metadata_remove_author",function(){
+    $(document).on("click","span.metadata_delete_author",function(){
         if(is_metadata_enable){
             $(this).parent().remove();
         }

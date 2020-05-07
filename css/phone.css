@@ -1,0 +1,39 @@
+div.title{
+    /* ヘッダー */
+    display: none;
+}
+div.header_main{
+    display: block;
+}
+div.external_link{
+    display: none;
+}
+div.header_menu{
+    display: block;
+}
+div.content{
+    /* コンテンツ */
+    flex-direction: column;
+    position: relative;
+    overflow-y: hidden;
+}
+div.data_check{
+    /* データチェック */
+    overflow-y: unset;
+    height: auto;
+    flex-basis: auto;
+}
+div.preview{
+    /* プレビュー */
+    display: none;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+div.separator{
+    /* セパレータ */
+    display: none;
+}
