@@ -2,10 +2,10 @@ div.title{
     /* ヘッダー */
     display: none;
 }
-div.header_main{
+.title_icon{
     display: block;
 }
-div.external_link{
+div.header_menu_alt{
     display: none;
 }
 div.header_menu{
@@ -13,6 +13,7 @@ div.header_menu{
 }
 div.content{
     /* コンテンツ */
+    display: grid;
     flex-direction: column;
     position: relative;
     overflow-y: hidden;

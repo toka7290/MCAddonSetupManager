@@ -1,11 +1,12 @@
 :root{
-    --color_theme_color: #2e7d32;
+    --color_theme_color: #60ad5e;
     --color_background: #e8f5e9;
     --color_background_2: #c8e6c9;
     --color_header: #2e7d32;
     --color_header_2: #60ad5e;
     --color_header_text: #fff;
     --color_header_hover: #1faa00;
+    --color_header_2_hover: #6abf69;
     --color_header_preview: #004d40;
     --color_header_preview_hover: #1b5e20;
     --color_toolbar: #66bb6a;

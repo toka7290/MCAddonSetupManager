@@ -17,6 +17,9 @@ $(function(){
     });
     // チェックボックス操作
     $('input[type="checkbox"]').change(function(){
+        onChangedJSON();
+    });
+    function changed_checkbox(){
         is_dependencies_enable = $('#dependencies_enable').is(':checked');
         is_capabilities_enable = $('#capabilities_enable').is(':checked');
         is_metadata_enable = $('#metadata_enable').is(':checked');
@@ -37,8 +40,7 @@ $(function(){
         }else{
             $('div.metadata_list input').prop('disabled', true);
         }
-        onChangedJSON();
-    });
+    }
     // モジュールタイプ変更操作
     $(document).on("change","#modules_type",function(){
         onChangedJSON();
@@ -74,6 +76,10 @@ $(function(){
     });
     //Modules tab追加
     $(".modules_controls_addtab").on("click",function(){
+        modules_addtab();
+        onChangedJSON();
+    });
+    function modules_addtab(){
         num = $(".modules_controls_tab li").length;
         addtab = '<li>'+num+'<span class="delete_tab">×</span></li>';
         $(".modules_controls_tab").append(addtab);
@@ -83,8 +89,7 @@ $(function(){
         if(0<num){
             $(".modules_controls_addtab").hide();
         }
-        onChangedJSON();
-    });
+    }
     //Dependencies tab変更
     $(document).on("click",".dependencies_controls_tab li",function(){
         if(is_dependencies_enable){
@@ -113,24 +118,29 @@ $(function(){
     //Dependencies tab追加
     $(".dependencies_controls_addtab").on("click",function(){
         if(is_dependencies_enable){
-            num = $(".dependencies_controls_tab li").length;
-            addtab = '<li>'+num+'<span class="delete_tab">×</span></li>';
-            $(".dependencies_controls_tab").append(addtab);
-            content = $(".dependencies_contents > div:first-child").clone();
-            content.removeClass('selected_tab_content');
-            $(".dependencies_contents").append(content);
+            dependencies_addtab();
         }
         onChangedJSON();
     });
+    function dependencies_addtab(){
+        num = $(".dependencies_controls_tab li").length;
+        addtab = '<li>'+num+'<span class="delete_tab">×</span></li>';
+        $(".dependencies_controls_tab").append(addtab);
+        content = $(".dependencies_contents > div:first-child").clone();
+        content.removeClass('selected_tab_content');
+        $(".dependencies_contents").append(content);
+    }
     //author追加
     $("#metadata_author_add").on("click",function(){
         if(is_metadata_enable){
-            author = $("#metadata_author").val();
-            author_list_child = '<div><span class="name">'+author+'</span><span class="metadata_delete_author">×</span></div>';
-            $(".metadata_author_list").append(author_list_child);
+            add_author($("#metadata_author").val());
         }
         onChangedJSON();
     });
+    function add_author(name){
+        author_list_child = '<div><span class="name">'+name+'</span><span class="metadata_delete_author">×</span></div>';
+        $(".metadata_author_list").append(author_list_child);
+    }
     //author削除
     $(document).on("click","span.metadata_delete_author",function(){
         if(is_metadata_enable){
@@ -214,6 +224,163 @@ $(function(){
         }
         return chars.join("");
     }
+    // 外部インポート
+    $("#input_file").on("change",function(){
+        var data = $("#input_file").prop('files')[0]; 
+        var file_reader = new FileReader();
+        file_reader.onload = function(){
+            json_text = file_reader.result;
+            import_data(json_text);
+        };
+        file_reader.readAsText(data);
+    });
+    // jsonデータ取り出し
+    function import_data(json_text){
+        json_data = JSON.parse(json_text);
+        console.log(json_data);
+        if(json_data.format_version!=null){
+            $('#format_version').val(json_data.format_version);
+        }
+        
+        if(json_data.header.name!=null){
+            $('#header_pack_name').val(json_data.header.name);
+        }
+        if(json_data.header.description!=null){
+            $('#header_description').val(json_data.header.description);
+        }
+        if(json_data.header.version!=null){
+            if(json_data.header.version[0]!=null){
+                $('#header_version_major').val(json_data.header.version[0]);
+            }
+            if(json_data.header.version[1]!=null){
+                $('#header_version_minor').val(json_data.header.version[1]);
+            }
+            if(json_data.header.version[2]!=null){
+                $('#header_version_patch').val(json_data.header.version[2]);
+            }
+        }
+        if(json_data.header.min_engine_version!=null){
+            if(json_data.header.min_engine_version[0]!=null){
+                $('#header_min_engine_version_major').val(json_data.header.min_engine_version[0]);
+            }
+            if(json_data.header.min_engine_version[1]!=null){
+                $('#header_min_engine_version_minor').val(json_data.header.min_engine_version[1]);
+            }
+            if(json_data.header.min_engine_version[2]!=null){
+                $('#header_min_engine_version_patch').val(json_data.header.min_engine_version[2]);
+            }
+        }
+        if(json_data.header.uuid!=null){
+            $('#header_uuid').val(json_data.header.uuid);
+        }
+        if(json_data.header.platform_locked!=null&&json_data.header.platform_locked){
+            $('#header_platform_locked').prop("checked",true);
+        }
+        if(json_data.header.base_game_version!=null){
+            if(json_data.header.base_game_version[0]!=null){
+                $('#header_base_game_version_major').val(json_data.header.base_game_version[0]);
+            }
+            if(json_data.header.base_game_version[1]!=null){
+                $('#header_base_game_version_minor').val(json_data.header.base_game_version[1]);
+            }
+            if(json_data.header.base_game_version[2]!=null){
+                $('#header_base_game_version_patch').val(json_data.header.base_game_version[2]);
+            }
+            
+        }
+        if(json_data.header.lock_template_options!=null&&json_data.header.lock_template_options){
+            $('#header_lock_template_options').prop("checked",true);
+        }
+
+        if(json_data.modules!=null){
+            for(i=0;i<json_data.modules.length;i++){
+                child_num = i + 1;
+                if(i>0){
+                    modules_addtab();
+                }
+                if(json_data.modules[i].type!=null){
+                    $('div.modules_contents > div:nth-child('+child_num+') #modules_type').val(json_data.modules[i].type);
+                }
+                if(json_data.modules[i].description!=null){
+                    $('div.modules_contents > div:nth-child('+child_num+') #modules_description').val(json_data.modules[i].description);
+                }
+                if(json_data.modules[i].version!=null){
+                    if(json_data.modules[i].version[0]!=null){
+                        $('div.modules_contents > div:nth-child('+child_num+') #modules_version_major').val(json_data.modules[i].version[0]);
+                    }
+                    if(json_data.modules[i].version[1]!=null){
+                        $('div.modules_contents > div:nth-child('+child_num+') #modules_version_minor').val(json_data.modules[i].version[1]);
+                    }
+                    if(json_data.modules[i].version[2]!=null){
+                        $('div.modules_contents > div:nth-child('+child_num+') #modules_version_patch').val(json_data.modules[i].version[2]);
+                    }
+                }
+                if(json_data.modules[i].uuid!=null){
+                    $('div.modules_contents > div:nth-child('+child_num+') #modules_uuid').val(json_data.modules[i].uuid);
+                }
+            }
+        }
+        
+        
+        if(json_data.dependencies!=null){
+            $('#dependencies_enable').prop("checked",true);
+            for(i=0;i<json_data.dependencies.length;i++){
+                child_num = i + 1;
+                if(i>0){
+                    dependencies_addtab();
+                }
+                if(json_data.dependencies[i].uuid!=null){
+                    $('div.dependencies_contents > div:nth-child('+child_num+') #dependencies_uuid').val(json_data.dependencies[i].uuid);
+                }
+                if(json_data.dependencies[i].version!=null){
+                    if(json_data.dependencies[i].version[0]!=null){
+                        $('div.dependencies_contents > div:nth-child('+child_num+') #dependencies_version_major').val(json_data.dependencies[i].version[0]);
+                    }
+                    if(json_data.dependencies[i].version[1]!=null){
+                        $('div.dependencies_contents > div:nth-child('+child_num+') #dependencies_version_minor').val(json_data.dependencies[i].version[1]);
+                    }
+                    if(json_data.dependencies[i].version[2]!=null){
+                        $('div.dependencies_contents > div:nth-child('+child_num+') #dependencies_version_patch').val(json_data.dependencies[i].version[2]);
+                    }
+                }
+            }
+        }
+
+        if(json_data.capabilities!=null){
+            $('#capabilities_enable').prop("checked",true);
+            for(capabilities of json_data.capabilities){
+                switch(capabilities){
+                    case "experimental_custom_ui":
+                        $('#experimental_custom_ui').prop("checked",true);
+                        break;
+                    case "chemistry":
+                        $('#chemistry').prop("checked",true);
+                        break;
+                    case "raytracing":
+                        $('#raytracing').prop("checked",true);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        if(json_data.metadata!=null){
+            $('#metadata_enable').prop("checked",true);
+            if(json_data.metadata.authors!=null){
+                for(author of json_data.metadata.authors){
+                    add_author(author);
+                }
+            }
+            if(json_data.metadata.url!=null){
+                $('#metadata_url').val(json_data.metadata.url);
+            }
+            if(json_data.metadata.license!=null){
+                $('#metadata_license').val(json_data.metadata.license);
+            }
+        }
+        onChangedJSON();
+    }
     // json 出力
     function exportJSON(){
         json_raw = new Object();
@@ -230,9 +397,9 @@ $(function(){
         }
         if(is_world_template){
             json_raw.header.base_game_version = "replace_base_game_version";
-        }
-        if($('#header_lock_template_options').is(':checked')){
-            json_raw.header.lock_template_options = true;
+            if($('#header_lock_template_options').is(':checked')){
+                json_raw.header.lock_template_options = true;
+            }
         }
 
         json_raw.modules = new Array();
@@ -472,12 +639,14 @@ $(function(){
     }
     // 更新処理
     function onChangedJSON(){
+        changed_checkbox();
         type_changed();
         checkIssue();
         json_code = exportJSON();
         $("pre.language-json code.language-json").remove();
         content = '<code class="language-json">'+json_code+'</code>';
-        $("pre.language-json").append(content)
+        $("pre.language-json").append(content);
+        $("textarea#code_buffer").val(json_code);
         Prism.highlightAll();
     }
 });

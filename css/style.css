@@ -169,17 +169,36 @@ div.title p{
     margin: 0.5em;
     align-self: flex-end;
 }
+.title_icon{
+    display: none;
+    margin: 0 0.5rem;
+    height: 2em;
+    align-self: center;
+}
 div.header_menu{
     display: none;
     text-align: end;
 }
+div#import_file{
+    display: inline-block;
+}
+div#import_file label{
+    margin: 0;
+    padding: 0.5rem;
+}
+div#import_file input{
+    display: none;
+}
 div.header_menu p{
-    transition: 0.5s;
+    color: var(--color_header_text);
     display: inline-block;
     margin: 0;
     padding: 0.5em;
+    transition-duration: 0.5s;
+    transition-property: background-color;
 }
-div.header_menu p:hover{
+div.header_menu p:hover,
+div#import_file label:hover{
     cursor: pointer;
     background-color: var(--color_header_hover);
 }
@@ -189,21 +208,62 @@ div.header_menu p.active{
 div.header_menu p.active:hover{
     background-color: var(--color_header_preview_hover);
 }
-div.external_link{
+div.header_menu_alt{
     display: inline-flex;
     align-items: center;
 }
-div.external_link a{
-    display: inline-block;
-    line-height: 0;
+div.header_menu_alt > *{
+    display: inline-flex;
+    align-items: center;
     padding: 0.5rem;
-    transition: 0.5s;
+    transition-duration: 0.5s;
+    transition-property: background-color;
+    position: relative;
+    margin: 0;
+    white-space: nowrap;
 }
-div.external_link a:hover{
+div.header_menu_alt > *:hover{
+    cursor: pointer;
     transition: 0.5s;
     background-color: var(--color_header_hover);
 }
-div.external_link img,
+div.header_menu_alt > * p{
+    margin: 0;
+}
+ul.more_info{
+    display: none;
+}
+div.header_menu_alt a{
+    display: inline-block;
+    line-height: 0;
+    padding: 0.5rem;
+}
+ul.more_info{
+    display: none;
+    list-style: none;
+    position: absolute;
+    z-index: 2;
+    top: 3rem;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    background-color: var(--color_header_2);
+}
+div.open_more_info:hover ul.more_info{
+    display: block;
+}
+ul.more_info a{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--color_header_text);
+    transition-duration: 0.5s;
+    transition-property: background-color;
+}
+ul.more_info a:hover{
+    background-color: var(--color_header_2_hover);
+}
+div.header_menu_alt img,
 div.about_external_link img{
     width: 2rem;
 }
@@ -222,6 +282,8 @@ div.close_about{
 }
 div.close_about img{
     border-radius: 1em;
+    transition-duration: 0.5s;
+    transition-property: background-color;
 }
 div.close_about img:hover{
     cursor: pointer;
@@ -230,6 +292,9 @@ div.close_about img:hover{
 }
 div.about_content{
     text-align: center;
+}
+div.about_content>img{
+    width: 50vw;
 }
 div.about_external_link{
     display: block;
@@ -258,6 +323,7 @@ div.content{
 div.editor{
     display: block;
     flex-basis: 100%;
+    flex-grow: 2;
     height: 100%;
     overflow-y: scroll;
     scrollbar-width: thin;
@@ -391,6 +457,7 @@ div.metadata_author_list span.name{
 /* データチェック */
 div.data_check{
     display: flex;
+    flex-grow: 1;
     flex-direction: column;
     flex-basis: 100%;
     height: 100%;
@@ -433,6 +500,9 @@ div.preview pre{
     white-space: initial;
     scrollbar-width: thin;
     scrollbar-color: var(--color_scrollbar-track) transparent;
+}
+textarea#code_buffer{
+    display: none;
 }
 /* イシュー */
 div.issue{
