@@ -13,7 +13,7 @@ div.header_menu{
 }
 div.content{
     /* コンテンツ */
-    display: grid;
+    display: flex;
     flex-direction: column;
     position: relative;
     overflow-y: hidden;
