@@ -37,11 +37,10 @@
                 "operatingSystem": "Any. It is a Web Application"
             }
         </script>
-        <script type="text/javascript" src="js/serviceworker.js"></script>
         <script>
             if ('serviceWorker' in navigator) {
                 window.addEventListener("load", function() {
-                    navigator.serviceWorker.register('/js/serviceworker.js', {scope: "/../"}).then(function(registration) {
+                    navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
                         console.log("serviceworker success!")
                     });;
                 });
