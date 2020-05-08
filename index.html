@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <head>
+    <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/websaite#">
         <meta charset="UTF-8">
         <title>とかさんのManifestGenelator</title>
         <!-- metadata -->
@@ -36,11 +36,22 @@
                 "operatingSystem": "Any. It is a Web Application"
             }
         </script>
+        <script type="text/javascript" src="js/serviceworker.js"></script>
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener("load", function() {
+                    navigator.serviceWorker.register('/serviceworker.js');
+                });
+            }
+        </script>
+        <meta property="og:url" content="https://toka7290.github.io/MCAddonSetupManager/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="とかさんのManifestGenelator" />
+        <meta property="og:title" content="ManifestGenelator" />
+        <meta property="og:description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。" />
+        <meta property="og:image" content="img/icon.png" />
         <meta name="twitter:card" content="summary">
         <meta name="twitter:site" content="@toka7290">
-        <meta name="twitter:title" content="とかさんのManifestGenelator">
-        <meta name="twitter:description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。">
-        <meta name="twitter:image" content="img/icon.png">
         <!-- lib -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="lib/prism.js"></script>
@@ -55,19 +66,30 @@
     <body>
         <header class="header">
             <div class="header_main">
+                <img src="img/icon.png" alt="" class="title_icon">
                 <div class="title">
                     <h1>とかさんのManifestGenelator</h1>
-                    <p>version:0.3.1</p>
+                    <p>version:0.4.0</p>
                 </div>
                 <div class="header_menu">
-                    <p id="show_preview">preview</p>
-                    <p id="open_about">about</p>
+                    <div id="import_file"><label for="input_file">Import</label><input type="file" name="input_file" id="input_file" accept=".json"></div>
+                    <p id="show_preview">Preview</p>
+                    <p id="open_about">About</p>
                 </div>
-                <div class="external_link">
-                    <a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ"><img src="img/homepage.svg" alt=""></a>
-                    <a href="https://twitter.com/toka7290" target="_blank" title="Twitter"><img src="img/twitter.svg" alt=""></a>
-                    <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github"><img src="img/github.svg" alt=""></a>
-                    <a href="http://tokamcwin10.blog.jp/archives/38495158.html" target="_blank" title="manifest.jsonの解説ページに飛びます。"><img src="img/help.svg" alt=""></a>
+                <div class="header_menu_alt">
+                    <label for="input_file">
+                        <img src="img/import.svg" alt="">
+                        <p>Import</p>
+                    </label>
+                    <div class="open_more_info">
+                        <img src="img/more.svg" alt="">
+                        <ul class="more_info">
+                            <li><a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ"><img src="img/homepage.svg" alt=""><p>Homepage</p></a></li>
+                            <li><a href="https://twitter.com/toka7290" target="_blank" title="Twitter"><img src="img/twitter.svg" alt=""><p>Twitter</p></a></li>
+                            <li><a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github"><img src="img/github.svg" alt=""><p>GitHub</p></a></li>
+                            <li><a href="http://tokamcwin10.blog.jp/archives/38495158.html" target="_blank" title="manifest.jsonの解説ページに飛びます。"><img src="img/help.svg" alt=""><p>Manifest Help</p></a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="page_about">
@@ -75,8 +97,9 @@
                     <img src="img/close.svg" alt="">
                 </div>
                 <div class="about_content">
+                    <img src="img/icon.png" alt="">
                     <h2>とかさんのManifestGenelator</h2>
-                    <p>version:0.3.1</p>
+                    <p>version:0.4.0</p>
                     <div class="about_external_link">
                         <a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ"><img src="img/homepage.svg" alt=""></a>
                         <a href="https://twitter.com/toka7290" target="_blank" title="Twitter"><img src="img/twitter.svg" alt=""></a>
@@ -260,9 +283,14 @@
             <div class="separator"></div>
             <div class="data_check">
                 <div class="preview">
+                    <div class="preview_contlrol_bar">
+                        <p class="preview_contlrol_copy">Copy</p>
+                        <p class="preview_contlrol_download">Download</p>
+                    </div>
                     <pre class="language-json">
                         <code class="language-json"></code>
                     </pre>
+                    <textarea name="code_buffer" id="code_buffer"></textarea>
                 </div>
                 <div class="issue">
                     <div class="issue_contlrol_bar">

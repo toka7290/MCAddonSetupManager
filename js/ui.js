@@ -10,7 +10,7 @@ $(function(){
     });
     $(document).on("mouseup",function(){
         is_separator_drag = false;
-        $("html").css("cursor","auto");
+        $("html").removeAttr("style",'');
         $(".separator").prev().removeClass('drag_lock');
         $(".separator").next().removeClass('drag_lock');
     });
@@ -36,8 +36,9 @@ $(function(){
             $("p#show_preview").addClass('active');
         }
     });
+    // ウィンドウワイズ変更時にcss削除
     $(window).resize(function(){
-        $("div.preview").css('display', '')
+        $("div.preview").css('display', '');
     });
     // about開く
     $("p#open_about").on("click",function(){
@@ -46,6 +47,23 @@ $(function(){
     // about閉じる
     $("div.close_about").on("click",function(){
         $("div.page_about").fadeOut();
+    });
+    // コピー
+    $("p.preview_contlrol_copy").on("click",function(){
+        $("textarea#code_buffer").select();
+        document.execCommand("copy");
+        $("textarea#code_buffer").blur();
+        $("p.preview_contlrol_copy").text("Copied");
+        setTimeout(function(){
+            $("p.preview_contlrol_copy").text("Copy");
+        },1000);
+    });
+    // ダウンロード
+    $("p.preview_contlrol_download").on("click",function(){
+        content = $("textarea#code_buffer").val();
+        $("<a></a>", {href: window.URL.createObjectURL(new Blob([content])),
+            download: "manifest.json",
+            target: "_blank"})[0].click();
     });
     // イシューリスト開閉
     $("div.issue_contlrol_bar").on("click",function(){
