@@ -46,7 +46,7 @@ $(function(){
         onChangedJSON();
     });
     //UUID生成
-    $(document).on("click",'input[type="button"]#generate_uuid',function(){
+    $(document).on("click",'input[type="button"].generate_uuid',function(){
         $(this).prev().val(getUuid_v4);
         onChangedJSON();
     });
@@ -237,7 +237,6 @@ $(function(){
     // jsonデータ取り出し
     function import_data(json_text){
         json_data = JSON.parse(json_text);
-        console.log(json_data);
         if(json_data.format_version!=null){
             $('#format_version').val(json_data.format_version);
         }

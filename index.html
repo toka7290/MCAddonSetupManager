@@ -31,6 +31,7 @@
                 "offers": {
                     "@type": "Offer",
                     "price": "0"
+                    "priceCurrency": "JPN"
                 },
                 "url": "https://toka7290.github.io/MCAddonSetupManager/",
                 "operatingSystem": "Any. It is a Web Application"
@@ -40,7 +41,7 @@
         <script>
             if ('serviceWorker' in navigator) {
                 window.addEventListener("load", function() {
-                    navigator.serviceWorker.register('/serviceworker.js');
+                    navigator.serviceWorker.register('/js/serviceworker.js');
                 });
             }
         </script>
@@ -152,7 +153,7 @@
                         <div>
                             <label for="header_uuid">UUID</label>
                             <input type="text" name="uuid" id="header_uuid">
-                            <input type="button" value="Generate" id="generate_uuid">
+                            <input type="button" value="Generate" class="generate_uuid">
                         </div>
                         <div>
                             <label for="header_platform_locked">プラットフォームロック</label>
@@ -212,7 +213,7 @@
                                 <div>
                                     <label for="modules_uuid">UUID</label>
                                     <input type="text" name="uuid" id="modules_uuid">
-                                    <input type="button" value="Generate" id="generate_uuid">
+                                    <input type="button" value="Generate" class="generate_uuid">
                                 </div>
                             </div>
                         </div>
