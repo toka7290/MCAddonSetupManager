@@ -1,5 +1,7 @@
 {
-  "background_color": "#e8f5e9",
+  "name": "とかさんのManifestGenelator",
+  "short_name": "ManifestGenelator",
+  "description": "Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。",
   "display": "standalone",
   "icons": [
     {
@@ -7,7 +9,7 @@
       "sizes": "256x256"
     }
   ],
-  "name": "とかさんのManifestGenelator",
-  "short_name": "ManifestGenelator",
-  "theme_color": "#60ad5e"
+  "start_url": "/MCAddonSetupManager/index.html",
+  "theme_color": "#60ad5e",
+  "background_color": "#e8f5e9"
 } 
