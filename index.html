@@ -42,10 +42,8 @@
                 window.addEventListener("load", function() {
                     navigator.serviceWorker.register('/MCAddonSetupManager/serviceworker.js', {scope: '/MCAddonSetupManager/'}).then(function(reg) {
                         // registration worked
-                        console.log('Registration succeeded. Scope is ' + reg.scope);
                     }).catch(function(error) {
                         // registration failed
-                        console.log('Registration failed with ' + error);
                     });
                 });
             }
@@ -75,7 +73,7 @@
                 <img src="img/icon.png" alt="" class="title_icon">
                 <div class="title">
                     <h1>とかさんのManifestGenelator</h1>
-                    <p>version:0.4.0</p>
+                    <p>version:0.4.1</p>
                 </div>
                 <div class="header_menu">
                     <div id="import_file"><label for="input_file">Import</label><input type="file" name="input_file" id="input_file" accept=".json"></div>
@@ -105,7 +103,7 @@
                 <div class="about_content">
                     <img src="img/icon.png" alt="">
                     <h2>とかさんのManifestGenelator</h2>
-                    <p>version:0.4.0</p>
+                    <p>version:0.4.1</p>
                     <div class="about_external_link">
                         <a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ"><img src="img/homepage.svg" alt=""></a>
                         <a href="https://twitter.com/toka7290" target="_blank" title="Twitter"><img src="img/twitter.svg" alt=""></a>
