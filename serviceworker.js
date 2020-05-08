@@ -1,6 +1,26 @@
 var CACHE_NAME = 'pwa-caches';
 var urlsToCache = [
-    '/toka7290.github.io/MCAddonSetupManager/',
+    '/MCAddonSetupManager/',
+    '/MCAddonSetupManager/index.html',
+    '/MCAddonSetupManager/css/style.css',
+    '/MCAddonSetupManager/css/phone.css',
+    '/MCAddonSetupManager/css/color.css',
+    '/MCAddonSetupManager/css/prism.css',
+    '/MCAddonSetupManager/img/chevron-up.svg',
+    '/MCAddonSetupManager/img/close.svg',
+    '/MCAddonSetupManager/img/error.svg',
+    '/MCAddonSetupManager/img/github.svg',
+    '/MCAddonSetupManager/img/help.svg',
+    '/MCAddonSetupManager/img/homepage.svg',
+    '/MCAddonSetupManager/img/icon.png',
+    '/MCAddonSetupManager/img/import.svg',
+    '/MCAddonSetupManager/img/more.svg',
+    '/MCAddonSetupManager/img/twitter.svg',
+    '/MCAddonSetupManager/img/warning.svg',
+    '/MCAddonSetupManager/js/editor_manifest.js',
+    '/MCAddonSetupManager/js/ui.js',
+    '/MCAddonSetupManager/json/webapp.webmanifest',
+    '/MCAddonSetupManager/lib/prism.js',
     'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'
 ];
 

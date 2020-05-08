@@ -40,9 +40,13 @@
         <script>
             if ('serviceWorker' in navigator) {
                 window.addEventListener("load", function() {
-                    navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
-                        console.log("serviceworker success!")
-                    });;
+                    navigator.serviceWorker.register('/MCAddonSetupManager/serviceworker.js', {scope: '/MCAddonSetupManager/'}).then(function(reg) {
+                        // registration worked
+                        console.log('Registration succeeded. Scope is ' + reg.scope);
+                    }).catch(function(error) {
+                        // registration failed
+                        console.log('Registration failed with ' + error);
+                    });
                 });
             }
         </script>
