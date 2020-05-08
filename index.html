@@ -41,7 +41,9 @@
         <script>
             if ('serviceWorker' in navigator) {
                 window.addEventListener("load", function() {
-                    navigator.serviceWorker.register('/js/serviceworker.js');
+                    navigator.serviceWorker.register('/js/serviceworker.js', {scope: "/../"}).then(function(registration) {
+                        console.log("serviceworker success!")
+                    });;
                 });
             }
         </script>
