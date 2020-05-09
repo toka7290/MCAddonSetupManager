@@ -292,6 +292,7 @@ div.about_content>img{
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
     _::-webkit-full-page-media, _:future, :root div.about_content>img {
         background-image: url("../img/icon_2000.png");
+        background-size: 50vw;
     }
 }
 div.about_external_link{
