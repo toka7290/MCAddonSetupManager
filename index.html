@@ -9,6 +9,14 @@
         <meta name="Description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。">
         <meta http-equiv="content-language" content="ja">
         <meta name ="theme-color" content="#60ad5e">
+        <meta property="og:url" content="https://toka7290.github.io/MCAddonSetupManager/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="とかさんのManifestGenelator" />
+        <meta property="og:title" content="ManifestGenelator" />
+        <meta property="og:description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。" />
+        <meta property="og:image" content="https://toka7290.github.io/MCAddonSetupManager/img/icon_2000.png" />
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@toka7290">
         <link rel="apple-touch-icon" href="img/icon_apple-touch-icon.png">
         <link rel="icon" href="img/icon.png">
         <link rel="manifest" href="json/webapp.webmanifest">
@@ -52,36 +60,10 @@
             }
             let deferredPrompt;
             window.addEventListener('beforeinstallprompt', (e) => {
-                // Prevent the mini-infobar from appearing on mobile
                 e.preventDefault();
-                // Stash the event so it can be triggered later.
                 deferredPrompt = e;
-                // Update UI notify the user they can install the PWA
-                showInstallPromotion();
-            });
-            buttonInstall.addEventListener('click', (e) => {
-                // Hide the app provided install promotion
-                hideMyInstallPromotion();
-                // Show the install prompt
-                deferredPrompt.prompt();
-                // Wait for the user to respond to the prompt
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                    console.log('User accepted the install prompt');
-                    } else {
-                    console.log('User dismissed the install prompt');
-                    }
-                })
             });
         </script>
-        <meta property="og:url" content="https://toka7290.github.io/MCAddonSetupManager/" />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="とかさんのManifestGenelator" />
-        <meta property="og:title" content="ManifestGenelator" />
-        <meta property="og:description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。" />
-        <meta property="og:image" content="https://toka7290.github.io/MCAddonSetupManager/img/icon.png" />
-        <meta name="twitter:card" content="summary">
-        <meta name="twitter:site" content="@toka7290">
         <!-- lib -->
         <script src="lib/jquery-3.5.1.min.js"></script>
         <script src="lib/prism.js" async></script>
