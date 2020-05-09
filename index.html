@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/websaite#">
         <meta charset="UTF-8">
         <title>とかさんのManifestGenelator</title>
         <!-- metadata -->
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <meta name="keywords" content="とかさん,Minecraft,マインクラフト,manifest,マニフェスト,manifest.json,Genelator,tool,ツール,Addon,アドオン">
+        <meta name="Description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。">
         <meta http-equiv="content-language" content="ja">
+        <meta name ="theme-color" content="#60ad5e">
+        <link rel="apple-touch-icon" href="img/icon_apple-touch-icon.png">
         <link rel="icon" href="img/icon.png">
         <link rel="manifest" href="json/webapp.webmanifest">
         <script type="application/ld+json">
@@ -81,13 +84,13 @@
         <meta name="twitter:site" content="@toka7290">
         <!-- lib -->
         <script src="lib/jquery-3.5.1.min.js"></script>
-        <script src="lib/prism.js"></script>
+        <script src="lib/prism.js" async></script>
         <!-- js -->
-        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/main.js" async></script>
         <!-- css -->
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/prism.css">
-        <link rel="stylesheet" href="css/phone.css" media="(max-aspect-ratio: 1/1) and (min-aspect-ratio: 1/30)">
+        <link rel="stylesheet" href="css/style.css" async>
+        <link rel="stylesheet" href="css/prism.css" async>
+        <link rel="stylesheet" href="css/phone.css" media="(max-aspect-ratio: 1/1) and (min-aspect-ratio: 1/30)" async>
     </head>
     <body>
         <header class="header">
@@ -156,24 +159,24 @@
                             <textarea type="text" name="description" id="header_description"></textarea>
                         </div>
                         <div>
-                            <label for="header_version">バージョン</label>
-                            <span id="header_version">
+                            <label for="header_version_major">
+                                <span>バージョン</span>
                                 <input type="number" min="0" name="" id="header_version_major" value="1">
                                 <span>.</span>
                                 <input type="number" min="0" name="" id="header_version_minor" value="0">
                                 <span>.</span>
                                 <input type="number" min="0" name="" id="header_version_patch" value="0">
-                            </span>
+                            </label>
                         </div>
                         <div>
-                            <label for="header_min_engine_version">最小エンジンバージョン</label>
-                            <span id="header_min_engine_version">
+                            <label for="header_min_engine_version_major">
+                                <span>最小エンジンバージョン</span>
                                 <input type="number" min="0" name="" id="header_min_engine_version_major" value="1">
                                 <span>.</span>
                                 <input type="number" min="0" name="" id="header_min_engine_version_minor" value="13">
                                 <span>.</span>
                                 <input type="number" min="0" name="" id="header_min_engine_version_patch" value="0">
-                            </span>
+                            </label>
                         </div>
                         <div>
                             <label for="header_uuid">UUID</label>
@@ -185,14 +188,14 @@
                             <input type="checkbox" name="header_platform_locked" id="header_platform_locked">
                         </div>
                         <div>
-                            <label for="base_game_version">基本ゲームバージョン</label>
-                            <span id="header_base_game_version">
+                            <label>
+                                <span>基本ゲームバージョン</span>
                                 <input type="number" min="0" name="" id="header_base_game_version_major" value="1" disabled>
                                 <span>.</span>
                                 <input type="number" min="0" name="" id="header_base_game_version_minor" value="0" disabled>
                                 <span>.</span>
                                 <input type="number" min="0" name="" id="header_base_game_version_patch" value="0" disabled>
-                            </span>
+                            </label>
                         </div>
                         <div>
                             <label for="header_lock_template_options">テンプレートオプションロック</label>
