@@ -47,7 +47,9 @@ $(function(){
         };
         try{
             file_reader.readAsText(data);
-        }catch{}
+        }catch(e){
+            console.error("error:"+e);
+        }
     });
     // プレビュー表示切替
     $("p#show_preview").on("click",function(){
@@ -470,6 +472,7 @@ $(function(){
             json_data = JSON.parse(json_text);
         }catch(e){
             window.alert("有効なjsonではありません");
+            console.error("error:"+e)
             return;
         }
         
