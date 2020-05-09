@@ -18,7 +18,7 @@
         <meta name="twitter:card" content="summary">
         <meta name="twitter:site" content="@toka7290">
         <link rel="apple-touch-icon" href="img/icon_apple-touch-icon.png">
-        <link rel="icon" href="img/icon.png">
+        <link rel="icon" href="img/icon.webp">
         <link rel="manifest" href="json/webapp.webmanifest">
         <script type="application/ld+json">
             {
@@ -27,7 +27,7 @@
                 "name": "とかさんのManifestGenelator",
                 "applicationCategory": "DeveloperApplication",
                 "applicationSubCategory": "Minecraft Manifest json",
-                "image": "img/icon.png",
+                "image": "img/icon_2000.png",
                 "about": "Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。",
                 "aggregateRating": {
                     "@type": "AggregateRating",
@@ -65,19 +65,19 @@
             });
         </script>
         <!-- lib -->
-        <script src="lib/jquery-3.5.1.min.js"></script>
-        <script src="lib/prism.js" async></script>
+        <script src="lib/jquery-3.5.1.min.js" defer></script>
+        <script src="lib/prism.js" defer></script>
         <!-- js -->
-        <script type="text/javascript" src="js/main.js" async></script>
+        <script type="text/javascript" src="js/main.js" defer></script>
         <!-- css -->
-        <link rel="stylesheet" href="css/style.css" async>
-        <link rel="stylesheet" href="css/prism.css" async>
-        <link rel="stylesheet" href="css/phone.css" media="(max-aspect-ratio: 1/1) and (min-aspect-ratio: 1/30)" async>
+        <link rel="stylesheet" href="css/style.css" media="all">
+        <link rel="stylesheet" href="css/prism.css" media="all">
+        <link rel="stylesheet" href="css/phone.css" media="(max-aspect-ratio: 1/1) and (min-aspect-ratio: 1/30)">
     </head>
     <body>
         <header class="header">
             <div class="header_main">
-                <img src="img/icon.png" alt="" class="title_icon">
+                <img src="img/icon.webp" alt="" class="title_icon">
                 <div class="title">
                     <h1>とかさんのManifestGenelator</h1>
                     <p>version:0.4.1</p>
@@ -95,10 +95,10 @@
                     <div class="open_more_info">
                         <img src="img/more.svg" alt="">
                         <ul class="more_info">
-                            <li><a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ"><img src="img/homepage.svg" alt=""><p>Homepage</p></a></li>
-                            <li><a href="https://twitter.com/toka7290" target="_blank" title="Twitter"><img src="img/twitter.svg" alt=""><p>Twitter</p></a></li>
-                            <li><a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github"><img src="img/github.svg" alt=""><p>GitHub</p></a></li>
-                            <li><a href="http://tokamcwin10.blog.jp/archives/38495158.html" target="_blank" title="manifest.jsonの解説ページに飛びます。"><img src="img/help.svg" alt=""><p>Manifest Help</p></a></li>
+                            <li><a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener"><img src="img/homepage.svg" alt=""><p>Homepage</p></a></li>
+                            <li><a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener"><img src="img/twitter.svg" alt=""><p>Twitter</p></a></li>
+                            <li><a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener"><img src="img/github.svg" alt=""><p>GitHub</p></a></li>
+                            <li><a href="http://tokamcwin10.blog.jp/archives/38495158.html" target="_blank" title="manifest.jsonの解説ページに飛びます。" rel="noopener"><img src="img/help.svg" alt=""><p>Manifest Help</p></a></li>
                         </ul>
                     </div>
                 </div>
@@ -108,14 +108,14 @@
                     <img src="img/close.svg" alt="">
                 </div>
                 <div class="about_content">
-                    <img src="img/icon.png" alt="">
+                    <img src="img/icon.webp" alt="">
                     <h2>とかさんのManifestGenelator</h2>
                     <p>version:0.4.1</p>
                     <div class="about_external_link">
-                        <a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ"><img src="img/homepage.svg" alt=""></a>
-                        <a href="https://twitter.com/toka7290" target="_blank" title="Twitter"><img src="img/twitter.svg" alt=""></a>
-                        <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github"><img src="img/github.svg" alt=""></a>
-                        <a href="http://tokamcwin10.blog.jp/archives/38495158.html" target="_blank" title="manifest.jsonの解説ページに飛びます。"><img src="img/help.svg" alt=""></a>
+                        <a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener"><img src="img/homepage.svg" alt=""></a>
+                        <a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener"><img src="img/twitter.svg" alt=""></a>
+                        <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener"><img src="img/github.svg" alt=""></a>
+                        <a href="http://tokamcwin10.blog.jp/archives/38495158.html" target="_blank" title="manifest.jsonの解説ページに飛びます。" rel="noopener"><img src="img/help.svg" alt=""></a>
                     </div>
                 </div>
             </div>
@@ -211,14 +211,14 @@
                                     <textarea type="text" name="description" id="modules_description"></textarea>
                                 </div>
                                 <div>
-                                    <label for="modules_version">バージョン</label>
-                                    <span id="modules_version">
+                                    <label>
+                                        <span>バージョン</span>
                                         <input type="number" min="0" name="" id="modules_version_major" value="1">
                                         <span>.</span>
                                         <input type="number" min="0" name="" id="modules_version_minor" value="0">
                                         <span>.</span>
                                         <input type="number" min="0" name="" id="modules_version_patch" value="0">
-                                    </span>
+                                    </label>
                                 </div>
                                 <div>
                                     <label for="modules_uuid">UUID</label>
@@ -229,7 +229,7 @@
                         </div>
                     </fieldset>
                     <fieldset class="dependencies">
-                        <legend><input type="checkbox" name="dependencies" id="dependencies_enable">Dependencies</legend>
+                        <legend><input type="checkbox" name="dependencies" id="dependencies_enable"><label for="dependencies_enable">Dependencies</label></legend>
                         <div class="dependencies_controls">
                             <div class="dependencies_controls_bar">
                                 <ul class="dependencies_controls_tab">
@@ -245,20 +245,20 @@
                                     <input type="text" name="uuid" id="dependencies_uuid" disabled>
                                 </div>
                                 <div>
-                                    <label for="dependencies_version">バージョン</label>
-                                    <span id="dependencies_version">
+                                    <label>
+                                        <span>バージョン</span>
                                         <input type="number" min="0" name="" id="dependencies_version_major" value="1" disabled>
                                         <span>.</span>
                                         <input type="number" min="0" name="" id="dependencies_version_minor" value="0" disabled>
                                         <span>.</span>
                                         <input type="number" min="0" name="" id="dependencies_version_patch" value="0" disabled>
-                                    </span>
+                                    </label>
                                 </div>
                             </div>
                         </div>
                     </fieldset>
                     <fieldset class="capabilities">
-                        <legend><input type="checkbox" name="capabilities" id="capabilities_enable">Capabilities</legend>
+                        <legend><input type="checkbox" name="capabilities" id="capabilities_enable"><label for="capabilities_enable">Capabilities</label></legend>
                         <div class="capabilities_list">
                             <div><input type="checkbox" name="experimental_custom_ui" id="experimental_custom_ui" disabled><label for="experimental_custom_ui">experimental_custom_ui</label></div>
                             <div><input type="checkbox" name="chemistry" id="chemistry" disabled><label for="chemistry">chemistry</label></div>
@@ -266,16 +266,17 @@
                         </div>
                     </fieldset>
                     <fieldset class="metadata">
-                        <legend><input type="checkbox" name="metadata" id="metadata_enable">Metadata</legend>
+                        <legend><input type="checkbox" name="metadata" id="metadata_enable"><label for="metadata_enable">Metadata</label></legend>
                         <div class="metadata_list">
                             <div>
-                                <label for="metadata_authors">作者</label>
+                                <label for="metadata_author">作者</label>
                                 <div class="metadata_authors">
                                     <div class="metadata_author_list">
                                     </div>
                                     <div class="metadata_author_adder">
                                         <input type="text" name="metadata_author" id="metadata_author" disabled>
-                                        <input type="button" value="Add" id="metadata_author_add" disabled>
+                                        <label for="metadata_author_add"><input type="button" value="Add" id="metadata_author_add" disabled></label>
+                                        
                                     </div>
                                 </div>
                             </div>
