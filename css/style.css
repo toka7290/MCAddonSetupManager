@@ -350,10 +350,16 @@ fieldset div{
     align-items: center;
     margin: 2px 0;
 }
+.disabled{
+    color: var(--color_disabled_text);
+}
+div.dependencies_contents{
+    display: block;
+}
 div.modules_controls,
 div.dependencies_controls,
 div.modules_contents,
-div.dependencies_contents{
+div.dependencies_list{
     /* タブ */
     margin: 0;
 }
@@ -421,7 +427,7 @@ span.dependencies_controls_addtab.disabled:hover{
     cursor: auto;
 }
 div.modules_contents > div,
-div.dependencies_contents > div{
+div.dependencies_list > div{
     display: none;
     border: 2px solid var(--color_boader_2);
     padding: 0.5em;
@@ -430,7 +436,7 @@ div.dependencies_contents > div{
     border-radius: 4px;
 }
 div.modules_contents div.selected_tab_content,
-div.dependencies_contents div.selected_tab_content{
+div.dependencies_list div.selected_tab_content{
     display: block;
 }
 span.modules_controls_addtab,

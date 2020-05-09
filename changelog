@@ -41,3 +41,8 @@
     内部最適化
     pwa完全対応
     セパレータの動作改善
+1.1.0
+    "base_game_version"が選択できない問題の修正
+    "lock_template_options"のfalseが出るように修正
+    world_template選択時に"min_engine_version"を選択しないように修正
+    選択不可のテキストを薄く
