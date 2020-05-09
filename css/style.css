@@ -230,6 +230,7 @@ div.header_menu_alt > *:hover{
 }
 div.header_menu_alt > * p{
     margin: 0;
+    padding-left: 0.5rem;
 }
 ul.more_info{
     display: none;
@@ -237,7 +238,6 @@ ul.more_info{
 div.header_menu_alt a{
     display: inline-block;
     line-height: 0;
-    padding: 0.5rem;
 }
 ul.more_info{
     display: none;
@@ -256,6 +256,7 @@ div.open_more_info:hover ul.more_info{
 ul.more_info a{
     display: flex;
     align-items: center;
+    padding: 0.5rem;
     text-decoration: none;
     color: var(--color_header_text);
     transition-duration: 0.5s;
@@ -503,7 +504,10 @@ div.preview pre{
     scrollbar-color: var(--color_scrollbar-track) transparent;
 }
 textarea#code_buffer{
-    display: none;
+    position: absolute;
+    z-index: -100;
+    width: 1px;
+    height: 1px;
 }
 /* イシュー */
 div.issue{
