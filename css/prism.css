@@ -5,7 +5,6 @@ https://prismjs.com/download.html#themes=prism-okaidia&languages=json&plugins=li
  * Loosely based on Monokai textmate theme by http://www.monokai.nl/
  * @author ocodia
  */
-
 code[class*="language-"],
 pre[class*="language-"] {
 	color: #f8f8f2;
@@ -70,14 +69,14 @@ pre[class*="language-"] {
 .token.constant,
 .token.symbol,
 .token.deleted {
-	color: #b3e5fc;
+	color: var(--color_prism_symbol);
 }
 
 .token.boolean{
-	color: #1e88e5;
+	color: var(--color_prism_boolean);
 }
 .token.number {
-	color: #aed581;
+	color: var(--color_prism_number);
 }
 
 .token.selector,
@@ -86,7 +85,7 @@ pre[class*="language-"] {
 .token.char,
 .token.builtin,
 .token.inserted {
-	color: #ff9e80;
+	color: var(--color_prism_string);
 }
 
 .token.operator,
@@ -106,7 +105,7 @@ pre[class*="language-"] {
 }
 
 .token.keyword {
-	color: #e91e63;
+	color: var(--color_prism_keyword);
 }
 
 .token.regex,
