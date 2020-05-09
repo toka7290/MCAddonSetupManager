@@ -13,15 +13,17 @@ var urlsToCache = [
     '/MCAddonSetupManager/img/help.svg',
     '/MCAddonSetupManager/img/homepage.svg',
     '/MCAddonSetupManager/img/icon.png',
+    '/MCAddonSetupManager/img/icon_256.png',
+    '/MCAddonSetupManager/img/icon_512.png',
+    '/MCAddonSetupManager/img/icon_apple-touch-icon.png',
     '/MCAddonSetupManager/img/import.svg',
     '/MCAddonSetupManager/img/more.svg',
     '/MCAddonSetupManager/img/twitter.svg',
     '/MCAddonSetupManager/img/warning.svg',
-    '/MCAddonSetupManager/js/editor_manifest.js',
-    '/MCAddonSetupManager/js/ui.js',
+    '/MCAddonSetupManager/js/main.js',
     '/MCAddonSetupManager/json/webapp.webmanifest',
     '/MCAddonSetupManager/lib/prism.js',
-    'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'
+    '/MCAddonSetupManager/lib/jquery-3.5.1.min.js'
 ];
 
 // インストール処理
