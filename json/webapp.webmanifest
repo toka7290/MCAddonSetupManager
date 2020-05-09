@@ -7,6 +7,14 @@
     {
       "src": "https://toka7290.github.io/MCAddonSetupManager/img/icon_256.png",
       "sizes": "256x256"
+    },
+    {
+      "src": "https://toka7290.github.io/MCAddonSetupManager/img/icon_512.png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "https://toka7290.github.io/MCAddonSetupManager/img/icon.png",
+      "sizes": "2000x2000"
     }
   ],
   "start_url": "/MCAddonSetupManager/index.html",
