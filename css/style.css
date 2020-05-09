@@ -167,6 +167,12 @@ div.title p{
     height: 2em;
     align-self: center;
 }
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    _::-webkit-full-page-media, _:future, :root .title_icon {
+        background-image: url("../img/icon_2000.png");
+        background-size: 2em;
+    }
+}
 div.header_menu{
     display: none;
     text-align: end;
