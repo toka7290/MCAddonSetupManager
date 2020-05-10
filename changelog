@@ -46,3 +46,5 @@
     "lock_template_options"のfalseが出るように修正
     world_template選択時に"min_engine_version"を選択しないように修正
     選択不可のテキストを薄く
+1.1.1
+    "base_game_version"がformat_version1で選択できる問題の修正

@@ -1,5 +1,6 @@
 $(function(){
     // 宣言
+    var format_version = 2;
     var is_separator_drag = false;
     var is_dependencies_enable = false;
     var is_capabilities_enable = false;
@@ -102,6 +103,9 @@ $(function(){
         $("div.issue_content").slideToggle();
     });
     
+    $('#format_version').on("change",function(){
+        format_version = Number($('#format_version').val());
+    });
     //UUID生成
     $(document).on("click",'input[type="button"].generate_uuid',function(){
         $(this).prev().val(getUuid_v4);
@@ -303,8 +307,10 @@ $(function(){
                     is_world_template = true;
                     $("#header_min_engine_version").addClass("disabled");
                     $("#header_min_engine_version *").prop('disabled', true);
-                    $("#header_base_game_version").removeClass("disabled");
-                    $("#header_base_game_version *").prop('disabled', false);
+                    if(format_version>=2){
+                        $("#header_base_game_version").removeClass("disabled");
+                        $("#header_base_game_version *").prop('disabled', false);
+                    }
                     $("#header_lock_template_options").parent().removeClass("disabled");
                     $("#header_lock_template_options").prop('disabled', false);
                     break;
@@ -350,7 +356,7 @@ $(function(){
     function checkJSONWarning(){
         warning_num = 0;
         // format_version固有
-        switch(Number($('#format_version').val())){
+        switch(format_version){
             case 1:
                 if(Number($('#header_min_engine_version_major').val())>1||
                 Number($('#header_min_engine_version_minor').val())>=13){
@@ -419,7 +425,7 @@ $(function(){
     // エラー検査
     function checkJSONError(){
         error_num = 0;
-        switch(Number($('#format_version').val())){
+        switch(format_version){
             case 1:
                 break;
             case 2:
@@ -427,6 +433,12 @@ $(function(){
                 Number($('#header_min_engine_version_minor').val())<13){
                     // 1.12以下はエラー
                     addIssue('error',"[Header:min engine version] version1.12以下を指定することはできません。");
+                    error_num++;
+                };
+                if(Number($('#header_base_game_version_major').val())<=1&&
+                Number($('#header_base_game_version_minor').val())<13){
+                    // 1.12以下はエラー
+                    addIssue('error',"[Header:base game version] version1.12以下を指定することはできません。");
                     error_num++;
                 };
                 break;
@@ -636,7 +648,7 @@ $(function(){
     // json 出力
     function exportJSON(){
         json_raw = new Object();
-        json_raw.format_version = Number($('#format_version').val());
+        json_raw.format_version = format_version;
 
         json_raw.header = new Object();
         json_raw.header.name = $('#header_pack_name').val();
@@ -650,7 +662,9 @@ $(function(){
             json_raw.header.platform_locked = true;
         }
         if(is_world_template){
-            json_raw.header.base_game_version = "replace_base_game_version";
+            if(format_version>=2){
+                json_raw.header.base_game_version = "replace_base_game_version";
+            }
             json_raw.header.lock_template_options = $('#header_lock_template_options').is(':checked');
         }
 
