@@ -142,8 +142,8 @@ $(function(){
             selectedindex = $(".dependencies_controls_tab li").index(this);
             $(".dependencies_controls_tab li").removeClass('selected_tab');
             $(".dependencies_controls_tab li").eq(selectedindex).addClass('selected_tab');
-            $(".dependencies_contents > div").removeClass('selected_tab_content');
-            $(".dependencies_contents > div").eq(selectedindex).addClass('selected_tab_content');
+            $(".dependencies_list > div").removeClass('selected_tab_content');
+            $(".dependencies_list > div").eq(selectedindex).addClass('selected_tab_content');
         }
     });
     // Dependencies tab削除
@@ -151,9 +151,9 @@ $(function(){
         if(is_dependencies_enable){
             selectedindex = $(this).parent().index();
             $(".dependencies_controls_tab li").eq(selectedindex-1).addClass('selected_tab');
-            $(".dependencies_contents > div").eq(selectedindex-1).addClass('selected_tab_content');
+            $(".dependencies_list > div").eq(selectedindex-1).addClass('selected_tab_content');
             $(this).parent().remove();
-            $(".dependencies_contents > div").eq(selectedindex).remove();
+            $(".dependencies_list > div").eq(selectedindex).remove();
             for(i=0;i<$(".dependencies_controls_tab li").length;i++){
                 $(".dependencies_controls_tab li").eq(i).html(i+'<span class="delete_tab">×</span>');
             }
@@ -214,9 +214,9 @@ $(function(){
         num = $(".dependencies_controls_tab li").length;
         addtab = '<li>'+num+'<span class="delete_tab">×</span></li>';
         $(".dependencies_controls_tab").append(addtab);
-        content = $(".dependencies_contents > div:first-child").clone();
+        content = $(".dependencies_list > div:first-child").clone();
         content.removeClass('selected_tab_content');
-        $(".dependencies_contents").append(content);
+        $(".dependencies_list").append(content);
     }
     // オーナー追加
     function add_author(name){
@@ -242,27 +242,37 @@ $(function(){
         is_capabilities_enable = $('#capabilities_enable').is(':checked');
         is_metadata_enable = $('#metadata_enable').is(':checked');
         if(is_dependencies_enable){
-            $('div.dependencies_contents input').prop('disabled', false);
+            $(".dependencies_contents").removeClass('disabled');
+            $('div.dependencies_list input').prop('disabled', false);
             $('span.dependencies_controls_addtab').removeClass('disabled');
         }else{
-            $('div.dependencies_contents input').prop('disabled', true);
+            $(".dependencies_contents").addClass('disabled');
+            $('div.dependencies_list input').prop('disabled', true);
             $('span.dependencies_controls_addtab').addClass('disabled');
         }
         if(is_capabilities_enable){
+            $(".capabilities_list").removeClass('disabled');
             $('div.capabilities_list input').prop('disabled', false);
         }else{
+            $(".capabilities_list").addClass('disabled');
             $('div.capabilities_list input').prop('disabled', true);
         }
         if(is_metadata_enable){
+            $(".metadata_list").removeClass('disabled');
             $('div.metadata_list input').prop('disabled', false);
         }else{
+            $(".metadata_list").addClass('disabled');
             $('div.metadata_list input').prop('disabled', true);
         }
     }
     // モジュールタイプ変更
     function type_changed(){
         is_world_template = false;
+        $("#header_min_engine_version").removeClass("disabled");
+        $("#header_min_engine_version *").prop('disabled', false);
+        $("#header_base_game_version").addClass("disabled");
         $("#header_base_game_version *").prop('disabled', true);
+        $("#header_lock_template_options").parent().addClass("disabled");
         $("#header_lock_template_options").prop('disabled', true);
         for(i=1;i<=$(".modules_controls_tab li").length;i++){
             $('div.modules_contents > div:nth-child('+i+') #modules_type option').prop('disabled', false);
@@ -291,7 +301,11 @@ $(function(){
                     $(".modules_controls_addtab").hide();
                     type_prevention(i,"world_template");
                     is_world_template = true;
+                    $("#header_min_engine_version").addClass("disabled");
+                    $("#header_min_engine_version *").prop('disabled', true);
+                    $("#header_base_game_version").removeClass("disabled");
                     $("#header_base_game_version *").prop('disabled', false);
+                    $("#header_lock_template_options").parent().removeClass("disabled");
                     $("#header_lock_template_options").prop('disabled', false);
                     break;
             }
@@ -437,7 +451,7 @@ $(function(){
         if(is_dependencies_enable){
             for(i=0;i<$(".dependencies_controls_tab li").length;i++){
                 child_num = i + 1;
-                if(!isUUID($('div.dependencies_contents > div:nth-child('+child_num+') #dependencies_uuid').val())){
+                if(!isUUID($('div.dependencies_list > div:nth-child('+child_num+') #dependencies_uuid').val())){
                     //UUIDではありません
                     addIssue('error',"[Dependencies:"+i+":uuid] 入力されている文字列は有効なUUIDではありません。");
                     error_num++;
@@ -568,17 +582,17 @@ $(function(){
                     dependencies_addtab();
                 }
                 if(json_data.dependencies[i].uuid!=null){
-                    $('div.dependencies_contents > div:nth-child('+child_num+') #dependencies_uuid').val(json_data.dependencies[i].uuid);
+                    $('div.dependencies_list > div:nth-child('+child_num+') #dependencies_uuid').val(json_data.dependencies[i].uuid);
                 }
                 if(json_data.dependencies[i].version!=null){
                     if(json_data.dependencies[i].version[0]!=null){
-                        $('div.dependencies_contents > div:nth-child('+child_num+') #dependencies_version_major').val(json_data.dependencies[i].version[0]);
+                        $('div.dependencies_list > div:nth-child('+child_num+') #dependencies_version_major').val(json_data.dependencies[i].version[0]);
                     }
                     if(json_data.dependencies[i].version[1]!=null){
-                        $('div.dependencies_contents > div:nth-child('+child_num+') #dependencies_version_minor').val(json_data.dependencies[i].version[1]);
+                        $('div.dependencies_list > div:nth-child('+child_num+') #dependencies_version_minor').val(json_data.dependencies[i].version[1]);
                     }
                     if(json_data.dependencies[i].version[2]!=null){
-                        $('div.dependencies_contents > div:nth-child('+child_num+') #dependencies_version_patch').val(json_data.dependencies[i].version[2]);
+                        $('div.dependencies_list > div:nth-child('+child_num+') #dependencies_version_patch').val(json_data.dependencies[i].version[2]);
                     }
                 }
             }
@@ -628,16 +642,16 @@ $(function(){
         json_raw.header.name = $('#header_pack_name').val();
         json_raw.header.description = $('#header_description').val();
         json_raw.header.version = "replace_header_version";
-        json_raw.header.min_engine_version = "replace_header_min_engine_version";
+        if(!is_world_template){
+            json_raw.header.min_engine_version = "replace_header_min_engine_version";
+        }
         json_raw.header.uuid = $('#header_uuid').val();
         if($('#header_platform_locked').is(':checked')){
             json_raw.header.platform_locked = true;
         }
         if(is_world_template){
             json_raw.header.base_game_version = "replace_base_game_version";
-            if($('#header_lock_template_options').is(':checked')){
-                json_raw.header.lock_template_options = true;
-            }
+            json_raw.header.lock_template_options = $('#header_lock_template_options').is(':checked');
         }
 
         json_raw.modules = new Array();
@@ -654,7 +668,7 @@ $(function(){
             for(i=0;i<$(".dependencies_controls_tab li").length;i++){
                 child_num = i + 1;
                 json_raw.dependencies[i] = new Object();
-                json_raw.dependencies[i].uuid = $('div.dependencies_contents > div:nth-child('+child_num+') #dependencies_uuid').val();
+                json_raw.dependencies[i].uuid = $('div.dependencies_list > div:nth-child('+child_num+') #dependencies_uuid').val();
                 json_raw.dependencies[i].version = "replace_dependencies_"+i+"_version";
             }
         }
@@ -705,8 +719,12 @@ $(function(){
             Number($('#header_base_game_version_patch').val())
         ]).split(/,/).join(', ');
         string_raw = string_raw.replace('"replace_header_version"', header_version);
-        string_raw = string_raw.replace('"replace_header_min_engine_version"', min_engine_version);
-        string_raw = string_raw.replace('"replace_base_game_version"', header_base_game_version);
+        if(!is_world_template){
+            string_raw = string_raw.replace('"replace_header_min_engine_version"', min_engine_version);
+        }else{
+            string_raw = string_raw.replace('"replace_base_game_version"', header_base_game_version);
+        }
+        
         for(i=0;i<$(".modules_controls_tab li").length;i++){
             child_num = i + 1;
             modules_version = JSON.stringify([
@@ -720,9 +738,9 @@ $(function(){
             for(i=0;i<$(".dependencies_controls_tab li").length;i++){
                 child_num = i + 1;
                 dependencies_version = JSON.stringify([
-                    Number($('div.dependencies_contents > div:nth-child('+child_num+') #dependencies_version_major').val()),
-                    Number($('div.dependencies_contents > div:nth-child('+child_num+') #dependencies_version_minor').val()),
-                    Number($('div.dependencies_contents > div:nth-child('+child_num+') #dependencies_version_patch').val())
+                    Number($('div.dependencies_list > div:nth-child('+child_num+') #dependencies_version_major').val()),
+                    Number($('div.dependencies_list > div:nth-child('+child_num+') #dependencies_version_minor').val()),
+                    Number($('div.dependencies_list > div:nth-child('+child_num+') #dependencies_version_patch').val())
                 ]).split(/,/).join(', ');
                 string_raw = string_raw.replace('"replace_dependencies_'+i+'_version"', dependencies_version);
             }

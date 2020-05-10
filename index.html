@@ -81,7 +81,7 @@
                 <img src="img/icon.webp" alt="" class="title_icon">
                 <div class="title">
                     <h1>とかさんのManifestGenelator</h1>
-                    <p>version:1.0.0</p>
+                    <p>version:1.1.0</p>
                 </div>
                 <div class="header_menu">
                     <div id="import_file"><label for="input_file">Import</label><input type="file" name="input_file" id="input_file" accept=".json"></div>
@@ -111,7 +111,7 @@
                 <div class="about_content">
                     <img src="img/icon.webp" alt="">
                     <h2>とかさんのManifestGenelator</h2>
-                    <p>version:1.0.0</p>
+                    <p>version:1.1.0</p>
                     <div class="about_external_link">
                         <a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener"><img src="img/homepage.svg" alt=""></a>
                         <a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener"><img src="img/twitter.svg" alt=""></a>
@@ -152,7 +152,7 @@
                             </label>
                         </div>
                         <div>
-                            <label for="header_min_engine_version_major">
+                            <label id="header_min_engine_version">
                                 <span>最小エンジンバージョン</span>
                                 <input type="number" min="0" name="" id="header_min_engine_version_major" value="1">
                                 <span>.</span>
@@ -171,11 +171,11 @@
                             <input type="checkbox" name="header_platform_locked" id="header_platform_locked">
                         </div>
                         <div>
-                            <label>
+                            <label id="header_base_game_version">
                                 <span>基本ゲームバージョン</span>
                                 <input type="number" min="0" name="" id="header_base_game_version_major" value="1" disabled>
                                 <span>.</span>
-                                <input type="number" min="0" name="" id="header_base_game_version_minor" value="0" disabled>
+                                <input type="number" min="0" name="" id="header_base_game_version_minor" value="13" disabled>
                                 <span>.</span>
                                 <input type="number" min="0" name="" id="header_base_game_version_patch" value="0" disabled>
                             </label>
@@ -231,29 +231,31 @@
                     </fieldset>
                     <fieldset class="dependencies">
                         <legend><input type="checkbox" name="dependencies" id="dependencies_enable"><label for="dependencies_enable">Dependencies</label></legend>
-                        <div class="dependencies_controls">
-                            <div class="dependencies_controls_bar">
-                                <ul class="dependencies_controls_tab">
-                                    <li class="selected_tab">0<span class="delete_tab">×</span></li>
-                                </ul>
-                                <span class="dependencies_controls_addtab disabled">+</span>
-                            </div>
-                        </div>
                         <div class="dependencies_contents">
-                            <div class="selected_tab_content">
-                                <div>
-                                    <label for="dependencies_uuid">UUID</label>
-                                    <input type="text" name="uuid" id="dependencies_uuid" disabled>
+                            <div class="dependencies_controls">
+                                <div class="dependencies_controls_bar">
+                                    <ul class="dependencies_controls_tab">
+                                        <li class="selected_tab">0<span class="delete_tab">×</span></li>
+                                    </ul>
+                                    <span class="dependencies_controls_addtab disabled">+</span>
                                 </div>
-                                <div>
-                                    <label>
-                                        <span>バージョン</span>
-                                        <input type="number" min="0" name="" id="dependencies_version_major" value="1" disabled>
-                                        <span>.</span>
-                                        <input type="number" min="0" name="" id="dependencies_version_minor" value="0" disabled>
-                                        <span>.</span>
-                                        <input type="number" min="0" name="" id="dependencies_version_patch" value="0" disabled>
-                                    </label>
+                            </div>
+                            <div class="dependencies_list">
+                                <div class="selected_tab_content">
+                                    <div>
+                                        <label for="dependencies_uuid">UUID</label>
+                                        <input type="text" name="uuid" id="dependencies_uuid" disabled>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            <span>バージョン</span>
+                                            <input type="number" min="0" name="" id="dependencies_version_major" value="1" disabled>
+                                            <span>.</span>
+                                            <input type="number" min="0" name="" id="dependencies_version_minor" value="0" disabled>
+                                            <span>.</span>
+                                            <input type="number" min="0" name="" id="dependencies_version_patch" value="0" disabled>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
