@@ -12,6 +12,7 @@ body{
     height: 100%;
     margin: 0;
     padding: 0;
+    color: var(--color_text);
 }
 fieldset{
     border-color: var(--color_boader);
@@ -19,6 +20,7 @@ fieldset{
 }
 input,textarea,select{
     font: inherit;
+    color: var(--color_input_text);
     padding: 2px;
     border: 1px solid var(--color_input_boader);
     background-color: var(--color_input_background);
@@ -36,6 +38,10 @@ textarea:disabled,
 select:disabled{
     border: 1px solid var(--color_input_disabled);
     border-radius: 4px;
+}
+input:-webkit-autofill,
+input:-internal-autofill-selected{
+    background-color: black !important;
 }
 input[type="text"]{
     width: 50%;
@@ -167,12 +173,13 @@ div.title p{
     height: 2em;
     align-self: center;
 }
+/*  
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
     _::-webkit-full-page-media, _:future, :root .title_icon {
         background-image: url("../img/icon_2000.png");
         background-size: 2em;
     }
-}
+}*/
 div.header_menu{
     display: none;
     text-align: end;
@@ -245,7 +252,7 @@ ul.more_info{
     right: 0;
     padding: 0;
     margin: 0;
-    background-color: var(--color_header_2);
+    background-color: var(--color_header);
 }
 div.open_more_info:hover ul.more_info{
     display: block;
@@ -274,7 +281,7 @@ div.page_about{
     top: 0;
     left: 0;
     right: 0;
-    background-color: var(--color_header_2);
+    background-color: var(--color_header);
 }
 div.close_about{
     text-align: end;
@@ -299,6 +306,7 @@ div.about_content>img{
     _::-webkit-full-page-media, _:future, :root div.about_content>img {
         background-image: url("../img/icon_2000.png");
         background-size: 50vw;
+        border: none;
     }
 }
 div.about_external_link{

@@ -51,8 +51,13 @@
         <script>
             if ('serviceWorker' in navigator) {
                 window.addEventListener("load", function() {
-                    navigator.serviceWorker.register('/MCAddonSetupManager/serviceworker.js', {scope: '/MCAddonSetupManager/'}).then(function(reg) {
+                    navigator.serviceWorker.register('/MCAddonSetupManager/serviceworker.js', {scope: '/MCAddonSetupManager/'})
+                    .then(function(reg) {
                         // registration worked
+                        registration.onupdatefound = function() {
+                            // update
+                            registration.update();
+                        }
                     }).catch(function(error) {
                         // registration failed
                     });
@@ -73,15 +78,15 @@
         <link rel="stylesheet" href="css/color.css" media="all">
         <link rel="stylesheet" href="css/style.css" media="all">
         <link rel="stylesheet" href="css/prism.css" media="all">
-        <link rel="stylesheet" href="css/phone.css" media="(max-aspect-ratio: 1/1) and (min-aspect-ratio: 1/30)">
+        <link rel="stylesheet" href="css/phone.css" media="(max-width: 35rem)">
     </head>
     <body>
         <header class="header">
             <div class="header_main">
-                <img src="img/icon.webp" alt="" class="title_icon">
+                <img src="img/icon.webp" alt="" class="title_icon" onerror="this.src='img/icon_2000.png'">
                 <div class="title">
                     <h1>とかさんのManifestGenelator</h1>
-                    <p>version:1.1.1</p>
+                    <p>version:1.1.2</p>
                 </div>
                 <div class="header_menu">
                     <div id="import_file"><label for="input_file">Import</label><input type="file" name="input_file" id="input_file" accept=".json"></div>
@@ -109,9 +114,9 @@
                     <img src="img/close.svg" alt="">
                 </div>
                 <div class="about_content">
-                    <img src="img/icon.webp" alt="">
+                    <img src="img/icon.webp" alt="" onerror="this.src='img/icon_2000.png'">
                     <h2>とかさんのManifestGenelator</h2>
-                    <p>version:1.1.1</p>
+                    <p>version:1.1.2</p>
                     <div class="about_external_link">
                         <a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener"><img src="img/homepage.svg" alt=""></a>
                         <a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener"><img src="img/twitter.svg" alt=""></a>
