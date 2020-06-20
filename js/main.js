@@ -48,13 +48,15 @@ $(function(){
     });
     // シェア
     $('#page_share').on("click",function(){
+        const data = {
+            title: "とかさんのManifestGenelator",
+            text: "Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。",
+            url: "https://toka7290.github.io/MCAddonSetupManager/"
+        }
         if (navigator.share) {
-			navigator.share({
-				title: document.querySelector('title').textContent,
-				text: document.querySelector('meta[name="description"]').getAttribute('content'),
-				url: location.href
-			});
-		}
+            navigator.share(data);
+            console.log("share");
+        }
     });
     // 外部インポート
     $("#input_file").on("change",function(){
