@@ -55,7 +55,6 @@ $(function(){
         }
         if (navigator.share) {
             navigator.share(data);
-            console.log("share");
         }
     });
     // 外部インポート
