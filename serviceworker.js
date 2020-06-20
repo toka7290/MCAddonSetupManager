@@ -24,7 +24,7 @@ var urlsToCache = [
     '/MCAddonSetupManager/js/main.js',
     '/MCAddonSetupManager/json/webapp.webmanifest',
     '/MCAddonSetupManager/lib/prism.js',
-    '/MCAddonSetupManager/lib/jquery-3.5.1.min.js'
+    '/MCAddonSetupManager/lib/jquery-3.5.1.slim.min.js'
 ];
 
 // インストール処理

@@ -26,14 +26,14 @@
       "short_name": "Blog",
       "description": "作者のブログを開きます。",
       "url": "http://tokamcwin10.blog.jp/",
-      "icons": [{ "src": "/img/homepage.svg" }]
+      "icons": [{ "src": "/MCAddonSetupManager/img/homepage.svg" }]
     },
     {
       "name": "Manifest Help",
       "short_name": "Manifest Help",
       "description": "manifest.jsonの解説ページに飛びます。",
       "url": "http://tokamcwin10.blog.jp/archives/38495158.html",
-      "icons": [{ "src": "/img/help.svg" }]
+      "icons": [{ "src": "/MCAddonSetupManager/img/help.svg" }]
     }
   ]
 } 
