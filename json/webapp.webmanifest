@@ -19,5 +19,21 @@
   ],
   "start_url": "/MCAddonSetupManager/index.html",
   "theme_color": "#60ad5e",
-  "background_color": "#e8f5e9"
+  "background_color": "#e8f5e9",
+  "shortcuts": [
+    {
+      "name": "とかさんのブログ",
+      "short_name": "Blog",
+      "description": "作者のブログを開きます。",
+      "url": "http://tokamcwin10.blog.jp/",
+      "icons": [{ "src": "https://toka7290.github.io/MCAddonSetupManager/img/homepage.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Manifest Help",
+      "short_name": "Manifest Help",
+      "description": "manifest.jsonの解説ページに飛びます。",
+      "url": "http://tokamcwin10.blog.jp/archives/38495158.html",
+      "icons": [{ "src": "https://toka7290.github.io/MCAddonSetupManager/img/help.svg", "sizes": "192x192" }]
+    }
+  ]
 } 

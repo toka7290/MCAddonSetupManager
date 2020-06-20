@@ -1,5 +1,6 @@
 $(function(){
     // 宣言
+    var isChanged = false;
     var format_version = 2;
     var is_separator_drag = false;
     var is_dependencies_enable = false;
@@ -7,9 +8,16 @@ $(function(){
     var is_metadata_enable = false;
     var is_world_template = false;
     onChangedJSON();
+    // ページ離脱時に警告表示
+    $(window).bind("beforeunload", function() {
+        if (isChanged) {
+            return "このページを離れようとしています。";
+        }
+    });
     // 変更
     $(document).on("change",'input,textarea,select',function(){
         onChangedJSON();
+        isChanged = true;
     });
     // セパレータ移動
     $(".separator").on("mousedown",function(e){
@@ -37,6 +45,16 @@ $(function(){
             $(".separator").prev().css("flex-basis",prevwidth);
             $(".separator").next().css("flex-basis",nextwidth);
         }
+    });
+    // シェア
+    $('#page_share').on("click",function(){
+        if (navigator.share) {
+			navigator.share({
+				title: document.querySelector('title').textContent,
+				text: document.querySelector('meta[name="description"]').getAttribute('content'),
+				url: location.href
+			});
+		}
     });
     // 外部インポート
     $("#input_file").on("change",function(){

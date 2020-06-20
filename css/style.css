@@ -173,16 +173,13 @@ div.title p{
     height: 2em;
     align-self: center;
 }
-/*  
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-    _::-webkit-full-page-media, _:future, :root .title_icon {
-        background-image: url("../img/icon_2000.png");
-        background-size: 2em;
-    }
-}*/
 div.header_menu{
     display: none;
     text-align: end;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 div#import_file{
     display: inline-block;
@@ -216,6 +213,10 @@ div.header_menu p.active:hover{
 div.header_menu_alt{
     display: inline-flex;
     align-items: center;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 div.header_menu_alt > *{
     display: inline-flex;
@@ -236,12 +237,19 @@ div.header_menu_alt > * p{
     margin: 0;
     padding-left: 0.5rem;
 }
-ul.more_info{
-    display: none;
-}
 div.header_menu_alt a{
     display: inline-block;
     line-height: 0;
+}
+ul.share_page{
+    list-style: none;
+    position: absolute;
+    z-index: -10;
+    top: 3rem;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    background-color: var(--color_header);
 }
 ul.more_info{
     display: none;
@@ -254,9 +262,12 @@ ul.more_info{
     margin: 0;
     background-color: var(--color_header);
 }
+div.open_share_page:hover ul.share_page,
 div.open_more_info:hover ul.more_info{
     display: block;
+    z-index: 10;
 }
+ul.share_page li,
 ul.more_info a{
     display: flex;
     align-items: center;
@@ -266,6 +277,7 @@ ul.more_info a{
     transition-duration: 0.5s;
     transition-property: background-color;
 }
+ul.share_page li:hover,
 ul.more_info a:hover{
     background-color: var(--color_header_2_hover);
 }
@@ -377,6 +389,10 @@ div.dependencies_controls_bar{
     top: 2px;
     left: 2px;
     margin: 0;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 
 }
 ul.modules_controls_tab,
@@ -504,6 +520,10 @@ div.preview_contlrol_bar{
     display: flex;
     justify-content: flex-end;
     background-color: var(--color_toolbar);
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 div.preview_contlrol_bar p{
     margin: 0;
@@ -538,6 +558,10 @@ div.issue_contlrol_bar{
     background-color: var(--color_toolbar);
     padding: 2px;
     vertical-align: middle;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 div.issue_contlrol_bar:hover{
     cursor: pointer;
@@ -600,6 +624,10 @@ ul.issue_list li:nth-child(2n){
 ul.issue_list li img{
     width: 1.2rem;
     vertical-align: middle;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 ul.issue_list li p{
     display: inline;

@@ -17,6 +17,7 @@
         <meta property="og:image" content="https://toka7290.github.io/MCAddonSetupManager/img/icon_2000.png" />
         <meta name="twitter:card" content="summary">
         <meta name="twitter:site" content="@toka7290">
+        <meta name="google-site-verification" content="Gvi-XrJEZRsxJgsNLv5NOddbD6COJo804pUgyPvpi34" />
         <link rel="apple-touch-icon" href="img/icon_apple-touch-icon.png">
         <link rel="icon" href="img/icon.webp">
         <link rel="manifest" href="json/webapp.webmanifest">
@@ -80,25 +81,39 @@
         <link rel="stylesheet" href="css/phone.css" media="(max-width: 35rem)">
     </head>
     <body>
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v7.0"></script>
         <header class="header">
             <div class="header_main">
                 <img src="img/icon.webp" alt="" class="title_icon" onerror="this.src='img/icon_2000.png'">
                 <div class="title">
                     <h1>とかさんのManifestGenelator</h1>
-                    <p>version:1.1.2</p>
+                    <p>version:1.2.0</p>
                 </div>
                 <div class="header_menu">
                     <div id="import_file"><label for="input_file">Import</label><input type="file" name="input_file" id="input_file" accept=".json"></div>
                     <p id="show_preview">Preview</p>
+                    <p id="page_share">share</p>
                     <p id="open_about">About</p>
                 </div>
                 <div class="header_menu_alt">
                     <label for="input_file">
-                        <img src="img/import.svg" alt="">
+                        <img src="img/import.svg" alt="import">
                         <p>Import</p>
                     </label>
+                    <div class="open_share_page">
+                        <img src="img/share.svg" alt="share">
+                        <ul class="share_page">
+                            <li><a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-url="https://toka7290.github.io/MCAddonSetupManager/" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></li>
+                            <li><div class="fb-share-button" data-href="https://toka7290.github.io/MCAddonSetupManager/" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftoka7290.github.io%2FMCAddonSetupManager%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div></li>
+                            <li>
+                                <div class="line-it-button" data-lang="ja" data-type="share-a" data-ver="3" data-url="https://toka7290.github.io/MCAddonSetupManager/" data-color="default" data-size="large" data-count="false" style="display: none;"></div>
+                                <script src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="open_more_info">
-                        <img src="img/more.svg" alt="">
+                        <img src="img/more.svg" alt="more">
                         <ul class="more_info">
                             <li><a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener"><img src="img/homepage.svg" alt=""><p>Homepage</p></a></li>
                             <li><a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener"><img src="img/twitter.svg" alt=""><p>Twitter</p></a></li>
@@ -115,7 +130,7 @@
                 <div class="about_content">
                     <img src="img/icon.webp" alt="" onerror="this.src='img/icon_2000.png'">
                     <h2>とかさんのManifestGenelator</h2>
-                    <p>version:1.1.2</p>
+                    <p>version:1.2.0</p>
                     <div class="about_external_link">
                         <a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener"><img src="img/homepage.svg" alt=""></a>
                         <a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener"><img src="img/twitter.svg" alt=""></a>
@@ -128,7 +143,7 @@
         <div class="content">
             <div class="editor">
                 <form name="editor_manifest">
-                    <fieldset class="basic">
+                    <fieldset class="basic" title="このmanifest.jsonのフォーマットバージョンを設定します。">
                         <label for="format_version">フォーマットバージョン</label>
                         <select name="format_version" id="format_version">
                             <option value="2">2</option>
@@ -137,15 +152,15 @@
                     </fieldset>
                     <fieldset class="header">
                         <legend>Header</legend>
-                        <div>
+                        <div title="このパックの名前を設定します。">
                             <label for="header_pack_name">名前</label>
                             <input type="text" name="pack_name" id="header_pack_name">
                         </div>
-                        <div>
+                        <div title="このパックの説明を設定します。">
                             <label for="header_description">説明</label>
                             <textarea type="text" name="description" id="header_description"></textarea>
                         </div>
-                        <div>
+                        <div title="このパックのバージョンを示します。">
                             <label for="header_version_major">
                                 <span>バージョン</span>
                                 <input type="number" min="0" name="" id="header_version_major" value="1">
@@ -155,7 +170,7 @@
                                 <input type="number" min="0" name="" id="header_version_patch" value="0">
                             </label>
                         </div>
-                        <div>
+                        <div title="このパックが動作するMinecraftの最小バージョン(このパックの作成バージョン)を設定します。">
                             <label id="header_min_engine_version">
                                 <span>最小エンジンバージョン</span>
                                 <input type="number" min="0" name="" id="header_min_engine_version_major" value="1">
@@ -165,16 +180,16 @@
                                 <input type="number" min="0" name="" id="header_min_engine_version_patch" value="0">
                             </label>
                         </div>
-                        <div>
+                        <div title="このパックのUUIDを設定します。">
                             <label for="header_uuid">UUID</label>
                             <input type="text" name="uuid" id="header_uuid">
                             <input type="button" value="Generate" class="generate_uuid">
                         </div>
-                        <div>
+                        <div title="このパックをマルチプラットフォーム環境で使用できないようにします。">
                             <label for="header_platform_locked">プラットフォームロック</label>
                             <input type="checkbox" name="header_platform_locked" id="header_platform_locked">
                         </div>
-                        <div>
+                        <div title="このパックワールドの作成されたバージョンを設定します。">
                             <label id="header_base_game_version">
                                 <span>基本ゲームバージョン</span>
                                 <input type="number" min="0" name="" id="header_base_game_version_major" value="1" disabled>
@@ -184,7 +199,7 @@
                                 <input type="number" min="0" name="" id="header_base_game_version_patch" value="0" disabled>
                             </label>
                         </div>
-                        <div>
+                        <div title="ワールドテンプレートの導入時、ワールド設定をロックします。">
                             <label for="header_lock_template_options">テンプレートオプションロック</label>
                             <input type="checkbox" name="header_lock_template_options" id="header_lock_template_options" disabled>
                         </div>
@@ -201,7 +216,7 @@
                         </div>
                         <div class="modules_contents">
                             <div class="selected_tab_content">
-                                <div>
+                                <div title="このモジュールのタイプを設定します。">
                                     <label for="modules_type">タイプ</label>
                                     <select name="modules_type" id="modules_type" required>
                                         <option value="resources">resources</option>
@@ -211,11 +226,11 @@
                                         <option value="world_template">world_template</option>
                                     </select>
                                 </div>
-                                <div>
+                                <div title="このモジュールの説明を設定します。">
                                     <label for="modules_description">説明</label>
                                     <textarea type="text" name="description" id="modules_description"></textarea>
                                 </div>
-                                <div>
+                                <div title="このモジュールのバージョンを設定します。">
                                     <label>
                                         <span>バージョン</span>
                                         <input type="number" min="0" name="" id="modules_version_major" value="1">
@@ -225,7 +240,7 @@
                                         <input type="number" min="0" name="" id="modules_version_patch" value="0">
                                     </label>
                                 </div>
-                                <div>
+                                <div title="このモジュールのUUIDを設定します。">
                                     <label for="modules_uuid">UUID</label>
                                     <input type="text" name="uuid" id="modules_uuid">
                                     <input type="button" value="Generate" class="generate_uuid">
@@ -235,7 +250,7 @@
                     </fieldset>
                     <fieldset class="dependencies">
                         <legend><input type="checkbox" name="dependencies" id="dependencies_enable"><label for="dependencies_enable">Dependencies</label></legend>
-                        <div class="dependencies_contents">
+                        <div class="dependencies_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
                             <div class="dependencies_controls">
                                 <div class="dependencies_controls_bar">
                                     <ul class="dependencies_controls_tab">
@@ -246,11 +261,11 @@
                             </div>
                             <div class="dependencies_list">
                                 <div class="selected_tab_content">
-                                    <div>
+                                    <div title="依存関係にあるパックのUUIDを設定します。">
                                         <label for="dependencies_uuid">UUID</label>
                                         <input type="text" name="uuid" id="dependencies_uuid" disabled>
                                     </div>
-                                    <div>
+                                    <div title="依存関係にあるパックのバージョンを設定します。">
                                         <label>
                                             <span>バージョン</span>
                                             <input type="number" min="0" name="" id="dependencies_version_major" value="1" disabled>
@@ -266,16 +281,16 @@
                     </fieldset>
                     <fieldset class="capabilities">
                         <legend><input type="checkbox" name="capabilities" id="capabilities_enable"><label for="capabilities_enable">Capabilities</label></legend>
-                        <div class="capabilities_list">
-                            <div><input type="checkbox" name="experimental_custom_ui" id="experimental_custom_ui" disabled><label for="experimental_custom_ui">experimental_custom_ui</label></div>
-                            <div><input type="checkbox" name="chemistry" id="chemistry" disabled><label for="chemistry">chemistry</label></div>
-                            <div><input type="checkbox" name="raytracing" id="raytracing" disabled><label for="raytracing">raytracing</label></div>
+                        <div class="capabilities_list" title="このパックで追加の機能を有効にします。">
+                            <div title="カスタムUI機能を有効化します。"><input type="checkbox" name="experimental_custom_ui" id="experimental_custom_ui" disabled><label for="experimental_custom_ui">experimental_custom_ui</label></div>
+                            <div title="Education Chemistry の機能に追加、変更できるようにします。"><input type="checkbox" name="chemistry" id="chemistry" disabled><label for="chemistry">chemistry</label></div>
+                            <div title="レイトレーシングの機能をパックで使えるようにします。(1.15.x以上)"><input type="checkbox" name="raytracing" id="raytracing" disabled><label for="raytracing">raytracing</label></div>
                         </div>
                     </fieldset>
                     <fieldset class="metadata">
                         <legend><input type="checkbox" name="metadata" id="metadata_enable"><label for="metadata_enable">Metadata</label></legend>
                         <div class="metadata_list">
-                            <div>
+                            <div title="このパックの作者を設定します。">
                                 <label for="metadata_author">作者</label>
                                 <div class="metadata_authors">
                                     <div class="metadata_author_list">
@@ -287,11 +302,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>
+                            <div title="このパックのホームページURLを設定します。">
                                 <label for="metadata_url">URL</label>
                                 <input type="url" name="metadata_url" id="metadata_url" disabled>
                             </div>
-                            <div>
+                            <div title="このパックのライセンスを設定します。">
                                 <label for="metadata_license">ライセンス</label>
                                 <input type="text" name="metadata_license" id="metadata_license" disabled>
                             </div>
