@@ -181,14 +181,14 @@ div.header_menu{
     -moz-user-select: none;
     -webkit-user-select: none;
 }
-div#import_file{
+div.import_file{
     display: inline-block;
 }
-div#import_file label{
+div.import_file label{
     margin: 0;
     padding: 0.5rem;
 }
-div#import_file input{
+div.import_file input{
     display: none;
 }
 div.header_menu p{
@@ -200,7 +200,7 @@ div.header_menu p{
     transition-property: background-color;
 }
 div.header_menu p:hover,
-div#import_file label:hover{
+div.import_file label:hover{
     cursor: pointer;
     background-color: var(--color_header_hover);
 }
@@ -228,6 +228,10 @@ div.header_menu_alt > *{
     margin: 0;
     white-space: nowrap;
 }
+div.header_menu_alt > *.ondrag{
+    outline: 5px dashed var(--color_header_text);
+}
+div.header_menu_alt > *.dragover,
 div.header_menu_alt > *:hover{
     cursor: pointer;
     transition: 0.5s;
@@ -314,13 +318,13 @@ div.about_content{
 div.about_content>img{
     width: 50vw;
 }
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
+/* @media screen and (-webkit-min-device-pixel-ratio: 0) {
     _::-webkit-full-page-media, _:future, :root div.about_content>img {
         background-image: url("../img/icon_2000.png");
         background-size: 50vw;
         border: none;
     }
-}
+} */
 div.about_external_link{
     display: block;
 }

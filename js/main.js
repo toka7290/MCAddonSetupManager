@@ -50,7 +50,7 @@ $(function(){
     $('#page_share').on("click",function(){
         const data = {
             title: "とかさんのManifestGenelator",
-            text: "Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。",
+            text: "アドオン作成補助ツール。manifest.jsonを簡単に作成・編集",
             url: "https://toka7290.github.io/MCAddonSetupManager/"
         }
         if (navigator.share) {
@@ -59,17 +59,36 @@ $(function(){
     });
     // 外部インポート
     $("#input_file").on("change",function(){
-        var data = $("#input_file").prop('files')[0]; 
-        var file_reader = new FileReader();
-        file_reader.onload = function(){
-            json_text = file_reader.result;
-            import_data(json_text);
-        };
-        try{
-            file_reader.readAsText(data);
-        }catch(e){
-            console.error("error:"+e);
+        importFile();
+    });
+    // ファイルドラッグ&ドロップ
+    $(window).on("dragover",function(event){
+        event.preventDefault();
+        $(".import_file").addClass('ondrag');
+    });
+    $(window).on("dragleave",function(event){
+        event.preventDefault();
+        $(".import_file").removeClass('dragover ondrag');
+    });
+    $(".import_file").on("dragover",function(event){
+        event.preventDefault();
+        $(".import_file").addClass('dragover');
+    });
+    $(".import_file").on("dragleave",function(event){
+        event.preventDefault();
+        $(".import_file").removeClass('dragover ondrag');
+    });
+    $(".import_file").on("drop",function(_event){
+        isChanged = true;
+        $(".import_file").removeClass('dragover ondrag');
+        var event = _event;
+        if( _event.originalEvent ){
+            event = _event.originalEvent;
         }
+        event.stopPropagation();
+        event.preventDefault();
+        $("#input_file").prop('files', event.dataTransfer.files);
+        importFile();
     });
     // プレビュー表示切替
     $("p#show_preview").on("click",function(){
@@ -247,6 +266,20 @@ $(function(){
         $(".metadata_author_list").append(author_list_child);
     }
 
+    // インポート処理
+    function importFile(){
+        var data = $("#input_file").prop('files')[0]; 
+        var file_reader = new FileReader();
+        file_reader.onload = function(){
+            json_text = file_reader.result;
+            import_data(json_text);
+        };
+        try{
+            file_reader.readAsText(data);
+        }catch(e){
+            console.error("error:"+e);
+        }
+    }
     // 更新処理
     function onChangedJSON(){
         changed_checkbox();

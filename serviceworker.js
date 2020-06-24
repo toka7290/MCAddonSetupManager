@@ -19,6 +19,7 @@ var urlsToCache = [
     '/MCAddonSetupManager/img/icon_apple-touch-icon.png',
     '/MCAddonSetupManager/img/import.svg',
     '/MCAddonSetupManager/img/more.svg',
+    '/TokaBlockGenelator/img/share.svg',
     '/MCAddonSetupManager/img/twitter.svg',
     '/MCAddonSetupManager/img/warning.svg',
     '/MCAddonSetupManager/js/main.js',
@@ -36,6 +37,7 @@ self.addEventListener('install', function(event) {
                 return cache.addAll(urlsToCache);
             })
     );
+    event.waitUntil(self.skipWaiting());
 });
 
 // リソースフェッチ時のキャッシュロード処理
