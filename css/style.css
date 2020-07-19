@@ -142,7 +142,6 @@ label+*{
 }
 header{
     /* ヘッダー */
-    max-height: 3rem;
     color: var(--color_header_text);
     background-color: var(--color_header);
 }
