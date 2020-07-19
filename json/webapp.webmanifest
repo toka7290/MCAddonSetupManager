@@ -6,7 +6,8 @@
   "icons": [
     {
       "src": "https://toka7290.github.io/MCAddonSetupManager/img/icon_256.png",
-      "sizes": "256x256"
+      "sizes": "256x256",
+      "purpose": "any maskable"
     },
     {
       "src": "https://toka7290.github.io/MCAddonSetupManager/img/icon_512.png",
