@@ -182,10 +182,11 @@ div.header_menu{
 }
 div.import_file{
     display: inline-block;
+    align-self: center;
+    padding: 0.5rem;
 }
 div.import_file label{
     margin: 0;
-    padding: 0.5rem;
 }
 div.import_file input{
     display: none;
@@ -199,7 +200,7 @@ div.header_menu p{
     transition-property: background-color;
 }
 div.header_menu p:hover,
-div.import_file label:hover{
+div.header_menu div.import_file:hover{
     cursor: pointer;
     background-color: var(--color_header_hover);
 }

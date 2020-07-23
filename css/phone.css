@@ -9,7 +9,9 @@ div.header_menu_alt{
     display: none;
 }
 div.header_menu{
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 div.content{
     /* コンテンツ */
