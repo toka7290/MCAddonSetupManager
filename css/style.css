@@ -17,6 +17,7 @@ body{
 fieldset{
     border-color: var(--color_boader);
     border-radius: 4px;
+    word-wrap: anywhere;
 }
 input,textarea,select{
     font: inherit;
@@ -182,7 +183,6 @@ div.header_menu{
 }
 div.import_file{
     display: inline-block;
-    align-self: center;
     padding: 0.5rem;
 }
 div.import_file label{

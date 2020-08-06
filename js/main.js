@@ -141,6 +141,7 @@ $(function(){
         $("div.issue_content").slideToggle();
     });
     
+    // フォーマットバージョン変更
     $('#format_version').on("change",function(){
         format_version = Number($('#format_version').val());
     });
@@ -160,9 +161,11 @@ $(function(){
     // Modules tab削除
     $(document).on("click",".modules_controls_tab li span.delete_tab",function(event){
         selectedindex = $(this).parent().index();
+        if($(".modules_controls_tab li").eq(selectedindex).hasClass('selected_tab')){
+            $(".modules_controls_tab li").eq(selectedindex-1).addClass('selected_tab');
+            $(".modules_contents > div").eq(selectedindex-1).addClass('selected_tab_content');
+        }
         $(this).parent().remove();
-        $(".modules_controls_tab li").eq(selectedindex-1).addClass('selected_tab');
-        $(".modules_contents > div").eq(selectedindex-1).addClass('selected_tab_content');
         $(".modules_contents > div").eq(selectedindex).remove();
         for(i=0;i<$(".modules_controls_tab li").length;i++){
             $(".modules_controls_tab li").eq(i).html(i+'<span class="delete_tab">×</span>');
@@ -192,8 +195,10 @@ $(function(){
     $(document).on("click",".dependencies_controls_tab li span.delete_tab",function(event){
         if(is_dependencies_enable){
             selectedindex = $(this).parent().index();
-            $(".dependencies_controls_tab li").eq(selectedindex-1).addClass('selected_tab');
-            $(".dependencies_list > div").eq(selectedindex-1).addClass('selected_tab_content');
+            if($(".dependencies_controls_tab li").eq(selectedindex).hasClass('selected_tab')){
+                $(".dependencies_controls_tab li").eq(selectedindex-1).addClass('selected_tab');
+                $(".dependencies_list > div").eq(selectedindex-1).addClass('selected_tab_content');
+            }
             $(this).parent().remove();
             $(".dependencies_list > div").eq(selectedindex).remove();
             for(i=0;i<$(".dependencies_controls_tab li").length;i++){
@@ -214,6 +219,7 @@ $(function(){
     $("#metadata_author_add").on("click",function(){
         if(is_metadata_enable){
             add_author($("#metadata_author").val());
+            $("#metadata_author").val("");
         }
         onChangedJSON();
     });
