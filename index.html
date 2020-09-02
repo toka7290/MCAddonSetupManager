@@ -30,11 +30,6 @@
                 "applicationSubCategory": "Minecraft Manifest json",
                 "image": "img/icon_2000.png",
                 "about": "Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。",
-                "aggregateRating": {
-                    "@type": "AggregateRating",
-                    "ratingValue": "5",
-                    "ratingCount": "8864"
-                },
                 "creator": {
                     "@type": "Person",
                     "name": "とかさん",
@@ -60,6 +55,7 @@
                         }
                     }).catch(function(error) {
                         // registration failed
+                        console.error("serviceWorker failed");
                     });
                 });
             }
@@ -86,12 +82,22 @@
                 <img src="img/icon.webp" alt="" class="title_icon" onerror="this.src='img/icon_2000.png'">
                 <div class="title">
                     <h1>とかさんのManifestGenelator</h1>
-                    <p>version:1.2.3</p>
+                    <p>version:1.3.0</p>
                 </div>
                 <div class="header_menu">
-                    <div class="import_file"><label for="input_file">Import</label><input type="file" name="input_file" id="input_file" accept=".json"></div>
-                    <p id="show_preview">Preview</p>
-                    <p id="page_share">share</p>
+                    <div class="import_file">
+                        <label for="input_file">Import</label><input type="file" name="input_file" id="input_file" accept=".json">
+                        <div class="help_content top" id="help_content_1">
+                            <p>すでファイルがある場合はデータをインポートします。</p>
+                        </div>
+                    </div>
+                    <div id="show_preview">
+                        <span>Preview</span>
+                        <div class="help_content top" id="help_content_3">
+                            <p>入力・編集したデータのjsonプレビュー閲覧とダウンロード・コピーをします。</p>
+                        </div>
+                    </div>
+                    <p id="show_help">help</p>
                     <p id="open_about">About</p>
                 </div>
                 <div class="header_menu_alt">
@@ -102,13 +108,15 @@
                     <div class="open_more_info">
                         <img src="img/more.svg" alt="more">
                         <ul class="more_info">
-                            <li><a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener"><img src="img/homepage.svg" alt=""><p>Homepage</p></a></li>
-                            <li><a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener"><img src="img/twitter.svg" alt=""><p>Twitter</p></a></li>
-                            <li><a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener"><img src="img/github.svg" alt=""><p>GitHub</p></a></li>
-                            <li><a href="http://tokamcwin10.blog.jp/archives/38495158.html" target="_blank" title="manifest.jsonの解説ページに飛びます。" rel="noopener"><img src="img/help.svg" alt=""><p>Manifest Help</p></a></li>
+                            <li><a href="https://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener noreferrer"><img src="img/homepage.svg" alt=""><p>Homepage</p></a></li>
+                            <li><a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener noreferrer"><img src="img/twitter.svg" alt=""><p>Twitter</p></a></li>
+                            <li><a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener noreferrer"><img src="img/github.svg" alt=""><p>GitHub</p></a></li>
+                            <li><a href="https://tokamcwin10.blog.jp/article-38495158" target="_blank" title="manifest.jsonの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/help.svg" alt=""><p>Manifest Help</p></a></li>
                         </ul>
                     </div>
                 </div>
+            </div>
+            <div id="page_help">
             </div>
             <div class="page_about">
                 <div class="close_about">
@@ -117,16 +125,22 @@
                 <div class="about_content">
                     <img src="img/icon.webp" alt="" onerror="this.src='img/icon_2000.png'">
                     <h2>とかさんのManifestGenelator</h2>
-                    <p>version:1.2.3</p>
+                    <p>version:1.3.0</p>
+                    <div id="page_share"><img src="img/share.svg" alt=""></div>
                     <div class="about_external_link">
-                        <a href="http://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener"><img src="img/homepage.svg" alt=""></a>
-                        <a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener"><img src="img/twitter.svg" alt=""></a>
-                        <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener"><img src="img/github.svg" alt=""></a>
-                        <a href="http://tokamcwin10.blog.jp/archives/38495158.html" target="_blank" title="manifest.jsonの解説ページに飛びます。" rel="noopener"><img src="img/help.svg" alt=""></a>
+                        <a href="https://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener noreferrer"><img src="img/homepage.svg" alt=""></a>
+                        <a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener noreferrer"><img src="img/twitter.svg" alt=""></a>
+                        <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener noreferrer"><img src="img/github.svg" alt=""></a>
+                        <a href="https://tokamcwin10.blog.jp/article-38495158" target="_blank" title="manifest.jsonの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/help.svg" alt=""></a>
+                        
                     </div>
                 </div>
             </div>
         </header>
+        <div class="help_content bottom" id="help_content_2">
+            <p>データを編集します</p>
+            <p>エラー等は下にある[問題]タブから見ることができます。</p>
+        </div>
         <div class="content">
             <div class="editor">
                 <form name="editor_manifest">
@@ -237,16 +251,16 @@
                     </fieldset>
                     <fieldset class="dependencies">
                         <legend><input type="checkbox" name="dependencies" id="dependencies_enable"><label for="dependencies_enable">Dependencies</label></legend>
-                        <div class="dependencies_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
-                            <div class="dependencies_controls">
-                                <div class="dependencies_controls_bar">
-                                    <ul class="dependencies_controls_tab">
+                        <div class="dependencies tab_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
+                            <div class="dependencies tab_controls">
+                                <div class="dependencies tab_controls_bar">
+                                    <ul class="dependencies tab_controls_bar_tab">
                                         <li class="selected_tab">0<span class="delete_tab">×</span></li>
                                     </ul>
-                                    <span class="dependencies_controls_addtab disabled">+</span>
+                                    <span class="dependencies tab_controls_addtab">+</span>
                                 </div>
                             </div>
-                            <div class="dependencies_list">
+                            <div class="dependencies tab_content_list">
                                 <div class="selected_tab_content">
                                     <div title="依存関係にあるパックのUUIDを設定します。">
                                         <label for="dependencies_uuid">UUID</label>
@@ -295,6 +309,35 @@
                             <div title="このパックのライセンスを設定します。">
                                 <label for="metadata_license">ライセンス</label>
                                 <input type="text" name="metadata_license" id="metadata_license" disabled>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="subpacks">
+                        <legend><input type="checkbox" name="subpacks" id="subpacks_enable"><label for="subpacks_enable">Subpacks</label></legend>
+                        <div class="subpacks tab_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
+                            <div class="subpacks tab_controls">
+                                <div class="subpacks tab_controls_bar">
+                                    <ul class="subpacks tab_controls_bar_tab">
+                                        <li class="selected_tab">0<span class="delete_tab">×</span></li>
+                                    </ul>
+                                    <span class="subpacks tab_controls_addtab">+</span>
+                                </div>
+                            </div>
+                            <div class="subpacks tab_content_list">
+                                <div class="selected_tab_content">
+                                    <div title="サブパックのフォルダー名を指定します。">
+                                        <label for="subpacks_folder_name">フォルダー名</label>
+                                        <input type="text" name="uuid" id="subpacks_folder_name" disabled>
+                                    </div>
+                                    <div title="サブパックの実際に表示される名前を設定します。">
+                                        <label for="subpacks_name">名前</label>
+                                        <input type="text" name="uuid" id="subpacks_name" disabled>
+                                    </div>
+                                    <div title="このサブパックのメモリ使用量">
+                                        <label for="subpacks_memory_tier">メモリティア</label>
+                                        <input type="number" min="0" name="subpacks_memory_tier" id="subpacks_memory_tier" value="0" disabled>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </fieldset>

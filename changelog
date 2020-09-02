@@ -73,6 +73,18 @@
     タブが二つ表示される不具合の修正
     メタデータの作者名削除後に入力欄をクリアするように変更
     schemaのエラー修正
-next
-    subpack
+1.3.0
+    リンクのhttps化
+    サイトマップ実装
+    subpack 追加
+    JSON-LD 改良
     リンク修正
+    pack_manifest変換
+    Dependencies 改良
+    help追加
+    serviceWorkerがエラーしたときわかるように
+    tabアニメーションの追加
+    authorアニメーションの追加
+    tab0要素を削除できるように
+    共有ボタンの設置場所変更
+    イシューリストがたためなくなる問題の修正

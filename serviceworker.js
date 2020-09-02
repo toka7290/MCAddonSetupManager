@@ -1,4 +1,4 @@
-var CACHE_NAME = 'pwa-caches';
+var CACHE_NAME = 'toka-20200831';
 var urlsToCache = [
     '/MCAddonSetupManager/',
     '/MCAddonSetupManager/index.html',
@@ -19,6 +19,7 @@ var urlsToCache = [
     '/MCAddonSetupManager/img/icon_apple-touch-icon.png',
     '/MCAddonSetupManager/img/import.svg',
     '/MCAddonSetupManager/img/more.svg',
+    "/MCAddonSetupManager/img/share.svg",
     '/MCAddonSetupManager/img/twitter.svg',
     '/MCAddonSetupManager/img/warning.svg',
     '/MCAddonSetupManager/js/main.js',

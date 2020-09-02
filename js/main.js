@@ -6,7 +6,9 @@ $(function(){
     var is_dependencies_enable = false;
     var is_capabilities_enable = false;
     var is_metadata_enable = false;
+    var is_subpacks_enable = false;
     var is_world_template = false;
+    var help_page_num = 0;
     onChangedJSON();
     // ページ離脱時に警告表示
     $(window).bind("beforeunload", function() {
@@ -50,7 +52,7 @@ $(function(){
     $('#page_share').on("click",function(){
         const data = {
             title: "とかさんのManifestGenelator",
-            text: "アドオン作成補助ツール。manifest.jsonを簡単に作成・編集",
+            text: "とかさんのManifestGenelator -manifest.jsonを簡単に作成・編集-",
             url: "https://toka7290.github.io/MCAddonSetupManager/"
         }
         if (navigator.share) {
@@ -60,6 +62,14 @@ $(function(){
     // 外部インポート
     $("#input_file").on("change",function(){
         importFile();
+    });
+    // ヘルプを表示
+    $("#show_help").on("click",function(){
+        $("#page_help").fadeIn("fast");
+        toggle_help();
+    });
+    $("#page_help").on("click",function(){
+        toggle_help();
     });
     // ファイルドラッグ&ドロップ
     $(window).on("dragover",function(event){
@@ -91,17 +101,21 @@ $(function(){
         importFile();
     });
     // プレビュー表示切替
-    $("p#show_preview").on("click",function(){
+    $("div#show_preview").on("click",function(){
         $("div.preview").slideToggle();
-        if($("p#show_preview").attr("class")=="active"){
-            $("p#show_preview").removeClass('active');
+        if($("div#show_preview").attr("class")=="active"){
+            $("div#show_preview").removeClass('active');
         }else{
-            $("p#show_preview").addClass('active');
+            $("div#show_preview").addClass('active');
         }
     });
     // ウィンドウワイズ変更時にcss削除
     $(window).resize(function(){
         $("div.preview").removeAttr("style",'');
+        $("div.editor").removeAttr("style",'');
+        $("div.data_check").removeAttr("style",'');
+        help_page_num = 5;
+        toggle_help();
     });
     // about開く
     $("p#open_about").on("click",function(){
@@ -160,20 +174,30 @@ $(function(){
     });
     // Modules tab削除
     $(document).on("click",".modules_controls_tab li span.delete_tab",function(event){
-        selectedindex = $(this).parent().index();
-        if($(".modules_controls_tab li").eq(selectedindex).hasClass('selected_tab')){
-            $(".modules_controls_tab li").eq(selectedindex-1).addClass('selected_tab');
-            $(".modules_contents > div").eq(selectedindex-1).addClass('selected_tab_content');
-        }
-        $(this).parent().remove();
-        $(".modules_contents > div").eq(selectedindex).remove();
-        for(i=0;i<$(".modules_controls_tab li").length;i++){
-            $(".modules_controls_tab li").eq(i).html(i+'<span class="delete_tab">×</span>');
-        }
-        if($(".modules_controls_tab li").length<=1){
-            $(".modules_controls_addtab").show();
-        }
-        onChangedJSON();
+        delete_tab = $(this).parent();
+        selectedindex = delete_tab.index();
+        modules_controls_tabs = $(".modules_controls_tab li");
+        modules_contents = $(".modules_contents > div");
+        delete_tab.hide(
+            150,
+            function(){
+                modules_contents.eq(selectedindex).remove();
+                if(modules_controls_tabs.eq(selectedindex).hasClass('selected_tab')){
+                    if(selectedindex-1<0) selectedindex=2;
+                    modules_controls_tabs.eq(selectedindex-1).addClass('selected_tab');
+                    modules_contents.eq(selectedindex-1).addClass('selected_tab_content');
+                }
+                delete_tab.remove();
+                modules_controls_tabs = $(".modules_controls_tab li");
+                for(i=0;i<modules_controls_tabs.length;i++){
+                    modules_controls_tabs.eq(i).html(i+'<span class="delete_tab">×</span>');
+                }
+                if(modules_controls_tabs.length<=1){
+                    $(".modules_controls_addtab").show(150);
+                }
+                onChangedJSON();
+            }
+        );
         event.stopPropagation();
     });
     //Modules tab追加
@@ -181,40 +205,61 @@ $(function(){
         modules_addtab();
         onChangedJSON();
     });
-    //Dependencies tab変更
-    $(document).on("click",".dependencies_controls_tab li",function(){
-        if(is_dependencies_enable){
-            selectedindex = $(".dependencies_controls_tab li").index(this);
-            $(".dependencies_controls_tab li").removeClass('selected_tab');
-            $(".dependencies_controls_tab li").eq(selectedindex).addClass('selected_tab');
-            $(".dependencies_list > div").removeClass('selected_tab_content');
-            $(".dependencies_list > div").eq(selectedindex).addClass('selected_tab_content');
+    //tab変更
+    $(document).on("click",".tab_controls_bar_tab li",function(){
+        if((is_subpacks_enable && $(this).parents('.tab_controls').hasClass("subpacks")) ||
+            (is_dependencies_enable && $(this).parents('.tab_controls').hasClass("dependencies"))
+        ){
+            selectedindex = $(this).index();
+            controls_tab = $(this).parent();
+            controls_tabs = controls_tab.children("li");
+            controls_tabs.removeClass('selected_tab');
+            controls_tabs.eq(selectedindex).addClass('selected_tab');
+            tab_content = controls_tab.parents('.tab_controls').next().children("div");
+            tab_content.removeClass('selected_tab_content');
+            tab_content.eq(selectedindex).addClass('selected_tab_content');
         }
     });
-    // Dependencies tab削除
-    $(document).on("click",".dependencies_controls_tab li span.delete_tab",function(event){
-        if(is_dependencies_enable){
-            selectedindex = $(this).parent().index();
-            if($(".dependencies_controls_tab li").eq(selectedindex).hasClass('selected_tab')){
-                $(".dependencies_controls_tab li").eq(selectedindex-1).addClass('selected_tab');
-                $(".dependencies_list > div").eq(selectedindex-1).addClass('selected_tab_content');
-            }
-            $(this).parent().remove();
-            $(".dependencies_list > div").eq(selectedindex).remove();
-            for(i=0;i<$(".dependencies_controls_tab li").length;i++){
-                $(".dependencies_controls_tab li").eq(i).html(i+'<span class="delete_tab">×</span>');
-            }
-            onChangedJSON();
+    //tab削除
+    $(document).on("click",".tab_controls_bar_tab li span.delete_tab",function(event){
+        if((is_subpacks_enable && $(this).parents('.tab_controls').hasClass("subpacks")) ||
+            (is_dependencies_enable && $(this).parents('.tab_controls').hasClass("dependencies"))
+        ){
+            selected_tab = $(this).parent();
+            controls_tab = selected_tab.parent();
+            controls_tabs = controls_tab.children("li");
+            selectedindex = selected_tab.index();
+            tab_content_list = controls_tab.parents('.tab_controls').next().children("div");
+            selected_tab.hide(
+                150,
+                function(){
+                    tab_content_list.eq(selectedindex).remove();
+                    if(selected_tab.hasClass('selected_tab')){
+                        if(selectedindex-1<0) selectedindex=2;
+                        controls_tabs.eq(selectedindex-1).addClass('selected_tab');
+                        tab_content_list.eq(selectedindex-1).addClass('selected_tab_content');
+                    }
+                    selected_tab.remove();
+                    controls_tabs = controls_tab.children("li");
+                    for(i=0;i<controls_tabs.length;i++){
+                        controls_tabs.eq(i).html(i+'<span class="delete_tab">×</span>');
+                    }
+                    onChangedJSON();
+                }
+            );
         }
         event.stopPropagation();
     });
-    //Dependencies tab追加
-    $(".dependencies_controls_addtab").on("click",function(){
-        if(is_dependencies_enable){
-            dependencies_addtab();
+    //tab追加
+    $(".tab_controls_addtab").on("click",function(){
+        if((is_subpacks_enable && $(this).hasClass("subpacks"))||
+            (is_dependencies_enable && $(this).hasClass("dependencies"))
+        ){
+            add_tab($(this).prev());
         }
         onChangedJSON();
     });
+
     //author追加
     $("#metadata_author_add").on("click",function(){
         if(is_metadata_enable){
@@ -226,7 +271,13 @@ $(function(){
     //author削除
     $(document).on("click","span.metadata_delete_author",function(){
         if(is_metadata_enable){
-            $(this).parent().remove();
+            metadata_author = $(this).parent();
+            metadata_author.hide(
+                150,
+                function (){
+                    metadata_author.remove();
+                }
+            );
         }
         onChangedJSON();
     });
@@ -250,26 +301,31 @@ $(function(){
         num = $(".modules_controls_tab li").length;
         addtab = '<li>'+num+'<span class="delete_tab">×</span></li>';
         $(".modules_controls_tab").append(addtab);
+        $(".modules_controls_tab").children('li:last-child').hide().show(150);
         content = $(".modules_contents > div:first-child").clone();
         content.removeClass('selected_tab_content');
         $(".modules_contents").append(content);
         if(0<num){
-            $(".modules_controls_addtab").hide();
+            $(".modules_controls_addtab").hide(150);
         }
     }
-    // 依存タブ追加
-    function dependencies_addtab(){
-        num = $(".dependencies_controls_tab li").length;
+    //タブ追加
+    function add_tab(controls_tab){
+        num = controls_tab.children('li').length;
         addtab = '<li>'+num+'<span class="delete_tab">×</span></li>';
-        $(".dependencies_controls_tab").append(addtab);
-        content = $(".dependencies_list > div:first-child").clone();
+        controls_tab.append(addtab)
+        controls_tab.children('li:last-child').hide().show(150);
+        tab_content_list = controls_tab.parents('.tab_controls').next();
+        content = tab_content_list.children("div:first-child").clone();
         content.removeClass('selected_tab_content');
-        $(".dependencies_list").append(content);
+        tab_content_list.append(content);
     }
     // オーナー追加
     function add_author(name){
+        metadata_author_list = $(".metadata_author_list");
         author_list_child = '<div><span class="name">'+name+'</span><span class="metadata_delete_author">×</span></div>';
-        $(".metadata_author_list").append(author_list_child);
+        metadata_author_list.append(author_list_child);
+        metadata_author_list.children('div:last-child').hide().show(150);
     }
 
     // インポート処理
@@ -284,6 +340,38 @@ $(function(){
             file_reader.readAsText(data);
         }catch(e){
             console.error("error:"+e);
+        }
+    }
+    // ヘルプ切換
+    function toggle_help(){
+        switch(help_page_num){
+            default:
+            case 0:
+                $("#help_content_1").fadeIn("fast");
+                help_page_num++;
+                return;
+            case 1:
+                $("#help_content_1").fadeOut("fast");
+                $("#help_content_2").slideToggle("fast");
+                help_page_num++;
+                return;
+            case 2:
+                $("#help_content_2").slideToggle("fast");
+                $("#help_content_3").fadeIn("fast");
+                help_page_num++;
+                return;
+            case 3:
+                $("#help_content_3").fadeOut("fast");
+                $("#page_help").hide();
+                help_page_num = 0;
+                return;
+            case 5:
+                $("#help_content_1").hide();
+                $("#help_content_2").hide();
+                $("#help_content_3").hide();
+                $("#page_help").hide();
+                help_page_num = 0;
+                return;
         }
     }
     // 更新処理
@@ -303,14 +391,15 @@ $(function(){
         is_dependencies_enable = $('#dependencies_enable').is(':checked');
         is_capabilities_enable = $('#capabilities_enable').is(':checked');
         is_metadata_enable = $('#metadata_enable').is(':checked');
+        is_subpacks_enable = $('#subpacks_enable').is(':checked');
         if(is_dependencies_enable){
-            $(".dependencies_contents").removeClass('disabled');
-            $('div.dependencies_list input').prop('disabled', false);
-            $('span.dependencies_controls_addtab').removeClass('disabled');
+            $("div.dependencies.tab_contents").removeClass('disabled');
+            $('div.dependencies.tab_contents input').prop('disabled', false);
+            $('div.dependencies.tab_contents .tab_controls_bar').removeClass('disabled');
         }else{
-            $(".dependencies_contents").addClass('disabled');
-            $('div.dependencies_list input').prop('disabled', true);
-            $('span.dependencies_controls_addtab').addClass('disabled');
+            $("div.dependencies.tab_contents").addClass('disabled');
+            $('div.dependencies.tab_contents input').prop('disabled', true);
+            $('div.dependencies.tab_contents .tab_controls_bar').addClass('disabled');
         }
         if(is_capabilities_enable){
             $(".capabilities_list").removeClass('disabled');
@@ -326,6 +415,15 @@ $(function(){
             $(".metadata_list").addClass('disabled');
             $('div.metadata_list input').prop('disabled', true);
         }
+        if(is_subpacks_enable){
+            $("div.subpacks.tab_contents").removeClass('disabled');
+            $('div.subpacks.tab_contents input').prop('disabled', false);
+            $('div.subpacks.tab_contents .tab_controls_bar').removeClass('disabled');
+        }else{
+            $("div.subpacks.tab_contents").addClass('disabled');
+            $('div.subpacks.tab_contents input').prop('disabled', true);
+            $('div.subpacks.tab_contents .tab_controls_bar').addClass('disabled');
+        }
     }
     // モジュールタイプ変更
     function type_changed(){
@@ -340,27 +438,27 @@ $(function(){
             $('div.modules_contents > div:nth-child('+i+') #modules_type option').prop('disabled', false);
             switch($('div.modules_contents > div:nth-child('+i+') #modules_type').val()){
                 case "resources":
-                    $(".modules_controls_addtab").hide();
+                    $(".modules_controls_addtab").hide(150);
                     type_prevention(i,"resources");
                     break;
                 case "data":
                     if($(".modules_controls_tab li").length<=1){
-                        $(".modules_controls_addtab").show();
+                        $(".modules_controls_addtab").show(150);
                     }
                     type_prevention(i,"data");
                     break;
                 case "client_data":
                     if($(".modules_controls_tab li").length<=1){
-                        $(".modules_controls_addtab").show();
+                        $(".modules_controls_addtab").show(150);
                     }
                     type_prevention(i,"client_data");
                     break;
                 case "interface":
-                    $(".modules_controls_addtab").hide();
+                    $(".modules_controls_addtab").hide(150);
                     type_prevention(i,"interface");
                     break;
                 case "world_template":
-                    $(".modules_controls_addtab").hide();
+                    $(".modules_controls_addtab").hide(150);
                     type_prevention(i,"world_template");
                     is_world_template = true;
                     $("#header_min_engine_version").addClass("disabled");
@@ -519,11 +617,27 @@ $(function(){
             }
         }
         if(is_dependencies_enable){
-            for(i=0;i<$(".dependencies_controls_tab li").length;i++){
+            for(i=0;i<$(".dependencies.tab_controls_bar_tab li").length;i++){
                 child_num = i + 1;
-                if(!isUUID($('div.dependencies_list > div:nth-child('+child_num+') #dependencies_uuid').val())){
+                if(!isUUID($('div.dependencies.tab_content_list > div:nth-child('+child_num+') #dependencies_uuid').val())){
                     //UUIDではありません
                     addIssue('error',"[Dependencies:"+i+":uuid] 入力されている文字列は有効なUUIDではありません。");
+                    error_num++;
+                }
+            }
+        }
+        if(is_subpacks_enable){
+            for(i=0;i<$(".subpacks.tab_controls_bar_tab li").length;i++){
+                child_num = i + 1;
+                tab_content = $('div.subpacks.tab_content_list > div:nth-child('+child_num+')');
+                if(tab_content.find('#subpacks_folder_name').val()==null||
+                    tab_content.find('#subpacks_folder_name').val()==""){
+                    addIssue('error',"[Subpacks:"+i+":folder_name] フォルダー名が空です。");
+                    error_num++;
+                }
+                if(tab_content.find('#subpacks_name').val()==null||
+                    tab_content.find('#subpacks_name').val()==""){
+                    addIssue('error',"[Subpacks:"+i+":name] 名前が空です。");
                     error_num++;
                 }
             }
@@ -559,9 +673,90 @@ $(function(){
             console.error("error:"+e)
             return;
         }
-        
+        // format_versionがない場合pack_manifest検査
         if(json_data.format_version!=null){
             $('#format_version').val(json_data.format_version);
+        }else if(json_data.header.modules!=null){
+            // pack_manifest.json
+            if(json_data.header.pack_id!=null){
+                $('#header_uuid').val(json_data.header.pack_id);
+            }
+            if(json_data.header.name!=null){
+                $('#header_pack_name').val(json_data.header.name);
+            }
+            if(json_data.header.packs_version!=null){
+                header_version = json_data.header.packs_version.split('.');
+                if(header_version[0]!=null){
+                    $('#header_version_major').val(Number(header_version[0]));
+                }
+                if(header_version[1]!=null){
+                    $('#header_version_minor').val(Number(header_version[1]));
+                }
+                if(header_version[2]!=null){
+                    $('#header_version_patch').val(Number(header_version[2]));
+                }
+            }
+            if(json_data.header.description!=null){
+                $('#header_description').val(json_data.header.description);
+            }
+            if(json_data.header.modules!=null){
+                for(i=0;i<json_data.header.modules.length;i++){
+                    child_num = i + 1;
+                    if(i>0){
+                        modules_addtab();
+                    }
+                    if(json_data.header.modules[i].type!=null){
+                        $('div.modules_contents > div:nth-child('+child_num+') #modules_type').val(json_data.header.modules[i].type);
+                    }
+                    if(json_data.header.modules[i].description!=null){
+                        $('div.modules_contents > div:nth-child('+child_num+') #modules_description').val(json_data.header.modules[i].description);
+                    }
+                    if(json_data.header.modules[i].version!=null){
+                        modules_version = json_data.header.modules[i].version.split('.');
+                        if(modules_version[0]!=null){
+                            $('div.modules_contents > div:nth-child('+child_num+') #modules_version_major').val(Number(modules_version[0]));
+                        }
+                        if(modules_version[1]!=null){
+                            $('div.modules_contents > div:nth-child('+child_num+') #modules_version_minor').val(Number(modules_version[1]));
+                        }
+                        if(modules_version[2]!=null){
+                            $('div.modules_contents > div:nth-child('+child_num+') #modules_version_patch').val(Number(modules_version[2]));
+                        }
+                    }
+                    if(json_data.header.modules[i].uuid!=null){
+                        $('div.modules_contents > div:nth-child('+child_num+') #modules_uuid').val(json_data.header.modules[i].uuid);
+                    }
+                }
+            }
+            if(json_data.header.dependencies!=null){
+                $('#dependencies_enable').prop("checked",true);
+                for(i=0;i<json_data.header.dependencies.length;i++){
+                    child_num = i + 1;
+                    if(i>0){
+                        add_tab($(".dependencies.tab_controls_bar_tab"));
+                    }
+                    tab_content = $('div.dependencies.tab_content_list > div:nth-child('+child_num+')');
+                    if(json_data.header.dependencies[i].uuid!=null){
+                        tab_content.find('#dependencies_uuid').val(json_data.header.dependencies[i].uuid);
+                    }
+                    if(json_data.header.dependencies[i].version!=null){
+                        modules_version = json_data.header.dependencies[i].version.split('.');
+                        if(modules_version[0]!=null){
+                            tab_content.find('#dependencies_version_major').val(modules_version[0]);
+                        }
+                        if(modules_version[1]!=null){
+                            tab_content.find('#dependencies_version_minor').val(modules_version[1]);
+                        }
+                        if(modules_version[2]!=null){
+                            tab_content.find('#dependencies_version_patch').val(modules_version[2]);
+                        }
+                    }
+                }
+            }
+            
+            window.alert("古い形式(pack_manifest.json)から変換します。");
+            onChangedJSON();
+            return;
         }
         
         if(json_data.header.name!=null){
@@ -643,26 +838,26 @@ $(function(){
             }
         }
         
-        
         if(json_data.dependencies!=null){
             $('#dependencies_enable').prop("checked",true);
             for(i=0;i<json_data.dependencies.length;i++){
                 child_num = i + 1;
                 if(i>0){
-                    dependencies_addtab();
+                    add_tab($(".dependencies.tab_controls_bar_tab"));
                 }
+                tab_content = $('div.dependencies.tab_content_list > div:nth-child('+child_num+')');
                 if(json_data.dependencies[i].uuid!=null){
-                    $('div.dependencies_list > div:nth-child('+child_num+') #dependencies_uuid').val(json_data.dependencies[i].uuid);
+                    tab_content.find('#dependencies_uuid').val(json_data.dependencies[i].uuid);
                 }
                 if(json_data.dependencies[i].version!=null){
                     if(json_data.dependencies[i].version[0]!=null){
-                        $('div.dependencies_list > div:nth-child('+child_num+') #dependencies_version_major').val(json_data.dependencies[i].version[0]);
+                        tab_content.find('#dependencies_version_major').val(json_data.dependencies[i].version[0]);
                     }
                     if(json_data.dependencies[i].version[1]!=null){
-                        $('div.dependencies_list > div:nth-child('+child_num+') #dependencies_version_minor').val(json_data.dependencies[i].version[1]);
+                        tab_content.find('#dependencies_version_minor').val(json_data.dependencies[i].version[1]);
                     }
                     if(json_data.dependencies[i].version[2]!=null){
-                        $('div.dependencies_list > div:nth-child('+child_num+') #dependencies_version_patch').val(json_data.dependencies[i].version[2]);
+                        tab_content.find('#dependencies_version_patch').val(json_data.dependencies[i].version[2]);
                     }
                 }
             }
@@ -701,6 +896,26 @@ $(function(){
                 $('#metadata_license').val(json_data.metadata.license);
             }
         }
+        
+        if(json_data.subpacks!=null){
+            $('#subpacks_enable').prop("checked",true);
+            for(i=0;i<json_data.subpacks.length;i++){
+                child_num = i + 1;
+                if(i>0){
+                    add_tab($('.subpacks.tab_controls_bar_tab'));
+                }
+                tab_content = $('div.subpacks.tab_content_list > div:nth-child('+child_num+')');
+                if(json_data.subpacks[i].folder_name!=null){
+                    tab_content.find('#subpacks_folder_name').val(json_data.subpacks[i].folder_name);
+                }
+                if(json_data.subpacks[i].name!=null){
+                    tab_content.find('#subpacks_name').val(json_data.subpacks[i].name);
+                }
+                if(json_data.subpacks[i].memory_tier!=null){
+                    tab_content.find('#subpacks_memory_tier').val(json_data.subpacks[i].memory_tier);
+                }
+            }
+        }
         onChangedJSON();
     }
     // json 出力
@@ -737,10 +952,11 @@ $(function(){
         }
         if(is_dependencies_enable){
             json_raw.dependencies = new Array();
-            for(i=0;i<$(".dependencies_controls_tab li").length;i++){
+            for(i=0;i<$(".dependencies.tab_controls_bar_tab li").length;i++){
                 child_num = i + 1;
+                tab_content = $('div.dependencies.tab_content_list > div:nth-child('+child_num+')');
                 json_raw.dependencies[i] = new Object();
-                json_raw.dependencies[i].uuid = $('div.dependencies_list > div:nth-child('+child_num+') #dependencies_uuid').val();
+                json_raw.dependencies[i].uuid = tab_content.find('#dependencies_uuid').val();
                 json_raw.dependencies[i].version = "replace_dependencies_"+i+"_version";
             }
         }
@@ -768,6 +984,17 @@ $(function(){
             }
             json_raw.metadata.url = $('#metadata_url').val();
             json_raw.metadata.license = $('#metadata_license').val();
+        }
+        if(is_subpacks_enable){
+            json_raw.subpacks = new Array();
+            for(i=0; i<$(".subpacks.tab_controls_bar_tab li").length; i++){
+                child_num = i + 1;
+                json_raw.subpacks[i] = new Object();
+                tab_content = $('div.subpacks.tab_content_list > div:nth-child('+child_num+')');
+                json_raw.subpacks[i].folder_name = tab_content.find('#subpacks_folder_name').val();
+                json_raw.subpacks[i].name = tab_content.find('#subpacks_name').val();
+                json_raw.subpacks[i].memory_tier = Number(tab_content.find('#subpacks_memory_tier').val());
+            }
         }
         json_string_raw = JSON.stringify(json_raw,null,'  ');
         
@@ -807,12 +1034,13 @@ $(function(){
             string_raw = string_raw.replace('"replace_modules_'+i+'_version"', modules_version);
         }
         if(is_dependencies_enable){
-            for(i=0;i<$(".dependencies_controls_tab li").length;i++){
+            for(i=0;i<$(".dependencies.tab_controls_bar_tab li").length;i++){
                 child_num = i + 1;
+                tab_content = $('div.dependencies.tab_content_list > div:nth-child('+child_num+')');
                 dependencies_version = JSON.stringify([
-                    Number($('div.dependencies_list > div:nth-child('+child_num+') #dependencies_version_major').val()),
-                    Number($('div.dependencies_list > div:nth-child('+child_num+') #dependencies_version_minor').val()),
-                    Number($('div.dependencies_list > div:nth-child('+child_num+') #dependencies_version_patch').val())
+                    Number(tab_content.find('#dependencies_version_major').val()),
+                    Number(tab_content.find('#dependencies_version_minor').val()),
+                    Number(tab_content.find('#dependencies_version_patch').val())
                 ]).split(/,/).join(', ');
                 string_raw = string_raw.replace('"replace_dependencies_'+i+'_version"', dependencies_version);
             }

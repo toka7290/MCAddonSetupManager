@@ -1,34 +1,36 @@
 :root{
-    --color_theme: #60ad5e;
-    --color_disabled_text: #808080;
-    --color_background: #e8f5e9;
-    --color_background_2: #c8e6c9;
-    --color_text: #000;
+    --color_header_preview_hover: #1b5e20;
+    --color_scrollbar-track: #1b5e20;
+    --color_header_preview: #004d40;
     --color_header: #2e7d32;
-    --color_header_text: #fff;
+    --color_input_focus: #388e3c;
     --color_header_hover: #1faa00;
     --color_header_2_hover: #43a047;
-    --color_header_preview: #004d40;
-    --color_header_preview_hover: #1b5e20;
+    --color_delete_icon: #519657;
+    --color_boader: #519657;
+    --color_input_boader: #519657;
+    --color_boader_2: #75a478;
+    --color_input_disabled: #80e27e;
+    --color_button_active: #81c784;
+    --color_theme: #60ad5e;
     --color_toolbar: #66bb6a;
     --color_toolbar_hover: #98ee99;
-    --color_boader: #519657;
-    --color_boader_2: #75a478;
-    
-    --color_input_text: #000;
-    --color_input_boader: #519657;
-    --color_input_background: #fbfffc;
-    --color_input_focus: #388e3c;
-    --color_input_disabled: #80e27e;
-    
-    --color_button_hover: #c8e6c9;
-    --color_button_active: #81c784;
-    
-    --color_scrollbar-track: #1b5e20;
     --color_separator: #a5d6a7;
-    
-    --color_delete_icon: #519657;
-    --color_delete_hover: #b2fab4;
+    --color_button_hover: #c8e6c9;
+    --color_background_2: #c8e6c9;
+    --color_background: #e8f5e9;
+    --color_input_background: #fbfffc;
+
+    --color_text: #000;
+    --color_input_text: #000;
+    --color-help_content_text: #000;
+    --color-help_content_border: #555;
+    --color_disabled_text: #808080;
+    --color_header_text: #fff;
+    --color_selected_tab: #fff;
+    --color-help_content: #fff;
+
+    --color_delete_hover: #d81b60;
     
     --color_prism_symbol: #b3e5fc;
     --color_prism_boolean: #1e88e5;
@@ -38,35 +40,31 @@
 }
 @media (prefers-color-scheme: dark){
     :root{
-        --color_theme: #212121;
-        --color_disabled_text: #808080;
-        --color_background: #212121;
-        --color_background_2: #424242;
-        --color_text: #f5f5f5;
+        --color_selected_tab: #000;
         --color_header: #090909;
-        --color_header_text: #f5f5f5;
+        --color_separator: #111111;
+        --color_toolbar_hover: #1b1b1b;
+        --color_input_background: #1b1b1b;
+        --color_theme: #212121;
+        --color_background: #212121;
         --color_header_hover: #373737;
+        --color_background_2: #424242;
         --color_header_2_hover: #494949;
         --color_header_preview: #757575;
-        --color_header_preview_hover: #9e9e9e;
         --color_toolbar: #757575;
-        --color_toolbar_hover: #1b1b1b;
-        --color_boader: #f5f5f5;
-        --color_boader_2: #e4e4e4;
-        
-        --color_input_text: #f5f5f5;
-        --color_input_boader: #f5f5f5;
-        --color_input_background: #1b1b1b;
+        --color_disabled_text: #808080;
+        --color_header_preview_hover: #9e9e9e;
         --color_input_focus: #cfcfcf;
         --color_input_disabled: #bdbebd;
-        
+        --color_boader_2: #e4e4e4;
         --color_button_hover: #e4e4e4;
         --color_button_active: #f0f0f0;
-        
+        --color_text: #f5f5f5;
+        --color_header_text: #f5f5f5;
+        --color_boader: #f5f5f5;
+        --color_input_text: #f5f5f5;
+        --color_input_boader: #f5f5f5;
         --color_scrollbar-track: #fcfcfc;
-        --color_separator: #111111;
-        
         --color_delete_icon: #f5f5f5;
-        --color_delete_hover: #ececec;
     }
 }
