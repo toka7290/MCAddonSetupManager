@@ -47,7 +47,7 @@
         <script>
             if ('serviceWorker' in navigator) {
                 window.addEventListener("load", function() {
-                    navigator.serviceWorker.register('/serviceworker.js', {scope: './MCAddonSetupManager/'})
+                    navigator.serviceWorker.register('./MCAddonSetupManager/serviceworker.js', {scope: './'})
                     .then(function(registration) {
                         // registration worked
                         registration.onupdatefound = function() {
