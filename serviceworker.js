@@ -1,4 +1,4 @@
-var CACHE_NAME = 'toka-20200831';
+var CACHE_NAME = 'toka-20200904';
 var urlsToCache = [
     '/MCAddonSetupManager/',
     '/MCAddonSetupManager/index.html',
@@ -20,6 +20,7 @@ var urlsToCache = [
     '/MCAddonSetupManager/img/import.svg',
     '/MCAddonSetupManager/img/more.svg',
     "/MCAddonSetupManager/img/share.svg",
+    "/MCAddonSetupManager/img/subpacks.svg",
     '/MCAddonSetupManager/img/twitter.svg',
     '/MCAddonSetupManager/img/warning.svg',
     '/MCAddonSetupManager/js/main.js',
@@ -27,7 +28,10 @@ var urlsToCache = [
     '/MCAddonSetupManager/lib/prism.js',
     '/MCAddonSetupManager/lib/jquery-3.5.1.min.js'
 ];
-var oldCacheKeys = 'pwa-caches';
+var oldCacheKeys = [
+  'toka-20200831',
+  'pwa-caches'
+];
 
 // インストール処理
 self.addEventListener('install', function(event) {
@@ -58,7 +62,6 @@ self.addEventListener("activate", function (event) {
 
 // リソースフェッチ時のキャッシュロード処理
 self.addEventListener("fetch", function (event) {
-    console.log(event.request.url);
     event.respondWith(
         caches.match(event.request).then(function (response) {
             if (response) return response;

@@ -276,10 +276,10 @@ $(function(){
                 150,
                 function (){
                     metadata_author.remove();
+                    onChangedJSON();
                 }
             );
         }
-        onChangedJSON();
     });
     // UUID生成
     function getUuid_v4() {

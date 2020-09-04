@@ -74,17 +74,21 @@
     メタデータの作者名削除後に入力欄をクリアするように変更
     schemaのエラー修正
 1.3.0
-    リンクのhttps化
-    サイトマップ実装
-    subpack 追加
-    JSON-LD 改良
-    リンク修正
-    pack_manifest変換
-    Dependencies 改良
-    help追加
-    serviceWorkerがエラーしたときわかるように
-    tabアニメーションの追加
-    authorアニメーションの追加
-    tab0要素を削除できるように
-    共有ボタンの設置場所変更
-    イシューリストがたためなくなる問題の修正
+- 設置していたリンクのhttps化＆リンク修正
+- サイトマップ実装
+- subpack編集機能追加
+- JSON-LDの改良
+- pack_manifestからのインポート＆変換対応
+- Dependenciesの表示を改良
+- スマートフォン表示でhelp機能の追加
+- serviceWorkerがエラーしたときわかるように
+- tabアニメーションの追加
+- authorアニメーションの追加
+- tab0要素を削除できるように
+- スマートフォン表示で共有ボタンの設置場所変更
+- イシューリストがたためなくなる問題の修正
+- serviceWorkerが正常に動作するように修正
+1.3.1
+- subpack helpリンク追加
+- serviceWorkerの改良
+- authorのデータ更新タイミングの調整

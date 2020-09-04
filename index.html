@@ -47,15 +47,15 @@
         <script>
             if ('serviceWorker' in navigator) {
                 window.addEventListener("load", function() {
-                    navigator.serviceWorker.register('/MCAddonSetupManager/serviceworker.js', {scope: '/MCAddonSetupManager/'})
-                    .then(function(reg) {
+                    navigator.serviceWorker.register('/serviceworker.js', {scope: './'})
+                    .then(function(registration) {
                         // registration worked
                         registration.onupdatefound = function() {
                             registration.update();
                         }
                     }).catch(function(error) {
                         // registration failed
-                        console.error("serviceWorker failed");
+                        console.error("serviceWorker failed :", error);
                     });
                 });
             }
@@ -82,7 +82,7 @@
                 <img src="img/icon.webp" alt="" class="title_icon" onerror="this.src='img/icon_2000.png'">
                 <div class="title">
                     <h1>とかさんのManifestGenelator</h1>
-                    <p>version:1.3.0</p>
+                    <p>version:1.3.1</p>
                 </div>
                 <div class="header_menu">
                     <div class="import_file">
@@ -112,6 +112,7 @@
                             <li><a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener noreferrer"><img src="img/twitter.svg" alt=""><p>Twitter</p></a></li>
                             <li><a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener noreferrer"><img src="img/github.svg" alt=""><p>GitHub</p></a></li>
                             <li><a href="https://tokamcwin10.blog.jp/article-38495158" target="_blank" title="manifest.jsonの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/help.svg" alt=""><p>Manifest Help</p></a></li>
+                            <li><a href="https://tokamcwin10.blog.jp/article-39181630" target="_blank" title="Subpacksの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/subpacks.svg" alt=""><p>Subpacks Help</p></a></li>
                         </ul>
                     </div>
                 </div>
@@ -125,13 +126,14 @@
                 <div class="about_content">
                     <img src="img/icon.webp" alt="" onerror="this.src='img/icon_2000.png'">
                     <h2>とかさんのManifestGenelator</h2>
-                    <p>version:1.3.0</p>
+                    <p>version:1.3.1</p>
                     <div id="page_share"><img src="img/share.svg" alt=""></div>
                     <div class="about_external_link">
                         <a href="https://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener noreferrer"><img src="img/homepage.svg" alt=""></a>
                         <a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener noreferrer"><img src="img/twitter.svg" alt=""></a>
                         <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener noreferrer"><img src="img/github.svg" alt=""></a>
                         <a href="https://tokamcwin10.blog.jp/article-38495158" target="_blank" title="manifest.jsonの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/help.svg" alt=""></a>
+                        <a href="https://tokamcwin10.blog.jp/article-39181630" target="_blank" title="Subpacksの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/subpacks.svg" alt=""></a>
                         
                     </div>
                 </div>
@@ -353,7 +355,7 @@
                     <pre class="language-json">
                         <code class="language-json"></code>
                     </pre>
-                    <textarea name="code_buffer" id="code_buffer"></textarea>
+                    <label><textarea name="code_buffer" id="code_buffer"></textarea></label>
                 </div>
                 <div class="issue">
                     <div class="issue_contlrol_bar">
