@@ -1,4 +1,4 @@
-var CACHE_NAME = 'toka-20200904';
+var CACHE_NAME = 'toka-20201119';
 var urlsToCache = [
     '/MCAddonSetupManager/',
     '/MCAddonSetupManager/index.html',
@@ -29,6 +29,7 @@ var urlsToCache = [
     '/MCAddonSetupManager/lib/jquery-3.5.1.min.js'
 ];
 var oldCacheKeys = [
+  'toka-20200904',
   'toka-20200831',
   'pwa-caches'
 ];
@@ -67,14 +68,14 @@ self.addEventListener("fetch", function (event) {
             if (response) return response;
             var fetchRequest = event.request.clone();
             return fetch(fetchRequest).then(function (response) {
-            if (!response || response.status !== 200 || response.type !== "basic") {
-                return response;
-            }
-            var responseToCache = response.clone();
-            caches.open(CACHE_NAME).then(function (cache) {
-                cache.put(event.request, responseToCache);
-            });
-            return response;
+              if (!response || response.status !== 200 || response.type !== "basic") {
+                  return response;
+              }
+              var responseToCache = response.clone();
+              caches.open(CACHE_NAME).then(function (cache) {
+                  cache.put(event.request, responseToCache);
+              });
+              return response;
             });
         })
     );

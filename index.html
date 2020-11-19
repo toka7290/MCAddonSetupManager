@@ -1,385 +1,435 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/websaite#">
-        <meta charset="UTF-8">
-        <title>とかさんのManifestGenelator</title>
-        <!-- metadata -->
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <meta name="keywords" content="とかさん,Minecraft,マインクラフト,manifest,マニフェスト,manifest.json,Genelator,tool,ツール,Addon,アドオン">
-        <meta name="Description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。">
-        <meta http-equiv="content-language" content="ja">
-        <meta name ="theme-color" content="#60ad5e">
-        <meta property="og:url" content="https://toka7290.github.io/MCAddonSetupManager/" />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="とかさんのManifestGenelator" />
-        <meta property="og:title" content="ManifestGenelator" />
-        <meta property="og:description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。" />
-        <meta property="og:image" content="https://toka7290.github.io/MCAddonSetupManager/img/icon_2000.png" />
-        <meta name="twitter:card" content="summary">
-        <meta name="twitter:site" content="@toka7290">
-        <meta name="google-site-verification" content="Gvi-XrJEZRsxJgsNLv5NOddbD6COJo804pUgyPvpi34" />
-        <link rel="apple-touch-icon" href="img/icon_apple-touch-icon.png">
-        <link rel="icon" href="img/icon.webp">
-        <link rel="manifest" href="json/webapp.webmanifest">
-        <script type="application/ld+json">
-            {
-                "@context": "http://schema.org",
-                "@type": "WebApplication",
-                "name": "とかさんのManifestGenelator",
-                "applicationCategory": "DeveloperApplication",
-                "applicationSubCategory": "Minecraft Manifest json",
-                "image": "img/icon_2000.png",
-                "about": "Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。",
-                "creator": {
-                    "@type": "Person",
-                    "name": "とかさん",
-                    "url": "http://tokamcwin10.blog.jp/"
-                },
-                "offers": {
-                    "@type": "Offer",
-                    "price": "0",
-                    "priceCurrency": "JPN"
-                },
-                "url": "https://toka7290.github.io/MCAddonSetupManager/",
-                "operatingSystem": "Any. It is a Web Application"
-            }
-        </script>
-        <script>
-            if ('serviceWorker' in navigator) {
-                window.addEventListener("load", function() {
-                    navigator.serviceWorker.register('/MCAddonSetupManager/serviceworker.js', {scope: '/MCAddonSetupManager/'})
-                    .then(function(registration) {
-                        // registration worked
-                        registration.onupdatefound = function() {
-                            registration.update();
-                        }
-                    }).catch(function(error) {
-                        // registration failed
-                        console.error("serviceWorker failed :", error);
-                    });
-                });
-            }
-            let deferredPrompt;
-            window.addEventListener('beforeinstallprompt', (e) => {
-                e.preventDefault();
-                deferredPrompt = e;
+
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/websaite#">
+    <meta charset="UTF-8" />
+    <title>とかさんのManifestGenerator</title>
+    <!-- metadata -->
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="keywords" content="とかさん,Minecraft,マインクラフト,manifest,マニフェスト,manifest.json,Generator,tool,ツール,Addon,アドオン" />
+    <meta name="Description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。" />
+    <meta http-equiv="content-language" content="ja" />
+    <meta name="theme-color" content="#60ad5e" />
+    <meta property="og:url" content="https://toka7290.github.io/MCAddonSetupManager/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="とかさんのManifestGenerator" />
+    <meta property="og:title" content="ManifestGenerator" />
+    <meta property="og:description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。" />
+    <meta property="og:image" content="https://toka7290.github.io/MCAddonSetupManager/img/icon_2000.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@toka7290" />
+    <meta name="google-site-verification" content="Gvi-XrJEZRsxJgsNLv5NOddbD6COJo804pUgyPvpi34" />
+    <link rel="apple-touch-icon" href="img/icon_apple-touch-icon.png" />
+    <link rel="icon" href="img/icon.webp" />
+    <link rel="manifest" href="json/webapp.webmanifest" />
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "WebApplication",
+        "name": "とかさんのManifestGenerator",
+        "applicationCategory": "DeveloperApplication",
+        "applicationSubCategory": "Minecraft Manifest json",
+        "image": "img/icon_2000.png",
+        "about": "Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。",
+        "creator": {
+          "@type": "Person",
+          "name": "とかさん",
+          "url": "http://tokamcwin10.blog.jp/"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "JPN"
+        },
+        "url": "https://toka7290.github.io/MCAddonSetupManager/",
+        "operatingSystem": "Any. It is a Web Application"
+      }
+    </script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker
+            .register("/MCAddonSetupManager/serviceworker.js", {
+              scope: "/MCAddonSetupManager/",
+            })
+            .then(function (registration) {
+              // registration worked
+              registration.onupdatefound = function () {
+                registration.update();
+              };
+            })
+            .catch(function (error) {
+              // registration failed
+              console.error("serviceWorker failed :", error);
             });
-        </script>
-        <!-- lib -->
-        <script src="lib/jquery-3.5.1.min.js" defer></script>
-        <script src="lib/prism.js" defer></script>
-        <!-- js -->
-        <script type="text/javascript" src="js/main.js" defer></script>
-        <!-- css -->
-        <link rel="stylesheet" href="css/color.css" media="all" async>
-        <link rel="stylesheet" href="css/style.css" media="all" async>
-        <link rel="stylesheet" href="css/prism.css" media="all" defer>
-        <link rel="stylesheet" href="css/phone.css" media="(max-width: 35rem)" async>
-    </head>
-    <body>
-        <header class="header">
-            <div class="header_main">
-                <img src="img/icon.webp" alt="" class="title_icon" onerror="this.src='img/icon_2000.png'">
-                <div class="title">
-                    <h1>とかさんのManifestGenelator</h1>
-                    <p>version:1.3.1</p>
-                </div>
-                <div class="header_menu">
-                    <div class="import_file">
-                        <label for="input_file">Import</label><input type="file" name="input_file" id="input_file" accept=".json">
-                        <div class="help_content top" id="help_content_1">
-                            <p>すでファイルがある場合はデータをインポートします。</p>
-                        </div>
-                    </div>
-                    <div id="show_preview">
-                        <span>Preview</span>
-                        <div class="help_content top" id="help_content_3">
-                            <p>入力・編集したデータのjsonプレビュー閲覧とダウンロード・コピーをします。</p>
-                        </div>
-                    </div>
-                    <p id="show_help">help</p>
-                    <p id="open_about">About</p>
-                </div>
-                <div class="header_menu_alt">
-                    <label for="input_file" class="import_file">
-                        <img src="img/import.svg" alt="import">
-                        <p>Import</p>
-                    </label>
-                    <div class="open_more_info">
-                        <img src="img/more.svg" alt="more">
-                        <ul class="more_info">
-                            <li><a href="https://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener noreferrer"><img src="img/homepage.svg" alt=""><p>Homepage</p></a></li>
-                            <li><a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener noreferrer"><img src="img/twitter.svg" alt=""><p>Twitter</p></a></li>
-                            <li><a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener noreferrer"><img src="img/github.svg" alt=""><p>GitHub</p></a></li>
-                            <li><a href="https://tokamcwin10.blog.jp/article-38495158" target="_blank" title="manifest.jsonの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/help.svg" alt=""><p>Manifest Help</p></a></li>
-                            <li><a href="https://tokamcwin10.blog.jp/article-39181630" target="_blank" title="Subpacksの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/subpacks.svg" alt=""><p>Subpacks Help</p></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div id="page_help">
-            </div>
-            <div class="page_about">
-                <div class="close_about">
-                    <img src="img/close.svg" alt="">
-                </div>
-                <div class="about_content">
-                    <img src="img/icon.webp" alt="" onerror="this.src='img/icon_2000.png'">
-                    <h2>とかさんのManifestGenelator</h2>
-                    <p>version:1.3.1</p>
-                    <div id="page_share"><img src="img/share.svg" alt=""></div>
-                    <div class="about_external_link">
-                        <a href="https://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener noreferrer"><img src="img/homepage.svg" alt=""></a>
-                        <a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener noreferrer"><img src="img/twitter.svg" alt=""></a>
-                        <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener noreferrer"><img src="img/github.svg" alt=""></a>
-                        <a href="https://tokamcwin10.blog.jp/article-38495158" target="_blank" title="manifest.jsonの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/help.svg" alt=""></a>
-                        <a href="https://tokamcwin10.blog.jp/article-39181630" target="_blank" title="Subpacksの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/subpacks.svg" alt=""></a>
-                        
-                    </div>
-                </div>
-            </div>
-        </header>
-        <div class="help_content bottom" id="help_content_2">
-            <p>データを編集します</p>
-            <p>エラー等は下にある[問題]タブから見ることができます。</p>
+        });
+      }
+      let deferredPrompt;
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+      });
+    </script>
+    <!-- lib -->
+    <script src="lib/jquery-3.5.1.min.js" defer></script>
+    <script src="lib/prism.js" defer></script>
+    <!-- js -->
+    <script type="text/javascript" src="js/main.js" defer></script>
+    <!-- css -->
+    <link rel="stylesheet" href="css/color.css" media="all" async />
+    <link rel="stylesheet" href="css/style.css" media="all" async />
+    <link rel="stylesheet" href="css/prism.css" media="all" defer />
+    <link rel="stylesheet" href="css/phone.css" media="(max-width: 35rem)" async />
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="header_main">
+        <img src="img/icon.webp" alt="" class="title_icon" onerror="this.src='img/icon_2000.png'" />
+        <div class="title">
+          <h1>とかさんのManifestGenerator</h1>
+          <p>version:1.3.2</p>
         </div>
-        <div class="content">
-            <div class="editor">
-                <form name="editor_manifest">
-                    <fieldset class="basic" title="このmanifest.jsonのフォーマットバージョンを設定します。">
-                        <label for="format_version">フォーマットバージョン</label>
-                        <select name="format_version" id="format_version">
-                            <option value="2">2</option>
-                            <option value="1">1</option>
-                        </select>
-                    </fieldset>
-                    <fieldset class="header">
-                        <legend>Header</legend>
-                        <div title="このパックの名前を設定します。">
-                            <label for="header_pack_name">名前</label>
-                            <input type="text" name="pack_name" id="header_pack_name">
-                        </div>
-                        <div title="このパックの説明を設定します。">
-                            <label for="header_description">説明</label>
-                            <textarea type="text" name="description" id="header_description"></textarea>
-                        </div>
-                        <div title="このパックのバージョンを示します。">
-                            <label for="header_version_major">
-                                <span>バージョン</span>
-                                <input type="number" min="0" name="" id="header_version_major" value="1">
-                                <span>.</span>
-                                <input type="number" min="0" name="" id="header_version_minor" value="0">
-                                <span>.</span>
-                                <input type="number" min="0" name="" id="header_version_patch" value="0">
-                            </label>
-                        </div>
-                        <div title="このパックが動作するMinecraftの最小バージョン(このパックの作成バージョン)を設定します。">
-                            <label id="header_min_engine_version">
-                                <span>最小エンジンバージョン</span>
-                                <input type="number" min="0" name="" id="header_min_engine_version_major" value="1">
-                                <span>.</span>
-                                <input type="number" min="0" name="" id="header_min_engine_version_minor" value="13">
-                                <span>.</span>
-                                <input type="number" min="0" name="" id="header_min_engine_version_patch" value="0">
-                            </label>
-                        </div>
-                        <div title="このパックのUUIDを設定します。">
-                            <label for="header_uuid">UUID</label>
-                            <input type="text" name="uuid" id="header_uuid">
-                            <input type="button" value="Generate" class="generate_uuid">
-                        </div>
-                        <div title="このパックをマルチプラットフォーム環境で使用できないようにします。">
-                            <label for="header_platform_locked">プラットフォームロック</label>
-                            <input type="checkbox" name="header_platform_locked" id="header_platform_locked">
-                        </div>
-                        <div title="このパックワールドの作成されたバージョンを設定します。">
-                            <label id="header_base_game_version">
-                                <span>基本ゲームバージョン</span>
-                                <input type="number" min="0" name="" id="header_base_game_version_major" value="1" disabled>
-                                <span>.</span>
-                                <input type="number" min="0" name="" id="header_base_game_version_minor" value="13" disabled>
-                                <span>.</span>
-                                <input type="number" min="0" name="" id="header_base_game_version_patch" value="0" disabled>
-                            </label>
-                        </div>
-                        <div title="ワールドテンプレートの導入時、ワールド設定をロックします。">
-                            <label for="header_lock_template_options">テンプレートオプションロック</label>
-                            <input type="checkbox" name="header_lock_template_options" id="header_lock_template_options" disabled>
-                        </div>
-                    </fieldset>
-                    <fieldset class="modules">
-                        <legend>Modules</legend>
-                        <div class="modules_controls">
-                            <div class="modules_controls_bar">
-                                <ul class="modules_controls_tab">
-                                    <li class="selected_tab">0<span class="delete_tab">×</span></li>
-                                </ul>
-                                <span class="modules_controls_addtab">+</span>
-                            </div>
-                        </div>
-                        <div class="modules_contents">
-                            <div class="selected_tab_content">
-                                <div title="このモジュールのタイプを設定します。">
-                                    <label for="modules_type">タイプ</label>
-                                    <select name="modules_type" id="modules_type" required>
-                                        <option value="resources">resources</option>
-                                        <option value="data">data</option>
-                                        <option value="client_data">client_data</option>
-                                        <option value="interface">interface</option>
-                                        <option value="world_template">world_template</option>
-                                    </select>
-                                </div>
-                                <div title="このモジュールの説明を設定します。">
-                                    <label for="modules_description">説明</label>
-                                    <textarea type="text" name="description" id="modules_description"></textarea>
-                                </div>
-                                <div title="このモジュールのバージョンを設定します。">
-                                    <label>
-                                        <span>バージョン</span>
-                                        <input type="number" min="0" name="" id="modules_version_major" value="1">
-                                        <span>.</span>
-                                        <input type="number" min="0" name="" id="modules_version_minor" value="0">
-                                        <span>.</span>
-                                        <input type="number" min="0" name="" id="modules_version_patch" value="0">
-                                    </label>
-                                </div>
-                                <div title="このモジュールのUUIDを設定します。">
-                                    <label for="modules_uuid">UUID</label>
-                                    <input type="text" name="uuid" id="modules_uuid">
-                                    <input type="button" value="Generate" class="generate_uuid">
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset class="dependencies">
-                        <legend><input type="checkbox" name="dependencies" id="dependencies_enable"><label for="dependencies_enable">Dependencies</label></legend>
-                        <div class="dependencies tab_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
-                            <div class="dependencies tab_controls">
-                                <div class="dependencies tab_controls_bar">
-                                    <ul class="dependencies tab_controls_bar_tab">
-                                        <li class="selected_tab">0<span class="delete_tab">×</span></li>
-                                    </ul>
-                                    <span class="dependencies tab_controls_addtab">+</span>
-                                </div>
-                            </div>
-                            <div class="dependencies tab_content_list">
-                                <div class="selected_tab_content">
-                                    <div title="依存関係にあるパックのUUIDを設定します。">
-                                        <label for="dependencies_uuid">UUID</label>
-                                        <input type="text" name="uuid" id="dependencies_uuid" disabled>
-                                    </div>
-                                    <div title="依存関係にあるパックのバージョンを設定します。">
-                                        <label>
-                                            <span>バージョン</span>
-                                            <input type="number" min="0" name="" id="dependencies_version_major" value="1" disabled>
-                                            <span>.</span>
-                                            <input type="number" min="0" name="" id="dependencies_version_minor" value="0" disabled>
-                                            <span>.</span>
-                                            <input type="number" min="0" name="" id="dependencies_version_patch" value="0" disabled>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset class="capabilities">
-                        <legend><input type="checkbox" name="capabilities" id="capabilities_enable"><label for="capabilities_enable">Capabilities</label></legend>
-                        <div class="capabilities_list" title="このパックで追加の機能を有効にします。">
-                            <div title="カスタムUI機能を有効化します。"><input type="checkbox" name="experimental_custom_ui" id="experimental_custom_ui" disabled><label for="experimental_custom_ui">experimental_custom_ui</label></div>
-                            <div title="Education Chemistry の機能に追加、変更できるようにします。"><input type="checkbox" name="chemistry" id="chemistry" disabled><label for="chemistry">chemistry</label></div>
-                            <div title="レイトレーシングの機能をパックで使えるようにします。(1.15.x以上)"><input type="checkbox" name="raytracing" id="raytracing" disabled><label for="raytracing">raytracing</label></div>
-                        </div>
-                    </fieldset>
-                    <fieldset class="metadata">
-                        <legend><input type="checkbox" name="metadata" id="metadata_enable"><label for="metadata_enable">Metadata</label></legend>
-                        <div class="metadata_list">
-                            <div title="このパックの作者を設定します。">
-                                <label for="metadata_author">作者</label>
-                                <div class="metadata_authors">
-                                    <div class="metadata_author_list">
-                                    </div>
-                                    <div class="metadata_author_adder">
-                                        <input type="text" name="metadata_author" id="metadata_author" disabled>
-                                        <label for="metadata_author_add"><input type="button" value="Add" id="metadata_author_add" disabled></label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div title="このパックのホームページURLを設定します。">
-                                <label for="metadata_url">URL</label>
-                                <input type="url" name="metadata_url" id="metadata_url" disabled>
-                            </div>
-                            <div title="このパックのライセンスを設定します。">
-                                <label for="metadata_license">ライセンス</label>
-                                <input type="text" name="metadata_license" id="metadata_license" disabled>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset class="subpacks">
-                        <legend><input type="checkbox" name="subpacks" id="subpacks_enable"><label for="subpacks_enable">Subpacks</label></legend>
-                        <div class="subpacks tab_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
-                            <div class="subpacks tab_controls">
-                                <div class="subpacks tab_controls_bar">
-                                    <ul class="subpacks tab_controls_bar_tab">
-                                        <li class="selected_tab">0<span class="delete_tab">×</span></li>
-                                    </ul>
-                                    <span class="subpacks tab_controls_addtab">+</span>
-                                </div>
-                            </div>
-                            <div class="subpacks tab_content_list">
-                                <div class="selected_tab_content">
-                                    <div title="サブパックのフォルダー名を指定します。">
-                                        <label for="subpacks_folder_name">フォルダー名</label>
-                                        <input type="text" name="uuid" id="subpacks_folder_name" disabled>
-                                    </div>
-                                    <div title="サブパックの実際に表示される名前を設定します。">
-                                        <label for="subpacks_name">名前</label>
-                                        <input type="text" name="uuid" id="subpacks_name" disabled>
-                                    </div>
-                                    <div title="このサブパックのメモリ使用量">
-                                        <label for="subpacks_memory_tier">メモリティア</label>
-                                        <input type="number" min="0" name="subpacks_memory_tier" id="subpacks_memory_tier" value="0" disabled>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
+        <div class="header_menu">
+          <div class="import_file">
+            <label for="input_file">Import</label><input type="file" name="input_file" id="input_file" accept=".json" />
+            <div class="help_content top" id="help_content_1">
+              <p>すでファイルがある場合はデータをインポートします。</p>
             </div>
-            <div class="separator"></div>
-            <div class="data_check">
-                <div class="preview">
-                    <div class="preview_contlrol_bar">
-                        <p class="preview_contlrol_copy">Copy</p>
-                        <p class="preview_contlrol_download">Download</p>
-                    </div>
-                    <pre class="language-json">
+          </div>
+          <div id="show_preview">
+            <span>Preview</span>
+            <div class="help_content top" id="help_content_3">
+              <p>
+                入力・編集したデータのjsonプレビュー閲覧とダウンロード・コピーをします。
+              </p>
+            </div>
+          </div>
+          <p id="show_help">help</p>
+          <p id="open_about">About</p>
+        </div>
+        <div class="header_menu_alt">
+          <label for="input_file" class="import_file">
+            <img src="img/import.svg" alt="import" />
+            <p>Import</p>
+          </label>
+          <div class="open_more_info">
+            <img src="img/more.svg" alt="more" />
+            <ul class="more_info">
+              <li>
+                <a href="https://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener noreferrer"><img src="img/homepage.svg" alt="" />
+                  <p>Homepage</p>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener noreferrer"><img src="img/twitter.svg" alt="" />
+                  <p>Twitter</p>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener noreferrer"><img src="img/github.svg" alt="" />
+                  <p>GitHub</p>
+                </a>
+              </li>
+              <li>
+                <a href="https://tokamcwin10.blog.jp/article-38495158" target="_blank" title="manifest.jsonの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/help.svg" alt="" />
+                  <p>Manifest Help</p>
+                </a>
+              </li>
+              <li>
+                <a href="https://tokamcwin10.blog.jp/article-39181630" target="_blank" title="Subpacksの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/subpacks.svg" alt="" />
+                  <p>Subpacks Help</p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div id="page_help"></div>
+      <div class="page_about">
+        <div class="close_about">
+          <img src="img/close.svg" alt="" />
+        </div>
+        <div class="about_content">
+          <img src="img/icon.webp" alt="" onerror="this.src='img/icon_2000.png'" />
+          <h2>とかさんのManifestGenerator</h2>
+          <p>version:1.3.2</p>
+          <div id="page_share"><img src="img/share.svg" alt="" /></div>
+          <div class="about_external_link">
+            <a href="https://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener noreferrer"><img src="img/homepage.svg" alt="" /></a>
+            <a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener noreferrer"><img src="img/twitter.svg" alt="" /></a>
+            <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener noreferrer"><img src="img/github.svg" alt="" /></a>
+            <a href="https://tokamcwin10.blog.jp/article-38495158" target="_blank" title="manifest.jsonの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/help.svg" alt="" /></a>
+            <a href="https://tokamcwin10.blog.jp/article-39181630" target="_blank" title="Subpacksの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/subpacks.svg" alt="" /></a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="help_content bottom" id="help_content_2">
+      <p>データを編集します</p>
+      <p>エラー等は下にある[問題]タブから見ることができます。</p>
+    </div>
+    <div class="content">
+      <div class="editor">
+        <form name="editor_manifest">
+          <fieldset class="basic" title="Manifest.jsonのフォーマットを定義します。">
+            <legend>Definition</legend>
+            <div title="このmanifest.jsonのフォーマットバージョンを設定します。">
+              <label for="format_version">フォーマットバージョン</label>
+              <select name="format_version" id="format_version">
+                <option value="2">2</option>
+                <option value="1">1</option>
+              </select>
+            </div>
+          </fieldset>
+          <fieldset class="header" title="マニフェストの諸定義を行います。">
+            <legend>Header</legend>
+            <div title="このパックの名前を設定します。">
+              <label for="header_pack_name">名前</label>
+              <input type="text" name="pack_name" id="header_pack_name" />
+            </div>
+            <div title="このパックの説明を設定します。">
+              <label for="header_description">説明</label>
+              <textarea type="text" name="description" id="header_description"></textarea>
+            </div>
+            <div title="このパックのバージョンを示します。">
+              <label for="header_version_major">
+                <span>バージョン</span>
+                <input type="number" min="0" name="" id="header_version_major" value="1" />
+                <span>.</span>
+                <input type="number" min="0" name="" id="header_version_minor" value="0" />
+                <span>.</span>
+                <input type="number" min="0" name="" id="header_version_patch" value="0" />
+              </label>
+            </div>
+            <div title="このパックが動作するMinecraftの最小バージョン(このパックの作成バージョン)を設定します。">
+              <label id="header_min_engine_version">
+                <span>最小エンジンバージョン</span>
+                <input type="number" min="0" name="" id="header_min_engine_version_major" value="1" />
+                <span>.</span>
+                <input type="number" min="0" name="" id="header_min_engine_version_minor" value="13" />
+                <span>.</span>
+                <input type="number" min="0" name="" id="header_min_engine_version_patch" value="0" />
+              </label>
+            </div>
+            <div title="このパックのUUIDを設定します。">
+              <label for="header_uuid">UUID</label>
+              <input type="text" name="uuid" id="header_uuid" />
+              <input type="button" value="Generate" class="generate_uuid" />
+            </div>
+            <div title="このパックをマルチプラットフォーム環境で使用できないようにします。">
+              <label for="header_platform_locked">プラットフォームロック</label>
+              <input type="checkbox" name="header_platform_locked" id="header_platform_locked" />
+            </div>
+            <div title="このパックワールドの作成されたバージョンを設定します。">
+              <label id="header_base_game_version">
+                <span>基本ゲームバージョン</span>
+                <input type="number" min="0" name="" id="header_base_game_version_major" value="1" disabled />
+                <span>.</span>
+                <input type="number" min="0" name="" id="header_base_game_version_minor" value="13" disabled />
+                <span>.</span>
+                <input type="number" min="0" name="" id="header_base_game_version_patch" value="0" disabled />
+              </label>
+            </div>
+            <div title="ワールドテンプレートの導入時、ワールド設定をロックします。">
+              <label for="header_lock_template_options">テンプレートオプションロック</label>
+              <input type="checkbox" name="header_lock_template_options" id="header_lock_template_options" disabled />
+            </div>
+          </fieldset>
+          <fieldset class="modules" title="このマニフェストを含むパックがどのモジュールを使用するか設定します。">
+            <legend>Modules</legend>
+            <div class="modules_controls">
+              <div class="modules_controls_bar">
+                <ul class="modules_controls_tab">
+                  <li class="selected_tab">
+                    0<span class="delete_tab">×</span>
+                  </li>
+                </ul>
+                <span class="modules_controls_add_tab">+</span>
+              </div>
+            </div>
+            <div class="modules_contents">
+              <div class="selected_tab_content">
+                <div title="このモジュールのタイプを設定します。">
+                  <label for="modules_type">タイプ</label>
+                  <select name="modules_type" id="modules_type" required>
+                    <option value="resources">resources</option>
+                    <option value="data">data</option>
+                    <option value="client_data">client_data</option>
+                    <option value="interface">interface</option>
+                    <option value="world_template">world_template</option>
+                  </select>
+                </div>
+                <div title="このモジュールの説明を設定します。">
+                  <label for="modules_description">説明</label>
+                  <textarea type="text" name="description" id="modules_description"></textarea>
+                </div>
+                <div title="このモジュールのバージョンを設定します。">
+                  <label>
+                    <span>バージョン</span>
+                    <input type="number" min="0" name="" id="modules_version_major" value="1" />
+                    <span>.</span>
+                    <input type="number" min="0" name="" id="modules_version_minor" value="0" />
+                    <span>.</span>
+                    <input type="number" min="0" name="" id="modules_version_patch" value="0" />
+                  </label>
+                </div>
+                <div title="このモジュールのUUIDを設定します。">
+                  <label for="modules_uuid">UUID</label>
+                  <input type="text" name="uuid" id="modules_uuid" />
+                  <input type="button" value="Generate" class="generate_uuid" />
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="dependencies" title="依存関係を設定します。">
+            <legend>
+              <input type="checkbox" name="dependencies" id="dependencies_enable" /><label for="dependencies_enable">Dependencies</label>
+            </legend>
+            <div class="dependencies tab_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
+              <div class="dependencies tab_controls">
+                <div class="dependencies tab_controls_bar">
+                  <ul class="dependencies tab_controls_bar_tab">
+                    <li class="selected_tab">
+                      0<span class="delete_tab">×</span>
+                    </li>
+                  </ul>
+                  <span class="dependencies tab_controls_add_tab">+</span>
+                </div>
+              </div>
+              <div class="dependencies tab_content_list">
+                <div class="selected_tab_content">
+                  <div title="依存関係にあるパックのUUIDを設定します。">
+                    <label for="dependencies_uuid">UUID</label>
+                    <input type="text" name="uuid" id="dependencies_uuid" disabled />
+                  </div>
+                  <div title="依存関係にあるパックのバージョンを設定します。">
+                    <label>
+                      <span>バージョン</span>
+                      <input type="number" min="0" name="" id="dependencies_version_major" value="1" disabled />
+                      <span>.</span>
+                      <input type="number" min="0" name="" id="dependencies_version_minor" value="0" disabled />
+                      <span>.</span>
+                      <input type="number" min="0" name="" id="dependencies_version_patch" value="0" disabled />
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="capabilities" title="特殊な機能を有効にする場合に使用します。">
+            <legend>
+              <input type="checkbox" name="capabilities" id="capabilities_enable" /><label for="capabilities_enable">Capabilities</label>
+            </legend>
+            <div class="capabilities_list" title="このパックで追加の機能を有効にします。">
+              <div title="カスタムUI機能を有効化します。">
+                <input type="checkbox" name="experimental_custom_ui" id="experimental_custom_ui" disabled /><label for="experimental_custom_ui">experimental_custom_ui</label>
+              </div>
+              <div title="Education Chemistry の機能に追加、変更できるようにします。">
+                <input type="checkbox" name="chemistry" id="chemistry" disabled /><label for="chemistry">chemistry</label>
+              </div>
+              <div title="レイトレーシングの機能をパックで使えるようにします。(1.15.x以上)">
+                <input type="checkbox" name="raytracing" id="raytracing" disabled /><label for="raytracing">raytracing</label>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="metadata" title="製作者に関する情報を記載します。ゲームプレイへの影響はありません。">
+            <legend>
+              <input type="checkbox" name="metadata" id="metadata_enable" /><label for="metadata_enable">Metadata</label>
+            </legend>
+            <div class="metadata_list">
+              <div title="このパックの作者を設定します。">
+                <label for="metadata_author">作者</label>
+                <div class="metadata_authors">
+                  <div class="metadata_author_list"></div>
+                  <div class="metadata_author_adder">
+                    <input type="text" name="metadata_author" id="metadata_author" disabled />
+                    <label for="metadata_author_add"><input type="button" value="Add" id="metadata_author_add" disabled /></label>
+                  </div>
+                </div>
+              </div>
+              <div title="このパックのホームページURLを設定します。">
+                <label for="metadata_url">URL</label>
+                <input type="url" name="metadata_url" id="metadata_url" disabled />
+              </div>
+              <div title="このパックのライセンスを設定します。">
+                <label for="metadata_license">ライセンス</label>
+                <input type="text" name="metadata_license" id="metadata_license" disabled />
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="subpacks" title="サブパック機能の設定を行います。">
+            <legend>
+              <input type="checkbox" name="subpacks" id="subpacks_enable" /><label for="subpacks_enable">Subpacks</label>
+            </legend>
+            <div class="subpacks tab_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
+              <div class="subpacks tab_controls">
+                <div class="subpacks tab_controls_bar">
+                  <ul class="subpacks tab_controls_bar_tab">
+                    <li class="selected_tab">
+                      0<span class="delete_tab">×</span>
+                    </li>
+                  </ul>
+                  <span class="subpacks tab_controls_add_tab">+</span>
+                </div>
+              </div>
+              <div class="subpacks tab_content_list">
+                <div class="selected_tab_content">
+                  <div title="サブパックのフォルダー名を指定します。">
+                    <label for="subpacks_folder_name">フォルダー名</label>
+                    <input type="text" name="uuid" id="subpacks_folder_name" disabled />
+                  </div>
+                  <div title="サブパックの実際に表示される名前を設定します。">
+                    <label for="subpacks_name">名前</label>
+                    <input type="text" name="uuid" id="subpacks_name" disabled />
+                  </div>
+                  <div title="このサブパックのメモリ使用量">
+                    <label for="subpacks_memory_tier">メモリティア</label>
+                    <input type="number" min="0" name="subpacks_memory_tier" id="subpacks_memory_tier" value="0" disabled />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div class="separator"></div>
+      <div class="data_check">
+        <div class="preview">
+          <div class="preview_control_bar">
+            <p class="preview_control_copy">Copy</p>
+            <p class="preview_control_download">Download</p>
+          </div>
+          <pre class="language-json">
                         <code class="language-json"></code>
                     </pre>
-                    <label><textarea name="code_buffer" id="code_buffer"></textarea></label>
-                </div>
-                <div class="issue">
-                    <div class="issue_contlrol_bar">
-                        <div class="issue_contlrol_label">
-                            <img src="img/chevron-up.svg" alt="img" class="open">
-                            <span>問題</span>
-                        </div>
-                        <div class="issue_contlrol_num">
-                            <div class="issue_contlrol_warning">
-                                <img src="img/warning.svg" alt="">
-                                <span class="issue_warning_num">警告:0</span>
-                            </div>
-                            <div class="issue_contlrol_error">
-                                <img src="img/error.svg" alt="">
-                                <span class="issue_error_num">エラー:0</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="issue_content">
-                        <ul class="issue_list">
-                        </ul>
-                    </div>
-                </div>
-            </div>
+          <label>
+            <textarea name="code_buffer" id="code_buffer"></textarea>
+          </label>
         </div>
-    </body>
+        <div class="issue">
+          <div class="issue_control_bar">
+            <div class="issue_control_label">
+              <img src="img/chevron-up.svg" alt="img" class="open" />
+              <span>問題</span>
+            </div>
+            <div class="issue_control_num">
+              <div class="issue_control_warning">
+                <img src="img/warning.svg" alt="" />
+                <span class="issue_warning_num">警告:0</span>
+              </div>
+              <div class="issue_control_error">
+                <img src="img/error.svg" alt="" />
+                <span class="issue_error_num">エラー:0</span>
+              </div>
+            </div>
+          </div>
+          <div class="issue_content">
+            <ul class="issue_list"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
 </html>
