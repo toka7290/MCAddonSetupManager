@@ -327,7 +327,10 @@ $(function(){
     // オーナー追加
     function add_author(name){
         const metadata_author_list = $(document).find(".metadata_author_list");
-        const author_list_child = '<div><span class="name">'+name+'</span><span class="metadata_delete_author">×</span></div>';
+        let author_list_child = $('<div>');
+        author_list_child.append($('<span>').addClass('name').text(name));
+        author_list_child.append($('<span>').addClass('metadata_delete_author').text('×'));
+        // const author_list_child = '<div><span class="name">'+name+'</span><span class="metadata_delete_author">×</span></div>';
         metadata_author_list.append(author_list_child);
         metadata_author_list.children('div:last-child').hide().show(150);
     }
