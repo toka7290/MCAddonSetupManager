@@ -326,7 +326,7 @@ $(function(){
     }
     // オーナー追加
     function add_author(name){
-        const metadata_author_list = $.find(".metadata_author_list");
+        const metadata_author_list = $(document).find(".metadata_author_list");
         const author_list_child = '<div><span class="name">'+name+'</span><span class="metadata_delete_author">×</span></div>';
         metadata_author_list.append(author_list_child);
         metadata_author_list.children('div:last-child').hide().show(150);
