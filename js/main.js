@@ -316,8 +316,9 @@ $(function(){
     //タブ追加
     function add_tab(controls_tab){
         const num = controls_tab.children('li').length;
-        const add_content = '<li>'+num+'<span class="delete_tab">×</span></li>';
-        controls_tab.append(add_content)
+        const addTab = $('<li>').text(num).append($('<span>').addClass('delete_tab').text('×'));
+        // const add_content = '<li>'+num+'<span class="delete_tab">×</span></li>';
+        controls_tab.append(addTab)
         controls_tab.children('li:last-child').hide().show(150);
         const tab_content_list = controls_tab.parents('.tab_controls').next();
         const content = tab_content_list.children("div:first-child").clone();
