@@ -504,6 +504,7 @@ $(function(){
     function checkIssue(){
         // イシュー削除
         $("ul.issue_list li").remove();
+        $(".stat_warning,.stat_error").removeClass("stat_warning stat_error");
         const error_num = checkJSONError();
         const warning_num = checkJSONWarning();
         $("span.issue_warning_num").text("警告:"+warning_num);
@@ -521,7 +522,7 @@ $(function(){
                 if(Number($('#header_min_engine_version_major').val())>1||
                 Number($('#header_min_engine_version_minor').val())>=13){
                     //1.13以上は警告
-                    addIssue('warning',"[Header:min engine version] フォーマットバージョン1では1.13より低いバージョンに設定する必要があります。これより高いバージョンはフォーマットバージョン2でサポートしています。");
+                    addIssue('warning', "[Header:min engine version] フォーマットバージョン1では1.13より低いバージョンに設定する必要があります。これより高いバージョンはフォーマットバージョン2でサポートしています。", $('#header_min_engine_version_major').parent().find('input'));
                     warning_num++;
                 };
                 break;
@@ -530,19 +531,20 @@ $(function(){
         }
         if($('#header_pack_name').val()==""){
             //名前がありません
-            addIssue('warning',"[Header:name] 名前が空です。名前が空の場合、\"名前がありません\"と表示されます。");
+            addIssue('warning', "[Header:name] 名前が空です。名前が空の場合、\"名前がありません\"と表示されます。", $('#header_pack_name'));
             warning_num++;
         }
         if($('#header_description').val()==""){
             //説明がありません
-            addIssue('warning',"[Header:description] 説明がありません。説明が空の場合、\"不明なパックの説明\"と表示されます。");
+            addIssue('warning', "[Header:description] 説明がありません。説明が空の場合、\"不明なパックの説明\"と表示されます。", $('#header_description'));
             warning_num++;
         }
         for(let i=0;i<$(".modules_controls_tab li").length;i++){
             const child_num = i + 1;
-            if($('div.modules_contents > div:nth-child('+child_num+') #modules_description').val()==""){
+            const modules_description = $('div.modules_contents > div:nth-child('+child_num+') #modules_description');
+            if(modules_description.val()==""){
                 //UUIDではありません
-                addIssue('warning',"[Modules:"+i+":description] 説明がありません。");
+                addIssue('warning', "[Modules:"+i+":description] 説明がありません。", modules_description);
                 warning_num++;
             }
         }
@@ -551,7 +553,7 @@ $(function(){
             &&!$('#chemistry').is(':checked')
             &&!$('#raytracing').is(':checked')){
                 //空です
-                addIssue('warning',"[Capabilities] 項目が一つも選択されていません。");
+                addIssue('warning', "[Capabilities] 項目が一つも選択されていません。", $('.capabilities_list>input'));
                 warning_num++;
             }
         }
@@ -560,23 +562,23 @@ $(function(){
                 for(let i=1;i<=$("div.metadata_author_list > div").length;i++){
                     if($('div.metadata_author_list > div:nth-child('+i+') > span.name').text()==""){
                         //名前がありません
-                        addIssue('warning',"[Metadata:author] 空の名前が存在しています。");
+                        addIssue('warning', "[Metadata:author] 空の名前が存在しています。", $('div.metadata_author_list > div:nth-child('+i+') > span.name'));
                         warning_num++;
                     }
                 }
             }else{
                 // 名前がありません
-                addIssue('warning',"[Metadata:author] 名前が入力されていません。");
+                addIssue('warning', "[Metadata:author] 名前が入力されていません。", $('#metadata_author'));
                 warning_num++;
             }
             if($('#metadata_url').val()==""){
                 //URLがありません
-                addIssue('warning',"[Metadata:url] URLが入力されていません。");
+                addIssue('warning', "[Metadata:url] URLが入力されていません。", $('#metadata_url'));
                 warning_num++;
             }
             if($('#metadata_license').val()==""){
                 //Licenseがありません
-                addIssue('warning',"[Metadata:license] ライセンスが入力されていません。");
+                addIssue('warning', "[Metadata:license] ライセンスが入力されていません。", $('#metadata_license'));
                 warning_num++;
             }
         }
@@ -592,40 +594,43 @@ $(function(){
                 if(Number($('#header_min_engine_version_major').val())<=1&&
                 Number($('#header_min_engine_version_minor').val())<13){
                     // 1.12以下はエラー
-                    addIssue('error',"[Header:min engine version] version1.12以下を指定することはできません。");
+                    addIssue('error', "[Header:min engine version] version1.12以下を指定することはできません。", $('#header_min_engine_version_major').parent().find('input'));
                     error_num++;
                 };
                 if(Number($('#header_base_game_version_major').val())<=1&&
                 Number($('#header_base_game_version_minor').val())<13){
                     // 1.12以下はエラー
-                    addIssue('error',"[Header:base game version] version1.12以下を指定することはできません。");
+                    addIssue('error', "[Header:base game version] version1.12以下を指定することはできません。", $('#header_base_game_version_major').parent().find('input'));
                     error_num++;
                 };
                 break;
         }
         if(!isUUID($('#header_uuid').val())){
             //UUIDではありません
-            addIssue('error',"[Header:uuid] 入力されている文字列は有効なUUIDではありません。");
+            addIssue('error', "[Header:uuid] 入力されている文字列は有効なUUIDではありません。", $('#header_uuid'));
             error_num++;
         }
         for(let i=0;i<$(".modules_controls_tab li").length;i++){
             const child_num = i + 1;
-            if($('div.modules_contents > div:nth-child('+child_num+') #modules_type').val()==null){
-                addIssue('error',"[Modules:"+i+":type] typeがnullになっています。typeを選択してください。");
+            const modules_type = $('div.modules_contents > div:nth-child('+child_num+') #modules_type');
+            if(modules_type.val()==null){
+                addIssue('error', "[Modules:"+i+":type] typeがnullになっています。typeを選択してください。", modules_type);
                 error_num++;
             }
-            if(!isUUID($('div.modules_contents > div:nth-child('+child_num+') #modules_uuid').val())){
+            const modules_uuid = $('div.modules_contents > div:nth-child('+child_num+') #modules_uuid');
+            if(!isUUID(modules_uuid.val())){
                 //UUIDではありません
-                addIssue('error',"[Modules:"+i+":uuid] 入力されている文字列は有効なUUIDではありません。");
+                addIssue('error', "[Modules:"+i+":uuid] 入力されている文字列は有効なUUIDではありません。", modules_uuid);
                 error_num++;
             }
         }
         if(is_dependencies_enable){
             for(let i=0;i<$(".dependencies.tab_controls_bar_tab li").length;i++){
                 const child_num = i + 1;
-                if(!isUUID($('div.dependencies.tab_content_list > div:nth-child('+child_num+') #dependencies_uuid').val())){
+                const dependencies_uuid = $('div.dependencies.tab_content_list > div:nth-child('+child_num+') #dependencies_uuid');
+                if(!isUUID(dependencies_uuid.val())){
                     //UUIDではありません
-                    addIssue('error',"[Dependencies:"+i+":uuid] 入力されている文字列は有効なUUIDではありません。");
+                    addIssue('error', "[Dependencies:"+i+":uuid] 入力されている文字列は有効なUUIDではありません。", dependencies_uuid);
                     error_num++;
                 }
             }
@@ -634,14 +639,14 @@ $(function(){
             for(let i=0;i<$(".subpacks.tab_controls_bar_tab li").length;i++){
                 const child_num = i + 1;
                 const tab_content = $('div.subpacks.tab_content_list > div:nth-child('+child_num+')');
-                if(tab_content.find('#subpacks_folder_name').val()==null||
-                    tab_content.find('#subpacks_folder_name').val()==""){
-                    addIssue('error',"[Subpacks:"+i+":folder_name] フォルダー名が空です。");
+                const subpacks_folder_name = tab_content.find('#subpacks_folder_name');
+                if(subpacks_folder_name.val()==null || subpacks_folder_name.val()==""){
+                    addIssue('error', "[Subpacks:"+i+":folder_name] フォルダー名が空です。", subpacks_folder_name);
                     error_num++;
                 }
-                if(tab_content.find('#subpacks_name').val()==null||
-                    tab_content.find('#subpacks_name').val()==""){
-                    addIssue('error',"[Subpacks:"+i+":name] 名前が空です。");
+                const subpacks_name = tab_content.find('#subpacks_name');
+                if(subpacks_name.val()==null || subpacks_name.val()==""){
+                    addIssue('error', "[Subpacks:"+i+":name] 名前が空です。", subpacks_name);
                     error_num++;
                 }
             }
@@ -649,12 +654,14 @@ $(function(){
         return error_num;
     }
     // イシュー更新
-    function addIssue(type,issue_content){
+    function addIssue(type,issue_content,issue_element){
         let content = '';
         if(type=='warning'){
             content = '<li><img src="img/warning.svg" alt=""><p>'+issue_content+'</p></li>';
+            issue_element.addClass("stat_warning");
         }else if(type=='error'){
             content = '<li><img src="img/error.svg" alt=""><p>'+issue_content+'</p></li>';
+            issue_element.addClass("stat_error");
         }
         $("ul.issue_list").append(content);
     }
@@ -664,7 +671,7 @@ $(function(){
 
         s = s.match('^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$');
         if (s === null) {
-        return false;
+            return false;
         }
         return true;
     }

@@ -88,7 +88,7 @@
         <img src="img/icon.webp" alt="" class="title_icon" onerror="this.src='img/icon_2000.png'" />
         <div class="title">
           <h1>とかさんのManifestGenerator</h1>
-          <p>version:1.3.2</p>
+          <p>version:1.4.0_dev1</p>
         </div>
         <div class="header_menu">
           <div class="import_file">
@@ -153,7 +153,7 @@
         <div class="about_content">
           <img src="img/icon.webp" alt="" onerror="this.src='img/icon_2000.png'" />
           <h2>とかさんのManifestGenerator</h2>
-          <p>version:1.3.2</p>
+          <p>version:1.4.0_dev1</p>
           <div id="page_share"><img src="img/share.svg" alt="" /></div>
           <div class="about_external_link">
             <a href="https://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener noreferrer"><img src="img/homepage.svg" alt="" /></a>
@@ -195,21 +195,26 @@
             <div title="このパックのバージョンを示します。">
               <label for="header_version_major">
                 <span>バージョン</span>
-                <input type="number" min="0" name="" id="header_version_major" value="1" />
-                <span>.</span>
-                <input type="number" min="0" name="" id="header_version_minor" value="0" />
-                <span>.</span>
-                <input type="number" min="0" name="" id="header_version_patch" value="0" />
+                <div class="version">
+                  <input type="number" min="0" name="" id="header_version_major" value="1" />
+                  <span>.</span>
+                  <input type="number" min="0" name="" id="header_version_minor" value="0" />
+                  <span>.</span>
+                  <input type="number" min="0" name="" id="header_version_patch" value="0" />
+                </div>
               </label>
             </div>
             <div title="このパックが動作するMinecraftの最小バージョン(このパックの作成バージョン)を設定します。">
               <label id="header_min_engine_version">
                 <span>最小エンジンバージョン</span>
-                <input type="number" min="0" name="" id="header_min_engine_version_major" value="1" />
-                <span>.</span>
-                <input type="number" min="0" name="" id="header_min_engine_version_minor" value="13" />
-                <span>.</span>
-                <input type="number" min="0" name="" id="header_min_engine_version_patch" value="0" />
+                <div class="version">
+                  <input type="number" min="0" name="" id="header_min_engine_version_major" value="1" />
+                  <span>.</span>
+                  <input type="number" min="0" name="" id="header_min_engine_version_minor" value="13" />
+                  <span>.</span>
+                  <input type="number" min="0" name="" id="header_min_engine_version_patch" value="0" />
+                </div>
+
               </label>
             </div>
             <div title="このパックのUUIDを設定します。">
@@ -224,11 +229,13 @@
             <div title="このパックワールドの作成されたバージョンを設定します。">
               <label id="header_base_game_version">
                 <span>基本ゲームバージョン</span>
-                <input type="number" min="0" name="" id="header_base_game_version_major" value="1" disabled />
-                <span>.</span>
-                <input type="number" min="0" name="" id="header_base_game_version_minor" value="13" disabled />
-                <span>.</span>
-                <input type="number" min="0" name="" id="header_base_game_version_patch" value="0" disabled />
+                <div class="version">
+                  <input type="number" min="0" name="" id="header_base_game_version_major" value="1" disabled />
+                  <span>.</span>
+                  <input type="number" min="0" name="" id="header_base_game_version_minor" value="13" disabled />
+                  <span>.</span>
+                  <input type="number" min="0" name="" id="header_base_game_version_patch" value="0" disabled />
+                </div>
               </label>
             </div>
             <div title="ワールドテンプレートの導入時、ワールド設定をロックします。">

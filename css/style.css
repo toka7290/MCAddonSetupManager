@@ -66,6 +66,7 @@ select:hover {
 }
 label {
   word-break: keep-all;
+  white-space: nowrap;
 }
 input:-webkit-autofill,
 input:-internal-autofill-selected {
@@ -88,6 +89,7 @@ input[type="button"] {
   vertical-align: middle;
   box-sizing: content-box;
   padding: 2px 0.5em;
+  margin: 0 0.5rem;
 }
 input[type="button"]:hover {
   cursor: pointer;
@@ -430,7 +432,7 @@ div.editor form {
 fieldset div {
   display: flex;
   align-items: center;
-  margin: 2px 0;
+  margin: 4px 0;
 }
 .disabled {
   color: var(--color_disabled_text);
@@ -562,6 +564,7 @@ div.metadata_list {
 }
 div.metadata_authors {
   display: block;
+  margin-left: 1rem;
 }
 div.metadata_author_list {
   display: block;
@@ -725,4 +728,21 @@ div.separator {
 }
 div.separator:hover {
   cursor: e-resize;
+}
+/* beta */
+.stat_warning,
+.stat_warning:focus {
+  box-shadow: 0 0 2px 2px gold;
+  background: cornsilk;
+}
+.stat_warning:focus {
+  box-shadow: 0 0 1px 1px gold;
+}
+.stat_error,
+.stat_warning.stat_error {
+  box-shadow: 0 0 2px 2px crimson;
+  background: antiquewhite;
+}
+.stat_error:focus {
+  box-shadow: 0 0 1px 1px crimson;
 }
