@@ -218,9 +218,13 @@
               </label>
             </div>
             <div title="このパックのUUIDを設定します。">
-              <label for="header_uuid">UUID</label>
-              <input type="text" name="uuid" id="header_uuid" />
-              <input type="button" value="Generate" class="generate_uuid" />
+              <label for="header_uuid">
+                <span>UUID</span>
+                <div class="formSet">
+                  <input type="text" name="uuid" id="header_uuid" />
+                  <input type="button" value="Generate" class="generate_uuid" />
+                </div>
+              </label>
             </div>
             <div title="このパックをマルチプラットフォーム環境で使用できないようにします。">
               <label for="header_platform_locked">プラットフォームロック</label>
@@ -274,17 +278,23 @@
                 <div title="このモジュールのバージョンを設定します。">
                   <label>
                     <span>バージョン</span>
-                    <input type="number" min="0" name="" id="modules_version_major" value="1" />
-                    <span>.</span>
-                    <input type="number" min="0" name="" id="modules_version_minor" value="0" />
-                    <span>.</span>
-                    <input type="number" min="0" name="" id="modules_version_patch" value="0" />
+                    <div class="version">
+                      <input type="number" min="0" name="" id="modules_version_major" value="1" />
+                      <span>.</span>
+                      <input type="number" min="0" name="" id="modules_version_minor" value="0" />
+                      <span>.</span>
+                      <input type="number" min="0" name="" id="modules_version_patch" value="0" />
+                    </div>
                   </label>
                 </div>
                 <div title="このモジュールのUUIDを設定します。">
-                  <label for="modules_uuid">UUID</label>
-                  <input type="text" name="uuid" id="modules_uuid" />
-                  <input type="button" value="Generate" class="generate_uuid" />
+                  <label for="modules_uuid">
+                    <span>UUID</span>
+                    <div class="formSet">
+                      <input type="text" name="uuid" id="modules_uuid" />
+                      <input type="button" value="Generate" class="generate_uuid" />
+                    </div>
+                  </label>
                 </div>
               </div>
             </div>
@@ -313,11 +323,13 @@
                   <div title="依存関係にあるパックのバージョンを設定します。">
                     <label>
                       <span>バージョン</span>
-                      <input type="number" min="0" name="" id="dependencies_version_major" value="1" disabled />
-                      <span>.</span>
-                      <input type="number" min="0" name="" id="dependencies_version_minor" value="0" disabled />
-                      <span>.</span>
-                      <input type="number" min="0" name="" id="dependencies_version_patch" value="0" disabled />
+                      <div class="version">
+                        <input type="number" min="0" name="" id="dependencies_version_major" value="1" disabled />
+                        <span>.</span>
+                        <input type="number" min="0" name="" id="dependencies_version_minor" value="0" disabled />
+                        <span>.</span>
+                        <input type="number" min="0" name="" id="dependencies_version_patch" value="0" disabled />
+                      </div>
                     </label>
                   </div>
                 </div>

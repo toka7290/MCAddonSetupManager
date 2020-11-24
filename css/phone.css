@@ -1,42 +1,84 @@
-div.title{
-    /* ヘッダー */
-    display: none;
+textarea {
+  width: calc(100% - 2rem);
 }
-.title_icon{
-    display: block;
+input[type="text"] {
+  width: calc(100% - 2rem);
 }
-div.header_menu_alt{
-    display: none;
+input[type="checkbox"] {
+  display: inline-block;
 }
-div.header_menu{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+div.title {
+  /* ヘッダー */
+  display: none;
 }
-div.content{
-    /* コンテンツ */
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow-y: hidden;
+.title_icon {
+  display: block;
 }
-div.data_check{
-    /* データチェック */
-    overflow-y: unset;
-    height: auto;
-    flex-basis: auto;
+div.header_menu_alt {
+  display: none;
 }
-div.preview{
-    /* プレビュー */
-    display: none;
-    z-index: 1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+div.header_menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
-div.separator{
-    /* セパレータ */
-    display: none;
+label span:first-child + *,
+label + * {
+  display: block;
+}
+fieldset div {
+  display: block;
+}
+label div.formSet {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+}
+.formSet input[type="text"] {
+  width: calc(100% - 1rem);
+}
+.formSet input[type="button"] {
+  align-self: flex-end;
+  margin-top: 0.5rem;
+}
+#format_version {
+  display: inline-block;
+}
+div.modules_controls_bar,
+div.tab_controls_bar {
+  display: flex;
+}
+div.modules_contents div.selected_tab_content,
+div.tab_content_list div.selected_tab_content {
+  box-sizing: border-box;
+}
+.metadata_author_adder {
+  display: flex;
+}
+div.content {
+  /* コンテンツ */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-y: hidden;
+}
+div.data_check {
+  /* データチェック */
+  overflow-y: unset;
+  height: auto;
+  flex-basis: auto;
+}
+div.preview {
+  /* プレビュー */
+  display: none;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+div.separator {
+  /* セパレータ */
+  display: none;
 }

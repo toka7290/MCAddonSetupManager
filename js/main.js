@@ -8,6 +8,8 @@ $(function(){
     var is_metadata_enable = false;
     var is_subpacks_enable = false;
     var is_world_template = false;
+    var timeoutID;
+    var is_can_issue = true;
     var help_page_num = 0;
     onChangedJSON();
     // ページ離脱時に警告表示
@@ -285,6 +287,17 @@ $(function(){
             );
         }
     });
+    // 高頻度更新防止処理
+    function delayIssue(){
+        is_can_issue = false;
+        if (typeof timeoutID === 'number') {
+            window.clearTimeout(timeoutID);
+        }
+        timeoutID = window.setTimeout(function () {
+            is_can_issue = true;
+            checkIssue();
+        }, 500);
+    }
     // UUID生成
     function getUuid_v4() {
         let chars = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".split("");
@@ -386,7 +399,8 @@ $(function(){
     function onChangedJSON(){
         changed_checkbox();
         type_changed();
-        checkIssue();
+        if(is_can_issue) checkIssue();
+        delayIssue();
         const json_code = exportJSON();
         $("pre.language-json code.language-json").remove();
         const content = '<code class="language-json">'+json_code+'</code>';

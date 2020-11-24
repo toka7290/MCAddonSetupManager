@@ -67,6 +67,7 @@ select:hover {
 label {
   word-break: keep-all;
   white-space: nowrap;
+  width: 100%;
 }
 input:-webkit-autofill,
 input:-internal-autofill-selected {
@@ -122,6 +123,9 @@ label span:first-child + *,
 label + * {
   margin: 0;
   margin-left: 1rem;
+}
+label:not(:only-child) {
+  width: auto;
 }
 ::-webkit-scrollbar {
   height: 8px;
@@ -433,6 +437,13 @@ fieldset div {
   display: flex;
   align-items: center;
   margin: 4px 0;
+}
+.version {
+  display: inline-block;
+}
+.formSet {
+  display: inline-block;
+  width: 100%;
 }
 .disabled {
   color: var(--color_disabled_text);
