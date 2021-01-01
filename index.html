@@ -19,6 +19,12 @@
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@toka7290" />
     <meta name="google-site-verification" content="Gvi-XrJEZRsxJgsNLv5NOddbD6COJo804pUgyPvpi34" />
+    <!-- css -->
+    <link rel="stylesheet" href="css/color.css" media="all" async />
+    <link rel="stylesheet" href="css/style.css" media="all" async />
+    <link rel="stylesheet" href="css/prism.css" media="all" defer />
+    <link rel="stylesheet" href="css/phone.css" media="(max-width: 35rem)" async />
+    <!-- icon etc -->
     <link rel="apple-touch-icon" href="img/icon_apple-touch-icon.png" />
     <link rel="icon" href="img/icon.webp" />
     <link rel="manifest" href="json/webapp.webmanifest" />
@@ -45,6 +51,7 @@
         "operatingSystem": "Any. It is a Web Application"
       }
     </script>
+    <!-- sw -->
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", function () {
@@ -74,12 +81,7 @@
     <script src="lib/jquery-3.5.1.min.js" defer></script>
     <script src="lib/prism.js" defer></script>
     <!-- js -->
-    <script type="text/javascript" src="js/main.min.js" defer></script>
-    <!-- css -->
-    <link rel="stylesheet" href="css/color.css" media="all" async />
-    <link rel="stylesheet" href="css/style.css" media="all" async />
-    <link rel="stylesheet" href="css/prism.css" media="all" defer />
-    <link rel="stylesheet" href="css/phone.css" media="(max-width: 35rem)" async />
+    <script type="text/javascript" src="js/main.js" defer></script>
   </head>
 
   <body>
@@ -168,6 +170,12 @@
     <div class="help_content bottom" id="help_content_2">
       <p>データを編集します</p>
       <p>エラー等は下にある[問題]タブから見ることができます。</p>
+    </div>
+    <div class="file_drop_zone hide">
+      <div class="file_drop_zone_textarea">
+        <img src="img/import.svg" alt="import">
+        <p>ファイルをドロップして&NewLine;インポートします。</p>
+      </div>
     </div>
     <div class="content">
       <div class="editor">

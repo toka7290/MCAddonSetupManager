@@ -108,12 +108,13 @@
 - エラー箇所のフォームをハイライト
 - エラー判定のタイミング変更
 - js 内部コードの軽量化、最適化
+- Modules tab の選択制限バグ
+- checkboxのindeterminate表示
+- スマートフォン表示のUI改良
+- ドラッグアンドドロップの領域を全画面に拡大
 
 TODO
 - 拡張機能
 - 色文字のプレビュー実装
 - 実表示プレビュー実装
 - 壊れたjson抽出
-- スマートフォン表示のUI改良
-- checkboxのindeterminate表示
-- エラーsvg filter: invert(1) hue-rotate(180deg);

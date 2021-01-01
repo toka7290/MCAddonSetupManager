@@ -2,10 +2,14 @@ textarea {
   width: calc(100% - 2rem);
 }
 input[type="text"] {
-  width: calc(100% - 2rem);
+  width: auto;
+  margin: 0.25rem 1rem;
 }
 input[type="checkbox"] {
   display: inline-block;
+}
+input[type="url"] {
+  width: auto;
 }
 div.title {
   /* ヘッダー */
@@ -30,16 +34,18 @@ fieldset div {
   display: block;
 }
 label div.formSet {
-  display: flex;
+  display: grid;
   flex-direction: column;
   align-items: baseline;
+  margin: 0;
 }
 .formSet input[type="text"] {
-  width: calc(100% - 1rem);
+  width: auto;
+  margin: 0.25rem 1rem;
 }
 .formSet input[type="button"] {
   align-self: flex-end;
-  margin-top: 0.5rem;
+  margin: 0.25rem 1rem;
 }
 #format_version {
   display: inline-block;
@@ -52,8 +58,18 @@ div.modules_contents div.selected_tab_content,
 div.tab_content_list div.selected_tab_content {
   box-sizing: border-box;
 }
-.metadata_author_adder {
-  display: flex;
+div.metadata_authors {
+  display: grid;
+  margin: 0;
+}
+div.metadata_author_adder {
+  display: grid;
+}
+div.metadata_author_adder > label {
+  display: grid;
+}
+input#metadata_author_add {
+  margin: 0.25rem 1rem;
 }
 div.content {
   /* コンテンツ */
