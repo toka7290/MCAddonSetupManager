@@ -37,7 +37,7 @@ $(function () {
   });
   $(document).on("mouseup", function () {
     is_separator_drag = false;
-    $("html").removeAttr("style", "");
+    $("html").css("cursor", "");
     const separator = $(".separator");
     separator.prev().removeClass("drag_lock");
     separator.next().removeClass("drag_lock");
@@ -115,9 +115,9 @@ $(function () {
   });
   // ウィンドウワイズ変更時にcss削除
   $(window).resize(function () {
-    $("div.preview").removeAttr("style", "");
-    $("div.editor").removeAttr("style", "");
-    $("div.data_check").removeAttr("style", "");
+    $("div.preview").css("display", "");
+    $("div.editor").css("flex-basis", "");
+    $("div.data_check").css("flex-basis", "");
     help_page_num = 5;
     toggle_help();
   });
@@ -482,13 +482,13 @@ $(function () {
   function type_changed() {
     is_world_template = false;
     let useable_module = [false, false, false, false, false];
-    const module_num = {
-      resources: 0,
-      data: 1,
-      client_data: 2,
-      interface: 3,
-      world_template: 4,
-    };
+    let module_num = {};
+    module_num["resources"] = 0;
+    module_num["data"] = 1;
+    module_num["client_data"] = 2;
+    module_num["interface"] = 3;
+    module_num["world_template"] = 4;
+
     const min_engine_version = $("#header_min_engine_version");
     min_engine_version.removeClass("disabled");
     const min_engine_version_children = min_engine_version
@@ -857,7 +857,7 @@ $(function () {
   }
   // jsonデータ取り出し
   function import_data(json_text) {
-    let json_data;
+    let json_data = {};
     try {
       json_data = JSON.parse(json_text);
     } catch (e) {
@@ -866,89 +866,89 @@ $(function () {
       return;
     }
     // format_versionがない場合pack_manifest検査
-    if (json_data.format_version != null) {
-      $("#format_version").val(json_data.format_version);
-    } else if (json_data.header.modules != null) {
+    if (json_data["format_version"] != null) {
+      $("#format_version").val(json_data["format_version"]);
+    } else if (json_data["header"]["modules"] != null) {
       // pack_manifest.json
-      if (json_data.header.pack_id != null) {
-        $("#header_uuid").val(json_data.header.pack_id);
+      if (json_data["header"]["pack_id"] != null) {
+        $("#header_uuid").val(json_data["header"]["pack_id"]);
       }
-      if (json_data.header.name != null) {
-        $("#header_pack_name").val(json_data.header.name);
+      if (json_data["header"]["name"] != null) {
+        $("#header_pack_name").val(json_data["header"]["name"]);
       }
-      if (json_data.header.packs_version != null) {
-        const header_version = json_data.header.packs_version.split(".");
+      if (json_data["header"]["packs_version"] != null) {
+        const header_version = json_data["header"]["packs_version"].split(".");
         if (header_version[0] != null) {
-          $("#header_version_major").val(Number(header_version[0]));
+          $("#header_version_major").val(header_version[0]);
         }
         if (header_version[1] != null) {
-          $("#header_version_minor").val(Number(header_version[1]));
+          $("#header_version_minor").val(header_version[1]);
         }
         if (header_version[2] != null) {
-          $("#header_version_patch").val(Number(header_version[2]));
+          $("#header_version_patch").val(header_version[2]);
         }
       }
-      if (json_data.header.description != null) {
-        $("#header_description").val(json_data.header.description);
+      if (json_data["header"]["description"] != null) {
+        $("#header_description").val(json_data["header"]["description"]);
       }
-      if (json_data.header.modules != null) {
-        for (let i = 0; i < json_data.header.modules.length; i++) {
+      if (json_data["header"]["modules"] != null) {
+        for (let i = 0; i < json_data["header"]["modules"].length; i++) {
           const child_num = i + 1;
           if (i > 0) {
             modules_add_tab();
           }
-          if (json_data.header.modules[i].type != null) {
+          if (json_data["header"]["modules"][i]["type"] != null) {
             $(
               "div.modules_contents > div:nth-child(" +
                 child_num +
                 ") #modules_type"
-            ).val(json_data.header.modules[i].type);
+            ).val(json_data["header"]["modules"][i]["type"]);
           }
-          if (json_data.header.modules[i].description != null) {
+          if (json_data["header"]["modules"][i]["description"] != null) {
             $(
               "div.modules_contents > div:nth-child(" +
                 child_num +
                 ") #modules_description"
-            ).val(json_data.header.modules[i].description);
+            ).val(json_data["header"]["modules"][i]["description"]);
           }
-          if (json_data.header.modules[i].version != null) {
-            const modules_version = json_data.header.modules[i].version.split(
-              "."
-            );
+          if (json_data["header"]["modules"][i]["version"] != null) {
+            const modules_version = json_data["header"]["modules"][i][
+              "version"
+            ].split(".");
             if (modules_version[0] != null) {
               $(
                 "div.modules_contents > div:nth-child(" +
                   child_num +
                   ") #modules_version_major"
-              ).val(Number(modules_version[0]));
+              ).val(modules_version[0]);
             }
             if (modules_version[1] != null) {
               $(
                 "div.modules_contents > div:nth-child(" +
                   child_num +
                   ") #modules_version_minor"
-              ).val(Number(modules_version[1]));
+              ).val(modules_version[1]);
             }
             if (modules_version[2] != null) {
               $(
                 "div.modules_contents > div:nth-child(" +
                   child_num +
                   ") #modules_version_patch"
-              ).val(Number(modules_version[2]));
+              ).val(modules_version[2]);
             }
           }
-          if (json_data.header.modules[i].uuid != null) {
+          if (json_data["header"]["modules"][i]["uuid"] != null) {
             $(
               "div.modules_contents > div:nth-child(" +
                 child_num +
                 ") #modules_uuid"
-            ).val(json_data.header.modules[i].uuid);
+            ).val(json_data["header"]["modules"][i]["uuid"]);
           }
         }
       }
-      if (json_data.header.dependencies != null) {
+      if (json_data["header"]["dependencies"] != null) {
         $("#dependencies_enable").prop("checked", true);
-        for (let i = 0; i < json_data.header.dependencies.length; i++) {
+        for (let i = 0; i < json_data["header"]["dependencies"].length; i++) {
           const child_num = i + 1;
           if (i > 0) {
             add_tab($(".dependencies.tab_controls_bar_tab"));
@@ -958,15 +958,15 @@ $(function () {
               child_num +
               ")"
           );
-          if (json_data.header.dependencies[i].uuid != null) {
+          if (json_data["header"]["dependencies"][i]["uuid"] != null) {
             tab_content
               .find("#dependencies_uuid")
-              .val(json_data.header.dependencies[i].uuid);
+              .val(json_data["header"]["dependencies"][i]["uuid"]);
           }
-          if (json_data.header.dependencies[i].version != null) {
-            const modules_version = json_data.header.dependencies[
-              i
-            ].version.split(".");
+          if (json_data["header"]["dependencies"][i]["version"] != null) {
+            const modules_version = json_data["header"]["dependencies"][i][
+              "version"
+            ].split(".");
             if (modules_version[0] != null) {
               tab_content
                 .find("#dependencies_version_major")
@@ -989,128 +989,128 @@ $(function () {
       onChangedJSON();
       return;
     }
-    if (json_data.header.name != null) {
-      $("#header_pack_name").val(json_data.header.name);
+    if (json_data["header"]["name"] != null) {
+      $("#header_pack_name").val(json_data["header"]["name"]);
     }
-    if (json_data.header.description != null) {
-      $("#header_description").val(json_data.header.description);
+    if (json_data["header"]["description"] != null) {
+      $("#header_description").val(json_data["header"]["description"]);
     }
-    if (json_data.header.version != null) {
-      if (json_data.header.version[0] != null) {
-        $("#header_version_major").val(json_data.header.version[0]);
+    if (json_data["header"]["version"] != null) {
+      if (json_data["header"]["version"][0] != null) {
+        $("#header_version_major").val(json_data["header"]["version"][0]);
       }
-      if (json_data.header.version[1] != null) {
-        $("#header_version_minor").val(json_data.header.version[1]);
+      if (json_data["header"]["version"][1] != null) {
+        $("#header_version_minor").val(json_data["header"]["version"][1]);
       }
-      if (json_data.header.version[2] != null) {
-        $("#header_version_patch").val(json_data.header.version[2]);
+      if (json_data["header"]["version"][2] != null) {
+        $("#header_version_patch").val(json_data["header"]["version"][2]);
       }
     }
-    if (json_data.header.min_engine_version != null) {
-      if (json_data.header.min_engine_version[0] != null) {
+    if (json_data["header"]["min_engine_version"] != null) {
+      if (json_data["header"]["min_engine_version"][0] != null) {
         $("#header_min_engine_version_major").val(
-          json_data.header.min_engine_version[0]
+          json_data["header"]["min_engine_version"][0]
         );
       }
-      if (json_data.header.min_engine_version[1] != null) {
+      if (json_data["header"]["min_engine_version"][1] != null) {
         $("#header_min_engine_version_minor").val(
-          json_data.header.min_engine_version[1]
+          json_data["header"]["min_engine_version"][1]
         );
       }
-      if (json_data.header.min_engine_version[2] != null) {
+      if (json_data["header"]["min_engine_version"][2] != null) {
         $("#header_min_engine_version_patch").val(
-          json_data.header.min_engine_version[2]
+          json_data["header"]["min_engine_version"][2]
         );
       }
     }
-    if (json_data.header.uuid != null) {
-      $("#header_uuid").val(json_data.header.uuid);
+    if (json_data["header"]["uuid"] != null) {
+      $("#header_uuid").val(json_data["header"]["uuid"]);
     }
     if (
-      json_data.header.platform_locked != null &&
-      json_data.header.platform_locked
+      json_data["header"]["platform_locked"] != null &&
+      json_data["header"]["platform_locked"]
     ) {
       $("#header_platform_locked").prop("checked", true);
     }
-    if (json_data.header.base_game_version != null) {
-      if (json_data.header.base_game_version[0] != null) {
+    if (json_data["header"]["base_game_version"] != null) {
+      if (json_data["header"]["base_game_version"][0] != null) {
         $("#header_base_game_version_major").val(
-          json_data.header.base_game_version[0]
+          json_data["header"]["base_game_version"][0]
         );
       }
-      if (json_data.header.base_game_version[1] != null) {
+      if (json_data["header"]["base_game_version"][1] != null) {
         $("#header_base_game_version_minor").val(
-          json_data.header.base_game_version[1]
+          json_data["header"]["base_game_version"][1]
         );
       }
-      if (json_data.header.base_game_version[2] != null) {
+      if (json_data["header"]["base_game_version"][2] != null) {
         $("#header_base_game_version_patch").val(
-          json_data.header.base_game_version[2]
+          json_data["header"]["base_game_version"][2]
         );
       }
     }
     if (
-      json_data.header.lock_template_options != null &&
-      json_data.header.lock_template_options
+      json_data["header"]["lock_template_options"] != null &&
+      json_data["header"]["lock_template_options"]
     ) {
       $("#header_lock_template_options").prop("checked", true);
     }
 
-    if (json_data.modules != null) {
-      for (let i = 0; i < json_data.modules.length; i++) {
+    if (json_data["modules"] != null) {
+      for (let i = 0; i < json_data["modules"].length; i++) {
         const child_num = i + 1;
         if (i > 0) {
           modules_add_tab();
         }
-        if (json_data.modules[i].type != null) {
+        if (json_data["modules"][i]["type"] != null) {
           $(
             "div.modules_contents > div:nth-child(" +
               child_num +
               ") #modules_type"
-          ).val(json_data.modules[i].type);
+          ).val(json_data["modules"][i]["type"]);
         }
-        if (json_data.modules[i].description != null) {
+        if (json_data["modules"][i]["description"] != null) {
           $(
             "div.modules_contents > div:nth-child(" +
               child_num +
               ") #modules_description"
-          ).val(json_data.modules[i].description);
+          ).val(json_data["modules"][i]["description"]);
         }
-        if (json_data.modules[i].version != null) {
-          if (json_data.modules[i].version[0] != null) {
+        if (json_data["modules"][i]["version"] != null) {
+          if (json_data["modules"][i]["version"][0] != null) {
             $(
               "div.modules_contents > div:nth-child(" +
                 child_num +
                 ") #modules_version_major"
-            ).val(json_data.modules[i].version[0]);
+            ).val(json_data["modules"][i]["version"][0]);
           }
-          if (json_data.modules[i].version[1] != null) {
+          if (json_data["modules"][i]["version"][1] != null) {
             $(
               "div.modules_contents > div:nth-child(" +
                 child_num +
                 ") #modules_version_minor"
-            ).val(json_data.modules[i].version[1]);
+            ).val(json_data["modules"][i]["version"][1]);
           }
-          if (json_data.modules[i].version[2] != null) {
+          if (json_data["modules"][i]["version"][2] != null) {
             $(
               "div.modules_contents > div:nth-child(" +
                 child_num +
                 ") #modules_version_patch"
-            ).val(json_data.modules[i].version[2]);
+            ).val(json_data["modules"][i]["version"][2]);
           }
         }
-        if (json_data.modules[i].uuid != null) {
+        if (json_data["modules"][i]["uuid"] != null) {
           $(
             "div.modules_contents > div:nth-child(" +
               child_num +
               ") #modules_uuid"
-          ).val(json_data.modules[i].uuid);
+          ).val(json_data["modules"][i]["uuid"]);
         }
       }
     }
-    if (json_data.dependencies != null) {
+    if (json_data["dependencies"] != null) {
       $("#dependencies_enable").prop("checked", true);
-      for (let i = 0; i < json_data.dependencies.length; i++) {
+      for (let i = 0; i < json_data["dependencies"].length; i++) {
         const child_num = i + 1;
         if (i > 0) {
           add_tab($(".dependencies.tab_controls_bar_tab"));
@@ -1118,34 +1118,34 @@ $(function () {
         const tab_content = $(
           "div.dependencies.tab_content_list > div:nth-child(" + child_num + ")"
         );
-        if (json_data.dependencies[i].uuid != null) {
+        if (json_data["dependencies"][i]["uuid"] != null) {
           tab_content
             .find("#dependencies_uuid")
-            .val(json_data.dependencies[i].uuid);
+            .val(json_data["dependencies"][i]["uuid"]);
         }
-        if (json_data.dependencies[i].version != null) {
-          if (json_data.dependencies[i].version[0] != null) {
+        if (json_data["dependencies"][i]["version"] != null) {
+          if (json_data["dependencies"][i]["version"][0] != null) {
             tab_content
               .find("#dependencies_version_major")
-              .val(json_data.dependencies[i].version[0]);
+              .val(json_data["dependencies"][i]["version"][0]);
           }
-          if (json_data.dependencies[i].version[1] != null) {
+          if (json_data["dependencies"][i]["version"][1] != null) {
             tab_content
               .find("#dependencies_version_minor")
-              .val(json_data.dependencies[i].version[1]);
+              .val(json_data["dependencies"][i]["version"][1]);
           }
-          if (json_data.dependencies[i].version[2] != null) {
+          if (json_data["dependencies"][i]["version"][2] != null) {
             tab_content
               .find("#dependencies_version_patch")
-              .val(json_data.dependencies[i].version[2]);
+              .val(json_data["dependencies"][i]["version"][2]);
           }
         }
       }
     }
 
-    if (json_data.capabilities != null) {
+    if (json_data["capabilities"] != null) {
       $("#capabilities_enable").prop("checked", true);
-      for (const capabilities of json_data.capabilities) {
+      for (const capabilities of json_data["capabilities"]) {
         switch (capabilities) {
           case "experimental_custom_ui":
             $("#experimental_custom_ui").prop("checked", true);
@@ -1162,23 +1162,23 @@ $(function () {
       }
     }
 
-    if (json_data.metadata != null) {
+    if (json_data["metadata"] != null) {
       $("#metadata_enable").prop("checked", true);
-      if (json_data.metadata.authors != null) {
-        for (const author of json_data.metadata.authors) {
+      if (json_data["metadata"]["authors"] != null) {
+        for (const author of json_data["metadata"]["authors"]) {
           add_author(author);
         }
       }
-      if (json_data.metadata.url != null) {
-        $("#metadata_url").val(json_data.metadata.url);
+      if (json_data["metadata"]["url"] != null) {
+        $("#metadata_url").val(json_data["metadata"]["url"]);
       }
-      if (json_data.metadata.license != null) {
-        $("#metadata_license").val(json_data.metadata.license);
+      if (json_data["metadata"]["license"] != null) {
+        $("#metadata_license").val(json_data["metadata"]["license"]);
       }
     }
-    if (json_data.subpacks != null) {
+    if (json_data["subpacks"] != null) {
       $("#subpacks_enable").prop("checked", true);
-      for (let i = 0; i < json_data.subpacks.length; i++) {
+      for (let i = 0; i < json_data["subpacks"].length; i++) {
         const child_num = i + 1;
         if (i > 0) {
           add_tab($(".subpacks.tab_controls_bar_tab"));
@@ -1186,18 +1186,20 @@ $(function () {
         const tab_content = $(
           "div.subpacks.tab_content_list > div:nth-child(" + child_num + ")"
         );
-        if (json_data.subpacks[i].folder_name != null) {
+        if (json_data["subpacks"][i]["folder_name"] != null) {
           tab_content
             .find("#subpacks_folder_name")
-            .val(json_data.subpacks[i].folder_name);
+            .val(json_data["subpacks"][i]["folder_name"]);
         }
-        if (json_data.subpacks[i].name != null) {
-          tab_content.find("#subpacks_name").val(json_data.subpacks[i].name);
+        if (json_data["subpacks"][i]["name"] != null) {
+          tab_content
+            .find("#subpacks_name")
+            .val(json_data["subpacks"][i]["name"]);
         }
-        if (json_data.subpacks[i].memory_tier != null) {
+        if (json_data["subpacks"][i]["memory_tier"] != null) {
           tab_content
             .find("#subpacks_memory_tier")
-            .val(json_data.subpacks[i].memory_tier);
+            .val(json_data["subpacks"][i]["memory_tier"]);
         }
       }
     }
@@ -1206,48 +1208,49 @@ $(function () {
   // json 出力
   function exportJSON() {
     let json_raw = new Object();
-    json_raw.format_version = format_version;
+    json_raw["format_version"] = format_version;
 
-    json_raw.header = new Object();
-    json_raw.header.name = $("#header_pack_name").val();
-    json_raw.header.description = $("#header_description").val();
-    json_raw.header.version = "replace_header_version";
+    json_raw["header"] = new Object();
+    json_raw["header"]["name"] = $("#header_pack_name").val();
+    json_raw["header"]["description"] = $("#header_description").val();
+    json_raw["header"]["version"] = "replace_header_version";
     if (!is_world_template) {
-      json_raw.header.min_engine_version = "replace_header_min_engine_version";
+      json_raw["header"]["min_engine_version"] =
+        "replace_header_min_engine_version";
     }
-    json_raw.header.uuid = $("#header_uuid").val();
+    json_raw["header"]["uuid"] = $("#header_uuid").val();
     if ($("#header_platform_locked").is(":checked")) {
-      json_raw.header.platform_locked = true;
+      json_raw["header"]["platform_locked"] = true;
     }
     if (is_world_template) {
       if (format_version >= 2) {
-        json_raw.header.base_game_version = "replace_base_game_version";
+        json_raw["header"]["base_game_version"] = "replace_base_game_version";
       }
-      json_raw.header.lock_template_options = $(
+      json_raw["header"]["lock_template_options"] = $(
         "#header_lock_template_options"
       ).is(":checked");
     }
 
-    json_raw.modules = new Array();
+    json_raw["modules"] = new Array();
     const modules_length = $(".modules_controls_tab li").length;
     for (let i = 0; i < modules_length; i++) {
       const child_num = i + 1;
-      json_raw.modules[i] = new Object();
-      json_raw.modules[i].type = $(
+      json_raw["modules"][i] = new Object();
+      json_raw["modules"][i]["type"] = $(
         "div.modules_contents > div:nth-child(" + child_num + ") #modules_type"
       ).val();
-      json_raw.modules[i].description = $(
+      json_raw["modules"][i]["description"] = $(
         "div.modules_contents > div:nth-child(" +
           child_num +
           ") #modules_description"
       ).val();
-      json_raw.modules[i].version = "replace_modules_" + i + "_version";
-      json_raw.modules[i].uuid = $(
+      json_raw["modules"][i]["version"] = "replace_modules_" + i + "_version";
+      json_raw["modules"][i]["uuid"] = $(
         "div.modules_contents > div:nth-child(" + child_num + ") #modules_uuid"
       ).val();
     }
     if (is_dependencies_enable) {
-      json_raw.dependencies = new Array();
+      json_raw["dependencies"] = new Array();
       const dependencies_length = $(".dependencies.tab_controls_bar_tab li")
         .length;
       for (let i = 0; i < dependencies_length; i++) {
@@ -1255,11 +1258,11 @@ $(function () {
         const tab_content = $(
           "div.dependencies.tab_content_list > div:nth-child(" + child_num + ")"
         );
-        json_raw.dependencies[i] = new Object();
-        json_raw.dependencies[i].uuid = tab_content
+        json_raw["dependencies"][i] = new Object();
+        json_raw["dependencies"][i]["uuid"] = tab_content
           .find("#dependencies_uuid")
           .val();
-        json_raw.dependencies[i].version =
+        json_raw["dependencies"][i]["version"] =
           "replace_dependencies_" + i + "_version";
       }
     }
@@ -1267,49 +1270,51 @@ $(function () {
       is_capabilities_enable &&
       $("div.capabilities_list div input").is(":checked")
     ) {
-      json_raw.capabilities = new Array();
+      json_raw["capabilities"] = new Array();
       if ($("#experimental_custom_ui").is(":checked")) {
-        json_raw.capabilities.push("experimental_custom_ui");
+        json_raw["capabilities"].push("experimental_custom_ui");
       }
       if ($("#chemistry").is(":checked")) {
-        json_raw.capabilities.push("chemistry");
+        json_raw["capabilities"].push("chemistry");
       }
       if ($("#raytracing").is(":checked")) {
-        json_raw.capabilities.push("raytracing");
+        json_raw["capabilities"].push("raytracing");
       }
     }
     if (is_metadata_enable) {
-      json_raw.metadata = new Object();
-      json_raw.metadata.authors = new Array();
+      json_raw["metadata"] = new Object();
+      json_raw["metadata"]["authors"] = new Array();
       if ($("div.metadata_author_list > div")[0]) {
         const metadata_length = $("div.metadata_author_list > div").length;
         for (let i = 1; i <= metadata_length; i++) {
-          json_raw.metadata.authors.push(
+          json_raw["metadata"]["authors"].push(
             $(
               "div.metadata_author_list > div:nth-child(" + i + ") > span.name"
             ).text()
           );
         }
       } else {
-        json_raw.metadata.authors.push("");
+        json_raw["metadata"]["authors"].push("");
       }
-      json_raw.metadata.url = $("#metadata_url").val();
-      json_raw.metadata.license = $("#metadata_license").val();
+      json_raw["metadata"]["url"] = $("#metadata_url").val();
+      json_raw["metadata"]["license"] = $("#metadata_license").val();
     }
     if (is_subpacks_enable) {
-      json_raw.subpacks = new Array();
+      json_raw["subpacks"] = new Array();
       const subpacks_length = $(".subpacks.tab_controls_bar_tab li").length;
       for (let i = 0; i < subpacks_length; i++) {
         const child_num = i + 1;
-        json_raw.subpacks[i] = new Object();
+        json_raw["subpacks"][i] = new Object();
         const tab_content = $(
           "div.subpacks.tab_content_list > div:nth-child(" + child_num + ")"
         );
-        json_raw.subpacks[i].folder_name = tab_content
+        json_raw["subpacks"][i]["folder_name"] = tab_content
           .find("#subpacks_folder_name")
           .val();
-        json_raw.subpacks[i].name = tab_content.find("#subpacks_name").val();
-        json_raw.subpacks[i].memory_tier = Number(
+        json_raw["subpacks"][i]["name"] = tab_content
+          .find("#subpacks_name")
+          .val();
+        json_raw["subpacks"][i]["memory_tier"] = Number(
           tab_content.find("#subpacks_memory_tier").val()
         );
       }
