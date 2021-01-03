@@ -122,12 +122,12 @@ $(function () {
     toggle_help();
   });
   // about開く
-  $("p#open_about").on("click", function () {
-    $("div.page_about").fadeIn();
+  $(".open_about").on("click", function () {
+    $("div.page_about").removeClass("about_hide");
   });
   // about閉じる
   $("div.close_about").on("click", function () {
-    $("div.page_about").fadeOut();
+    $("div.page_about").addClass("about_hide");
   });
   // コピー
   $("p.preview_control_copy").on("click", function () {
@@ -419,6 +419,35 @@ $(function () {
         return;
     }
   }
+  // 実表示
+  function updateDisplayPreview() {
+    // タイトル
+    let title = $("#header_pack_name").val();
+    if (title == "") title = "名前がありません";
+    else if (title.indexOf("\\n") != -1)
+      title = title.slice(0, title.indexOf("\\n") - title.length) + "\u2026";
+    $("#card_title").html(MinecraftText.toHTML(title));
+    // 説明
+    let description = $("#header_description").val();
+    if (description == "") description = "§c不明なパックの説明";
+    else {
+      let position = 0;
+      let i = 0;
+      do {
+        i++;
+        position = description.indexOf("\\n", position + 1);
+        if (position == -1) break;
+      } while (i < 3);
+      if (position != -1) {
+        console.log(position, description.length);
+        description =
+          description.slice(0, position - description.length) + "\u2026";
+      }
+      console.log(description, i);
+    }
+    $("#card_description").html(MinecraftText.toHTML(description));
+    MinecraftText.refeashObfuscate();
+  }
   // 更新処理
   function onChangedJSON() {
     changed_checkbox();
@@ -430,22 +459,32 @@ $(function () {
     const content = '<code class="language-json">' + json_code + "</code>";
     $("pre.language-json").append(content);
     $("textarea#code_buffer").val(json_code);
+    updateDisplayPreview();
     Prism.highlightAll();
   }
   // チェックボックス変更
   function changed_checkbox() {
-    is_dependencies_enable = $("#dependencies_enable").is(":checked");
+    is_dependencies_enable =
+      $("#dependencies_enable").is(":checked") ||
+      $("#dependencies_enable").is(":indeterminate");
     is_capabilities_enable =
       $("#capabilities_enable").is(":checked") ||
       $("#capabilities_enable").is(":indeterminate");
-    is_metadata_enable = $("#metadata_enable").is(":checked");
-    is_subpacks_enable = $("#subpacks_enable").is(":checked");
+    is_metadata_enable =
+      $("#metadata_enable").is(":checked") ||
+      $("#metadata_enable").is(":indeterminate");
+    is_subpacks_enable =
+      $("#subpacks_enable").is(":checked") ||
+      $("#subpacks_enable").is(":indeterminate");
     if (is_dependencies_enable) {
       $("div.dependencies.tab_contents").removeClass("disabled");
       $("div.dependencies.tab_contents input").prop("disabled", false);
       $("div.dependencies.tab_contents .tab_controls_bar").removeClass(
         "disabled"
       );
+      if ($("#dependencies_uuid").val() == "")
+        $("#dependencies_enable").prop("indeterminate", true);
+      else $("#dependencies_enable").prop("indeterminate", false);
     } else {
       $("div.dependencies.tab_contents").addClass("disabled");
       $("div.dependencies.tab_contents input").prop("disabled", true);
@@ -464,6 +503,15 @@ $(function () {
     if (is_metadata_enable) {
       $(".metadata_list").removeClass("disabled");
       $("div.metadata_list input").prop("disabled", false);
+      if (
+        !(
+          $("div.metadata_author_list > div")[0] ||
+          $("#metadata_url").val() != "" ||
+          $("#metadata_license").val() != ""
+        )
+      )
+        $("#metadata_enable").prop("indeterminate", true);
+      else $("#metadata_enable").prop("indeterminate", false);
     } else {
       $(".metadata_list").addClass("disabled");
       $("div.metadata_list input").prop("disabled", true);
@@ -472,6 +520,14 @@ $(function () {
       $("div.subpacks.tab_contents").removeClass("disabled");
       $("div.subpacks.tab_contents input").prop("disabled", false);
       $("div.subpacks.tab_contents .tab_controls_bar").removeClass("disabled");
+      if (
+        !(
+          $("#subpacks_folder_name").val() != "" ||
+          $("#subpacks_name").val() != ""
+        )
+      )
+        $("#subpacks_enable").prop("indeterminate", true);
+      else $("#subpacks_enable").prop("indeterminate", false);
     } else {
       $("div.subpacks.tab_contents").addClass("disabled");
       $("div.subpacks.tab_contents input").prop("disabled", true);
@@ -492,12 +548,12 @@ $(function () {
     const min_engine_version = $("#header_min_engine_version");
     min_engine_version.removeClass("disabled");
     const min_engine_version_children = min_engine_version
-      .children()
+      .find("input")
       .prop("disabled", false);
     const base_game_version = $("#header_base_game_version");
     base_game_version.addClass("disabled");
     const base_game_version_children = base_game_version
-      .children()
+      .find("input")
       .prop("disabled", true);
     const lock_template_options = $("#header_lock_template_options");
     lock_template_options.parent().addClass("disabled");
@@ -1281,10 +1337,15 @@ $(function () {
         json_raw["capabilities"].push("raytracing");
       }
     }
-    if (is_metadata_enable) {
+    if (
+      is_metadata_enable &&
+      ($("div.metadata_author_list > div")[0] ||
+        $("#metadata_url").val() != "" ||
+        $("#metadata_license").val() != "")
+    ) {
       json_raw["metadata"] = new Object();
-      json_raw["metadata"]["authors"] = new Array();
       if ($("div.metadata_author_list > div")[0]) {
+        json_raw["metadata"]["authors"] = new Array();
         const metadata_length = $("div.metadata_author_list > div").length;
         for (let i = 1; i <= metadata_length; i++) {
           json_raw["metadata"]["authors"].push(
@@ -1294,10 +1355,12 @@ $(function () {
           );
         }
       } else {
-        json_raw["metadata"]["authors"].push("");
+        // json_raw["metadata"]["authors"].push("");
       }
-      json_raw["metadata"]["url"] = $("#metadata_url").val();
-      json_raw["metadata"]["license"] = $("#metadata_license").val();
+      if ($("#metadata_url").val() != "")
+        json_raw["metadata"]["url"] = $("#metadata_url").val();
+      if ($("#metadata_license").val() != "")
+        json_raw["metadata"]["license"] = $("#metadata_license").val();
     }
     if (is_subpacks_enable) {
       json_raw["subpacks"] = new Array();

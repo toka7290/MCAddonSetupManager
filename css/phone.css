@@ -11,20 +11,52 @@ input[type="checkbox"] {
 input[type="url"] {
   width: auto;
 }
-div.title {
-  /* ヘッダー */
-  display: none;
-}
-.title_icon {
-  display: block;
-}
-div.header_menu_alt {
-  display: none;
-}
-div.header_menu {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+@media (max-width: 41rem) {
+  div.title {
+    /* ヘッダー */
+    display: none;
+  }
+  .title_icon {
+    display: block;
+  }
+  div.header_menu_alt {
+    display: none;
+  }
+  div.header_menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  div#page_share {
+    display: block;
+  }
+  div.content {
+    /* コンテンツ */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-y: hidden;
+  }
+  div.data_check {
+    /* データチェック */
+    overflow-y: unset;
+    height: auto;
+    flex-basis: auto;
+  }
+  div.preview {
+    /* プレビュー */
+    display: none;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  div.separator {
+    /* セパレータ */
+    display: none;
+  }
 }
 label span:first-child + *,
 label + * {
@@ -70,31 +102,4 @@ div.metadata_author_adder > label {
 }
 input#metadata_author_add {
   margin: 0.25rem 1rem;
-}
-div.content {
-  /* コンテンツ */
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow-y: hidden;
-}
-div.data_check {
-  /* データチェック */
-  overflow-y: unset;
-  height: auto;
-  flex-basis: auto;
-}
-div.preview {
-  /* プレビュー */
-  display: none;
-  z-index: 1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-div.separator {
-  /* セパレータ */
-  display: none;
 }

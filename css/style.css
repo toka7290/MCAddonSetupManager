@@ -243,7 +243,8 @@ div.open_more_info:hover ul.more_info {
   display: block;
   z-index: 10;
 }
-ul.more_info a {
+ul.more_info a,
+ul.more_info span {
   display: flex;
   align-items: center;
   padding: 0.5rem;
@@ -252,7 +253,9 @@ ul.more_info a {
   transition-duration: 0.5s;
   transition-property: background-color;
 }
-ul.more_info a:hover {
+ul.more_info a:hover,
+ul.more_info span:hover {
+  cursor: pointer;
   background-color: var(--color_header_2_hover);
 }
 div#page_help {
@@ -347,52 +350,7 @@ div.header_menu_alt img,
 div.about_external_link img,
 div#page_share img {
   width: 2rem;
-}
-div.page_about {
-  display: none;
-  z-index: 2;
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: var(--color_header);
-}
-div.close_about {
-  text-align: end;
-}
-div.close_about img {
-  border-radius: 1em;
-  transition-duration: 0.5s;
-  transition-property: background-color;
-}
-div.close_about img:hover {
-  cursor: pointer;
-  transition: 0.5s;
-  background-color: var(--color_header_hover);
-}
-div.about_content {
-  text-align: center;
-}
-div.about_content > img {
-  width: 50vw;
-  max-width: 20rem;
-}
-div.about_external_link {
-  display: block;
-}
-div.about_external_link a,
-div#page_share {
-  display: inline-block;
-  line-height: 0;
-  padding: 0.5rem;
-  transition: 0.5s;
-  border-radius: 1em;
-}
-div.about_external_link a:hover,
-div#page_share:hover {
-  transition: 0.5s;
-  background-color: var(--color_header_hover);
+  pointer-events: none;
 }
 div.content {
   /* コンテンツ */
@@ -620,7 +578,7 @@ div.preview_control_bar p:hover {
   transition: 0.5s;
   background-color: var(--color_toolbar_hover);
 }
-div.preview pre {
+div.code_preview pre {
   margin: 1rem;
   white-space: initial;
   scrollbar-width: thin;
@@ -690,6 +648,7 @@ div.issue_control_warning img,
 div.issue_control_error img {
   width: 1.2rem;
   vertical-align: middle;
+  pointer-events: none;
 }
 ul.issue_list {
   list-style: none;
@@ -714,6 +673,7 @@ ul.issue_list li img {
   -ms-user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
+  pointer-events: none;
 }
 ul.issue_list li p {
   display: inline;
@@ -783,4 +743,107 @@ div.separator:hover {
 .file_drop_zone_textarea p {
   white-space: pre;
   margin: 0.5rem 0;
+}
+/* about */
+.page_about {
+  visibility: visible;
+  transition: 1s;
+  opacity: 1;
+  transition-property: opacity hidden;
+  display: grid;
+  position: fixed;
+  place-items: center;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.about_hide {
+  visibility: hidden;
+  transition: 1s;
+  opacity: 0;
+  transition-property: opacity hidden;
+}
+
+.about_area {
+  position: absolute;
+  width: auto;
+  height: auto;
+  padding: 20px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  background: var(--color_header);
+  border-radius: 6px;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+div.close_about {
+  text-align: end;
+}
+
+div.close_about img {
+  border-radius: 1em;
+  transition-duration: 0.5s;
+  transition-property: background-color;
+}
+
+div.close_about img:hover {
+  cursor: pointer;
+  transition: 0.5s;
+  background-color: var(--color_header_hover);
+}
+
+div.about_content {
+  text-align: center;
+}
+
+div.about_content > img {
+  width: 50%;
+  max-width: 20rem;
+}
+
+div.about_title,
+div.copyright {
+  user-select: text;
+  -ms-user-select: text;
+  -moz-user-select: text;
+  -webkit-user-select: text;
+}
+
+div#page_share {
+  display: none;
+}
+
+div.about_external_link {
+  display: block;
+}
+
+div.about_external_link a {
+  display: inline-block;
+  line-height: 0;
+  padding: 0.5rem;
+  transition: 0.5s;
+  border-radius: 1em;
+}
+
+div.about_external_link a:hover,
+div#page_share:hover {
+  transition: 0.5s;
+  background-color: var(--color_header_hover);
+}
+
+div.copyright {
+  margin: 1.5rem 0 0.5rem 0;
+  font-size: x-small;
+}
+
+div.copyright p {
+  margin: 0;
 }
