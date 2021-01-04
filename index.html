@@ -205,77 +205,94 @@
         <form name="editor_manifest">
           <fieldset class="basic" title="Manifest.jsonのフォーマットを定義します。">
             <legend>Definition</legend>
-            <div title="このmanifest.jsonのフォーマットバージョンを設定します。">
-              <label for="format_version">フォーマットバージョン</label>
-              <select name="format_version" id="format_version">
-                <option value="2">2</option>
-                <option value="1">1</option>
-              </select>
+            <div class="value_element" title="このmanifest.jsonのフォーマットバージョンを設定します。">
+              <div class="value_label">
+                <label for="format_version">フォーマットバージョン</label>
+              </div>
+              <div class="value_input">
+                <select name="format_version" id="format_version">
+                  <option value="2">2</option>
+                  <option value="1">1</option>
+                </select>
+              </div>
             </div>
           </fieldset>
           <fieldset class="header" title="マニフェストの諸定義を行います。">
             <legend>Header</legend>
-            <div title="このパックの名前を設定します。">
-              <label for="header_pack_name">名前</label>
-              <input type="text" name="pack_name" id="header_pack_name" />
+            <div class="value_element" title="このパックの名前を設定します。">
+              <div class="value_label">
+                <label for="header_pack_name">名前</label>
+              </div>
+              <div class="value_input">
+                <input type="text" name="pack_name" id="header_pack_name" />
+              </div>
             </div>
-            <div title="このパックの説明を設定します。">
-              <label for="header_description">説明</label>
-              <textarea type="text" name="description" id="header_description"></textarea>
+            <div class="value_element" title="このパックの説明を設定します。">
+              <div class="value_label">
+                <label for="header_description">説明</label>
+              </div>
+              <div class="value_input">
+                <textarea type="text" name="description" id="header_description"></textarea>
+              </div>
             </div>
-            <div title="このパックのバージョンを示します。">
-              <label for="header_version_major">
-                <span>バージョン</span>
-                <div class="version">
-                  <input type="number" min="0" name="" id="header_version_major" value="1" />
-                  <span>.</span>
-                  <input type="number" min="0" name="" id="header_version_minor" value="0" />
-                  <span>.</span>
-                  <input type="number" min="0" name="" id="header_version_patch" value="0" />
-                </div>
-              </label>
+            <div class="value_element" title="このパックのバージョンを示します。">
+              <div class="value_label">
+                <label for="header_version_major">バージョン</label>
+              </div>
+              <div class="value_input type_version">
+                <label><input type="number" min="0" name="" id="header_version_major" value="1" /></label>
+                <span>.</span>
+                <label><input type="number" min="0" name="" id="header_version_minor" value="0" /></label>
+                <span>.</span>
+                <label><input type="number" min="0" name="" id="header_version_patch" value="0" /></label>
+              </div>
             </div>
-            <div title="このパックが動作するMinecraftの最小バージョン(このパックの作成バージョン)を設定します。">
-              <label id="header_min_engine_version">
-                <span>最小エンジンバージョン</span>
-                <div class="version">
-                  <input type="number" min="0" name="" id="header_min_engine_version_major" value="1" />
-                  <span>.</span>
-                  <input type="number" min="0" name="" id="header_min_engine_version_minor" value="13" />
-                  <span>.</span>
-                  <input type="number" min="0" name="" id="header_min_engine_version_patch" value="0" />
-                </div>
-
-              </label>
+            <div class="value_element" title="このパックが動作するMinecraftの最小バージョン(このパックの作成バージョン)を設定します。">
+              <div class="value_label">
+                <label id="min_engine_version" for="header_min_engine_version_major">最小エンジンバージョン</label>
+              </div>
+              <div class="value_input type_version" id="min_engine_version_input">
+                <label><input type="number" min="0" name="" id="header_min_engine_version_major" value="1" /></label>
+                <span>.</span>
+                <label><input type="number" min="0" name="" id="header_min_engine_version_minor" value="13" /></label>
+                <span>.</span>
+                <label><input type="number" min="0" name="" id="header_min_engine_version_patch" value="0" /></label>
+              </div>
             </div>
-            <div title="このパックのUUIDを設定します。">
-              <label for="header_uuid">UUID</label>
-              <div>
-                <input type="text" name="uuid" id="header_uuid" />
+            <div class="value_element" title="このパックのUUIDを設定します。">
+              <div class="value_label">
+                <label for="header_uuid">UUID</label>
+              </div>
+              <div class="value_input type_uuid">
+                <label><input type="text" name="uuid" id="header_uuid" /></label>
                 <label for="header_uuid_generate">
                   <input type="button" value="Generate" class="generate_uuid" id="header_uuid_generate" />
                 </label>
               </div>
             </div>
-            <div title="このパックをマルチプラットフォーム環境で使用できないようにします。">
-              <label for="header_platform_locked">プラットフォームロック</label>
-              <input type="checkbox" name="header_platform_locked" id="header_platform_locked" />
+            <div class="value_element" title="このパックをマルチプラットフォーム環境で使用できないようにします。">
+              <div class="value_checkbox">
+                <label for="header_platform_locked">プラットフォームロック</label>
+                <input type="checkbox" name="header_platform_locked" id="header_platform_locked" />
+              </div>
             </div>
-            <div title="このパックワールドの作成されたバージョンを設定します。">
-              <label id="header_base_game_version">
-                <span>基本ゲームバージョン</span>
-                <div class="version">
-                  <input type="number" min="0" name="" id="header_base_game_version_major" value="1" disabled />
-                  <span>.</span>
-                  <input type="number" min="0" name="" id="header_base_game_version_minor" value="13" disabled />
-                  <span>.</span>
-                  <input type="number" min="0" name="" id="header_base_game_version_patch" value="0" disabled />
-                </div>
-              </label>
+            <div class="value_element" title="このパックワールドの作成されたバージョンを設定します。">
+              <div class="value_label">
+                <label id="base_game_version" for="header_base_game_version_major">基本ゲームバージョン</label>
+              </div>
+              <div class="value_input type_version" id="base_game_version_input">
+                <label><input type="number" min="0" name="" id="header_base_game_version_major" value="1" disabled /></label>
+                <span>.</span>
+                <label><input type="number" min="0" name="" id="header_base_game_version_minor" value="13" disabled /></label>
+                <span>.</span>
+                <label><input type="number" min="0" name="" id="header_base_game_version_patch" value="0" disabled /></label>
+              </div>
             </div>
-            <div title="ワールドテンプレートの導入時、ワールド設定をロックします。">
-              <label for="header_lock_template_options">テンプレートオプションロック</label>
-              <input type="checkbox" name="header_lock_template_options" id="header_lock_template_options" disabled />
+            <div class="value_element" title="ワールドテンプレートの導入時、ワールド設定をロックします。">
+              <div class="value_checkbox">
+                <label for="header_lock_template_options">テンプレートオプションロック</label>
+                <input type="checkbox" name="header_lock_template_options" id="header_lock_template_options" disabled />
+              </div>
             </div>
           </fieldset>
           <fieldset class="modules" title="このマニフェストを含むパックがどのモジュールを使用するか設定します。">
@@ -292,40 +309,48 @@
             </div>
             <div class="modules_contents">
               <div class="selected_tab_content">
-                <div title="このモジュールのタイプを設定します。">
-                  <label for="modules_type">タイプ</label>
-                  <select name="modules_type" id="modules_type" required>
-                    <option value="resources">resources</option>
-                    <option value="data">data</option>
-                    <option value="client_data">client_data</option>
-                    <option value="interface">interface</option>
-                    <option value="world_template">world_template</option>
-                  </select>
+                <div class="value_element" title="このモジュールのタイプを設定します。">
+                  <div class="value_label">
+                    <label for="modules_type">タイプ</label>
+                  </div>
+                  <div class="value_input">
+                    <select name="modules_type" id="modules_type" required>
+                      <option value="resources">resources</option>
+                      <option value="data">data</option>
+                      <option value="client_data">client_data</option>
+                      <option value="interface">interface</option>
+                      <option value="world_template">world_template</option>
+                    </select>
+                  </div>
                 </div>
-                <div title="このモジュールの説明を設定します。">
-                  <label for="modules_description">説明</label>
-                  <textarea type="text" name="description" id="modules_description"></textarea>
+                <div class="value_element" title="このモジュールの説明を設定します。">
+                  <div class="value_label">
+                    <label for="modules_description">説明</label>
+                  </div>
+                  <div class="value_input">
+                    <textarea type="text" name="description" id="modules_description"></textarea>
+                  </div>
                 </div>
-                <div title="このモジュールのバージョンを設定します。">
-                  <label>
-                    <span>バージョン</span>
-                    <div class="version">
-                      <input type="number" min="0" name="" id="modules_version_major" value="1" />
-                      <span>.</span>
-                      <input type="number" min="0" name="" id="modules_version_minor" value="0" />
-                      <span>.</span>
-                      <input type="number" min="0" name="" id="modules_version_patch" value="0" />
-                    </div>
-                  </label>
+                <div class="value_element" title="このモジュールのバージョンを設定します。">
+                  <div class="value_label">
+                    <label for="modules_version_major">バージョン</label>
+                  </div>
+                  <div class="value_input type_version">
+                    <label><input type="number" min="0" name="" id="modules_version_major" value="1" /></label>
+                    <span>.</span>
+                    <label><input type="number" min="0" name="" id="modules_version_minor" value="0" /></label>
+                    <span>.</span>
+                    <label><input type="number" min="0" name="" id="modules_version_patch" value="0" /></label>
+                  </div>
                 </div>
-                <div title="このモジュールのUUIDを設定します。">
-                  <label for="modules_uuid">
-                    <span>UUID</span>
-                    <div class="formSet">
-                      <input type="text" name="uuid" id="modules_uuid" />
-                      <input type="button" value="Generate" class="generate_uuid" />
-                    </div>
-                  </label>
+                <div class="value_element" title="このモジュールのUUIDを設定します。">
+                  <div class="value_label">
+                    <label for="modules_uuid">UUID</label>
+                  </div>
+                  <div class="value_input type_uuid">
+                    <label><input type="text" name="uuid" id="modules_uuid" /></label>
+                    <label><input type="button" value="Generate" class="generate_uuid" /></label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -347,21 +372,25 @@
               </div>
               <div class="dependencies tab_content_list">
                 <div class="selected_tab_content">
-                  <div title="依存関係にあるパックのUUIDを設定します。">
-                    <label for="dependencies_uuid">UUID</label>
-                    <input type="text" name="uuid" id="dependencies_uuid" disabled />
+                  <div class="value_element" title="依存関係にあるパックのUUIDを設定します。">
+                    <div class="value_label">
+                      <label for="dependencies_uuid">UUID</label>
+                    </div>
+                    <div class="value_input">
+                      <input type="text" name="uuid" id="dependencies_uuid" disabled />
+                    </div>
                   </div>
-                  <div title="依存関係にあるパックのバージョンを設定します。">
-                    <label>
-                      <span>バージョン</span>
-                      <div class="version">
-                        <input type="number" min="0" name="" id="dependencies_version_major" value="1" disabled />
-                        <span>.</span>
-                        <input type="number" min="0" name="" id="dependencies_version_minor" value="0" disabled />
-                        <span>.</span>
-                        <input type="number" min="0" name="" id="dependencies_version_patch" value="0" disabled />
-                      </div>
-                    </label>
+                  <div class="value_element" title="依存関係にあるパックのバージョンを設定します。">
+                    <div class="value_label">
+                      <label for="dependencies_version_major">バージョン</label>
+                    </div>
+                    <div class="value_input type_version">
+                      <label><input type="number" min="0" name="" id="dependencies_version_major" value="1" disabled /></label>
+                      <span>.</span>
+                      <label><input type="number" min="0" name="" id="dependencies_version_minor" value="0" disabled /></label>
+                      <span>.</span>
+                      <label><input type="number" min="0" name="" id="dependencies_version_patch" value="0" disabled /></label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -372,13 +401,13 @@
               <input type="checkbox" name="capabilities" id="capabilities_enable" /><label for="capabilities_enable">Capabilities</label>
             </legend>
             <div class="capabilities_list" title="このパックで追加の機能を有効にします。">
-              <div title="カスタムUI機能を有効化します。">
+              <div class="value_element" title="カスタムUI機能を有効化します。">
                 <input type="checkbox" name="experimental_custom_ui" id="experimental_custom_ui" disabled /><label for="experimental_custom_ui">experimental_custom_ui</label>
               </div>
-              <div title="Education Chemistry の機能に追加、変更できるようにします。">
+              <div class="value_element" title="Education Chemistry の機能に追加、変更できるようにします。">
                 <input type="checkbox" name="chemistry" id="chemistry" disabled /><label for="chemistry">chemistry</label>
               </div>
-              <div title="レイトレーシングの機能をパックで使えるようにします。(1.15.x以上)">
+              <div class="value_element" title="レイトレーシングの機能をパックで使えるようにします。(1.15.x以上)">
                 <input type="checkbox" name="raytracing" id="raytracing" disabled /><label for="raytracing">raytracing</label>
               </div>
             </div>
@@ -388,23 +417,35 @@
               <input type="checkbox" name="metadata" id="metadata_enable" /><label for="metadata_enable">Metadata</label>
             </legend>
             <div class="metadata_list">
-              <div title="このパックの作者を設定します。">
-                <label for="metadata_author">作者</label>
-                <div class="metadata_authors">
-                  <div class="metadata_author_list"></div>
-                  <div class="metadata_author_adder">
-                    <input type="text" name="metadata_author" id="metadata_author" disabled />
-                    <label for="metadata_author_add"><input type="button" value="Add" id="metadata_author_add" disabled /></label>
+              <div class="value_element" title="このパックの作者を設定します。">
+                <div class="value_label">
+                  <label for="metadata_author">作者</label>
+                </div>
+                <div class="value_input type_authors">
+                  <div class="authors_list"></div>
+                  <div class="author_adder">
+                    <label><input type="text" name="metadata_author" id="metadata_author" disabled /></label>
+                    <label for="metadata_author_add">
+                      <input type="button" value="Add" id="metadata_author_add" disabled />
+                    </label>
                   </div>
                 </div>
               </div>
-              <div title="このパックのホームページURLを設定します。">
-                <label for="metadata_url">URL</label>
-                <input type="url" name="metadata_url" id="metadata_url" disabled />
+              <div class="value_element" title="このパックのホームページURLを設定します。">
+                <div class="value_label">
+                  <label for="metadata_url">URL</label>
+                </div>
+                <div class="value_input">
+                  <input type="url" name="metadata_url" id="metadata_url" disabled />
+                </div>
               </div>
-              <div title="このパックのライセンスを設定します。">
-                <label for="metadata_license">ライセンス</label>
-                <input type="text" name="metadata_license" id="metadata_license" disabled />
+              <div class="value_element" title="このパックのライセンスを設定します。">
+                <div class="value_label">
+                  <label for="metadata_license">ライセンス</label>
+                </div>
+                <div class="value_input">
+                  <input type="text" name="metadata_license" id="metadata_license" disabled />
+                </div>
               </div>
             </div>
           </fieldset>
@@ -425,17 +466,29 @@
               </div>
               <div class="subpacks tab_content_list">
                 <div class="selected_tab_content">
-                  <div title="サブパックのフォルダー名を指定します。">
-                    <label for="subpacks_folder_name">フォルダー名</label>
-                    <input type="text" name="uuid" id="subpacks_folder_name" disabled />
+                  <div class="value_element" title="サブパックのフォルダー名を指定します。">
+                    <div class="value_label">
+                      <label for="subpacks_folder_name">フォルダー名</label>
+                    </div>
+                    <div class="value_input">
+                      <input type="text" name="uuid" id="subpacks_folder_name" disabled />
+                    </div>
                   </div>
-                  <div title="サブパックの実際に表示される名前を設定します。">
-                    <label for="subpacks_name">名前</label>
-                    <input type="text" name="uuid" id="subpacks_name" disabled />
+                  <div class="value_element" title="サブパックの実際に表示される名前を設定します。">
+                    <div class="value_label">
+                      <label for="subpacks_name">名前</label>
+                    </div>
+                    <div class="value_input">
+                      <input type="text" name="uuid" id="subpacks_name" disabled />
+                    </div>
                   </div>
-                  <div title="このサブパックのメモリ使用量">
-                    <label for="subpacks_memory_tier">メモリティア</label>
-                    <input type="number" min="0" name="subpacks_memory_tier" id="subpacks_memory_tier" value="0" disabled />
+                  <div class="value_element" title="このサブパックのメモリ使用量">
+                    <div class="value_label">
+                      <label for="subpacks_memory_tier">メモリティア</label>
+                    </div>
+                    <div class="value_input">
+                      <input type="number" min="0" name="subpacks_memory_tier" id="subpacks_memory_tier" value="0" disabled />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -462,61 +515,14 @@
               </div>
             </div>
           </div>
-          <style>
-            .display_preview_card {
-              display: grid;
-              grid-template-rows: 4rem;
-              grid-template-columns: 4rem 80%;
-              grid-gap: .25rem;
-              height: 4rem;
-              padding: .25rem;
-              margin: 1rem;
-              background-color: rgba(0, 0, 0, 0.5);
-              color: white;
-              border-radius: 0.3em;
-              user-select: none;
-              -ms-user-select: none;
-              -moz-user-select: none;
-              -webkit-user-select: none;
-            }
-
-            .card_icon {
-              height: 100%;
-            }
-
-            .card_icon img {
-              pointer-events: none;
-              height: 100%;
-            }
-
-            .card_text {}
-
-            .card_text p {
-              margin: 0;
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-              line-height: 1;
-            }
-
-            #card_title {
-              height: 1rem;
-            }
-
-            #card_description {
-              padding-top: 1px;
-              white-space: pre;
-              height: 3rem;
-            }
-          </style>
           <div class="code_preview">
             <pre class="language-json">
               <code class="language-json"></code>
             </pre>
+            <label>
+              <textarea name="code_buffer" id="code_buffer"></textarea>
+            </label>
           </div>
-          <label>
-            <textarea name="code_buffer" id="code_buffer"></textarea>
-          </label>
         </div>
         <div class="issue">
           <div class="issue_control_bar">

@@ -1,15 +1,39 @@
-textarea {
-  width: calc(100% - 2rem);
+div.value_input {
+  grid-template-columns: 1fr;
+  margin-right: 0.5rem;
 }
-input[type="text"] {
+div.value_input > input {
+  max-width: initial;
   width: auto;
-  margin: 0.25rem 1rem;
 }
-input[type="checkbox"] {
-  display: inline-block;
+div.value_input.type_version > label {
+  display: grid;
 }
-input[type="url"] {
+div.value_input.type_uuid,
+div.author_adder {
+  display: grid;
+  grid-gap: 0.5rem;
+}
+div.value_input.type_uuid input,
+div.author_adder input {
   width: auto;
+  max-width: 100%;
+  margin: 0;
+  width: auto;
+  max-width: inherit;
+}
+div.value_input.type_uuid > label,
+div.author_adder > label {
+  display: grid;
+}
+div.value_input.type_uuid > label input {
+  width: auto;
+  max-width: inherit;
+  min-width: 0;
+}
+div.value_input.type_uuid > label input[type="button"] {
+  width: auto;
+  max-width: inherit;
 }
 @media (max-width: 41rem) {
   div.title {
@@ -37,6 +61,22 @@ input[type="url"] {
     position: relative;
     overflow-y: hidden;
   }
+  div.value_input > input {
+    /* エディタ */
+    width: auto;
+    max-width: inherit;
+    min-width: 0;
+  }
+  div.value_input.type_uuid input,
+  div.author_adder input {
+    width: auto;
+    max-width: inherit;
+    min-width: 0;
+  }
+  input[type="number"] {
+    min-width: 0;
+    width: auto;
+  }
   div.data_check {
     /* データチェック */
     overflow-y: unset;
@@ -57,49 +97,4 @@ input[type="url"] {
     /* セパレータ */
     display: none;
   }
-}
-label span:first-child + *,
-label + * {
-  display: block;
-}
-fieldset div {
-  display: block;
-}
-label div.formSet {
-  display: grid;
-  flex-direction: column;
-  align-items: baseline;
-  margin: 0;
-}
-.formSet input[type="text"] {
-  width: auto;
-  margin: 0.25rem 1rem;
-}
-.formSet input[type="button"] {
-  align-self: flex-end;
-  margin: 0.25rem 1rem;
-}
-#format_version {
-  display: inline-block;
-}
-div.modules_controls_bar,
-div.tab_controls_bar {
-  display: flex;
-}
-div.modules_contents div.selected_tab_content,
-div.tab_content_list div.selected_tab_content {
-  box-sizing: border-box;
-}
-div.metadata_authors {
-  display: grid;
-  margin: 0;
-}
-div.metadata_author_adder {
-  display: grid;
-}
-div.metadata_author_adder > label {
-  display: grid;
-}
-input#metadata_author_add {
-  margin: 0.25rem 1rem;
 }

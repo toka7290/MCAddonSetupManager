@@ -106,11 +106,12 @@ $(function () {
   });
   // プレビュー表示切替
   $("div#show_preview").on("click", function () {
+    const show_preview = $("div#show_preview");
     $("div.preview").slideToggle();
-    if (this.attr("class") == "active") {
-      this.removeClass("active");
+    if (show_preview.hasClass("active")) {
+      show_preview.removeClass("active");
     } else {
-      this.addClass("active");
+      show_preview.addClass("active");
     }
   });
   // ウィンドウワイズ変更時にcss削除
@@ -168,7 +169,7 @@ $(function () {
   });
   //UUID生成
   $(document).on("click", 'input[type="button"].generate_uuid', function () {
-    $(this).prev().val(getUuid_v4);
+    $(this).parents("div.type_uuid").find('input[type="text"]').val(getUuid_v4);
     onChangedJSON();
   });
   //Modules tab変更
@@ -363,14 +364,16 @@ $(function () {
   }
   // オーナー追加
   function add_author(name) {
-    const metadata_author_list = $(document).find(".metadata_author_list");
+    const author_list = $(document).find(
+      "div.value_input.type_authors .authors_list"
+    );
     const author_list_child = $("<div>");
     author_list_child.append($("<span>").addClass("name").text(name));
     author_list_child.append(
       $("<span>").addClass("metadata_delete_author").text("×")
     );
-    metadata_author_list.append(author_list_child);
-    metadata_author_list.children("div:last-child").hide().show(150);
+    author_list.append(author_list_child);
+    author_list.children("div:last-child").hide().show(150);
   }
 
   // インポート処理
@@ -505,7 +508,7 @@ $(function () {
       $("div.metadata_list input").prop("disabled", false);
       if (
         !(
-          $("div.metadata_author_list > div")[0] ||
+          $("div.authors_list > div")[0] ||
           $("#metadata_url").val() != "" ||
           $("#metadata_license").val() != ""
         )
@@ -545,16 +548,16 @@ $(function () {
     module_num["interface"] = 3;
     module_num["world_template"] = 4;
 
-    const min_engine_version = $("#header_min_engine_version");
-    min_engine_version.removeClass("disabled");
-    const min_engine_version_children = min_engine_version
-      .find("input")
-      .prop("disabled", false);
-    const base_game_version = $("#header_base_game_version");
-    base_game_version.addClass("disabled");
-    const base_game_version_children = base_game_version
-      .find("input")
-      .prop("disabled", true);
+    const min_engine_version = $("#min_engine_version").removeClass("disabled");
+    const min_engine_version_input = $("#min_engine_version_input input").prop(
+      "disabled",
+      false
+    );
+    const base_game_version = $("#base_game_version").addClass("disabled");
+    const base_game_version_input = $("#base_game_version_input input").prop(
+      "disabled",
+      true
+    );
     const lock_template_options = $("#header_lock_template_options");
     lock_template_options.parent().addClass("disabled");
     lock_template_options.prop("disabled", true);
@@ -579,10 +582,10 @@ $(function () {
           case "world_template":
             is_world_template = true;
             min_engine_version.addClass("disabled");
-            min_engine_version_children.prop("disabled", true);
+            min_engine_version_input.prop("disabled", true);
             if (format_version >= 2) {
               base_game_version.removeClass("disabled");
-              base_game_version_children.prop("disabled", false);
+              base_game_version_input.prop("disabled", false);
             }
             lock_template_options.parent().removeClass("disabled");
             lock_template_options.prop("disabled", false);
@@ -711,11 +714,11 @@ $(function () {
       }
     }
     if (is_metadata_enable) {
-      if ($("div.metadata_author_list > div")[0]) {
-        const metadata_length = $("div.metadata_author_list > div").length;
+      if ($("div.authors_list > div")[0]) {
+        const metadata_length = $("div.authors_list > div").length;
         for (let i = 1; i <= metadata_length; i++) {
           const author_name = $(
-            "div.metadata_author_list > div:nth-child(" + i + ") > span.name"
+            "div.authors_list > div:nth-child(" + i + ") > span.name"
           );
           if (author_name.text() == "") {
             //名前がありません
@@ -1339,19 +1342,17 @@ $(function () {
     }
     if (
       is_metadata_enable &&
-      ($("div.metadata_author_list > div")[0] ||
+      ($("div.authors_list > div")[0] ||
         $("#metadata_url").val() != "" ||
         $("#metadata_license").val() != "")
     ) {
       json_raw["metadata"] = new Object();
-      if ($("div.metadata_author_list > div")[0]) {
+      if ($("div.authors_list > div")[0]) {
         json_raw["metadata"]["authors"] = new Array();
-        const metadata_length = $("div.metadata_author_list > div").length;
+        const metadata_length = $("div.authors_list > div").length;
         for (let i = 1; i <= metadata_length; i++) {
           json_raw["metadata"]["authors"].push(
-            $(
-              "div.metadata_author_list > div:nth-child(" + i + ") > span.name"
-            ).text()
+            $("div.authors_list > div:nth-child(" + i + ") > span.name").text()
           );
         }
       } else {
