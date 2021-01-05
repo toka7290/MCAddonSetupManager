@@ -9,7 +9,10 @@ div.value_input > input {
 div.value_input.type_version > label {
   display: grid;
 }
-div.value_input.type_uuid,
+div.value_input.type_uuid {
+  display: block;
+}
+div.value_input.type_uuid .uuid_group,
 div.author_adder {
   display: grid;
   grid-gap: 0.5rem;
@@ -22,16 +25,20 @@ div.author_adder input {
   width: auto;
   max-width: inherit;
 }
-div.value_input.type_uuid > label,
+div.uuid_group > label,
 div.author_adder > label {
   display: grid;
 }
-div.value_input.type_uuid > label input {
+div.uuid_group > label:first-child input {
+  width: auto;
+  max-width: inherit;
+}
+div.uuid_group > label input {
   width: auto;
   max-width: inherit;
   min-width: 0;
 }
-div.value_input.type_uuid > label input[type="button"] {
+div.uuid_group > label input[type="button"] {
   width: auto;
   max-width: inherit;
 }

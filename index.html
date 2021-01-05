@@ -166,7 +166,7 @@
       <div class="page_about about_hide">
         <div class="about_area">
           <div class="close_about">
-            <img src="img/close.svg" alt="" />
+            <img src="img/close.svg" alt="" id="close_about_image" />
           </div>
           <div class="about_content">
             <img src="img/icon.webp" alt="" onerror="this.src='img/icon_2000.png'" />
@@ -264,10 +264,12 @@
                 <label for="header_uuid">UUID</label>
               </div>
               <div class="value_input type_uuid">
-                <label><input type="text" name="uuid" id="header_uuid" /></label>
-                <label for="header_uuid_generate">
-                  <input type="button" value="Generate" class="generate_uuid" id="header_uuid_generate" />
-                </label>
+                <div class="uuid_group">
+                  <label><input type="text" name="uuid" id="header_uuid" /></label>
+                  <label>
+                    <input type="button" value="Generate" class="generate_uuid" id="header_uuid_generate" />
+                  </label>
+                </div>
               </div>
             </div>
             <div class="value_element" title="このパックをマルチプラットフォーム環境で使用できないようにします。">
@@ -348,8 +350,10 @@
                     <label for="modules_uuid">UUID</label>
                   </div>
                   <div class="value_input type_uuid">
-                    <label><input type="text" name="uuid" id="modules_uuid" /></label>
-                    <label><input type="button" value="Generate" class="generate_uuid" /></label>
+                    <div class="uuid_group">
+                      <label><input type="text" name="uuid" id="modules_uuid" /></label>
+                      <label><input type="button" value="Generate" class="generate_uuid" /></label>
+                    </div>
                   </div>
                 </div>
               </div>

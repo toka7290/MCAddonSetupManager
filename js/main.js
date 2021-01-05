@@ -131,7 +131,7 @@ $(function () {
     $("div.page_about").removeClass("about_hide");
   });
   // about閉じる
-  $("div.close_about").on("click", function () {
+  $("img#close_about_image").on("click", function () {
     $("div.page_about").addClass("about_hide");
   });
   // コピー
@@ -437,7 +437,6 @@ $(function () {
       for (const index in split_text) {
         let i = split_text[index].indexOf("\\n");
         if (index >= 1) result += `\\\\`;
-        console.log(split_text[index]);
         if (i != -1) {
           result += `${
             split_text[index].slice(
@@ -452,7 +451,6 @@ $(function () {
       }
       title = result;
     }
-    // title = title.slice(0, title.indexOf("\\n") - title.length) + "\u2026";
     $("#card_title").html(MinecraftText.toHTML(title));
     // 説明
     let description = $("#header_description").val().toString();
@@ -469,7 +467,6 @@ $(function () {
           if (position == -1) break;
         } while (i < 3);
         if (index >= 1) result += `\\\\`;
-        console.log(split_text[index]);
         if (position != -1) {
           result += `${
             split_text[index].slice(

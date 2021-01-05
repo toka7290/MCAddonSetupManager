@@ -23,12 +23,16 @@
 
   --color_text: #000;
   --color_input_text: #000;
-  --color-help_content_text: #000;
-  --color-help_content_border: #555;
+  --color_help_content_text: #000;
+  --color_help_content_border: #555;
   --color_disabled_text: #808080;
   --color_header_text: #fff;
   --color_selected_tab: #fff;
-  --color-help_content: #fff;
+  --color_help_content: #fff;
+  --color_focus_text: #fff;
+  --color_focus_foreground: rgba(0, 0, 0, 0.75);
+  --color_focus_background: rgba(0, 0, 0, 0.25);
+  --color_display_preview_background: rgba(0, 0, 0, 0.75);
 
   --color_delete_hover: #d81b60;
   --color_error: #f44336;
@@ -70,6 +74,9 @@
     --color_input_text: #f5f5f5;
     --color_header_text: #f5f5f5;
     --color_selected_tab: #000;
+    --color_focus_text: #000;
+    --color_focus_foreground: #fff;
+    --color_focus_background: rgba(0, 0, 0, 0.5);
 
     --color_error_background: #440000;
     --color_warning_background: #353000;

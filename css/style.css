@@ -267,9 +267,9 @@ div.help_content {
   min-width: 12rem;
   max-width: 15rem;
   font-size: 16px;
-  background: var(--color-help_content);
+  background: var(--color_help_content);
   text-align: center;
-  border: solid 3px var(--color-help_content_border);
+  border: solid 3px var(--color_help_content_border);
   border-radius: 1rem;
 }
 div.help_content.bottom {
@@ -284,7 +284,7 @@ div.help_content.top::before {
   top: -24px;
   margin-left: -15px;
   border: 12px solid transparent;
-  border-bottom: 12px solid var(--color-help_content);
+  border-bottom: 12px solid var(--color_help_content);
   z-index: 12;
 }
 div.help_content.top:after {
@@ -293,7 +293,7 @@ div.help_content.top:after {
   top: -30px;
   margin-left: -17px;
   border: 14px solid transparent;
-  border-bottom: 14px solid var(--color-help_content_border);
+  border-bottom: 14px solid var(--color_help_content_border);
   z-index: 11;
 }
 div.help_content.bottom:before {
@@ -303,7 +303,7 @@ div.help_content.bottom:before {
   left: 50%;
   margin-left: -15px;
   border: 12px solid transparent;
-  border-top: 12px solid var(--color-help_content);
+  border-top: 12px solid var(--color_help_content);
   z-index: 12;
 }
 div.help_content.bottom:after {
@@ -313,7 +313,7 @@ div.help_content.bottom:after {
   left: 50%;
   margin-left: -17px;
   border: 14px solid transparent;
-  border-top: 14px solid var(--color-help_content_border);
+  border-top: 14px solid var(--color_help_content_border);
   z-index: 11;
 }
 div.help_content#help_content_1 {
@@ -335,7 +335,7 @@ div.help_content#help_content_3:after {
   right: 4.9rem;
 }
 div.help_content p {
-  color: var(--color-help_content_text);
+  color: var(--color_help_content_text);
 }
 div.header_menu_alt img,
 div.about_external_link img,
@@ -353,7 +353,7 @@ div#page_share img {
   z-index: 100;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.25);
+  background: var(--color_focus_background);
 }
 .file_drop_zone.hide {
   display: none;
@@ -364,15 +364,20 @@ div#page_share img {
   height: auto;
   padding: 20px;
   font-weight: 600;
-  color: #fff;
+  color: var(--color_focus_text);
   text-align: center;
-  background: rgba(0, 0, 0, 0.75);
+  background: var(--color_focus_foreground);
   border-radius: 6px;
   user-select: none;
   -ms-user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   z-index: 50;
+}
+@media (prefers-color-scheme: dark) {
+  .file_drop_zone_textarea img {
+    filter: invert(1);
+  }
 }
 .file_drop_zone_textarea p {
   white-space: pre;
@@ -392,7 +397,7 @@ div#page_share img {
   z-index: 5;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.25);
+  background: var(--color_focus_background);
 }
 .about_hide {
   visibility: hidden;
@@ -497,60 +502,47 @@ div.editor form {
   padding: 1em;
   box-sizing: border-box;
 }
-
 div + div.value_element {
   margin-top: 0.5rem;
 }
-
 div.value_input {
   display: grid;
   grid-template-columns: auto minmax(0.5rem, 20%);
   width: auto;
   margin-left: 0.5rem;
 }
-
 div.value_input input,
 div.value_input textarea {
   grid-row: 1;
   grid-column: 1;
 }
-
 div.value_input.type_version {
   display: flex;
   width: auto;
   align-items: flex-end;
   margin-left: 0.5rem;
 }
-
 div.value_input.type_version > label {
   width: auto;
 }
-
-div.value_input.type_uuid {
-  display: flex;
-  width: auto;
-  align-items: center;
+div.uuid_group {
+  display: inline-flex;
 }
-
-div.value_input.type_uuid > label:first-child {
+div.uuid_group > label {
+  display: contents;
+}
+div.uuid_group > label input {
+  max-width: max-content;
+}
+div.uuid_group > label:first-child input {
   max-width: 22rem;
-  display: grid;
+  width: 100%;
 }
-div.value_input.type_uuid > label {
-  flex-grow: 1;
-}
-
-div.value_input.type_uuid > label > input[type="text"] {
-  width: auto;
-  max-width: 22rem;
-}
-
 div.value_checkbox {
   display: grid;
   grid-template-columns: minmax(auto, max-content) minmax(0.5rem, 20%);
   align-items: center;
 }
-
 div.value_checkbox > label {
   white-space: normal;
 }
@@ -651,7 +643,8 @@ span.metadata_delete_author:hover {
   background-color: var(--color_delete_hover);
   color: var(--color_selected_tab);
 }
-.disabled span.delete_tab:hover {
+.disabled span.delete_tab:hover,
+.disabled span.metadata_delete_author:hover {
   cursor: auto;
   background-color: inherit;
   color: inherit;
@@ -761,7 +754,7 @@ div.preview_control_bar p:hover {
   height: 4rem;
   padding: 0.25rem;
   margin: 1rem;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--color_display_preview_background);
   color: white;
   border-radius: 0.3em;
   user-select: none;
