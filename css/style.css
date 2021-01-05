@@ -341,6 +341,7 @@ div.header_menu_alt img,
 div.about_external_link img,
 div#page_share img {
   width: 2rem;
+  height: 2rem;
   pointer-events: none;
 }
 .file_drop_zone {

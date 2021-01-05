@@ -1025,7 +1025,7 @@ $(function () {
     let content = "";
     if (type == "warning") {
       content =
-        '<li><img src="img/warning.svg" alt=""><p>' +
+        '<li><img src="img/warning.svg" alt="" width="19px" height="19px"><p>' +
         issue_content +
         "</p></li>";
       issue_element.addClass("stat_warning");
