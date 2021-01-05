@@ -1,0 +1,107 @@
+div.value_input {
+  grid-template-columns: 1fr;
+  margin-right: 0.5rem;
+}
+div.value_input > input {
+  max-width: initial;
+  width: auto;
+}
+div.value_input.type_version > label {
+  display: grid;
+}
+div.value_input.type_uuid {
+  display: block;
+}
+div.value_input.type_uuid .uuid_group,
+div.author_adder {
+  display: grid;
+  grid-gap: 0.5rem;
+}
+div.value_input.type_uuid input,
+div.author_adder input {
+  width: auto;
+  max-width: 100%;
+  margin: 0;
+  width: auto;
+  max-width: inherit;
+}
+div.uuid_group > label,
+div.author_adder > label {
+  display: grid;
+}
+div.uuid_group > label:first-child input {
+  width: auto;
+  max-width: inherit;
+}
+div.uuid_group > label input {
+  width: auto;
+  max-width: inherit;
+  min-width: 0;
+}
+div.uuid_group > label input[type="button"] {
+  width: auto;
+  max-width: inherit;
+}
+@media (max-width: 41rem) {
+  div.title {
+    /* ヘッダー */
+    display: none;
+  }
+  .title_icon {
+    display: block;
+  }
+  div.header_menu_alt {
+    display: none;
+  }
+  div.header_menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  div#page_share {
+    display: block;
+  }
+  div.content {
+    /* コンテンツ */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-y: hidden;
+  }
+  div.value_input > input {
+    /* エディタ */
+    width: auto;
+    max-width: inherit;
+    min-width: 0;
+  }
+  div.value_input.type_uuid input,
+  div.author_adder input {
+    width: auto;
+    max-width: inherit;
+    min-width: 0;
+  }
+  input[type="number"] {
+    min-width: 0;
+    width: auto;
+  }
+  div.data_check {
+    /* データチェック */
+    overflow-y: unset;
+    height: auto;
+    flex-basis: auto;
+  }
+  div.preview {
+    /* プレビュー */
+    display: none;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  div.separator {
+    /* セパレータ */
+    display: none;
+  }
+}
