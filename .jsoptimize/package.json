@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "js_compile": "google-closure-compiler --js=../js/main.js --js_output_file=../js/main.min.js"
+  },
+  "dependencies": {
+    "google-closure-library": "^20201102.0.1"
+  }
+}

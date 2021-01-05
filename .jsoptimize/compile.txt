@@ -1,0 +1,3 @@
+java -jar .\closure-compiler-v20201102.jar --js=..\lib\jquery-3.5.1.min.js --js=..\lib\prism.js --js=..\js\main.js --js_output_file=..\js\main.min.js --compilation_level=ADVANCED_OPTIMIZATIONS 
+
+java -jar .\closure-compiler-v20201102.jar --js=..\js\main.js --js_output_file=..\js\main.min.js --compilation_level=ADVANCED_OPTIMIZATIONS --externs=jquery-3.3.js --externs=prism.js --externs=minecraft_text.js
