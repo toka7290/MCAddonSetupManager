@@ -27,6 +27,10 @@ $(function () {
     onChangedJSON();
     isChanged = true;
   });
+  // 改行入力制限
+  $("textarea").on("keydown", function (e) {
+    if (e.key == "Enter") return false;
+  });
   // セパレータ移動
   $(".separator").on("mousedown", function (e) {
     if (!is_separator_drag) {
@@ -425,28 +429,60 @@ $(function () {
   // 実表示
   function updateDisplayPreview() {
     // タイトル
-    let title = $("#header_pack_name").val();
+    let title = $("#header_pack_name").val().toString();
     if (title == "") title = "名前がありません";
-    else if (title.indexOf("\\n") != -1)
-      title = title.slice(0, title.indexOf("\\n") - title.length) + "\u2026";
+    else if (title.match(/\\/g) != null) {
+      let split_text = title.split("\\\\");
+      let result = "";
+      for (const index in split_text) {
+        let i = split_text[index].indexOf("\\n");
+        if (index >= 1) result += `\\\\`;
+        console.log(split_text[index]);
+        if (i != -1) {
+          result += `${
+            split_text[index].slice(
+              0,
+              split_text[index].indexOf("\\n") - split_text[index].length
+            ) + "\u2026"
+          }`;
+          break;
+        } else {
+          result += `${split_text[index]}`;
+        }
+      }
+      title = result;
+    }
+    // title = title.slice(0, title.indexOf("\\n") - title.length) + "\u2026";
     $("#card_title").html(MinecraftText.toHTML(title));
     // 説明
-    let description = $("#header_description").val();
+    let description = $("#header_description").val().toString();
     if (description == "") description = "§c不明なパックの説明";
-    else {
+    else if (description.match(/\\/g) != null) {
       let position = 0;
       let i = 0;
-      do {
-        i++;
-        position = description.indexOf("\\n", position + 1);
-        if (position == -1) break;
-      } while (i < 3);
-      if (position != -1) {
-        console.log(position, description.length);
-        description =
-          description.slice(0, position - description.length) + "\u2026";
+      let result = "";
+      let split_text = description.split("\\\\");
+      for (const index in split_text) {
+        do {
+          i++;
+          position = split_text[index].indexOf("\\n", position + 1);
+          if (position == -1) break;
+        } while (i < 3);
+        if (index >= 1) result += `\\\\`;
+        console.log(split_text[index]);
+        if (position != -1) {
+          result += `${
+            split_text[index].slice(
+              0,
+              position + 1 - split_text[index].length
+            ) + "\u2026"
+          }`;
+          break;
+        } else {
+          result += `${split_text[index]}`;
+        }
       }
-      console.log(description, i);
+      description = result;
     }
     $("#card_description").html(MinecraftText.toHTML(description));
     MinecraftText.refeashObfuscate();
@@ -763,6 +799,32 @@ $(function () {
   // エラー検査
   function checkJSONError() {
     let error_num = 0;
+    let element_val = $("#header_pack_name")
+      .val()
+      .toString()
+      .replace(/\\\\/g, "");
+    if (element_val.slice(-1) == "\\") {
+      //名前の最後の文字がバックスラッシュ
+      addIssue(
+        "error",
+        '[Header:name] 最後の文字がバックスラッシュ"\\"です。エスケープ文字にするか消去してください。',
+        $("#header_pack_name")
+      );
+      error_num++;
+    }
+    element_val = $("#header_description")
+      .val()
+      .toString()
+      .replace(/\\\\/g, "");
+    if (element_val.slice(-1) == "\\") {
+      //説明の最後の文字がバックスラッシュ
+      addIssue(
+        "error",
+        '[Header:description] 最後の文字がバックスラッシュ"\\"です。エスケープ文字にするか消去してください。',
+        $("#header_description")
+      );
+      error_num++;
+    }
     switch (format_version) {
       case 1:
         break;
@@ -818,6 +880,23 @@ $(function () {
         );
         error_num++;
       }
+      const modules_description = $(
+        "div.modules_contents > div:nth-child(" +
+          child_num +
+          ") #modules_description"
+      );
+      element_val = modules_description.val().replace(/\\\\/g, "");
+      if (element_val.slice(-1) == "\\") {
+        //urlの最後の文字がバックスラッシュ
+        addIssue(
+          "error",
+          "[Modules:" +
+            i +
+            ':description] 最後の文字がバックスラッシュ"\\"です。エスケープ文字にするか消去してください。',
+          modules_description
+        );
+        error_num++;
+      }
       const modules_uuid = $(
         "div.modules_contents > div:nth-child(" + child_num + ") #modules_uuid"
       );
@@ -856,6 +935,49 @@ $(function () {
         }
       }
     }
+    if (is_metadata_enable) {
+      const metadata_length = $("div.authors_list > div").length;
+      for (let i = 1; i <= metadata_length; i++) {
+        const author_name = $(
+          "div.authors_list > div:nth-child(" + i + ") > span.name"
+        );
+        element_val = author_name.text().replace(/\\\\/g, "");
+        if (element_val.slice(-1) == "\\") {
+          //名前の最後の文字がバックスラッシュ
+          addIssue(
+            "error",
+            "[Metadata:author:" +
+              i +
+              '] 最後の文字がバックスラッシュ"\\"です。消去するかエスケープ文字にして再登録してください。',
+            author_name
+          );
+          error_num++;
+        }
+      }
+      element_val = $("#metadata_url").val().replace(/\\\\/g, "");
+      if (element_val.slice(-1) == "\\") {
+        //urlの最後の文字がバックスラッシュ
+        addIssue(
+          "error",
+          '[Metadata:url] 最後の文字がバックスラッシュ"\\"です。エスケープ文字にするか消去してください。',
+          $("#metadata_url")
+        );
+        error_num++;
+      }
+      element_val = $("#metadata_license")
+        .val()
+        .toString()
+        .replace(/\\\\/g, "");
+      if (element_val.slice(-1) == "\\") {
+        //ライセンスの最後の文字がバックスラッシュ
+        addIssue(
+          "error",
+          '[Metadata:license] 最後の文字がバックスラッシュ"\\"です。エスケープ文字にするか消去してください。',
+          $("#metadata_license")
+        );
+        error_num++;
+      }
+    }
     if (is_subpacks_enable) {
       const subpacks_length = $(".subpacks.tab_controls_bar_tab li").length;
       for (let i = 0; i < subpacks_length; i++) {
@@ -876,10 +998,23 @@ $(function () {
           error_num++;
         }
         const subpacks_name = tab_content.find("#subpacks_name");
-        if (subpacks_name.val() == null || subpacks_name.val() == "") {
+        const subpacks_name_val = subpacks_name.val().toString();
+        if (subpacks_name_val == null || subpacks_name_val == "") {
           addIssue(
             "error",
             "[Subpacks:" + i + ":name] 名前が空です。",
+            subpacks_name
+          );
+          error_num++;
+        }
+        element_val = subpacks_name_val.replace(/\\\\/g, "");
+        if (element_val.slice(-1) == "\\") {
+          //名前の最後の文字がバックスラッシュ
+          addIssue(
+            "error",
+            "[Subpacks:" +
+              i +
+              ':name] 最後の文字がバックスラッシュ"\\"です。エスケープ文字にするか消去してください。',
             subpacks_name
           );
           error_num++;
@@ -1270,8 +1405,8 @@ $(function () {
     json_raw["format_version"] = format_version;
 
     json_raw["header"] = new Object();
-    json_raw["header"]["name"] = $("#header_pack_name").val();
-    json_raw["header"]["description"] = $("#header_description").val();
+    json_raw["header"]["name"] = "replace_header_pack_name";
+    json_raw["header"]["description"] = "replace_header_description";
     json_raw["header"]["version"] = "replace_header_version";
     if (!is_world_template) {
       json_raw["header"]["min_engine_version"] =
@@ -1298,11 +1433,8 @@ $(function () {
       json_raw["modules"][i]["type"] = $(
         "div.modules_contents > div:nth-child(" + child_num + ") #modules_type"
       ).val();
-      json_raw["modules"][i]["description"] = $(
-        "div.modules_contents > div:nth-child(" +
-          child_num +
-          ") #modules_description"
-      ).val();
+      json_raw["modules"][i]["description"] =
+        "replace_modules_" + i + "description";
       json_raw["modules"][i]["version"] = "replace_modules_" + i + "_version";
       json_raw["modules"][i]["uuid"] = $(
         "div.modules_contents > div:nth-child(" + child_num + ") #modules_uuid"
@@ -1351,17 +1483,13 @@ $(function () {
         json_raw["metadata"]["authors"] = new Array();
         const metadata_length = $("div.authors_list > div").length;
         for (let i = 1; i <= metadata_length; i++) {
-          json_raw["metadata"]["authors"].push(
-            $("div.authors_list > div:nth-child(" + i + ") > span.name").text()
-          );
+          json_raw["metadata"]["authors"].push("replace_" + i + "author");
         }
-      } else {
-        // json_raw["metadata"]["authors"].push("");
       }
       if ($("#metadata_url").val() != "")
-        json_raw["metadata"]["url"] = $("#metadata_url").val();
+        json_raw["metadata"]["url"] = "replace_metadata_url";
       if ($("#metadata_license").val() != "")
-        json_raw["metadata"]["license"] = $("#metadata_license").val();
+        json_raw["metadata"]["license"] = "replace_metadata_license";
     }
     if (is_subpacks_enable) {
       json_raw["subpacks"] = new Array();
@@ -1375,20 +1503,26 @@ $(function () {
         json_raw["subpacks"][i]["folder_name"] = tab_content
           .find("#subpacks_folder_name")
           .val();
-        json_raw["subpacks"][i]["name"] = tab_content
-          .find("#subpacks_name")
-          .val();
+        json_raw["subpacks"][i]["name"] = "replace_subpacks_name";
         json_raw["subpacks"][i]["memory_tier"] = Number(
           tab_content.find("#subpacks_memory_tier").val()
         );
       }
     }
-    const json_string_raw = JSON.stringify(json_raw, null, "  ");
+    const json_string_raw = `${JSON.stringify(json_raw, null, "  ")}`;
 
-    return jsonVersionReplacer(json_string_raw);
+    return jsonReplacer(json_string_raw);
   }
   // json バージョン置き換え
-  function jsonVersionReplacer(string_raw) {
+  function jsonReplacer(string_raw) {
+    string_raw = string_raw.replace(
+      "replace_header_pack_name",
+      $("#header_pack_name").val()
+    );
+    string_raw = string_raw.replace(
+      "replace_header_description",
+      $("#header_description").val()
+    );
     const header_version = JSON.stringify([
       Number($("#header_version_major").val()),
       Number($("#header_version_minor").val()),
@@ -1425,6 +1559,14 @@ $(function () {
 
     for (let i = 0; i < $(".modules_controls_tab li").length; i++) {
       const child_num = i + 1;
+      string_raw = string_raw.replace(
+        "replace_modules_" + i + "description",
+        $(
+          "div.modules_contents > div:nth-child(" +
+            child_num +
+            ") #modules_description"
+        ).val()
+      );
       const modules_version = JSON.stringify([
         Number(
           $(
@@ -1475,6 +1617,32 @@ $(function () {
           dependencies_version
         );
       }
+    }
+    const metadata_length = $("div.authors_list > div").length;
+    for (let i = 1; i <= metadata_length; i++) {
+      string_raw = string_raw.replace(
+        "replace_" + i + "author",
+        $("div.authors_list > div:nth-child(" + i + ") > span.name").text()
+      );
+    }
+    string_raw = string_raw.replace(
+      "replace_metadata_url",
+      $("#metadata_url").val()
+    );
+    string_raw = string_raw.replace(
+      "replace_metadata_license",
+      $("#metadata_license").val()
+    );
+    const subpacks_length = $(".subpacks.tab_controls_bar_tab li").length;
+    for (let i = 0; i < subpacks_length; i++) {
+      string_raw = string_raw.replace(
+        "replace_subpacks_name",
+        $(
+          "div.subpacks.tab_content_list > div:nth-child(" +
+            (i + 1) +
+            ") #subpacks_name"
+        ).val()
+      );
     }
     return string_raw;
   }
