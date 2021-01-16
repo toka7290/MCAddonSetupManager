@@ -440,6 +440,7 @@ div.about_content {
 div.about_content > img {
   width: 50%;
   max-width: 20rem;
+  height: auto;
 }
 div.about_title,
 div.copyright {
