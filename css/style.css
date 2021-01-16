@@ -159,36 +159,7 @@ div.header_menu {
   -moz-user-select: none;
   -webkit-user-select: none;
 }
-div.import_file {
-  display: inline-block;
-  padding: 0.5rem;
-  position: relative;
-}
-div.import_file label {
-  margin: 0;
-}
-div.import_file input {
-  display: none;
-}
-div.header_menu > * {
-  color: var(--color_header_text);
-  display: inline-block;
-  margin: 0;
-  padding: 0.5em;
-  transition-duration: 0.5s;
-  transition-property: background-color;
-}
-div.header_menu p:hover,
-div.header_menu div:hover {
-  cursor: pointer;
-  background-color: var(--color_header_hover);
-}
-div#show_preview {
-  position: relative;
-}
-div#show_preview.active {
-  background-color: var(--color_header_hover);
-}
+
 div.header_menu_alt {
   display: inline-flex;
   align-items: center;
@@ -504,21 +475,17 @@ div.editor form {
   padding: 1em;
   box-sizing: border-box;
 }
-div + div.value_element {
-  margin-top: 0.5rem;
-}
 div.value_input {
   display: grid;
-  grid-template-columns: auto minmax(0.5rem, 20%);
+} /* grid-template-columns: auto minmax(0.5rem, 20%);
   width: auto;
-  margin-left: 0.5rem;
-}
+  margin-left: 0.5rem; */
 div.value_input input,
 div.value_input textarea {
   grid-row: 1;
   grid-column: 1;
 }
-div.value_input.type_version {
+/* div.value_input.type_version {
   display: flex;
   width: auto;
   align-items: flex-end;
@@ -526,7 +493,7 @@ div.value_input.type_version {
 }
 div.value_input.type_version > label {
   width: auto;
-}
+} */
 div.uuid_group {
   display: inline-flex;
 }

@@ -45,6 +45,29 @@
   --color_prism_number: #aed581;
   --color_prism_string: #ff9e80;
   --color_prism_keyword: #e91e63;
+
+  --color_themePrimary: #2e7d32;
+  --color_themeLighterAlt: #f4faf4;
+  --color_themeLighter: #d3ead4;
+  --color_themeLight: #afd8b1;
+  --color_themeTertiary: #6eb171;
+  --color_themeSecondary: #3f8d43;
+  --color_themeDarkAlt: #2a702d;
+  --color_themeDark: #235f26;
+  --color_themeDarker: #1a461c;
+  --color_neutralLighterAlt: #faf9f8;
+  --color_neutralLighter: #f3f2f1;
+  --color_neutralLight: #edebe9;
+  --color_neutralQuaternaryAlt: #e1dfdd;
+  --color_neutralQuaternary: #d0d0d0;
+  --color_neutralTertiaryAlt: #c8c6c4;
+  --color_neutralTertiary: #a19f9d;
+  --color_neutralSecondary: #605e5c;
+  --color_neutralPrimaryAlt: #3b3a39;
+  --color_neutralPrimary: #323130;
+  --color_neutralDark: #201f1e;
+  --color_black: #000000;
+  --color_white: #ffffff;
 }
 @media (prefers-color-scheme: dark) {
   :root {

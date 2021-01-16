@@ -1022,16 +1022,28 @@ $(function () {
   }
   // イシュー更新
   function addIssue(type, issue_content, issue_element) {
-    let content = "";
+    let content = $("<li>");
     if (type == "warning") {
-      content =
-        '<li><img src="img/warning.svg" alt="" width="19px" height="19px"><p>' +
-        issue_content +
-        "</p></li>";
+      content.append(
+        $("<img>").attr({
+          src: "img/warning.svg",
+          alt: "",
+          width: "19px",
+          height: "19px",
+        }),
+        $("<p>").text(issue_content)
+      );
       issue_element.addClass("stat_warning");
     } else if (type == "error") {
-      content =
-        '<li><img src="img/error.svg" alt=""><p>' + issue_content + "</p></li>";
+      content.append(
+        $("<img>").attr({
+          src: "img/error.svg",
+          alt: "",
+          width: "19px",
+          height: "19px",
+        }),
+        $("<p>").text(issue_content)
+      );
       issue_element.addClass("stat_error");
     }
     $("ul.issue_list").append(content);

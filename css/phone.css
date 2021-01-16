@@ -58,6 +58,36 @@ div.uuid_group > label input[type="button"] {
     flex-wrap: wrap;
     justify-content: flex-end;
   }
+  div.import_file {
+    display: inline-block;
+    padding: 0.5rem;
+    position: relative;
+  }
+  div.import_file label {
+    margin: 0;
+  }
+  div.import_file input {
+    display: none;
+  }
+  div.header_menu > * {
+    color: var(--color_header_text);
+    display: inline-block;
+    margin: 0;
+    padding: 0.5em;
+    transition-duration: 0.5s;
+    transition-property: background-color;
+  }
+  div.header_menu p:hover,
+  div.header_menu div:hover {
+    cursor: pointer;
+    background-color: var(--color_header_hover);
+  }
+  div#show_preview {
+    position: relative;
+  }
+  div#show_preview.active {
+    background-color: var(--color_header_hover);
+  }
   div#page_share {
     display: block;
   }

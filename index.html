@@ -20,9 +20,10 @@
     <meta name="twitter:site" content="@toka7290" />
     <meta name="google-site-verification" content="Gvi-XrJEZRsxJgsNLv5NOddbD6COJo804pUgyPvpi34" />
     <!-- css -->
-    <link rel="stylesheet" href="css/color.min.css" media="all" async />
-    <link rel="stylesheet" href="css/style.min.css" media="all" async />
-    <link rel="stylesheet" href="css/prism.min.css" media="all" async defer />
+    <link rel="preload" href="css/style.min.css" as="style">
+    <link rel="stylesheet" href="css/color.min.css" async />
+    <link rel="stylesheet" href="css/style.min.css" async />
+    <link rel="stylesheet" href="css/prism.min.css" async defer />
     <link rel="stylesheet" href="css/phone.min.css" media="(max-width: 59rem)" async />
     <!-- icon etc -->
     <link rel="apple-touch-icon" href="img/icon_apple-touch-icon.png" />
@@ -56,10 +57,10 @@
   <body>
     <header class="header">
       <div class="header_main">
-        <img src="img/icon.webp" alt="" height="32px" width="32px" class="title_icon" onerror="this.src='img/icon_2000.png'" />
+        <img src="/img/icon.svg" alt="" height="32px" width="32px" class="title_icon">
         <div class="title">
           <h1>とかさんのManifestGenerator</h1>
-          <p>version:1.4.0</p>
+          <p>version:1.5.0_dev</p>
         </div>
         <div class="header_menu">
           <div class="import_file">
@@ -114,7 +115,7 @@
               </li>
               <li>
                 <span class="open_about">
-                  <img src="img/icon.webp" alt="" height="32px" width="32px" class="title_icon" onerror="this.src='img/icon_2000.png'" />
+                  <img src="/img/icon.svg" alt="" height="32px" width="32px">
                   <p>about</p>
                 </span>
               </li>
@@ -129,10 +130,10 @@
             <img src="img/close.svg" alt="" id="close_about_image" width="50px" height="50px" />
           </div>
           <div class="about_content">
-            <img src="img/icon.webp" alt="" onerror="this.src='img/icon_2000.png'" width="180px" height="180px" />
+            <img src="/img/icon.svg" alt="" width="180px" height="180px">
             <div class="about_title">
               <h2>とかさんのManifestGenerator</h2>
-              <p>version:1.4.0</p>
+              <p>version:1.5.0_dev</p>
             </div>
             <div id="page_share"><img src="img/share.svg" alt="" width="32px" height="32px" /></div>
             <div class="about_external_link">
@@ -163,8 +164,10 @@
     <div class="content">
       <div class="editor">
         <form name="editor_manifest">
-          <fieldset class="basic" title="Manifest.jsonのフォーマットを定義します。">
-            <legend>Definition</legend>
+          <div class="editor_element">
+            <div class="editor_element_legend">
+              <p>Definition</p>
+            </div>
             <div class="value_element" title="このmanifest.jsonのフォーマットバージョンを設定します。">
               <div class="value_label">
                 <label for="format_version">フォーマットバージョン</label>
@@ -176,9 +179,106 @@
                 </select>
               </div>
             </div>
-          </fieldset>
-          <fieldset class="header" title="マニフェストの諸定義を行います。">
-            <legend>Header</legend>
+          </div>
+          <style>
+            .content {
+              background-color: #d7ead3;
+            }
+
+            .editor_element {
+              margin: 1rem;
+              border-radius: 4px;
+              background: #ffffff;
+              box-shadow: 0 1.6px 3.6px 0 rgba(0, 0, 0, .132), 0 0.3px 0.9px 0 rgba(0, 0, 0, .108);
+
+            }
+
+            .editor_element_legend {
+              padding: 1rem 1.5rem;
+              border-bottom: #cbddc8 solid 2px;
+            }
+
+            .editor_element_legend p {
+              margin: 0;
+              font-size: large;
+              font-weight: bolder;
+            }
+
+            .value_element {
+              padding: 1rem 1.5rem;
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              width: auto;
+            }
+
+            .value_label {
+              display: flex;
+              align-items: center;
+            }
+
+            .value_input {
+              grid-template-columns: none;
+              margin-left: 0;
+            }
+
+            .value_input.type_version {
+              display: grid;
+              width: auto;
+              align-items: flex-end;
+              grid-template-columns: 1fr 1rem 1fr 1rem 1fr;
+            }
+
+            .type_version>label {
+              width: 100%;
+            }
+
+            .type_version>label>input {
+              width: 100%;
+              max-width: fit-content;
+              text-align: end;
+            }
+
+            .type_version>span {
+              text-align: center;
+            }
+
+            input,
+            select,
+            textarea {
+              border: 3px solid #d7ead3;
+              background-color: #fff;
+              border-radius: 6px;
+              box-sizing: content-box;
+              padding: .25rem .5rem;
+              width: auto;
+            }
+
+            input:focus,
+            textarea:focus,
+            select:focus {
+              border-color: var(--color_input_border);
+              outline: none;
+              box-shadow: none;
+            }
+
+            input:disabled,
+            textarea:disabled,
+            select:disabled {
+              background-color: #d7ead3;
+              border: 3px solid #d7ead3;
+              color: var(--color_disabled_text);
+              border-radius: 4px;
+              transition-duration: 0.5s;
+              transition-property: color;
+            }
+          </style>
+          <!-- <fieldset class="basic" title="Manifest.jsonのフォーマットを定義します。">
+            <legend>Definition</legend>
+          </fieldset> -->
+          <div class="editor_element">
+            <div class="editor_element_legend">
+              <p>Header</p>
+            </div>
             <div class="value_element" title="このパックの名前を設定します。">
               <div class="value_label">
                 <label for="header_pack_name">名前</label>
@@ -256,7 +356,10 @@
                 <input type="checkbox" name="header_lock_template_options" id="header_lock_template_options" disabled />
               </div>
             </div>
-          </fieldset>
+          </div>
+          <!-- <fieldset class="header" title="マニフェストの諸定義を行います。">
+            <legend>Header</legend>
+          </fieldset> -->
           <fieldset class="modules" title="このマニフェストを含むパックがどのモジュールを使用するか設定します。">
             <legend>Modules</legend>
             <div class="modules_controls">
@@ -470,7 +573,7 @@
           <div class="display_preview">
             <div class="display_preview_card">
               <div class="card_icon">
-                <img src="img/icon_256.png" alt="" width="64px" height="64px">
+                <img src="/img/icon.svg" alt="" width="64px" height="64px">
               </div>
               <div class="card_text">
                 <p id="card_title"></p>
