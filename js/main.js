@@ -62,8 +62,8 @@ $(function () {
   // シェア
   $("#page_share").on("click", function () {
     const data = {
-      title: "とかさんのManifestGenerator",
-      text: "とかさんのManifestGenerator -manifest.jsonを簡単に作成・編集-",
+      title: "とかさんの Manifest Generator",
+      text: "とかさんの Manifest Generator -manifest.jsonを簡単に作成・編集-",
       url: "https://toka7290.github.io/MCAddonSetupManager/",
     };
     if (navigator.share) {
