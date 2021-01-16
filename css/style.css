@@ -38,6 +38,7 @@ select {
   border: 1px solid var(--color_input_border);
   background-color: var(--color_input_background);
   border-radius: 4px;
+  min-width: 0;
 }
 input:focus,
 textarea:focus,
@@ -85,13 +86,13 @@ input[type="number"] {
 input[type="url"] {
   height: 1.5rem;
 }
-input[type="button"] {
+/* input[type="button"] {
   height: 1.5rem;
   vertical-align: middle;
   box-sizing: content-box;
   padding: 2px 0.5em;
   margin: 0 0.5rem;
-}
+} */
 input[type="button"]:hover {
   cursor: pointer;
   background-color: var(--color_button_hover);
@@ -493,7 +494,7 @@ div.value_input textarea {
 }
 div.value_input.type_version > label {
   width: auto;
-} */
+} 
 div.uuid_group {
   display: inline-flex;
 }
@@ -506,7 +507,7 @@ div.uuid_group > label input {
 div.uuid_group > label:first-child input {
   max-width: 22rem;
   width: 100%;
-}
+}*/
 div.value_checkbox {
   display: grid;
   grid-template-columns: minmax(auto, max-content) minmax(0.5rem, 20%);
