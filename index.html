@@ -190,7 +190,7 @@
               border-radius: 4px;
               background: #ffffff;
               box-shadow: 0 1.6px 3.6px 0 rgba(0, 0, 0, .132), 0 0.3px 0.9px 0 rgba(0, 0, 0, .108);
-
+              overflow: hidden;
             }
 
             .editor_element_legend {
@@ -198,14 +198,15 @@
               border-bottom: #cbddc8 solid 2px;
             }
 
-            .editor_element_legend p {
+            .editor_element_legend>p {
               margin: 0;
               font-size: large;
               font-weight: bolder;
             }
 
             .value_element {
-              padding: 1rem 1.5rem;
+              margin: .5rem .8rem;
+              padding: .5rem .7rem;
               display: grid;
               grid-template-columns: 1fr 1fr;
               width: auto;
@@ -517,9 +518,83 @@
             </div>
           </div>
           <div class="editor_element" title="依存関係を設定します。">
-            <div class="editor_element_legend">
-              <p><input type="checkbox" name="dependencies" id="dependencies_enable" /><label for="dependencies_enable">Dependencies</label></p>
+            <div class="editor_element_legend toggle">
+              <div>
+                <input type="checkbox" name="dependencies" id="dependencies_enable" />
+                <label for="dependencies_enable" class="toggle_body">
+                  <p class="toggle_body_text">Dependencies</p>
+                  <div class="toggle_body_box">
+                    <div class="toggle_body_padding"></div>
+                    <div class="toggle_body_thumb"></div>
+                  </div>
+                </label>
+              </div>
             </div>
+            <style>
+              .editor_element_legend.toggle input {
+                display: none;
+              }
+
+              .toggle_body {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                align-items: center;
+                user-select: none;
+                -ms-user-select: none;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+                cursor: pointer;
+              }
+
+              .toggle_body_text {
+                margin: 0 .5rem 0 0;
+                font-size: large;
+                font-weight: bolder;
+              }
+
+              .toggle_body_box {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                background-color: lightgrey;
+                border-radius: 1.5rem;
+                width: 3rem;
+                height: 1.5rem;
+                align-items: center;
+                justify-items: start;
+                transition: all 1s ease;
+              }
+
+              input:indeterminate+.toggle_body .toggle_body_box,
+              input:checked:indeterminate+.toggle_body .toggle_body_box {
+                background-color: #6eb171;
+              }
+
+              input:checked+.toggle_body .toggle_body_box {
+                background-color: #2e7d32;
+              }
+
+              .toggle_body_padding {
+                width: .25rem;
+                transition: width 1s ease 0s;
+              }
+
+              input:indeterminate+.toggle_body .toggle_body_padding,
+              input:checked:indeterminate+.toggle_body .toggle_body_padding {
+                width: 1rem;
+              }
+
+              input:checked+.toggle_body .toggle_body_padding {
+                width: 1.75rem;
+              }
+
+              .toggle_body_thumb {
+                border-radius: 50%;
+                width: 1rem;
+                height: 1rem;
+                background: white;
+                grid-column: 2;
+              }
+            </style>
             <div class="dependencies tab_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
               <div class="dependencies tab_controls">
                 <div class="dependencies tab_controls_bar">
@@ -558,8 +633,17 @@
             </div>
           </div>
           <div class="editor_element" title="特殊な機能を有効にする場合に使用します。">
-            <div class="editor_element_legend">
-              <p><input type="checkbox" name="capabilities" id="capabilities_enable" /><label for="capabilities_enable">Capabilities</label></p>
+            <div class="editor_element_legend toggle">
+              <div>
+                <input type="checkbox" name="capabilities" id="capabilities_enable" />
+                <label for="capabilities_enable" class="toggle_body">
+                  <p class="toggle_body_text">Capabilities</p>
+                  <div class="toggle_body_box">
+                    <div class="toggle_body_padding"></div>
+                    <div class="toggle_body_thumb"></div>
+                  </div>
+                </label>
+              </div>
             </div>
             <div class="capabilities_list" title="このパックで追加の機能を有効にします。">
               <div class="value_element" title="カスタムUI機能を有効化します。">
@@ -604,8 +688,17 @@
             </div>
           </div>
           <div class="editor_element" title="製作者に関する情報を記載します。ゲームプレイへの影響はありません。">
-            <div class="editor_element_legend">
-              <p><input type="checkbox" name="metadata" id="metadata_enable" /><label for="metadata_enable">Metadata</label></p>
+            <div class="editor_element_legend toggle">
+              <div>
+                <input type="checkbox" name="metadata" id="metadata_enable" />
+                <label for="metadata_enable" class="toggle_body">
+                  <p class="toggle_body_text">Metadata</p>
+                  <div class="toggle_body_box">
+                    <div class="toggle_body_padding"></div>
+                    <div class="toggle_body_thumb"></div>
+                  </div>
+                </label>
+              </div>
             </div>
             <div class="metadata_list">
               <div class="value_element" title="このパックの作者を設定します。">
@@ -613,15 +706,33 @@
                   <label for="metadata_author">作者</label>
                 </div>
                 <div class="value_input type_authors">
-                  <div class="authors_list"></div>
+                  <div class="authors_list">
+                    <label><input type="text" name="metadata_author_1" id="metadata_author_1" disabled /></label>
+                  </div>
                   <div class="author_adder">
-                    <label><input type="text" name="metadata_author" id="metadata_author" disabled /></label>
-                    <label for="metadata_author_add">
-                      <input type="button" value="Add" id="metadata_author_add" disabled />
-                    </label>
+                    <p id="metadata_author_add" disabled>+ 作者を追加する</p>
                   </div>
                 </div>
               </div>
+              <style>
+                .authors_list label {
+                  display: grid;
+                }
+
+                .author_adder {
+                  font-size: small;
+                  margin: .5rem 0 0 .5rem;
+                }
+
+                #metadata_author_add {
+                  margin: 0;
+                }
+
+                #metadata_author_add:hover {
+                  cursor: pointer;
+                  color: gray;
+                }
+              </style>
               <div class="value_element" title="このパックのホームページURLを設定します。">
                 <div class="value_label">
                   <label for="metadata_url">URL</label>
@@ -641,8 +752,17 @@
             </div>
           </div>
           <div class="editor_element" title="サブパック機能の設定を行います。">
-            <div class="editor_element_legend">
-              <p><input type="checkbox" name="subpacks" id="subpacks_enable" /><label for="subpacks_enable">Subpacks</label></p>
+            <div class="editor_element_legend toggle">
+              <div>
+                <input type="checkbox" name="subpacks" id="subpacks_enable" />
+                <label for="subpacks_enable" class="toggle_body">
+                  <p class="toggle_body_text">Subpacks</p>
+                  <div class="toggle_body_box">
+                    <div class="toggle_body_padding"></div>
+                    <div class="toggle_body_thumb"></div>
+                  </div>
+                </label>
+              </div>
             </div>
             <div class="subpacks tab_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
               <div class="subpacks tab_controls">

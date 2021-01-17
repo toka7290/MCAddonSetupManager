@@ -515,10 +515,10 @@ div.value_checkbox {
 }
 div.value_checkbox > label {
   white-space: normal;
-}*/
+}
 div.value_input.type_authors {
   grid-template-columns: 1fr;
-}
+}*/
 .disabled {
   color: var(--color_disabled_text);
   transition-duration: 1s;
@@ -646,8 +646,8 @@ div.capabilities_list {
   /* Capabilities */
   display: block;
 }
-div.metadata_list {
-  /* Metadata */
+/*div.metadata_list {
+  Metadata
   display: block;
 }
 div.authors_list {
@@ -663,12 +663,12 @@ div.authors_list div {
   align-items: center;
   justify-content: space-between;
 }
-div.authors_list div:nth-child(2n) {
+ div.authors_list div:nth-child(2n) {
   background-color: var(--color_toolbar_hover);
 }
 div.authors_list div + div {
   border-top: none;
-}
+} */
 div.data_check {
   /* データチェック */
   display: flex;
