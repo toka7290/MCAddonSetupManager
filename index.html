@@ -229,12 +229,13 @@
             }
 
             .type_version>label {
+              display: grid;
               width: 100%;
             }
 
             .type_version>label>input {
-              width: 100%;
-              max-width: fit-content;
+              width: auto;
+              max-width: 100vw;
               text-align: end;
             }
 
@@ -251,6 +252,7 @@
             }
 
             .type_uuid>label {
+              display: grid;
               width: 100%;
             }
 
@@ -267,6 +269,10 @@
             .type_uuid>label>input:first-child {
               max-width: 100vw;
               width: auto;
+            }
+
+            .value_checkbox {
+              grid-column: 2;
             }
 
             input,
@@ -356,10 +362,72 @@
             </div>
             <div class="value_element" title="このパックをマルチプラットフォーム環境で使用できないようにします。">
               <div class="value_checkbox">
-                <label for="header_platform_locked">プラットフォームロック</label>
                 <input type="checkbox" name="header_platform_locked" id="header_platform_locked" />
+                <label for="header_platform_locked" class="checkbox_body">
+                  <div class="checkbox_body_box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox_body_checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                  <p class="checkbox_body_text">プラットフォームロック</p>
+                </label>
               </div>
             </div>
+            <style>
+              .value_checkbox input {
+                display: none;
+              }
+
+              .checkbox_body {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                align-items: center;
+                user-select: none;
+                -ms-user-select: none;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+              }
+
+              .checkbox_body {
+                cursor: pointer;
+              }
+
+              .checkbox_body_text {
+                margin: 0 0 0 .5rem;
+              }
+
+              .checkbox_body_box {
+                display: grid;
+                border: 3px solid #d7ead3;
+                background-color: #fff;
+                border-radius: 6px;
+                width: 1.5rem;
+                height: 1.5rem;
+                place-items: center;
+              }
+
+              input:checked+.checkbox_body>.checkbox_body_box {
+                background-color: green;
+              }
+
+              .checkbox_body_checkMark {
+                display: block;
+                color: #fff;
+                text-align: center;
+              }
+
+              input:not(:checked)+.checkbox_body:hover .checkbox_body_checkMark {
+                color: gray;
+              }
+
+              input:disabled+.checkbox_body:hover {
+                cursor: auto;
+              }
+
+              input:disabled+.checkbox_body:hover .checkbox_body_checkMark {
+                color: #fff;
+              }
+            </style>
             <div class="value_element" title="このパックワールドの作成されたバージョンを設定します。">
               <div class="value_label">
                 <label id="base_game_version" for="header_base_game_version_major">基本ゲームバージョン</label>
@@ -374,8 +442,15 @@
             </div>
             <div class="value_element" title="ワールドテンプレートの導入時、ワールド設定をロックします。">
               <div class="value_checkbox">
-                <label for="header_lock_template_options">テンプレートオプションロック</label>
                 <input type="checkbox" name="header_lock_template_options" id="header_lock_template_options" disabled />
+                <label for="header_lock_template_options" class="checkbox_body">
+                  <div class="checkbox_body_box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox_body_checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                  <p class="checkbox_body_text">テンプレートオプションロック</p>
+                </label>
               </div>
             </div>
           </div>
@@ -488,13 +563,43 @@
             </div>
             <div class="capabilities_list" title="このパックで追加の機能を有効にします。">
               <div class="value_element" title="カスタムUI機能を有効化します。">
-                <input type="checkbox" name="experimental_custom_ui" id="experimental_custom_ui" disabled /><label for="experimental_custom_ui">experimental_custom_ui</label>
+                <div class="value_checkbox">
+                  <input type="checkbox" name="experimental_custom_ui" id="experimental_custom_ui" disabled />
+                  <label for="experimental_custom_ui" class="checkbox_body">
+                    <div class="checkbox_body_box">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox_body_checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </div>
+                    <p class="checkbox_body_text">experimental_custom_ui</p>
+                  </label>
+                </div>
               </div>
               <div class="value_element" title="Education Chemistry の機能に追加、変更できるようにします。">
-                <input type="checkbox" name="chemistry" id="chemistry" disabled /><label for="chemistry">chemistry</label>
+                <div class="value_checkbox">
+                  <input type="checkbox" name="chemistry" id="chemistry" disabled />
+                  <label for="chemistry" class="checkbox_body">
+                    <div class="checkbox_body_box">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox_body_checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </div>
+                    <p class="checkbox_body_text">chemistry</p>
+                  </label>
+                </div>
               </div>
               <div class="value_element" title="レイトレーシングの機能をパックで使えるようにします。(1.15.x以上)">
-                <input type="checkbox" name="raytracing" id="raytracing" disabled /><label for="raytracing">raytracing</label>
+                <div class="value_checkbox">
+                  <input type="checkbox" name="raytracing" id="raytracing" disabled />
+                  <label for="raytracing" class="checkbox_body">
+                    <div class="checkbox_body_box">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox_body_checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </div>
+                    <p class="checkbox_body_text">raytracing</p>
+                  </label>
+                </div>
               </div>
             </div>
           </div>

@@ -507,7 +507,7 @@ div.uuid_group > label input {
 div.uuid_group > label:first-child input {
   max-width: 22rem;
   width: 100%;
-}*/
+}
 div.value_checkbox {
   display: grid;
   grid-template-columns: minmax(auto, max-content) minmax(0.5rem, 20%);
@@ -515,7 +515,7 @@ div.value_checkbox {
 }
 div.value_checkbox > label {
   white-space: normal;
-}
+}*/
 div.value_input.type_authors {
   grid-template-columns: 1fr;
 }
