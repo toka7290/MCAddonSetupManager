@@ -210,6 +210,7 @@
               display: grid;
               grid-template-columns: 1fr 1fr;
               width: auto;
+              place-items: center normal;
             }
 
             .value_label {
@@ -279,12 +280,15 @@
             input,
             select,
             textarea {
+              font: inherit;
               border: 3px solid #d7ead3;
               background-color: #fff;
               border-radius: 6px;
               box-sizing: content-box;
               padding: .25rem .5rem;
               width: auto;
+              min-width: 0;
+              transition: all .5s;
             }
 
             input:focus,
@@ -302,8 +306,6 @@
               border: 3px solid #d7ead3;
               color: var(--color_disabled_text);
               border-radius: 4px;
-              transition-duration: 0.5s;
-              transition-property: color;
             }
           </style>
           <div class="editor_element">
@@ -376,7 +378,13 @@
             </div>
             <style>
               .value_checkbox input {
-                display: none;
+                filter: alpha(opacity=0);
+                -moz-opacity: 0;
+                opacity: 0;
+                -webkit-appearance: none;
+                appearance: none;
+                position: absolute;
+                pointer-events: none;
               }
 
               .checkbox_body {
@@ -395,6 +403,7 @@
 
               .checkbox_body_text {
                 margin: 0 0 0 .5rem;
+                min-width: 8rem;
               }
 
               .checkbox_body_box {
@@ -415,6 +424,10 @@
                 display: block;
                 color: #fff;
                 text-align: center;
+              }
+
+              input:focus+.checkbox_body .checkbox_body_box {
+                border-color: var(--color_input_border);
               }
 
               input:not(:checked)+.checkbox_body:hover .checkbox_body_checkMark {
@@ -459,16 +472,131 @@
             <div class="editor_element_legend">
               <p>Modules</p>
             </div>
-            <div class="modules_controls">
-              <div class="modules_controls_bar">
-                <ul class="modules_controls_tab">
-                  <li class="selected_tab">
-                    0<span class="delete_tab">×</span>
-                  </li>
-                </ul>
-                <span class="modules_controls_add_tab">+</span>
+            <div class="modules tab_controls">
+              <div class="modules tab_body">
+                <div class="modules tab_children selected" tabindex="0">
+                  <div class="tab_number">0</div>
+                  <div class="tab_underbar"></div>
+                </div>
               </div>
+              <div class="modules add_tab disabled">+ 追加</div>
+              <div class="modules remove_tab disabled">- 削除</div>
             </div>
+            <style>
+              .tab_controls {
+                display: grid;
+                grid-template: 1fr / 1fr auto auto;
+                margin: .5rem .8rem;
+                padding: .5rem .7rem;
+                grid-gap: .5rem;
+                place-items: center;
+                user-select: none;
+                -ms-user-select: none;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+              }
+
+              .tab_body {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                cursor: pointer;
+              }
+
+              .tab_children {
+                flex-grow: 1;
+                padding: .25rem 1rem 0 1rem;
+                position: relative;
+                transition: all 0.5s cubic-bezier(.77, 0, .18, 1);
+              }
+
+              .tab_number {
+                padding: .25rem 1rem;
+              }
+
+              .tab_underbar {
+                position: absolute;
+                width: 50%;
+                height: 3px;
+                left: 25%;
+                right: 25%;
+                bottom: 0;
+              }
+
+              .selected .tab_underbar {
+                background-color: #6eb171;
+                transition: all 0.5s cubic-bezier(.77, 0, .18, 1);
+              }
+
+              .add_tab,
+              .remove_tab {
+                padding: .25rem;
+                font-size: small;
+                cursor: pointer;
+              }
+
+              .disabled.tab_body,
+              .disabled.add_tab,
+              .disabled.remove_tab {
+                cursor: auto;
+                color: var(--color_disabled_text);
+              }
+
+              .tab_body:not(.disabled) .tab_children:hover {
+                background-color: #d7ead3;
+              }
+
+              .tab_body:not(.disabled) .tab_children:hover .tab_underbar {
+                width: 100%;
+                left: 0;
+                right: 0;
+              }
+
+              .add_tab:not(.disabled):hover,
+              .remove_tab:not(.disabled):hover {
+                color: gray;
+              }
+
+              /* old */
+              /* .tab_contents
+              .modules_controls
+              .tab_controls_bar
+              .modules_controls_tab
+              .tab_controls_bar_tab
+              .modules_controls_add_tab
+              .tab_controls_add_tab
+              delete_tab
+              selected_tab
+               */
+
+              span.metadata_delete_author {
+                display: inline-block;
+                width: 1rem;
+                height: 1rem;
+                box-sizing: content-box;
+                text-align: center;
+                vertical-align: middle;
+                line-height: 1.1rem;
+                color: var(--color_delete_icon);
+                margin-left: 0.5rem;
+                border-radius: 1rem;
+              }
+
+              span.metadata_delete_author:hover {
+                cursor: pointer;
+                border-radius: 1rem;
+                background-color: var(--color_delete_hover);
+                color: var(--color_selected_tab);
+              }
+
+              .disabled span.metadata_delete_author:hover {
+                cursor: auto;
+                background-color: inherit;
+                color: inherit;
+              }
+            </style>
             <div class="modules_contents">
               <div class="selected_tab_content">
                 <div class="value_element" title="このモジュールのタイプを設定します。">
@@ -597,14 +725,14 @@
             </style>
             <div class="dependencies tab_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
               <div class="dependencies tab_controls">
-                <div class="dependencies tab_controls_bar">
-                  <ul class="dependencies tab_controls_bar_tab">
-                    <li class="selected_tab">
-                      0<span class="delete_tab">×</span>
-                    </li>
-                  </ul>
-                  <span class="dependencies tab_controls_add_tab">+</span>
+                <div class="dependencies tab_body">
+                  <div class="dependencies tab_children selected">
+                    <div class="tab_number">0</div>
+                    <div class="tab_underbar"></div>
+                  </div>
                 </div>
+                <div class="dependencies add_tab">+ 追加</div>
+                <div class="dependencies remove_tab">- 削除</div>
               </div>
               <div class="dependencies tab_content_list">
                 <div class="selected_tab_content">
@@ -766,14 +894,14 @@
             </div>
             <div class="subpacks tab_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
               <div class="subpacks tab_controls">
-                <div class="subpacks tab_controls_bar">
-                  <ul class="subpacks tab_controls_bar_tab">
-                    <li class="selected_tab">
-                      0<span class="delete_tab">×</span>
-                    </li>
-                  </ul>
-                  <span class="subpacks tab_controls_add_tab">+</span>
+                <div class="subpacks tab_body">
+                  <div class="subpacks tab_children selected">
+                    <div class="tab_number">0</div>
+                    <div class="tab_underbar"></div>
+                  </div>
                 </div>
+                <div class="subpacks add_tab">+ 追加</div>
+                <div class="subpacks remove_tab">- 削除</div>
               </div>
               <div class="subpacks tab_content_list">
                 <div class="selected_tab_content">

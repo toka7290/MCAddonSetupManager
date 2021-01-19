@@ -365,6 +365,11 @@ $(function () {
     const content = tab_content_list.children("div:first-child").clone();
     content.removeClass("selected_tab_content");
     tab_content_list.append(content);
+
+    // <div class="subpacks tab_children">
+    //   <div class="tab_number">1</div>
+    //   <div class="tab_underbar"></div>
+    // </div>
   }
   // オーナー追加
   function add_author(name) {
@@ -498,6 +503,16 @@ $(function () {
     updateDisplayPreview();
     Prism.highlightAll();
   }
+
+  function switchTabControls(className = "", stat = [false, false, false]) {
+    const tab_controls = $(className + ".tab_controls div");
+    if (stat[0]) tab_controls.filter(".tab_body").removeClass("disabled");
+    else tab_controls.filter(".tab_body").addClass("disabled");
+    if (stat[1]) tab_controls.filter(".add_tab").removeClass("disabled");
+    else tab_controls.filter(".add_tab").addClass("disabled");
+    if (stat[2]) tab_controls.filter(".remove_tab").removeClass("disabled");
+    else tab_controls.filter(".remove_tab").addClass("disabled");
+  }
   // チェックボックス変更
   function changed_checkbox() {
     is_dependencies_enable =
@@ -512,33 +527,36 @@ $(function () {
     is_subpacks_enable =
       $("#subpacks_enable").is(":checked") ||
       $("#subpacks_enable").is(":indeterminate");
+    const dependencies_contents = $(
+      ".dependencies.tab_content_list div.value_element"
+    );
     if (is_dependencies_enable) {
-      $("div.dependencies.tab_contents").removeClass("disabled");
-      $("div.dependencies.tab_contents input").prop("disabled", false);
-      $("div.dependencies.tab_contents .tab_controls_bar").removeClass(
-        "disabled"
-      );
+      switchTabControls(".dependencies", [1, 1, 1]);
+      dependencies_contents.find("div.value_label").removeClass("disabled");
+      dependencies_contents.find("input").prop("disabled", false);
       if ($("#dependencies_uuid").val() == "")
         $("#dependencies_enable").prop("indeterminate", true);
       else $("#dependencies_enable").prop("indeterminate", false);
     } else {
-      $("div.dependencies.tab_contents").addClass("disabled");
-      $("div.dependencies.tab_contents input").prop("disabled", true);
-      $("div.dependencies.tab_contents .tab_controls_bar").addClass("disabled");
+      switchTabControls(".dependencies");
+      dependencies_contents.find("div.value_label").addClass("disabled");
+      dependencies_contents.find("input").prop("disabled", true);
     }
+    const capabilities_contents = $(".capabilities_list .value_element");
     if (is_capabilities_enable) {
-      $(".capabilities_list").removeClass("disabled");
-      $("div.capabilities_list input").prop("disabled", false);
+      capabilities_contents.removeClass("disabled");
+      capabilities_contents.find("input").prop("disabled", false);
       if (!$("div.capabilities_list div input").is(":checked"))
         $("#capabilities_enable").prop("indeterminate", true);
       else $("#capabilities_enable").prop("indeterminate", false);
     } else {
-      $(".capabilities_list").addClass("disabled");
-      $("div.capabilities_list input").prop("disabled", true);
+      capabilities_contents.addClass("disabled");
+      capabilities_contents.find("input").prop("disabled", true);
     }
+    const metadata_contents = $(".metadata_list .value_element");
     if (is_metadata_enable) {
-      $(".metadata_list").removeClass("disabled");
-      $("div.metadata_list input").prop("disabled", false);
+      metadata_contents.removeClass("disabled");
+      metadata_contents.find("input").prop("disabled", false);
       if (
         !(
           $("div.authors_list > div")[0] ||
@@ -549,13 +567,14 @@ $(function () {
         $("#metadata_enable").prop("indeterminate", true);
       else $("#metadata_enable").prop("indeterminate", false);
     } else {
-      $(".metadata_list").addClass("disabled");
-      $("div.metadata_list input").prop("disabled", true);
+      metadata_contents.addClass("disabled");
+      metadata_contents.find("input").prop("disabled", true);
     }
+    const subpacks_contents = $(".subpacks.tab_content_list div.value_element");
     if (is_subpacks_enable) {
-      $("div.subpacks.tab_contents").removeClass("disabled");
-      $("div.subpacks.tab_contents input").prop("disabled", false);
-      $("div.subpacks.tab_contents .tab_controls_bar").removeClass("disabled");
+      switchTabControls(".subpacks", [1, 1, 1]);
+      subpacks_contents.find("div.value_label").removeClass("disabled");
+      subpacks_contents.find("input").prop("disabled", false);
       if (
         !(
           $("#subpacks_folder_name").val() != "" ||
@@ -565,9 +584,9 @@ $(function () {
         $("#subpacks_enable").prop("indeterminate", true);
       else $("#subpacks_enable").prop("indeterminate", false);
     } else {
-      $("div.subpacks.tab_contents").addClass("disabled");
-      $("div.subpacks.tab_contents input").prop("disabled", true);
-      $("div.subpacks.tab_contents .tab_controls_bar").addClass("disabled");
+      switchTabControls(".subpacks");
+      subpacks_contents.find("div.value_label").addClass("disabled");
+      subpacks_contents.find("input").prop("disabled", true);
     }
   }
   // モジュールタイプ変更

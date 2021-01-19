@@ -9,10 +9,11 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   margin: 0;
   padding: 0;
+  overflow: hidden;
   color: var(--color_text);
 }
 ::-webkit-scrollbar {
@@ -23,102 +24,20 @@ body {
   background-color: var(--color_scrollbar-track);
   border-radius: 4px;
 }
-fieldset {
-  /* input関連 */
-  border-color: var(--color_border);
-  border-radius: 4px;
-  word-wrap: anywhere;
-}
-input,
-textarea,
-select {
-  font: inherit;
-  color: var(--color_input_text);
-  padding: 2px;
-  border: 1px solid var(--color_input_border);
-  background-color: var(--color_input_background);
-  border-radius: 4px;
-  min-width: 0;
-}
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  -moz-outline-radius: 4px;
-  box-shadow: 0 0 1px 1px var(--color_input_focus);
-}
-input:disabled,
-textarea:disabled,
-select:disabled {
-  color: var(--color_disabled_text);
-  border: 1px solid var(--color_input_disabled);
-  border-radius: 4px;
-  transition-duration: 0.5s;
-  transition-property: color;
-}
 input:-webkit-autofill,
 input:-internal-autofill-selected {
+  /* input関連 */
   background-color: black !important;
-}
-textarea {
-  width: auto;
-}
-select {
-  padding: 0 2px;
-  width: fit-content;
 }
 select:hover {
   cursor: pointer;
 }
-label {
-  word-break: keep-all;
-  white-space: nowrap;
-  width: 100%;
-}
-input[type="text"] {
-  width: auto;
-  height: 1.5rem;
-}
-input[type="number"] {
-  width: 3em;
-  height: 1.5rem;
-}
-input[type="url"] {
-  height: 1.5rem;
-}
-/* input[type="button"] {
-  height: 1.5rem;
-  vertical-align: middle;
-  box-sizing: content-box;
-  padding: 2px 0.5em;
-  margin: 0 0.5rem;
-} */
-input[type="button"]:hover {
+input[type="button"]:not(:disabled):hover {
   cursor: pointer;
   background-color: var(--color_button_hover);
 }
-input[type="button"]:disabled:hover {
-  cursor: auto;
-  background-color: var(--color_input_background);
-}
 input[type="button"]:active {
   background-color: var(--color_button_active);
-}
-input[type="checkbox"] {
-  width: 1.5rem;
-  height: 1.5rem;
-  margin: 0.5rem;
-  vertical-align: middle;
-}
-input[type="checkbox"]:hover {
-  cursor: pointer;
-}
-input[type="checkbox"]:disabled:hover {
-  cursor: auto;
-}
-input[type="checkbox"]:focus {
-  outline-color: transparent;
-  box-shadow: 0 0 3px 1px var(--color_input_focus);
 }
 header {
   /* ヘッダー */
@@ -527,7 +446,7 @@ div.value_input.type_authors {
 .disabled:hover {
   cursor: auto;
 }
-div.tab_contents {
+/*div.tab_contents {
   display: block;
   margin: 0;
 }
@@ -535,7 +454,7 @@ div.modules_controls,
 div.modules_contents,
 div.tab_controls,
 div.tab_content_list {
-  /* タブ */
+  タブ
   margin: 0;
 }
 div.modules_controls_bar,
@@ -643,10 +562,10 @@ span.tab_controls_add_tab {
   border-radius: 4px 4px 0 0;
 }
 div.capabilities_list {
-  /* Capabilities */
+  Capabilities
   display: block;
 }
-/*div.metadata_list {
+div.metadata_list {
   Metadata
   display: block;
 }
