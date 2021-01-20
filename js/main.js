@@ -177,124 +177,159 @@ $(function () {
     onChangedJSON();
   });
   //Modules tab変更
-  $(document).on("click", ".modules_controls_tab li", function () {
-    const controls_tab_li = $(".modules_controls_tab li");
-    const selected_index = controls_tab_li.index(this);
-    controls_tab_li
-      .removeClass("selected_tab")
-      .eq(selected_index)
-      .addClass("selected_tab");
-    $(".modules_contents > div")
-      .removeClass("selected_tab_content")
-      .eq(selected_index)
-      .addClass("selected_tab_content");
-  });
+  // $(document).on("click", ".modules_controls_tab li", function () {
+  //   const controls_tab_li = $(".modules_controls_tab li");
+  //   const selected_index = controls_tab_li.index(this);
+  //   controls_tab_li
+  //     .removeClass("selected_tab")
+  //     .eq(selected_index)
+  //     .addClass("selected_tab");
+  //   $(".modules.tab_content_list > div")
+  //     .removeClass("selected_tab_content")
+  //     .eq(selected_index)
+  //     .addClass("selected_tab_content");
+  // });
   // Modules tab削除
-  $(document).on(
-    "click",
-    ".modules_controls_tab li span.delete_tab",
-    function (event) {
-      const delete_tab = $(this).parent();
-      let deleted_index = delete_tab.index();
-      let modules_controls_tabs = $(".modules_controls_tab li");
-      const controls_tabs_length = modules_controls_tabs.length;
-      const modules_contents = $(".modules_contents > div");
-      delete_tab.hide(150, function () {
-        modules_contents.eq(deleted_index).remove();
-        // 番号の再割り当て
-        let num = 0;
-        for (let i = 0; i < controls_tabs_length; i++) {
-          modules_controls_tabs
-            .eq(i)
-            .html(num + '<span class="delete_tab">×</span>');
-          if (deleted_index != i) num++;
-        }
-        // select変更
-        if (delete_tab.hasClass("selected_tab")) {
-          if (deleted_index - 1 < 0) deleted_index = controls_tabs_length;
-          modules_controls_tabs.eq(deleted_index - 1).addClass("selected_tab");
-          modules_contents
-            .eq(deleted_index - 1)
-            .addClass("selected_tab_content");
-        }
-        delete_tab.remove();
-        onChangedJSON();
-      });
-      event.stopPropagation();
-    }
-  );
+  // $(document).on(
+  //   "click",
+  //   ".modules_controls_tab li span.delete_tab",
+  //   function (event) {
+  //     const delete_tab = $(this).parent();
+  //     let deleted_index = delete_tab.index();
+  //     let modules_controls_tabs = $(".modules_controls_tab li");
+  //     const controls_tabs_length = modules_controls_tabs.length;
+  //     const modules_contents = $(".modules.tab_content_list > div");
+  //     delete_tab.hide(150, function () {
+  //       modules_contents.eq(deleted_index).remove();
+  //       // 番号の再割り当て
+  //       let num = 0;
+  //       for (let i = 0; i < controls_tabs_length; i++) {
+  //         modules_controls_tabs
+  //           .eq(i)
+  //           .html(num + '<span class="delete_tab">×</span>');
+  //         if (deleted_index != i) num++;
+  //       }
+  //       // select変更
+  //       if (delete_tab.hasClass("selected_tab")) {
+  //         if (deleted_index - 1 < 0) deleted_index = controls_tabs_length;
+  //         modules_controls_tabs.eq(deleted_index - 1).addClass("selected_tab");
+  //         modules_contents
+  //           .eq(deleted_index - 1)
+  //           .addClass("selected_tab_content");
+  //       }
+  //       delete_tab.remove();
+  //       onChangedJSON();
+  //     });
+  //     event.stopPropagation();
+  //   }
+  // );
   //Modules tab追加
-  $(".modules_controls_add_tab").on("click", function () {
-    modules_add_tab();
-    onChangedJSON();
-  });
+  // $(".modules_controls_add_tab").on("click", function () {
+  //   modules_add_tab();
+  //   onChangedJSON();
+  // });
   //tab変更
-  $(document).on("click", ".tab_controls_bar_tab li", function () {
-    if (
-      (is_subpacks_enable &&
-        $(this).parents(".tab_controls").hasClass("subpacks")) ||
-      (is_dependencies_enable &&
-        $(this).parents(".tab_controls").hasClass("dependencies"))
-    ) {
-      const selected_index = $(this).index();
-      const controls_tab = $(this).parent();
-      const controls_tabs = controls_tab.children("li");
-      controls_tabs.removeClass("selected_tab");
-      controls_tabs.eq(selected_index).addClass("selected_tab");
-      const tab_content = controls_tab
-        .parents(".tab_controls")
-        .next()
-        .children("div");
-      tab_content.removeClass("selected_tab_content");
-      tab_content.eq(selected_index).addClass("selected_tab_content");
-    }
-  });
-  //tab削除
   $(document).on(
     "click",
-    ".tab_controls_bar_tab li span.delete_tab",
-    function (event) {
+    '.tab_children:not(:selected) input[type="button"]',
+    function () {
+      const className = $(this).attr("class");
       if (
-        (is_subpacks_enable &&
-          $(this).parents(".tab_controls").hasClass("subpacks")) ||
-        (is_dependencies_enable &&
-          $(this).parents(".tab_controls").hasClass("dependencies"))
+        className == "modules" ||
+        (is_dependencies_enable && className == "dependencies") ||
+        (is_subpacks_enable && className == "subpacks")
       ) {
-        const selected_tab = $(this).parent();
-        const controls_tab = selected_tab.parent();
-        let controls_tabs = controls_tab.children("li");
-        let selected_index = selected_tab.index();
-        const tab_content_list = controls_tab
-          .parents(".tab_controls")
-          .next()
-          .children("div");
-        selected_tab.hide(150, function () {
-          tab_content_list.eq(selected_index).remove();
-          if (selected_tab.hasClass("selected_tab")) {
-            if (selected_index - 1 < 0) selected_index = 2;
-            controls_tabs.eq(selected_index - 1).addClass("selected_tab");
-            tab_content_list
-              .eq(selected_index - 1)
-              .addClass("selected_tab_content");
-          }
-          selected_tab.remove();
-          controls_tabs = controls_tab.children("li");
-          for (let i = 0; i < controls_tabs.length; i++) {
-            controls_tabs.eq(i).html(i + '<span class="delete_tab">×</span>');
-          }
-          onChangedJSON();
-        });
+        const new_selected_tab = $(this).parent();
+        const new_selected_index = new_selected_tab.index();
+        $(`.${className}` + ".tab_children").removeClass("selected");
+        new_selected_tab.addClass("selected");
+        $(`.${className}` + ".tab_content_list>div")
+          .removeClass("selected_tab_content")
+          .eq(new_selected_index)
+          .addClass("selected_tab_content");
       }
-      event.stopPropagation();
     }
   );
+  //tab削除
+  $("#modules_remove,#dependencies_remove,#subpacks_remove").on(
+    "click",
+    function (e) {
+      const className = `.${$(this).attr("class")}`;
+      let tab_children = $(className + ".tab_children");
+      if (
+        tab_children.length > 1 &&
+        ($(this).hasClass("modules") ||
+          (is_subpacks_enable && $(this).hasClass("subpacks")) ||
+          (is_dependencies_enable && $(this).hasClass("dependencies")))
+      ) {
+        $(className + ".tab_children.selected").remove();
+        $(className + ".tab_content_list>.selected_tab_content").remove();
+        tab_children = $(className + ".tab_children");
+        const tab_contents = $(className + ".tab_content_list>div");
+        // 番号再振り当て
+        let index_num = 0;
+        for (let i = 0; i < tab_children.length; i++) {
+          const tab_child = tab_children.eq(i);
+          const tab_content = tab_contents.eq(i);
+          if (i == 0) {
+            tab_child.addClass("selected");
+            tab_content.addClass("selected_tab_content");
+          }
+          const tab_number = tab_child.children("div.tab_number");
+          tab_number.text(index_num);
+          index_num++;
+        }
+      }
+      onChangedJSON();
+      e.stopPropagation();
+    }
+  );
+  // $(document).on(
+  //   "click",
+  //   ".tab_controls_bar_tab li span.delete_tab",
+  //   function (event) {
+  //     if (
+  //       (is_subpacks_enable &&
+  //         $(this).parents(".tab_controls").hasClass("subpacks")) ||
+  //       (is_dependencies_enable &&
+  //         $(this).parents(".tab_controls").hasClass("dependencies"))
+  //     ) {
+  //       const selected_tab = $(this).parent();
+  //       const controls_tab = selected_tab.parent();
+  //       let controls_tabs = controls_tab.children("li");
+  //       let selected_index = selected_tab.index();
+  //       const tab_content_list = controls_tab
+  //         .parents(".tab_controls")
+  //         .next()
+  //         .children("div");
+  //       selected_tab.hide(150, function () {
+  //         tab_content_list.eq(selected_index).remove();
+  //         if (selected_tab.hasClass("selected_tab")) {
+  //           if (selected_index - 1 < 0) selected_index = 2;
+  //           controls_tabs.eq(selected_index - 1).addClass("selected_tab");
+  //           tab_content_list
+  //             .eq(selected_index - 1)
+  //             .addClass("selected_tab_content");
+  //         }
+  //         selected_tab.remove();
+  //         controls_tabs = controls_tab.children("li");
+  //         for (let i = 0; i < controls_tabs.length; i++) {
+  //           controls_tabs.eq(i).html(i + '<span class="delete_tab">×</span>');
+  //         }
+  //         onChangedJSON();
+  //       });
+  //     }
+  //     event.stopPropagation();
+  //   }
+  // );
   //tab追加
-  $(".tab_controls_add_tab").on("click", function () {
+  $("#modules_add,#dependencies_add,#subpacks_add").on("click", function () {
     if (
+      $(this).hasClass("modules") ||
       (is_subpacks_enable && $(this).hasClass("subpacks")) ||
       (is_dependencies_enable && $(this).hasClass("dependencies"))
     ) {
-      add_tab($(this).prev());
+      add_tab($(this).attr("class"));
     }
     onChangedJSON();
   });
@@ -344,32 +379,40 @@ $(function () {
     return chars.join("");
   }
   // モジュールタブ追加
-  function modules_add_tab() {
-    const controls_tab = $(".modules_controls_tab");
-    const num = controls_tab.children("li").length;
-    const add_content = "<li>" + num + '<span class="delete_tab">×</span></li>';
-    controls_tab.append(add_content);
-    controls_tab.children("li:last-child").hide().show(150);
-    const content = $(".modules_contents > div:first-child").clone();
-    content.removeClass("selected_tab_content");
-    $(".modules_contents").append(content);
-  }
+  // function modules_add_tab() {
+  //   const controls_tab = $(".modules_controls_tab");
+  //   const num = controls_tab.children("li").length;
+  //   const add_content = "<li>" + num + '<span class="delete_tab">×</span></li>';
+  //   controls_tab.append(add_content);
+  //   controls_tab.children("li:last-child").hide().show(150);
+  //   const content = $(".modules.tab_content_list > div:first-child").clone();
+  //   content.removeClass("selected_tab_content");
+  //   $(".modules.tab_content_list").append(content);
+  // }
   //タブ追加
-  function add_tab(controls_tab) {
-    const addTab = $("<li>")
-      .text(controls_tab.children("li").length)
-      .append($("<span>").addClass("delete_tab").text("×"));
-    controls_tab.append(addTab);
-    controls_tab.children("li:last-child").hide().show(150);
-    const tab_content_list = controls_tab.parents(".tab_controls").next();
-    const content = tab_content_list.children("div:first-child").clone();
-    content.removeClass("selected_tab_content");
-    tab_content_list.append(content);
-
-    // <div class="subpacks tab_children">
-    //   <div class="tab_number">1</div>
-    //   <div class="tab_underbar"></div>
-    // </div>
+  function add_tab(className = "") {
+    const tab_body = $(`.${className}` + ".tab_body");
+    const tab_number = tab_body.children("label").length;
+    tab_body.append(
+      $("<label>")
+        .addClass(`${className} tab_children`)
+        .append(
+          $("<input>").attr({
+            type: "button",
+            class: className,
+          }),
+          $("<div>").addClass("tab_number").text(tab_number),
+          $("<div>").addClass("tab_underBar")
+        )
+    );
+    tab_body.children("li:last-child").hide().show(150);
+    const tab_content_list = $(`.${className}` + ".tab_content_list");
+    tab_content_list.append(
+      tab_content_list
+        .children("div:first-child")
+        .clone()
+        .removeClass("selected_tab_content")
+    );
   }
   // オーナー追加
   function add_author(name) {
@@ -504,14 +547,15 @@ $(function () {
     Prism.highlightAll();
   }
 
-  function switchTabControls(className = "", stat = [false, false, false]) {
-    const tab_controls = $(className + ".tab_controls div");
-    if (stat[0]) tab_controls.filter(".tab_body").removeClass("disabled");
-    else tab_controls.filter(".tab_body").addClass("disabled");
-    if (stat[1]) tab_controls.filter(".add_tab").removeClass("disabled");
-    else tab_controls.filter(".add_tab").addClass("disabled");
-    if (stat[2]) tab_controls.filter(".remove_tab").removeClass("disabled");
-    else tab_controls.filter(".remove_tab").addClass("disabled");
+  function switchTabControls(className = "", stat = [0, 0, 0]) {
+    [".tab_body", ".add_tab", ".remove_tab"].forEach((control, index) => {
+      const element = $(className + control);
+      if (stat[index] == 1) {
+        element.removeClass("disabled").find("input").prop("disabled", false);
+      } else if (stat[index] == 0) {
+        element.addClass("disabled").find("input").prop("disabled", true);
+      }
+    });
   }
   // チェックボックス変更
   function changed_checkbox() {
@@ -530,15 +574,18 @@ $(function () {
     const dependencies_contents = $(
       ".dependencies.tab_content_list div.value_element"
     );
+    switchTabControls(".dependencies", [
+      is_dependencies_enable,
+      is_dependencies_enable,
+      $(".dependencies.tab_children").length > 1,
+    ]);
     if (is_dependencies_enable) {
-      switchTabControls(".dependencies", [1, 1, 1]);
       dependencies_contents.find("div.value_label").removeClass("disabled");
       dependencies_contents.find("input").prop("disabled", false);
       if ($("#dependencies_uuid").val() == "")
         $("#dependencies_enable").prop("indeterminate", true);
       else $("#dependencies_enable").prop("indeterminate", false);
     } else {
-      switchTabControls(".dependencies");
       dependencies_contents.find("div.value_label").addClass("disabled");
       dependencies_contents.find("input").prop("disabled", true);
     }
@@ -571,8 +618,12 @@ $(function () {
       metadata_contents.find("input").prop("disabled", true);
     }
     const subpacks_contents = $(".subpacks.tab_content_list div.value_element");
+    switchTabControls(".subpacks", [
+      is_subpacks_enable,
+      is_subpacks_enable,
+      $(".subpacks.tab_children").length > 1,
+    ]);
     if (is_subpacks_enable) {
-      switchTabControls(".subpacks", [1, 1, 1]);
       subpacks_contents.find("div.value_label").removeClass("disabled");
       subpacks_contents.find("input").prop("disabled", false);
       if (
@@ -584,7 +635,6 @@ $(function () {
         $("#subpacks_enable").prop("indeterminate", true);
       else $("#subpacks_enable").prop("indeterminate", false);
     } else {
-      switchTabControls(".subpacks");
       subpacks_contents.find("div.value_label").addClass("disabled");
       subpacks_contents.find("input").prop("disabled", true);
     }
@@ -599,7 +649,7 @@ $(function () {
     module_num["client_data"] = 2;
     module_num["interface"] = 3;
     module_num["world_template"] = 4;
-
+    // クラスのリセット
     const min_engine_version = $("#min_engine_version").removeClass("disabled");
     const min_engine_version_input = $("#min_engine_version_input input").prop(
       "disabled",
@@ -613,10 +663,11 @@ $(function () {
     const lock_template_options = $("#header_lock_template_options");
     lock_template_options.parent().addClass("disabled");
     lock_template_options.prop("disabled", true);
-    const controls_tab_length = $(".modules_controls_tab li").length;
+    const controls_tab_length = $(".modules.tab_children").length;
+    // 使用切換
     for (let i = 1; i <= controls_tab_length; i++) {
       const modules_type = $(
-        "div.modules_contents > div:nth-child(" + i + ") #modules_type"
+        "div.modules.tab_content_list > div:nth-child(" + i + ") #modules_type"
       );
       modules_type.children("option").prop("disabled", false);
       const modules_type_val = modules_type.val();
@@ -644,38 +695,28 @@ $(function () {
             break;
         }
       } else {
+        // 使用できるものに変更
         modules_type.val(Object.keys(module_num)[useable_module.indexOf(true)]);
       }
       type_prevention(controls_tab_length, useable_module, module_num);
     }
-    // addボタン表示切換
-    if (
+    // addボタン状態切換
+    switchTabControls(".modules", [
+      -1,
       useable_module.some((val) => {
         return val;
-      }) &&
-      controls_tab_length <= 1
-    ) {
-      $(".modules_controls_add_tab").show(150);
-    } else {
-      $(".modules_controls_add_tab").hide(150);
-    }
+      }) && controls_tab_length <= 1,
+      controls_tab_length > 1,
+    ]);
   }
   // 別タイプの選択制限
   function type_prevention(len, useable_module, module_num) {
     for (let i = 2; i <= len; i++) {
       for (let modules in module_num) {
         const module = $(
-          "div.modules_contents > div:nth-child(" +
-            i +
-            ") #modules_type option[value=" +
-            modules +
-            "]"
+          `div.modules.tab_content_list > div:nth-child(${i}) #modules_type option[value=${modules}]`
         );
-        if (useable_module[module_num[modules]]) {
-          module.prop("disabled", false);
-        } else {
-          module.prop("disabled", true);
-        }
+        module.prop("disabled", !useable_module[module_num[modules]]);
       }
     }
   }
@@ -736,7 +777,7 @@ $(function () {
     for (let i = 0; i < modules_length; i++) {
       const child_num = i + 1;
       const modules_description = $(
-        "div.modules_contents > div:nth-child(" +
+        "div.modules.tab_content_list > div:nth-child(" +
           child_num +
           ") #modules_description"
       );
@@ -884,7 +925,9 @@ $(function () {
     for (let i = 0; i < modules_length; i++) {
       const child_num = i + 1;
       const modules_type = $(
-        "div.modules_contents > div:nth-child(" + child_num + ") #modules_type"
+        "div.modules.tab_content_list > div:nth-child(" +
+          child_num +
+          ") #modules_type"
       );
       if (modules_type.val() == null) {
         addIssue(
@@ -897,7 +940,7 @@ $(function () {
         error_num++;
       }
       const modules_description = $(
-        "div.modules_contents > div:nth-child(" +
+        "div.modules.tab_content_list > div:nth-child(" +
           child_num +
           ") #modules_description"
       );
@@ -914,7 +957,9 @@ $(function () {
         error_num++;
       }
       const modules_uuid = $(
-        "div.modules_contents > div:nth-child(" + child_num + ") #modules_uuid"
+        "div.modules.tab_content_list > div:nth-child(" +
+          child_num +
+          ") #modules_uuid"
       );
       if (!isUUID(modules_uuid.val())) {
         //UUIDではありません
@@ -1121,14 +1166,14 @@ $(function () {
           }
           if (json_data["header"]["modules"][i]["type"] != null) {
             $(
-              "div.modules_contents > div:nth-child(" +
+              "div.modules.tab_content_list > div:nth-child(" +
                 child_num +
                 ") #modules_type"
             ).val(json_data["header"]["modules"][i]["type"]);
           }
           if (json_data["header"]["modules"][i]["description"] != null) {
             $(
-              "div.modules_contents > div:nth-child(" +
+              "div.modules.tab_content_list > div:nth-child(" +
                 child_num +
                 ") #modules_description"
             ).val(json_data["header"]["modules"][i]["description"]);
@@ -1139,21 +1184,21 @@ $(function () {
             ].split(".");
             if (modules_version[0] != null) {
               $(
-                "div.modules_contents > div:nth-child(" +
+                "div.modules.tab_content_list > div:nth-child(" +
                   child_num +
                   ") #modules_version_major"
               ).val(modules_version[0]);
             }
             if (modules_version[1] != null) {
               $(
-                "div.modules_contents > div:nth-child(" +
+                "div.modules.tab_content_list > div:nth-child(" +
                   child_num +
                   ") #modules_version_minor"
               ).val(modules_version[1]);
             }
             if (modules_version[2] != null) {
               $(
-                "div.modules_contents > div:nth-child(" +
+                "div.modules.tab_content_list > div:nth-child(" +
                   child_num +
                   ") #modules_version_patch"
               ).val(modules_version[2]);
@@ -1161,7 +1206,7 @@ $(function () {
           }
           if (json_data["header"]["modules"][i]["uuid"] != null) {
             $(
-              "div.modules_contents > div:nth-child(" +
+              "div.modules.tab_content_list > div:nth-child(" +
                 child_num +
                 ") #modules_uuid"
             ).val(json_data["header"]["modules"][i]["uuid"]);
@@ -1286,14 +1331,14 @@ $(function () {
         }
         if (json_data["modules"][i]["type"] != null) {
           $(
-            "div.modules_contents > div:nth-child(" +
+            "div.modules.tab_content_list > div:nth-child(" +
               child_num +
               ") #modules_type"
           ).val(json_data["modules"][i]["type"]);
         }
         if (json_data["modules"][i]["description"] != null) {
           $(
-            "div.modules_contents > div:nth-child(" +
+            "div.modules.tab_content_list > div:nth-child(" +
               child_num +
               ") #modules_description"
           ).val(json_data["modules"][i]["description"]);
@@ -1301,21 +1346,21 @@ $(function () {
         if (json_data["modules"][i]["version"] != null) {
           if (json_data["modules"][i]["version"][0] != null) {
             $(
-              "div.modules_contents > div:nth-child(" +
+              "div.modules.tab_content_list > div:nth-child(" +
                 child_num +
                 ") #modules_version_major"
             ).val(json_data["modules"][i]["version"][0]);
           }
           if (json_data["modules"][i]["version"][1] != null) {
             $(
-              "div.modules_contents > div:nth-child(" +
+              "div.modules.tab_content_list > div:nth-child(" +
                 child_num +
                 ") #modules_version_minor"
             ).val(json_data["modules"][i]["version"][1]);
           }
           if (json_data["modules"][i]["version"][2] != null) {
             $(
-              "div.modules_contents > div:nth-child(" +
+              "div.modules.tab_content_list > div:nth-child(" +
                 child_num +
                 ") #modules_version_patch"
             ).val(json_data["modules"][i]["version"][2]);
@@ -1323,7 +1368,7 @@ $(function () {
         }
         if (json_data["modules"][i]["uuid"] != null) {
           $(
-            "div.modules_contents > div:nth-child(" +
+            "div.modules.tab_content_list > div:nth-child(" +
               child_num +
               ") #modules_uuid"
           ).val(json_data["modules"][i]["uuid"]);
@@ -1454,18 +1499,21 @@ $(function () {
     }
 
     json_raw["modules"] = new Array();
-    const modules_length = $(".modules_controls_tab li").length;
+    const modules_length = $(".modules.tab_children").length;
     for (let i = 0; i < modules_length; i++) {
       const child_num = i + 1;
       json_raw["modules"][i] = new Object();
       json_raw["modules"][i]["type"] = $(
-        "div.modules_contents > div:nth-child(" + child_num + ") #modules_type"
+        `div.modules.tab_content_list > div:nth-child(${child_num}) #modules_type`
       ).val();
-      json_raw["modules"][i]["description"] =
-        "replace_modules_" + i + "description";
-      json_raw["modules"][i]["version"] = "replace_modules_" + i + "_version";
+      json_raw["modules"][i][
+        "description"
+      ] = `replace_modules_${i}_description`;
+      json_raw["modules"][i]["version"] = `replace_modules_${i}_version`;
       json_raw["modules"][i]["uuid"] = $(
-        "div.modules_contents > div:nth-child(" + child_num + ") #modules_uuid"
+        "div.modules.tab_content_list > div:nth-child(" +
+          child_num +
+          ") #modules_uuid"
       ).val();
     }
     if (is_dependencies_enable) {
@@ -1585,12 +1633,13 @@ $(function () {
       );
     }
 
-    for (let i = 0; i < $(".modules_controls_tab li").length; i++) {
+    for (let i = 0; i < $(".modules.tab_children").length; i++) {
       const child_num = i + 1;
+      console.log(string_raw);
       string_raw = string_raw.replace(
-        "replace_modules_" + i + "description",
+        `replace_modules_${i}_description`,
         $(
-          "div.modules_contents > div:nth-child(" +
+          "div.modules.tab_content_list > div:nth-child(" +
             child_num +
             ") #modules_description"
         ).val()
@@ -1598,21 +1647,21 @@ $(function () {
       const modules_version = JSON.stringify([
         Number(
           $(
-            "div.modules_contents > div:nth-child(" +
+            "div.modules.tab_content_list > div:nth-child(" +
               child_num +
               ") #modules_version_major"
           ).val()
         ),
         Number(
           $(
-            "div.modules_contents > div:nth-child(" +
+            "div.modules.tab_content_list > div:nth-child(" +
               child_num +
               ") #modules_version_minor"
           ).val()
         ),
         Number(
           $(
-            "div.modules_contents > div:nth-child(" +
+            "div.modules.tab_content_list > div:nth-child(" +
               child_num +
               ") #modules_version_patch"
           ).val()
@@ -1621,7 +1670,7 @@ $(function () {
         .split(/,/)
         .join(", ");
       string_raw = string_raw.replace(
-        '"replace_modules_' + i + '_version"',
+        `"replace_modules_${i}_version"`,
         modules_version
       );
     }

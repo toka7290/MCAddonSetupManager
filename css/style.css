@@ -394,17 +394,9 @@ div.editor form {
   width: 100%;
   padding: 1em;
   box-sizing: border-box;
-}
-div.value_input {
-  display: grid;
 } /* grid-template-columns: auto minmax(0.5rem, 20%);
   width: auto;
   margin-left: 0.5rem; */
-div.value_input input,
-div.value_input textarea {
-  grid-row: 1;
-  grid-column: 1;
-}
 /* div.value_input.type_version {
   display: flex;
   width: auto;

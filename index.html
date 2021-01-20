@@ -208,6 +208,7 @@
               margin: .5rem .8rem;
               padding: .5rem .7rem;
               display: grid;
+              grid-template-rows: 1fr;
               grid-template-columns: 1fr 1fr;
               width: auto;
               place-items: center normal;
@@ -219,7 +220,9 @@
             }
 
             .value_input {
-              grid-template-columns: none;
+              display: grid;
+              grid-template-rows: 1fr;
+              grid-template-columns: 1fr;
               margin-left: 0;
             }
 
@@ -227,6 +230,7 @@
               display: grid;
               width: auto;
               align-items: flex-end;
+              grid-template-rows: 1fr;
               grid-template-columns: 1fr 1rem 1fr 1rem 1fr;
             }
 
@@ -249,6 +253,7 @@
               display: grid;
               width: auto;
               align-items: flex-end;
+              grid-template-rows: 1fr;
               grid-template-columns: 2fr auto;
               grid-gap: 1rem;
             }
@@ -377,6 +382,10 @@
               </div>
             </div>
             <style>
+              .value_checkbox {
+                position: relative;
+              }
+
               .value_checkbox input {
                 filter: alpha(opacity=0);
                 -moz-opacity: 0;
@@ -389,6 +398,7 @@
 
               .checkbox_body {
                 display: grid;
+                grid-template-rows: 1fr;
                 grid-template-columns: auto 1fr;
                 align-items: center;
                 user-select: none;
@@ -474,18 +484,43 @@
             </div>
             <div class="modules tab_controls">
               <div class="modules tab_body">
-                <div class="modules tab_children selected" tabindex="0">
+                <label class="modules tab_children selected">
+                  <input type="button" class="modules">
                   <div class="tab_number">0</div>
-                  <div class="tab_underbar"></div>
-                </div>
+                  <div class="tab_underBar"></div>
+                </label>
               </div>
-              <div class="modules add_tab disabled">+ 追加</div>
-              <div class="modules remove_tab disabled">- 削除</div>
+              <div class="modules add_tab disabled">
+                <label>
+                  <input type="button" id="modules_add" class="modules" disabled>
+                  <div class="add_tab_text">+ 追加</div>
+                </label>
+              </div>
+              <div class="modules remove_tab disabled">
+                <label>
+                  <input type="button" id="modules_remove" class="modules" disabled>
+                  <div class="remove_tab_text">- 削除</div>
+                </label>
+              </div>
             </div>
             <style>
+              .tab_children input,
+              .add_tab input,
+              .remove_tab input {
+                filter: alpha(opacity=0);
+                -moz-opacity: 0;
+                opacity: 0;
+                -webkit-appearance: none;
+                appearance: none;
+                position: absolute;
+                pointer-events: none;
+              }
+
               .tab_controls {
+                position: relative;
                 display: grid;
-                grid-template: 1fr / 1fr auto auto;
+                grid-template-rows: 1fr;
+                grid-template-columns: 1fr auto auto;
                 margin: .5rem .8rem;
                 padding: .5rem .7rem;
                 grid-gap: .5rem;
@@ -506,8 +541,8 @@
               }
 
               .tab_children {
+                display: block;
                 flex-grow: 1;
-                padding: .25rem 1rem 0 1rem;
                 position: relative;
                 transition: all 0.5s cubic-bezier(.77, 0, .18, 1);
               }
@@ -516,7 +551,7 @@
                 padding: .25rem 1rem;
               }
 
-              .tab_underbar {
+              .tab_underBar {
                 position: absolute;
                 width: 50%;
                 height: 3px;
@@ -525,16 +560,20 @@
                 bottom: 0;
               }
 
-              .selected .tab_underbar {
+              .selected .tab_underBar {
                 background-color: #6eb171;
                 transition: all 0.5s cubic-bezier(.77, 0, .18, 1);
               }
 
               .add_tab,
               .remove_tab {
-                padding: .25rem;
                 font-size: small;
-                cursor: pointer;
+              }
+
+              .add_tab_text,
+              .remove_tab_text {
+                padding: .25rem;
+                margin: 0;
               }
 
               .disabled.tab_body,
@@ -544,19 +583,28 @@
                 color: var(--color_disabled_text);
               }
 
-              .tab_body:not(.disabled) .tab_children:hover {
+              .tab_body:not(.disabled) .tab_number:hover,
+              input:focus+.tab_number {
                 background-color: #d7ead3;
               }
 
-              .tab_body:not(.disabled) .tab_children:hover .tab_underbar {
+              .tab_body:not(.disabled) .tab_number:hover+.tab_underBar,
+              input:focus~.tab_underBar {
                 width: 100%;
                 left: 0;
                 right: 0;
               }
 
-              .add_tab:not(.disabled):hover,
-              .remove_tab:not(.disabled):hover {
+              .add_tab:not(.disabled):hover .add_tab_text,
+              .remove_tab:not(.disabled):hover .remove_tab_text,
+              #module_add:not(:disabled):focus+.add_tab_text,
+              #module_remove:not(:disabled):focus+.remove_tab_text {
+                cursor: pointer;
                 color: gray;
+              }
+
+              .tab_content_list>div:not(.selected_tab_content) {
+                display: none;
               }
 
               /* old */
@@ -597,7 +645,7 @@
                 color: inherit;
               }
             </style>
-            <div class="modules_contents">
+            <div class="modules tab_content_list">
               <div class="selected_tab_content">
                 <div class="value_element" title="このモジュールのタイプを設定します。">
                   <div class="value_label">
@@ -647,24 +695,33 @@
           </div>
           <div class="editor_element" title="依存関係を設定します。">
             <div class="editor_element_legend toggle">
-              <div>
-                <input type="checkbox" name="dependencies" id="dependencies_enable" />
-                <label for="dependencies_enable" class="toggle_body">
-                  <p class="toggle_body_text">Dependencies</p>
-                  <div class="toggle_body_box">
-                    <div class="toggle_body_padding"></div>
-                    <div class="toggle_body_thumb"></div>
-                  </div>
-                </label>
-              </div>
+              <input type="checkbox" name="dependencies" id="dependencies_enable" />
+              <label for="dependencies_enable" class="toggle_body">
+                <p class="toggle_body_text">Dependencies</p>
+                <div class="toggle_body_box">
+                  <div class="toggle_body_padding"></div>
+                  <div class="toggle_body_thumb"></div>
+                </div>
+              </label>
             </div>
             <style>
+              .editor_element_legend.toggle {
+                position: relative;
+              }
+
               .editor_element_legend.toggle input {
-                display: none;
+                filter: alpha(opacity=0);
+                -moz-opacity: 0;
+                opacity: 0;
+                -webkit-appearance: none;
+                appearance: none;
+                position: absolute;
+                pointer-events: none;
               }
 
               .toggle_body {
                 display: grid;
+                grid-template-rows: 1fr;
                 grid-template-columns: auto 1fr;
                 align-items: center;
                 user-select: none;
@@ -682,6 +739,7 @@
 
               .toggle_body_box {
                 display: grid;
+                grid-template-rows: 1fr;
                 grid-template-columns: auto 1fr;
                 background-color: lightgrey;
                 border-radius: 1.5rem;
@@ -690,6 +748,10 @@
                 align-items: center;
                 justify-items: start;
                 transition: all 1s ease;
+              }
+
+              input:focus+.toggle_body .toggle_body_box {
+                background-color: #d7ead3;
               }
 
               input:indeterminate+.toggle_body .toggle_body_box,
@@ -726,13 +788,24 @@
             <div class="dependencies tab_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
               <div class="dependencies tab_controls">
                 <div class="dependencies tab_body">
-                  <div class="dependencies tab_children selected">
+                  <label class="dependencies tab_children selected">
+                    <input type="button" class="dependencies">
                     <div class="tab_number">0</div>
-                    <div class="tab_underbar"></div>
-                  </div>
+                    <div class="tab_underBar"></div>
+                  </label>
                 </div>
-                <div class="dependencies add_tab">+ 追加</div>
-                <div class="dependencies remove_tab">- 削除</div>
+                <div class="dependencies add_tab disabled">
+                  <label>
+                    <input type="button" id="dependencies_add" class="dependencies" disabled>
+                    <div class="add_tab_text">+ 追加</div>
+                  </label>
+                </div>
+                <div class="dependencies remove_tab disabled">
+                  <label>
+                    <input type="button" id="dependencies_remove" class="dependencies" disabled>
+                    <div class="remove_tab_text">- 削除</div>
+                  </label>
+                </div>
               </div>
               <div class="dependencies tab_content_list">
                 <div class="selected_tab_content">
@@ -895,13 +968,24 @@
             <div class="subpacks tab_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
               <div class="subpacks tab_controls">
                 <div class="subpacks tab_body">
-                  <div class="subpacks tab_children selected">
+                  <label class="subpacks tab_children selected">
+                    <input type="button" class="subpacks">
                     <div class="tab_number">0</div>
-                    <div class="tab_underbar"></div>
-                  </div>
+                    <div class="tab_underBar"></div>
+                  </label>
                 </div>
-                <div class="subpacks add_tab">+ 追加</div>
-                <div class="subpacks remove_tab">- 削除</div>
+                <div class="subpacks add_tab disabled">
+                  <label>
+                    <input type="button" id="subpacks_add" class="subpacks" disabled>
+                    <div class="add_tab_text">+ 追加</div>
+                  </label>
+                </div>
+                <div class="subpacks remove_tab disabled">
+                  <label>
+                    <input type="button" id="subpacks_remove" class="subpacks" disabled>
+                    <div class="remove_tab_text">- 削除</div>
+                  </label>
+                </div>
               </div>
               <div class="subpacks tab_content_list">
                 <div class="selected_tab_content">
@@ -1025,7 +1109,7 @@
     <script src="lib/prism.js" defer></script>
     <script src="lib/minecraft_text.min.js" defer></script>
     <!-- js -->
-    <script type="text/javascript" src="js/main.min.js" defer></script>
+    <script type="text/javascript" src="js/main.js" defer></script>
   </body>
 
 </html>
