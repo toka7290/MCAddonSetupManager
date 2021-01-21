@@ -72,15 +72,15 @@ $(function () {
   });
   // 外部インポート
   $("#input_file").on("change", function () {
-    importFile();
+    importJsonFile();
   });
   // ヘルプを表示
   $("#show_help").on("click", function () {
     $("#page_help").fadeIn("fast");
-    toggle_help();
+    switchHelp();
   });
   $("#page_help").on("click", function () {
-    toggle_help();
+    switchHelp();
   });
   // ファイルドラッグ&ドロップ
   $(document).on("dragenter dragover", function (event) {
@@ -106,7 +106,7 @@ $(function () {
     event.stopPropagation();
     event.preventDefault();
     $("#input_file").prop("files", event.dataTransfer.files);
-    importFile();
+    importJsonFile();
   });
   // プレビュー表示切替
   $("div#show_preview").on("click", function () {
@@ -124,7 +124,7 @@ $(function () {
     $("div.editor").css("flex-basis", "");
     $("div.data_check").css("flex-basis", "");
     help_page_num = 5;
-    toggle_help();
+    switchHelp();
   });
   // about開く
   $(".open_about").on("click", function () {
@@ -176,58 +176,7 @@ $(function () {
     $(this).parents("div.type_uuid").find('input[type="text"]').val(getUuid_v4);
     onChangedJSON();
   });
-  //Modules tab変更
-  // $(document).on("click", ".modules_controls_tab li", function () {
-  //   const controls_tab_li = $(".modules_controls_tab li");
-  //   const selected_index = controls_tab_li.index(this);
-  //   controls_tab_li
-  //     .removeClass("selected_tab")
-  //     .eq(selected_index)
-  //     .addClass("selected_tab");
-  //   $(".modules.tab_content_list > div")
-  //     .removeClass("selected_tab_content")
-  //     .eq(selected_index)
-  //     .addClass("selected_tab_content");
-  // });
-  // Modules tab削除
-  // $(document).on(
-  //   "click",
-  //   ".modules_controls_tab li span.delete_tab",
-  //   function (event) {
-  //     const delete_tab = $(this).parent();
-  //     let deleted_index = delete_tab.index();
-  //     let modules_controls_tabs = $(".modules_controls_tab li");
-  //     const controls_tabs_length = modules_controls_tabs.length;
-  //     const modules_contents = $(".modules.tab_content_list > div");
-  //     delete_tab.hide(150, function () {
-  //       modules_contents.eq(deleted_index).remove();
-  //       // 番号の再割り当て
-  //       let num = 0;
-  //       for (let i = 0; i < controls_tabs_length; i++) {
-  //         modules_controls_tabs
-  //           .eq(i)
-  //           .html(num + '<span class="delete_tab">×</span>');
-  //         if (deleted_index != i) num++;
-  //       }
-  //       // select変更
-  //       if (delete_tab.hasClass("selected_tab")) {
-  //         if (deleted_index - 1 < 0) deleted_index = controls_tabs_length;
-  //         modules_controls_tabs.eq(deleted_index - 1).addClass("selected_tab");
-  //         modules_contents
-  //           .eq(deleted_index - 1)
-  //           .addClass("selected_tab_content");
-  //       }
-  //       delete_tab.remove();
-  //       onChangedJSON();
-  //     });
-  //     event.stopPropagation();
-  //   }
-  // );
-  //Modules tab追加
-  // $(".modules_controls_add_tab").on("click", function () {
-  //   modules_add_tab();
-  //   onChangedJSON();
-  // });
+
   //tab変更
   $(document).on(
     "click",
@@ -284,44 +233,6 @@ $(function () {
       e.stopPropagation();
     }
   );
-  // $(document).on(
-  //   "click",
-  //   ".tab_controls_bar_tab li span.delete_tab",
-  //   function (event) {
-  //     if (
-  //       (is_subpacks_enable &&
-  //         $(this).parents(".tab_controls").hasClass("subpacks")) ||
-  //       (is_dependencies_enable &&
-  //         $(this).parents(".tab_controls").hasClass("dependencies"))
-  //     ) {
-  //       const selected_tab = $(this).parent();
-  //       const controls_tab = selected_tab.parent();
-  //       let controls_tabs = controls_tab.children("li");
-  //       let selected_index = selected_tab.index();
-  //       const tab_content_list = controls_tab
-  //         .parents(".tab_controls")
-  //         .next()
-  //         .children("div");
-  //       selected_tab.hide(150, function () {
-  //         tab_content_list.eq(selected_index).remove();
-  //         if (selected_tab.hasClass("selected_tab")) {
-  //           if (selected_index - 1 < 0) selected_index = 2;
-  //           controls_tabs.eq(selected_index - 1).addClass("selected_tab");
-  //           tab_content_list
-  //             .eq(selected_index - 1)
-  //             .addClass("selected_tab_content");
-  //         }
-  //         selected_tab.remove();
-  //         controls_tabs = controls_tab.children("li");
-  //         for (let i = 0; i < controls_tabs.length; i++) {
-  //           controls_tabs.eq(i).html(i + '<span class="delete_tab">×</span>');
-  //         }
-  //         onChangedJSON();
-  //       });
-  //     }
-  //     event.stopPropagation();
-  //   }
-  // );
   //tab追加
   $("#modules_add,#dependencies_add,#subpacks_add").on("click", function () {
     if (
@@ -329,31 +240,37 @@ $(function () {
       (is_subpacks_enable && $(this).hasClass("subpacks")) ||
       (is_dependencies_enable && $(this).hasClass("dependencies"))
     ) {
-      add_tab($(this).attr("class"));
+      addTab($(this).attr("class"));
     }
     onChangedJSON();
   });
 
   //author追加
-  $("#metadata_author_add").on("click", function () {
-    if (is_metadata_enable) {
-      add_author($("#metadata_author").val());
-      $("#metadata_author").val("");
-    }
+  $("#author_add").on("click", function () {
+    addAuthor();
     onChangedJSON();
   });
+  function addAuthor(name = "") {
+    $("div.authors_list").append(
+      $("<label>")
+        .addClass("author_name")
+        .append(
+          $("<div>").addClass("author_num").text($(".author_name").length),
+          $("<input>").attr({
+            type: "text",
+            class: "metadata_author",
+            value: name,
+          })
+        )
+    );
+  }
   //author削除
-  $(document).on("click", "span.metadata_delete_author", function () {
-    if (is_metadata_enable) {
-      const metadata_author = $(this).parent();
-      metadata_author.hide(150, function () {
-        metadata_author.remove();
-        onChangedJSON();
-      });
-    }
+  $("#author_remove").on("click", function () {
+    $("div.authors_list>.author_name:last-child").remove();
+    onChangedJSON();
   });
   // 高頻度更新防止処理
-  function delayIssue() {
+  function setDelayIssue() {
     is_can_issue = false;
     if (typeof timeoutID === "number") {
       window.clearTimeout(timeoutID);
@@ -378,19 +295,8 @@ $(function () {
     }
     return chars.join("");
   }
-  // モジュールタブ追加
-  // function modules_add_tab() {
-  //   const controls_tab = $(".modules_controls_tab");
-  //   const num = controls_tab.children("li").length;
-  //   const add_content = "<li>" + num + '<span class="delete_tab">×</span></li>';
-  //   controls_tab.append(add_content);
-  //   controls_tab.children("li:last-child").hide().show(150);
-  //   const content = $(".modules.tab_content_list > div:first-child").clone();
-  //   content.removeClass("selected_tab_content");
-  //   $(".modules.tab_content_list").append(content);
-  // }
   //タブ追加
-  function add_tab(className = "") {
+  function addTab(className = "") {
     const tab_body = $(`.${className}` + ".tab_body");
     const tab_number = tab_body.children("label").length;
     tab_body.append(
@@ -414,27 +320,14 @@ $(function () {
         .removeClass("selected_tab_content")
     );
   }
-  // オーナー追加
-  function add_author(name) {
-    const author_list = $(document).find(
-      "div.value_input.type_authors .authors_list"
-    );
-    const author_list_child = $("<div>");
-    author_list_child.append($("<span>").addClass("name").text(name));
-    author_list_child.append(
-      $("<span>").addClass("metadata_delete_author").text("×")
-    );
-    author_list.append(author_list_child);
-    author_list.children("div:last-child").hide().show(150);
-  }
 
   // インポート処理
-  function importFile() {
+  function importJsonFile() {
     const data = $("#input_file").prop("files")[0];
     const file_reader = new FileReader();
     file_reader.onload = function () {
       const json_text = file_reader.result;
-      import_data(json_text);
+      setJSONData(json_text);
     };
     try {
       file_reader.readAsText(data);
@@ -443,7 +336,7 @@ $(function () {
     }
   }
   // ヘルプ切換
-  function toggle_help() {
+  function switchHelp() {
     switch (help_page_num) {
       case 1:
         $("#help_content_1").fadeOut("fast");
@@ -534,11 +427,12 @@ $(function () {
   }
   // 更新処理
   function onChangedJSON() {
-    changed_checkbox();
-    type_changed();
+    setDisabled();
+    setControls(setSelectRestriction());
+
     if (is_can_issue) checkIssue();
-    delayIssue();
-    const json_code = exportJSON();
+    setDelayIssue();
+    const json_code = getJSONData();
     $("pre.language-json code.language-json").remove();
     const content = '<code class="language-json">' + json_code + "</code>";
     $("pre.language-json").append(content);
@@ -546,8 +440,28 @@ $(function () {
     updateDisplayPreview();
     Prism.highlightAll();
   }
-
-  function switchTabControls(className = "", stat = [0, 0, 0]) {
+  function setControls(module = [0, 0]) {
+    setTabControls(".modules", [1, module]);
+    [".dependencies", ".subpacks"].forEach((className, num) => {
+      setTabControls(className, [
+        [is_dependencies_enable, is_subpacks_enable][num],
+        [is_dependencies_enable, is_subpacks_enable][num],
+        $(className + ".tab_children").length > 1,
+      ]);
+    });
+    // authors
+    if ($(".author_name").length > 1)
+      $(".remove_author")
+        .removeClass("disabled")
+        .find("input")
+        .prop("disabled", false);
+    else
+      $(".remove_author")
+        .addClass("disabled")
+        .find("input")
+        .prop("disabled", true);
+  }
+  function setTabControls(className = "", stat = [0, 0, 0]) {
     [".tab_body", ".add_tab", ".remove_tab"].forEach((control, index) => {
       const element = $(className + control);
       if (stat[index] == 1) {
@@ -558,7 +472,7 @@ $(function () {
     });
   }
   // チェックボックス変更
-  function changed_checkbox() {
+  function setDisabled() {
     is_dependencies_enable =
       $("#dependencies_enable").is(":checked") ||
       $("#dependencies_enable").is(":indeterminate");
@@ -574,11 +488,6 @@ $(function () {
     const dependencies_contents = $(
       ".dependencies.tab_content_list div.value_element"
     );
-    switchTabControls(".dependencies", [
-      is_dependencies_enable,
-      is_dependencies_enable,
-      $(".dependencies.tab_children").length > 1,
-    ]);
     if (is_dependencies_enable) {
       dependencies_contents.find("div.value_label").removeClass("disabled");
       dependencies_contents.find("input").prop("disabled", false);
@@ -605,11 +514,13 @@ $(function () {
       metadata_contents.removeClass("disabled");
       metadata_contents.find("input").prop("disabled", false);
       if (
-        !(
-          $("div.authors_list > div")[0] ||
-          $("#metadata_url").val() != "" ||
-          $("#metadata_license").val() != ""
-        )
+        ![
+          $(".metadata_author").length > 0
+            ? $(".metadata_author").val() != ""
+            : false,
+          $("#metadata_url").val() != "",
+          $("#metadata_license").val() != "",
+        ].some((ele) => ele)
       )
         $("#metadata_enable").prop("indeterminate", true);
       else $("#metadata_enable").prop("indeterminate", false);
@@ -618,11 +529,6 @@ $(function () {
       metadata_contents.find("input").prop("disabled", true);
     }
     const subpacks_contents = $(".subpacks.tab_content_list div.value_element");
-    switchTabControls(".subpacks", [
-      is_subpacks_enable,
-      is_subpacks_enable,
-      $(".subpacks.tab_children").length > 1,
-    ]);
     if (is_subpacks_enable) {
       subpacks_contents.find("div.value_label").removeClass("disabled");
       subpacks_contents.find("input").prop("disabled", false);
@@ -640,7 +546,7 @@ $(function () {
     }
   }
   // モジュールタイプ変更
-  function type_changed() {
+  function setSelectRestriction() {
     is_world_template = false;
     let useable_module = [false, false, false, false, false];
     let module_num = {};
@@ -667,7 +573,7 @@ $(function () {
     // 使用切換
     for (let i = 1; i <= controls_tab_length; i++) {
       const modules_type = $(
-        "div.modules.tab_content_list > div:nth-child(" + i + ") #modules_type"
+        ".modules.tab_content_list > div:nth-child(" + i + ") #modules_type"
       );
       modules_type.children("option").prop("disabled", false);
       const modules_type_val = modules_type.val();
@@ -700,21 +606,19 @@ $(function () {
       }
       type_prevention(controls_tab_length, useable_module, module_num);
     }
-    // addボタン状態切換
-    switchTabControls(".modules", [
-      -1,
+    return [
       useable_module.some((val) => {
         return val;
       }) && controls_tab_length <= 1,
       controls_tab_length > 1,
-    ]);
+    ];
   }
   // 別タイプの選択制限
   function type_prevention(len, useable_module, module_num) {
     for (let i = 2; i <= len; i++) {
       for (let modules in module_num) {
         const module = $(
-          `div.modules.tab_content_list > div:nth-child(${i}) #modules_type option[value=${modules}]`
+          `.modules.tab_content_list > div:nth-child(${i}) #modules_type option[value=${modules}]`
         );
         module.prop("disabled", !useable_module[module_num[modules]]);
       }
@@ -773,11 +677,11 @@ $(function () {
       );
       warning_num++;
     }
-    const modules_length = $(".modules_controls_tab li").length;
+    const modules_length = $(".modules.tab_children").length;
     for (let i = 0; i < modules_length; i++) {
       const child_num = i + 1;
       const modules_description = $(
-        "div.modules.tab_content_list > div:nth-child(" +
+        ".modules.tab_content_list > div:nth-child(" +
           child_num +
           ") #modules_description"
       );
@@ -807,28 +711,26 @@ $(function () {
       }
     }
     if (is_metadata_enable) {
-      if ($("div.authors_list > div")[0]) {
-        const metadata_length = $("div.authors_list > div").length;
-        for (let i = 1; i <= metadata_length; i++) {
-          const author_name = $(
-            "div.authors_list > div:nth-child(" + i + ") > span.name"
-          );
-          if (author_name.text() == "") {
-            //名前がありません
+      const metadata_length = $("label.author_name").length;
+      if (metadata_length) {
+        for (let i = 0; i < metadata_length; i++) {
+          const author_name = $("input.metadata_author").eq(i);
+          if (author_name.val() == "") {
+            // 名前が空です。
             addIssue(
               "warning",
-              "[Metadata:author] 空の名前が存在しています。",
+              `[Metadata:author:${i}] 名前が空です。`,
               author_name
             );
             warning_num++;
           }
         }
       } else {
-        // 名前がありません
+        // 名前が一つもありません。
         addIssue(
           "warning",
-          "[Metadata:author] 名前が入力されていません。",
-          $("#metadata_author")
+          "[Metadata:author] 名前が一つもありません。",
+          $("div.add_author")
         );
         warning_num++;
       }
@@ -921,11 +823,11 @@ $(function () {
       );
       error_num++;
     }
-    const modules_length = $(".modules_controls_tab li").length;
+    const modules_length = $(".modules.tab_children").length;
     for (let i = 0; i < modules_length; i++) {
       const child_num = i + 1;
       const modules_type = $(
-        "div.modules.tab_content_list > div:nth-child(" +
+        ".modules.tab_content_list > div:nth-child(" +
           child_num +
           ") #modules_type"
       );
@@ -940,7 +842,7 @@ $(function () {
         error_num++;
       }
       const modules_description = $(
-        "div.modules.tab_content_list > div:nth-child(" +
+        ".modules.tab_content_list > div:nth-child(" +
           child_num +
           ") #modules_description"
       );
@@ -957,7 +859,7 @@ $(function () {
         error_num++;
       }
       const modules_uuid = $(
-        "div.modules.tab_content_list > div:nth-child(" +
+        ".modules.tab_content_list > div:nth-child(" +
           child_num +
           ") #modules_uuid"
       );
@@ -974,8 +876,7 @@ $(function () {
       }
     }
     if (is_dependencies_enable) {
-      const dependencies_length = $(".dependencies.tab_controls_bar_tab li")
-        .length;
+      const dependencies_length = $(".dependencies.tab_children").length;
       for (let i = 0; i < dependencies_length; i++) {
         const child_num = i + 1;
         const dependencies_uuid = $(
@@ -997,12 +898,10 @@ $(function () {
       }
     }
     if (is_metadata_enable) {
-      const metadata_length = $("div.authors_list > div").length;
-      for (let i = 1; i <= metadata_length; i++) {
-        const author_name = $(
-          "div.authors_list > div:nth-child(" + i + ") > span.name"
-        );
-        element_val = author_name.text().replace(/\\\\/g, "");
+      const metadata_length = $("label.author_name").length;
+      for (let i = 0; i < metadata_length; i++) {
+        const author_name = $("input.metadata_author").eq(i);
+        element_val = author_name.val().replace(/\\\\/g, "");
         if (element_val.slice(-1) == "\\") {
           //名前の最後の文字がバックスラッシュ
           addIssue(
@@ -1040,7 +939,7 @@ $(function () {
       }
     }
     if (is_subpacks_enable) {
-      const subpacks_length = $(".subpacks.tab_controls_bar_tab li").length;
+      const subpacks_length = $(".subpacks.tab_children").length;
       for (let i = 0; i < subpacks_length; i++) {
         const child_num = i + 1;
         const tab_content = $(
@@ -1122,14 +1021,62 @@ $(function () {
     }
     return true;
   }
+  function searchErrorCause(text = "") {
+    let cause = [];
+    if (text == "") return 0;
+    if (text.match(/{/g).length == text.match(/}/g).length) cause.push(1);
+    if (text.match(/"/g).length % 2) cause.push(2);
+  }
   // jsonデータ取り出し
-  function import_data(json_text) {
+  function setJSONData(json_text) {
     let json_data = {};
     try {
       json_data = JSON.parse(json_text);
     } catch (e) {
-      window.alert("有効なjsonではありません");
-      console.error("error:" + e);
+      const massage = e.message.replace("JSON.parse: ", "").split(" at")[0];
+      const splitText = massage.split(" ");
+      const line =
+        splitText[splitText.findIndex((element) => element == "line") + 1];
+      switch (massage) {
+        case "unterminated string literal":
+        case "bad control character in string literal":
+        case "bad character in string literal":
+        case "bad Unicode escape":
+        case "bad escape character":
+        case "unterminated string":
+        case "no number after minus sign":
+        case "unexpected non-digit":
+        case "missing digits after decimal point":
+        case "unterminated fractional number":
+        case "missing digits after exponent indicator":
+        case "missing digits after exponent sign":
+        case "exponent part is missing a number":
+        case "unexpected end of data":
+        case "unexpected keyword":
+        case "unexpected character":
+        case "end of data while reading object contents":
+        case "expected property name or '}'":
+        case "end of data when ',' or ']' was expected":
+        case "expected ',' or ']' after array element":
+        case "end of data when property name was expected":
+        case "expected double-quoted property name":
+        case "end of data after property name when ':' was expected":
+        case "expected ':' after property name in object":
+        case "end of data after property value in object":
+        case "expected ',' or '}' after property value in object":
+        case "expected ',' or '}' after property-value pair in object literal":
+        case "property names must be double-quoted strings":
+        case "expected property name or '}'":
+        case "unexpected character":
+        case "unexpected non-whitespace character after JSON data":
+        case "Invalid character at position {0} (Edge)":
+          break;
+      }
+      let messageText = `有効なjsonではありません。\n${e.lineNumber - 1}~${
+        e.lineNumber
+      }行で問題が発生しています。`;
+      window.alert(messageText);
+      console.error(e.message.split(" "));
       return;
     }
     // format_versionがない場合pack_manifest検査
@@ -1166,14 +1113,14 @@ $(function () {
           }
           if (json_data["header"]["modules"][i]["type"] != null) {
             $(
-              "div.modules.tab_content_list > div:nth-child(" +
+              ".modules.tab_content_list > div:nth-child(" +
                 child_num +
                 ") #modules_type"
             ).val(json_data["header"]["modules"][i]["type"]);
           }
           if (json_data["header"]["modules"][i]["description"] != null) {
             $(
-              "div.modules.tab_content_list > div:nth-child(" +
+              ".modules.tab_content_list > div:nth-child(" +
                 child_num +
                 ") #modules_description"
             ).val(json_data["header"]["modules"][i]["description"]);
@@ -1184,21 +1131,21 @@ $(function () {
             ].split(".");
             if (modules_version[0] != null) {
               $(
-                "div.modules.tab_content_list > div:nth-child(" +
+                ".modules.tab_content_list > div:nth-child(" +
                   child_num +
                   ") #modules_version_major"
               ).val(modules_version[0]);
             }
             if (modules_version[1] != null) {
               $(
-                "div.modules.tab_content_list > div:nth-child(" +
+                ".modules.tab_content_list > div:nth-child(" +
                   child_num +
                   ") #modules_version_minor"
               ).val(modules_version[1]);
             }
             if (modules_version[2] != null) {
               $(
-                "div.modules.tab_content_list > div:nth-child(" +
+                ".modules.tab_content_list > div:nth-child(" +
                   child_num +
                   ") #modules_version_patch"
               ).val(modules_version[2]);
@@ -1206,7 +1153,7 @@ $(function () {
           }
           if (json_data["header"]["modules"][i]["uuid"] != null) {
             $(
-              "div.modules.tab_content_list > div:nth-child(" +
+              ".modules.tab_content_list > div:nth-child(" +
                 child_num +
                 ") #modules_uuid"
             ).val(json_data["header"]["modules"][i]["uuid"]);
@@ -1218,7 +1165,7 @@ $(function () {
         for (let i = 0; i < json_data["header"]["dependencies"].length; i++) {
           const child_num = i + 1;
           if (i > 0) {
-            add_tab($(".dependencies.tab_controls_bar_tab"));
+            addTab("dependencies");
           }
           const tab_content = $(
             "div.dependencies.tab_content_list > div:nth-child(" +
@@ -1327,18 +1274,18 @@ $(function () {
       for (let i = 0; i < json_data["modules"].length; i++) {
         const child_num = i + 1;
         if (i > 0) {
-          modules_add_tab();
+          addTab("modules");
         }
         if (json_data["modules"][i]["type"] != null) {
           $(
-            "div.modules.tab_content_list > div:nth-child(" +
+            ".modules.tab_content_list > div:nth-child(" +
               child_num +
               ") #modules_type"
           ).val(json_data["modules"][i]["type"]);
         }
         if (json_data["modules"][i]["description"] != null) {
           $(
-            "div.modules.tab_content_list > div:nth-child(" +
+            ".modules.tab_content_list > div:nth-child(" +
               child_num +
               ") #modules_description"
           ).val(json_data["modules"][i]["description"]);
@@ -1346,21 +1293,21 @@ $(function () {
         if (json_data["modules"][i]["version"] != null) {
           if (json_data["modules"][i]["version"][0] != null) {
             $(
-              "div.modules.tab_content_list > div:nth-child(" +
+              ".modules.tab_content_list > div:nth-child(" +
                 child_num +
                 ") #modules_version_major"
             ).val(json_data["modules"][i]["version"][0]);
           }
           if (json_data["modules"][i]["version"][1] != null) {
             $(
-              "div.modules.tab_content_list > div:nth-child(" +
+              ".modules.tab_content_list > div:nth-child(" +
                 child_num +
                 ") #modules_version_minor"
             ).val(json_data["modules"][i]["version"][1]);
           }
           if (json_data["modules"][i]["version"][2] != null) {
             $(
-              "div.modules.tab_content_list > div:nth-child(" +
+              ".modules.tab_content_list > div:nth-child(" +
                 child_num +
                 ") #modules_version_patch"
             ).val(json_data["modules"][i]["version"][2]);
@@ -1368,7 +1315,7 @@ $(function () {
         }
         if (json_data["modules"][i]["uuid"] != null) {
           $(
-            "div.modules.tab_content_list > div:nth-child(" +
+            ".modules.tab_content_list > div:nth-child(" +
               child_num +
               ") #modules_uuid"
           ).val(json_data["modules"][i]["uuid"]);
@@ -1380,7 +1327,7 @@ $(function () {
       for (let i = 0; i < json_data["dependencies"].length; i++) {
         const child_num = i + 1;
         if (i > 0) {
-          add_tab($(".dependencies.tab_controls_bar_tab"));
+          addTab("dependencies");
         }
         const tab_content = $(
           "div.dependencies.tab_content_list > div:nth-child(" + child_num + ")"
@@ -1433,7 +1380,7 @@ $(function () {
       $("#metadata_enable").prop("checked", true);
       if (json_data["metadata"]["authors"] != null) {
         for (const author of json_data["metadata"]["authors"]) {
-          add_author(author);
+          addAuthor(author);
         }
       }
       if (json_data["metadata"]["url"] != null) {
@@ -1448,7 +1395,7 @@ $(function () {
       for (let i = 0; i < json_data["subpacks"].length; i++) {
         const child_num = i + 1;
         if (i > 0) {
-          add_tab($(".subpacks.tab_controls_bar_tab"));
+          addTab("subpacks");
         }
         const tab_content = $(
           "div.subpacks.tab_content_list > div:nth-child(" + child_num + ")"
@@ -1473,7 +1420,7 @@ $(function () {
     onChangedJSON();
   }
   // json 出力
-  function exportJSON() {
+  function getJSONData() {
     let json_raw = new Object();
     json_raw["format_version"] = format_version;
 
@@ -1504,33 +1451,33 @@ $(function () {
       const child_num = i + 1;
       json_raw["modules"][i] = new Object();
       json_raw["modules"][i]["type"] = $(
-        `div.modules.tab_content_list > div:nth-child(${child_num}) #modules_type`
+        `.modules.tab_content_list > div:nth-child(${child_num}) #modules_type`
       ).val();
       json_raw["modules"][i][
         "description"
       ] = `replace_modules_${i}_description`;
       json_raw["modules"][i]["version"] = `replace_modules_${i}_version`;
       json_raw["modules"][i]["uuid"] = $(
-        "div.modules.tab_content_list > div:nth-child(" +
+        ".modules.tab_content_list > div:nth-child(" +
           child_num +
           ") #modules_uuid"
       ).val();
     }
     if (is_dependencies_enable) {
       json_raw["dependencies"] = new Array();
-      const dependencies_length = $(".dependencies.tab_controls_bar_tab li")
-        .length;
+      const dependencies_length = $(".dependencies.tab_children").length;
       for (let i = 0; i < dependencies_length; i++) {
         const child_num = i + 1;
         const tab_content = $(
-          "div.dependencies.tab_content_list > div:nth-child(" + child_num + ")"
+          `div.dependencies.tab_content_list > div:nth-child(${child_num})`
         );
         json_raw["dependencies"][i] = new Object();
         json_raw["dependencies"][i]["uuid"] = tab_content
           .find("#dependencies_uuid")
           .val();
-        json_raw["dependencies"][i]["version"] =
-          "replace_dependencies_" + i + "_version";
+        json_raw["dependencies"][i][
+          "version"
+        ] = `replace_dependencies_${i}_version`;
       }
     }
     if (
@@ -1548,33 +1495,34 @@ $(function () {
         json_raw["capabilities"].push("raytracing");
       }
     }
-    if (
-      is_metadata_enable &&
-      ($("div.authors_list > div")[0] ||
-        $("#metadata_url").val() != "" ||
-        $("#metadata_license").val() != "")
-    ) {
+    const isValue = [
+      $(".metadata_author").length > 0
+        ? $(".metadata_author").val() != ""
+        : false,
+      $("#metadata_url").val() != "",
+      $("#metadata_license").val() != "",
+    ];
+    if (is_metadata_enable && isValue.some((ele) => ele)) {
       json_raw["metadata"] = new Object();
-      if ($("div.authors_list > div")[0]) {
+      if (isValue[0]) {
         json_raw["metadata"]["authors"] = new Array();
-        const metadata_length = $("div.authors_list > div").length;
-        for (let i = 1; i <= metadata_length; i++) {
-          json_raw["metadata"]["authors"].push("replace_" + i + "author");
+        const metadata_length = $("label.author_name").length;
+        for (let i = 0; i < metadata_length; i++) {
+          json_raw["metadata"]["authors"].push(`replace_${i}_author`);
         }
       }
-      if ($("#metadata_url").val() != "")
-        json_raw["metadata"]["url"] = "replace_metadata_url";
-      if ($("#metadata_license").val() != "")
+      if (isValue[1]) json_raw["metadata"]["url"] = "replace_metadata_url";
+      if (isValue[2])
         json_raw["metadata"]["license"] = "replace_metadata_license";
     }
     if (is_subpacks_enable) {
       json_raw["subpacks"] = new Array();
-      const subpacks_length = $(".subpacks.tab_controls_bar_tab li").length;
+      const subpacks_length = $(".subpacks.tab_children").length;
       for (let i = 0; i < subpacks_length; i++) {
         const child_num = i + 1;
         json_raw["subpacks"][i] = new Object();
         const tab_content = $(
-          "div.subpacks.tab_content_list > div:nth-child(" + child_num + ")"
+          `div.subpacks.tab_content_list > div:nth-child(${child_num})`
         );
         json_raw["subpacks"][i]["folder_name"] = tab_content
           .find("#subpacks_folder_name")
@@ -1585,12 +1533,11 @@ $(function () {
         );
       }
     }
-    const json_string_raw = `${JSON.stringify(json_raw, null, "  ")}`;
 
-    return jsonReplacer(json_string_raw);
+    return replaceJsonCode(`${JSON.stringify(json_raw, null, "  ")}`);
   }
   // json バージョン置き換え
-  function jsonReplacer(string_raw) {
+  function replaceJsonCode(string_raw) {
     string_raw = string_raw.replace(
       "replace_header_pack_name",
       $("#header_pack_name").val()
@@ -1635,35 +1582,26 @@ $(function () {
 
     for (let i = 0; i < $(".modules.tab_children").length; i++) {
       const child_num = i + 1;
-      console.log(string_raw);
       string_raw = string_raw.replace(
         `replace_modules_${i}_description`,
         $(
-          "div.modules.tab_content_list > div:nth-child(" +
-            child_num +
-            ") #modules_description"
+          `.modules.tab_content_list > div:nth-child(${child_num}) #modules_description`
         ).val()
       );
       const modules_version = JSON.stringify([
         Number(
           $(
-            "div.modules.tab_content_list > div:nth-child(" +
-              child_num +
-              ") #modules_version_major"
+            `.modules.tab_content_list > div:nth-child(${child_num}) #modules_version_major`
           ).val()
         ),
         Number(
           $(
-            "div.modules.tab_content_list > div:nth-child(" +
-              child_num +
-              ") #modules_version_minor"
+            `.modules.tab_content_list > div:nth-child(${child_num}) #modules_version_minor`
           ).val()
         ),
         Number(
           $(
-            "div.modules.tab_content_list > div:nth-child(" +
-              child_num +
-              ") #modules_version_patch"
+            `.modules.tab_content_list > div:nth-child(${child_num}) #modules_version_patch`
           ).val()
         ),
       ])
@@ -1675,12 +1613,11 @@ $(function () {
       );
     }
     if (is_dependencies_enable) {
-      const dependencies_length = $(".dependencies.tab_controls_bar_tab li")
-        .length;
+      const dependencies_length = $(".dependencies.tab_children").length;
       for (let i = 0; i < dependencies_length; i++) {
         const child_num = i + 1;
         const tab_content = $(
-          "div.dependencies.tab_content_list > div:nth-child(" + child_num + ")"
+          `div.dependencies.tab_content_list > div:nth-child(${child_num})`
         );
         const dependencies_version = JSON.stringify([
           Number(tab_content.find("#dependencies_version_major").val()),
@@ -1690,16 +1627,16 @@ $(function () {
           .split(/,/)
           .join(", ");
         string_raw = string_raw.replace(
-          '"replace_dependencies_' + i + '_version"',
+          `"replace_dependencies_${i}_version"`,
           dependencies_version
         );
       }
     }
-    const metadata_length = $("div.authors_list > div").length;
-    for (let i = 1; i <= metadata_length; i++) {
+    const metadata_length = $("label.author_name").length;
+    for (let i = 0; i < metadata_length; i++) {
       string_raw = string_raw.replace(
-        "replace_" + i + "author",
-        $("div.authors_list > div:nth-child(" + i + ") > span.name").text()
+        `replace_${i}_author`,
+        $("input.metadata_author").eq(i).val()
       );
     }
     string_raw = string_raw.replace(
@@ -1710,14 +1647,14 @@ $(function () {
       "replace_metadata_license",
       $("#metadata_license").val()
     );
-    const subpacks_length = $(".subpacks.tab_controls_bar_tab li").length;
+    const subpacks_length = $(".subpacks.tab_children").length;
     for (let i = 0; i < subpacks_length; i++) {
       string_raw = string_raw.replace(
         "replace_subpacks_name",
         $(
-          "div.subpacks.tab_content_list > div:nth-child(" +
-            (i + 1) +
-            ") #subpacks_name"
+          `div.subpacks.tab_content_list > div:nth-child(${
+            i + 1
+          }) #subpacks_name`
         ).val()
       );
     }
