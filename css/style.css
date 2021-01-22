@@ -88,9 +88,11 @@ div.header_menu_alt {
   -moz-user-select: none;
   -webkit-user-select: none;
 }
+summary.more_info_icon,
 div.header_menu_alt > label,
 div.header_menu_alt > div {
   display: inline-flex;
+  position: relative;
   align-items: center;
   padding: 0.5rem;
   transition-duration: 0.5s;
@@ -104,7 +106,6 @@ div.header_menu_alt > label p {
   padding-left: 0.5rem;
 }
 ul.more_info {
-  display: none;
   list-style: none;
   position: absolute;
   z-index: 2;
@@ -114,12 +115,13 @@ ul.more_info {
   margin: 0;
   background-color: var(--color_header);
 }
-div.open_more_info:hover ul.more_info {
-  display: block;
-  z-index: 10;
+summary.more_info_icon::marker,
+summary.more_info_icon::-webkit-details-marker {
+  display: none;
+  list-style: none;
 }
 ul.more_info a,
-ul.more_info span {
+ul.more_info label {
   display: inline-block;
   line-height: 0;
   display: flex;
@@ -136,7 +138,13 @@ ul.more_info p {
 div.header_menu_alt > label:hover,
 div.header_menu_alt > div:hover,
 ul.more_info a:hover,
-ul.more_info span:hover {
+ul.more_info a:focus,
+ul.more_info label:hover,
+input:focus + label.open_about,
+summary.more_info_icon:hover,
+summary.more_info_icon:focus,
+input#input_file:focus + label {
+  outline: none;
   cursor: pointer;
   background-color: var(--color_header_2_hover);
 }
@@ -315,12 +323,16 @@ div#page_share img {
 div.close_about {
   text-align: end;
 }
-div.close_about img {
+div.close_about label {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
   border-radius: 1em;
   transition-duration: 0.5s;
   transition-property: background-color;
 }
-div.close_about img:hover {
+div.close_about label:hover,
+input#close_about_btn:focus + label {
   cursor: pointer;
   transition: 0.5s;
   background-color: var(--color_header_hover);
@@ -352,8 +364,10 @@ div.about_external_link a {
   padding: 0.5rem;
   transition: 0.5s;
   border-radius: 1em;
+  outline: none;
 }
 div.about_external_link a:hover,
+div.about_external_link a:focus,
 div#page_share:hover {
   transition: 0.5s;
   background-color: var(--color_header_hover);
@@ -616,11 +630,15 @@ div.preview_control_bar {
   -moz-user-select: none;
   -webkit-user-select: none;
 }
-div.preview_control_bar p {
-  margin: 0;
+.preview_control_child label {
+  display: block;
   padding: 0.5em;
 }
-div.preview_control_bar p:hover {
+.preview_control_child p {
+  margin: 0;
+}
+.preview_control_child label:hover,
+input:focus + label.control_text {
   cursor: pointer;
   transition: 0.5s;
   background-color: var(--color_toolbar_hover);

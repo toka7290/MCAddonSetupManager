@@ -64,11 +64,24 @@
         </div>
         <div class="header_menu">
           <div class="import_file">
-            <label for="input_file">Import</label><input type="file" name="input_file" id="input_file" accept=".json" />
+            <label for="input_file">Import</label>
             <div class="help_content top" id="help_content_1">
               <p>すでファイルがある場合はデータをインポートします。</p>
             </div>
           </div>
+          <style>
+            input#input_file,
+            input#open_about,
+            input#close_about_btn {
+              filter: alpha(opacity=0);
+              -moz-opacity: 0;
+              opacity: 0;
+              -webkit-appearance: none;
+              appearance: none;
+              position: absolute;
+              pointer-events: none;
+            }
+          </style>
           <div id="show_preview">
             <span>Preview</span>
             <div class="help_content top" id="help_content_3">
@@ -81,12 +94,13 @@
           <p class="open_about">About</p>
         </div>
         <div class="header_menu_alt">
+          <input type="file" name="input_file" id="input_file" accept=".json" />
           <label for="input_file" class="import_file">
             <img src="img/import.svg" alt="import" width="32px" height="32px" />
             <p>Import</p>
           </label>
-          <div class="open_more_info">
-            <img src="img/more.svg" alt="more" width="32px" height="32px" />
+          <details class="open_more_info">
+            <summary class="more_info_icon"><img src="img/more.svg" alt="more" width="32px" height="32px" /></summary>
             <ul class="more_info">
               <li>
                 <a href="https://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener noreferrer"><img src="img/homepage.svg" alt="" width="32px" height="32px" />
@@ -114,20 +128,24 @@
                 </a>
               </li>
               <li>
-                <span class="open_about">
+                <input type="button" id="open_about">
+                <label class="open_about" for="open_about">
                   <img src="/img/icon.svg" alt="" height="32px" width="32px">
                   <p>about</p>
-                </span>
+                </label>
               </li>
             </ul>
-          </div>
+          </details>
         </div>
       </div>
       <div id="page_help"></div>
       <div class="page_about about_hide">
         <div class="about_area">
           <div class="close_about">
-            <img src="img/close.svg" alt="" id="close_about_image" width="50px" height="50px" />
+            <input type="button" id="close_about_btn">
+            <label for="close_about_btn">
+              <img src="img/close.svg" alt="" id="close_about_image" width="50px" height="50px" />
+            </label>
           </div>
           <div class="about_content">
             <img src="/img/icon.svg" alt="" width="180px" height="180px">
@@ -162,7 +180,7 @@
       </div>
     </div>
     <div class="content">
-      <div class="editor">
+      <div class="editor" tabindex="-1">
         <form name="editor_manifest">
           <div class="editor_element">
             <div class="editor_element_legend">
@@ -287,6 +305,7 @@
               padding: .25rem .5rem;
               width: auto;
               min-width: 0;
+              box-shadow: none;
               transition: all .5s;
             }
 
@@ -591,8 +610,8 @@
 
               .add_tab:not(.disabled):hover .add_tab_text,
               .remove_tab:not(.disabled):hover .remove_tab_text,
-              #module_add:not(:disabled):focus+.add_tab_text,
-              #module_remove:not(:disabled):focus+.remove_tab_text {
+              input:not(:disabled):focus+.add_tab_text,
+              input:not(:disabled):focus+.remove_tab_text {
                 cursor: pointer;
                 color: gray;
               }
@@ -937,7 +956,9 @@
                 }
 
                 .value_element:not(.disabled) .add_author_text:hover,
-                .value_element:not(.disabled) .remove_author_text:hover {
+                .value_element:not(.disabled) .remove_author_text:hover,
+                input:not(:disabled):focus+.add_author_text,
+                input:not(:disabled):focus+.remove_author_text {
                   cursor: pointer;
                   color: gray;
                 }
@@ -1031,9 +1052,31 @@
       <div class="data_check">
         <div class="preview">
           <div class="preview_control_bar">
-            <p class="preview_control_copy">Copy</p>
-            <p class="preview_control_download">Download</p>
+            <div class="preview_control_child">
+              <input type="button" id="control_copy">
+              <label for="control_copy" class="control_text">
+                <p id="control_copy_text">Copy</p>
+              </label>
+            </div>
+            <div class="preview_control_child">
+              <input type="button" id="control_download">
+              <label for="control_download" class="control_text">
+                <p>Download</p>
+              </label>
+            </div>
           </div>
+          <style>
+            input#control_copy,
+            input#control_download {
+              filter: alpha(opacity=0);
+              -moz-opacity: 0;
+              opacity: 0;
+              -webkit-appearance: none;
+              appearance: none;
+              position: absolute;
+              pointer-events: none;
+            }
+          </style>
           <div class="display_preview">
             <div class="display_preview_card">
               <div class="card_icon">

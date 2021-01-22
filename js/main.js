@@ -127,26 +127,26 @@ $(function () {
     switchHelp();
   });
   // about開く
-  $(".open_about").on("click", function () {
+  $("#open_about").on("click", function () {
     $("div.page_about").removeClass("about_hide");
   });
   // about閉じる
-  $("img#close_about_image").on("click", function () {
+  $("#close_about_btn").on("click", function () {
     $("div.page_about").addClass("about_hide");
   });
   // コピー
-  $("p.preview_control_copy").on("click", function () {
+  $("#control_copy").on("click", function () {
     const code_buffer = $("textarea#code_buffer");
     code_buffer.select();
     document.execCommand("copy");
-    $("p.preview_control_copy").text("Copied");
+    $("p#control_copy_text").text("Copied");
     code_buffer.blur();
     setTimeout(function () {
-      $("p.preview_control_copy").text("Copy");
+      $("p#control_copy_text").text("Copy");
     }, 1000);
   });
   // ダウンロード
-  $("p.preview_control_download").on("click", function () {
+  $("#control_download").on("click", function () {
     let content = $("textarea#code_buffer").val();
     $("<a></a>", {
       href: window.URL.createObjectURL(new Blob([content])),
@@ -1021,62 +1021,55 @@ $(function () {
     }
     return true;
   }
-  function searchErrorCause(text = "") {
-    let cause = [];
-    if (text == "") return 0;
-    if (text.match(/{/g).length == text.match(/}/g).length) cause.push(1);
-    if (text.match(/"/g).length % 2) cause.push(2);
+  // エラー時のテキスト
+  function setErrorText(text = "", message = "") {
+    let messageText = "有効なjsonではありません。";
+    // 空白の場合は何も付け足さない
+    if (text == "" || message == "") return messageText;
+    const splitText = message.split(" ");
+    const lineIndex = splitText.findIndex((element) => element == "line");
+    const positionIndex = splitText.findIndex(
+      (element) => element == "position"
+    );
+    if (lineIndex != -1) {
+      const line = parseInt(splitText[lineIndex + 1]);
+      const getBeginningOfLineIndex = (maxLine) => {
+        let lastIndex = 0;
+        for (let i = 1; i < maxLine; i++) {
+          lastIndex = text.indexOf("\n", lastIndex) + 1;
+        }
+        return lastIndex;
+      };
+      const prevLineIndex = getBeginningOfLineIndex(line - 1);
+      const LineLastIndex = getBeginningOfLineIndex(line + 1) - 1;
+      messageText += `\n${
+        line - 1
+      }~${line}行で問題が発生しました。\n${text.substring(
+        prevLineIndex,
+        LineLastIndex
+      )}`;
+    } else if (positionIndex != -1) {
+      const position = splitText[positionIndex + 1];
+      const prevLineIndex =
+        text.lastIndexOf("\n", text.lastIndexOf("\n", position) - 1) + 1;
+      const prevLineNum = text.substr(0, prevLineIndex).match(/\n/g).length + 1;
+      messageText += `\n${prevLineNum}~${
+        prevLineNum + 1
+      }行で問題が発生しました。\n${text.substring(
+        prevLineIndex,
+        text.indexOf("\n", position - 1)
+      )}`;
+    }
+    return messageText;
   }
   // jsonデータ取り出し
-  function setJSONData(json_text) {
+  function setJSONData(json_text = "") {
     let json_data = {};
     try {
       json_data = JSON.parse(json_text);
     } catch (e) {
-      const massage = e.message.replace("JSON.parse: ", "").split(" at")[0];
-      const splitText = massage.split(" ");
-      const line =
-        splitText[splitText.findIndex((element) => element == "line") + 1];
-      switch (massage) {
-        case "unterminated string literal":
-        case "bad control character in string literal":
-        case "bad character in string literal":
-        case "bad Unicode escape":
-        case "bad escape character":
-        case "unterminated string":
-        case "no number after minus sign":
-        case "unexpected non-digit":
-        case "missing digits after decimal point":
-        case "unterminated fractional number":
-        case "missing digits after exponent indicator":
-        case "missing digits after exponent sign":
-        case "exponent part is missing a number":
-        case "unexpected end of data":
-        case "unexpected keyword":
-        case "unexpected character":
-        case "end of data while reading object contents":
-        case "expected property name or '}'":
-        case "end of data when ',' or ']' was expected":
-        case "expected ',' or ']' after array element":
-        case "end of data when property name was expected":
-        case "expected double-quoted property name":
-        case "end of data after property name when ':' was expected":
-        case "expected ':' after property name in object":
-        case "end of data after property value in object":
-        case "expected ',' or '}' after property value in object":
-        case "expected ',' or '}' after property-value pair in object literal":
-        case "property names must be double-quoted strings":
-        case "expected property name or '}'":
-        case "unexpected character":
-        case "unexpected non-whitespace character after JSON data":
-        case "Invalid character at position {0} (Edge)":
-          break;
-      }
-      let messageText = `有効なjsonではありません。\n${e.lineNumber - 1}~${
-        e.lineNumber
-      }行で問題が発生しています。`;
-      window.alert(messageText);
-      console.error(e.message.split(" "));
+      window.alert(setErrorText(json_text, e.message));
+      console.error("error:" + e);
       return;
     }
     // format_versionがない場合pack_manifest検査
@@ -1109,7 +1102,7 @@ $(function () {
         for (let i = 0; i < json_data["header"]["modules"].length; i++) {
           const child_num = i + 1;
           if (i > 0) {
-            modules_add_tab();
+            addTab("modules");
           }
           if (json_data["header"]["modules"][i]["type"] != null) {
             $(
