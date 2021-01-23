@@ -700,10 +700,11 @@ textarea#code_buffer {
 }
 div.issue {
   /* イシュー */
+  position: relative;
   bottom: 0;
   width: 100%;
 }
-div.issue_control_bar {
+.issue_status_bar {
   display: flex;
   background-color: var(--color_toolbar);
   padding: 2px;
@@ -713,45 +714,47 @@ div.issue_control_bar {
   -moz-user-select: none;
   -webkit-user-select: none;
 }
-div.issue_control_bar:hover {
+.issue_status_bar:hover,
+input#issue_control:focus + label.issue_status_bar {
   cursor: pointer;
+  background-color: var(--color_toolbar_hover);
 }
-div.issue_control_label img {
+div.issue_status_label img {
   width: 1.5rem;
   transition: 0.5s;
   vertical-align: middle;
 }
-div.issue_control_label img.open {
+div.issue_status_label img.open {
   transform-origin: center;
   transform: rotate(180deg);
 }
-div.issue_control_label span {
+div.issue_status_label span {
   vertical-align: middle;
 }
-div.issue_control_num {
+div.issue_status_num {
   display: flex;
   align-items: center;
 }
-div.issue_control_num div {
+div.issue_status_num div {
   padding: 0 0.5rem;
   line-height: 0;
   font-size: 0;
   display: flex;
   align-items: center;
 }
-div.issue_control_num div * {
+div.issue_status_num div * {
   line-height: normal;
   font-size: medium;
 }
-div.issue_control_num div + div {
+div.issue_status_num div + div {
   padding-left: 0;
 }
-div.issue_control_warning span,
-div.issue_control_error span {
+div.issue_status_warning span,
+div.issue_status_error span {
   align-self: center;
 }
-div.issue_control_warning img,
-div.issue_control_error img {
+div.issue_status_warning img,
+div.issue_status_error img {
   width: 1.2rem;
   vertical-align: middle;
   pointer-events: none;

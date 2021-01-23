@@ -155,8 +155,8 @@ $(function () {
     })[0].click();
   });
   // イシューリスト開閉
-  $("div.issue_control_bar").on("click", function () {
-    const control_bar_img = $("div.issue_control_bar img");
+  $("#issue_control").on("click", function () {
+    const control_bar_img = $("div.issue_status_label img");
     if (control_bar_img.hasClass("close")) {
       // 開く
       control_bar_img.attr("class", "open");

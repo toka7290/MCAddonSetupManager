@@ -72,7 +72,8 @@
           <style>
             input#input_file,
             input#open_about,
-            input#close_about_btn {
+            input#close_about_btn,
+            input#issue_control {
               filter: alpha(opacity=0);
               -moz-opacity: 0;
               opacity: 0;
@@ -181,7 +182,7 @@
     </div>
     <div class="content">
       <div class="editor" tabindex="-1">
-        <form name="editor_manifest">
+        <form name="editor_manifest" tabindex="-1">
           <div class="editor_element">
             <div class="editor_element_legend">
               <p>Definition</p>
@@ -1093,27 +1094,28 @@
               <code class="language-json"></code>
             </pre>
             <label>
-              <textarea name="code_buffer" id="code_buffer"></textarea>
+              <textarea name="code_buffer" id="code_buffer" tabindex="-1"></textarea>
             </label>
           </div>
         </div>
         <div class="issue">
-          <div class="issue_control_bar">
-            <div class="issue_control_label">
+          <input type="checkbox" name="issue_control" id="issue_control">
+          <label for="issue_control" class="issue_status_bar">
+            <div class="issue_status_label">
               <img src="img/chevron-up.svg" alt="img" class="close" width="24px" height="24px" />
               <span>問題</span>
             </div>
-            <div class="issue_control_num">
-              <div class="issue_control_warning">
+            <div class="issue_status_num">
+              <div class="issue_status_warning">
                 <img src="img/warning.svg" alt="" width="19px" height="19px" />
                 <span class="issue_warning_num">警告:0</span>
               </div>
-              <div class="issue_control_error">
+              <div class="issue_status_error">
                 <img src="img/error.svg" alt="" width="19px" height="19px" />
                 <span class="issue_error_num">エラー:0</span>
               </div>
             </div>
-          </div>
+          </label>
           <div class="issue_content" style="display: none;">
             <ul class="issue_list"></ul>
           </div>
