@@ -52,7 +52,7 @@ $(function () {
       const separator = $(".separator");
       separator.prev().addClass("drag_lock");
       separator.next().addClass("drag_lock");
-      const maxwidth = $("html").width() - 5;
+      const maxwidth = $("html").width() - 2;
       const next_width = maxwidth - e.clientX;
       const prev_width = maxwidth - next_width;
       separator.next().css("flex-basis", next_width);
@@ -180,7 +180,7 @@ $(function () {
   //tab変更
   $(document).on(
     "click",
-    '.tab_children:not(:selected) input[type="button"]',
+    '.tab_children:not(:selected)>input[type="button"]',
     function () {
       const className = $(this).attr("class");
       if (
@@ -200,7 +200,7 @@ $(function () {
     }
   );
   //tab削除
-  $("#modules_remove,#dependencies_remove,#subpacks_remove").on(
+  $("#modules-delete,#dependencies-delete,#subpacks-delete").on(
     "click",
     function (e) {
       const className = `.${$(this).attr("class")}`;
@@ -244,7 +244,31 @@ $(function () {
     }
     onChangedJSON();
   });
-
+  //タブ追加
+  function addTab(className = "") {
+    const tab_body = $(`.${className}` + ".tab_body");
+    const tab_number = tab_body.children("label").length;
+    tab_body.append(
+      $("<label>")
+        .addClass(`${className} tab_children invisible-Control`)
+        .append(
+          $("<input>").attr({
+            type: "button",
+            class: className,
+          }),
+          $("<div>").addClass("tab_number").text(tab_number),
+          $("<div>").addClass("tab_underBar")
+        )
+    );
+    tab_body.children("li:last-child").hide().show(150);
+    const tab_content_list = $(`.${className}` + ".tab_content_list");
+    tab_content_list.append(
+      tab_content_list
+        .children("div:first-child")
+        .clone()
+        .removeClass("selected_tab_content")
+    );
+  }
   //author追加
   $("#author_add").on("click", function () {
     addAuthor();
@@ -265,7 +289,7 @@ $(function () {
     );
   }
   //author削除
-  $("#author_remove").on("click", function () {
+  $("#author-delete").on("click", function () {
     $("div.authors_list>.author_name:last-child").remove();
     onChangedJSON();
   });
@@ -294,31 +318,6 @@ $(function () {
       }
     }
     return chars.join("");
-  }
-  //タブ追加
-  function addTab(className = "") {
-    const tab_body = $(`.${className}` + ".tab_body");
-    const tab_number = tab_body.children("label").length;
-    tab_body.append(
-      $("<label>")
-        .addClass(`${className} tab_children`)
-        .append(
-          $("<input>").attr({
-            type: "button",
-            class: className,
-          }),
-          $("<div>").addClass("tab_number").text(tab_number),
-          $("<div>").addClass("tab_underBar")
-        )
-    );
-    tab_body.children("li:last-child").hide().show(150);
-    const tab_content_list = $(`.${className}` + ".tab_content_list");
-    tab_content_list.append(
-      tab_content_list
-        .children("div:first-child")
-        .clone()
-        .removeClass("selected_tab_content")
-    );
   }
 
   // インポート処理
@@ -440,8 +439,9 @@ $(function () {
     updateDisplayPreview();
     Prism.highlightAll();
   }
+  //
   function setControls(module = [0, 0]) {
-    setTabControls(".modules", [1, module]);
+    setTabControls(".modules", [true, ...module]);
     [".dependencies", ".subpacks"].forEach((className, num) => {
       setTabControls(className, [
         [is_dependencies_enable, is_subpacks_enable][num],
