@@ -1,17 +1,17 @@
-var CACHE_NAME = "toka-20210105";
+var CACHE_NAME = "toka-202101-----";
 var urlsToCache = [
   "/MCAddonSetupManager/",
   "/MCAddonSetupManager/index.html",
-  "/MCAddonSetupManager/css/color.css",
-  "/MCAddonSetupManager/css/phone.css",
-  "/MCAddonSetupManager/css/prism.css",
-  "/MCAddonSetupManager/css/style.css",
-  "/MCAddonSetupManager/img/chevron-up.svg",
+  "/MCAddonSetupManager/css/color.min.css",
+  "/MCAddonSetupManager/css/phone.min.css",
+  "/MCAddonSetupManager/css/prism.min.css",
+  "/MCAddonSetupManager/css/style.min.css",
   "/MCAddonSetupManager/img/close.svg",
   "/MCAddonSetupManager/img/error.svg",
   "/MCAddonSetupManager/img/github.svg",
   "/MCAddonSetupManager/img/help.svg",
   "/MCAddonSetupManager/img/homepage.svg",
+  "/MCAddonSetupManager/img/icon.svg",
   "/MCAddonSetupManager/img/icon.webp",
   "/MCAddonSetupManager/img/icon_256.png",
   "/MCAddonSetupManager/img/icon_512.png",
@@ -31,6 +31,7 @@ var urlsToCache = [
   "/MCAddonSetupManager/lib/minecraft_text.min.js.map",
 ];
 var oldCacheKeys = [
+  "toka-20210105",
   "toka-20201119",
   "toka-20200904",
   "toka-20200831",
