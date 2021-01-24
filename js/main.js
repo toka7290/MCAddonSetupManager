@@ -43,15 +43,15 @@ $(function () {
     is_separator_drag = false;
     $("html").css("cursor", "");
     const separator = $(".separator");
-    separator.prev().removeClass("drag_lock");
-    separator.next().removeClass("drag_lock");
+    separator.prev().removeClass("drag-lock");
+    separator.next().removeClass("drag-lock");
   });
   $(document).on("mousemove", function (e) {
     if (is_separator_drag) {
       $("html").css("cursor", "e-resize");
       const separator = $(".separator");
-      separator.prev().addClass("drag_lock");
-      separator.next().addClass("drag_lock");
+      separator.prev().addClass("drag-lock");
+      separator.next().addClass("drag-lock");
       const maxwidth = $("html").width() - 2;
       const next_width = maxwidth - e.clientX;
       const prev_width = maxwidth - next_width;
@@ -60,7 +60,7 @@ $(function () {
     }
   });
   // シェア
-  $("#page_share").on("click", function () {
+  $("#page-share").on("click", function () {
     const data = {
       title: "とかさんの Manifest Generator",
       text: "とかさんの Manifest Generator -manifest.jsonを簡単に作成・編集-",
@@ -71,83 +71,83 @@ $(function () {
     }
   });
   // 外部インポート
-  $("#input_file").on("change", function () {
+  $("#input-file").on("change", function () {
     importJsonFile();
   });
   // ヘルプを表示
   $("#show_help").on("click", function () {
-    $("#page_help").fadeIn("fast");
+    $("#page-help").fadeIn("fast");
     switchHelp();
   });
-  $("#page_help").on("click", function () {
+  $("#page-help").on("click", function () {
     switchHelp();
   });
   // ファイルドラッグ&ドロップ
   $(document).on("dragenter dragover", function (event) {
     event.stopPropagation();
     event.preventDefault();
-    $(".file_drop_zone").removeClass("hide");
+    $(".file-drop-zone").removeClass("hide");
   });
-  $(".file_drop_zone,.file_drop_zone_textarea").on(
+  $(".file-drop-zone,.file-drop-zone-textarea").on(
     "dragleave",
     function (event) {
       event.stopPropagation();
       event.preventDefault();
-      $(".file_drop_zone").addClass("hide");
+      $(".file-drop-zone").addClass("hide");
     }
   );
   $(document).on("drop", function (_event) {
     isChanged = true;
-    $(".file_drop_zone").addClass("hide");
+    $(".file-drop-zone").addClass("hide");
     var event = _event;
     if (_event.originalEvent) {
       event = _event.originalEvent;
     }
     event.stopPropagation();
     event.preventDefault();
-    $("#input_file").prop("files", event.dataTransfer.files);
+    $("#input-file").prop("files", event.dataTransfer.files);
     importJsonFile();
   });
   // プレビュー表示切替
-  $("div#show_preview").on("click", function () {
-    const show_preview = $("div#show_preview");
+  $("div#show-preview").on("click", function () {
+    const showPreview = $("div#show-preview");
     $("div.preview").slideToggle();
-    if (show_preview.hasClass("active")) {
-      show_preview.removeClass("active");
+    if (showPreview.hasClass("active")) {
+      showPreview.removeClass("active");
     } else {
-      show_preview.addClass("active");
+      showPreview.addClass("active");
     }
   });
   // ウィンドウワイズ変更時にcss削除
   $(window).resize(function () {
     $("div.preview").css("display", "");
     $("div.editor").css("flex-basis", "");
-    $("div.data_check").css("flex-basis", "");
+    $("div.data-check").css("flex-basis", "");
     help_page_num = 5;
     switchHelp();
   });
   // about開く
-  $("#open_about").on("click", function () {
-    $("div.page_about").removeClass("about_hide");
+  $("#open-about").on("click", function () {
+    $("div.page-about").removeClass("about-hide");
   });
   // about閉じる
-  $("#close_about_btn").on("click", function () {
-    $("div.page_about").addClass("about_hide");
+  $("#close-about-btn").on("click", function () {
+    $("div.page-about").addClass("about-hide");
   });
   // コピー
   $("#control_copy").on("click", function () {
-    const code_buffer = $("textarea#code_buffer");
-    code_buffer.select();
+    const codeBuffer = $("textarea#code-buffer");
+    codeBuffer.select();
     document.execCommand("copy");
     $("p#control_copy_text").text("Copied");
-    code_buffer.blur();
+    codeBuffer.blur();
     setTimeout(function () {
       $("p#control_copy_text").text("Copy");
     }, 1000);
   });
   // ダウンロード
   $("#control_download").on("click", function () {
-    let content = $("textarea#code_buffer").val();
+    let content = $("textarea#code-buffer").val();
     $("<a></a>", {
       href: window.URL.createObjectURL(new Blob([content])),
       download: "manifest.json",
@@ -155,8 +155,8 @@ $(function () {
     })[0].click();
   });
   // イシューリスト開閉
-  $("#issue_control").on("click", function () {
-    const control_bar_img = $("div.issue_status_label img");
+  $("#issue-control").on("click", function () {
+    const control_bar_img = $("div.issue-status-label svg");
     if (control_bar_img.hasClass("close")) {
       // 開く
       control_bar_img.attr("class", "open");
@@ -173,14 +173,14 @@ $(function () {
   });
   //UUID生成
   $(document).on("click", 'input[type="button"].generate_uuid', function () {
-    $(this).parents("div.type_uuid").find('input[type="text"]').val(getUuid_v4);
+    $(this).parents("div.type-uuid").find('input[type="text"]').val(getUuid_v4);
     onChangedJSON();
   });
 
   //tab変更
   $(document).on(
     "click",
-    '.tab_children:not(:selected)>input[type="button"]',
+    '.tab-children:not(:selected)>input[type="button"]',
     function () {
       const className = $(this).attr("class");
       if (
@@ -190,12 +190,12 @@ $(function () {
       ) {
         const new_selected_tab = $(this).parent();
         const new_selected_index = new_selected_tab.index();
-        $(`.${className}` + ".tab_children").removeClass("selected");
+        $(`.${className}` + ".tab-children").removeClass("selected");
         new_selected_tab.addClass("selected");
-        $(`.${className}` + ".tab_content_list>div")
-          .removeClass("selected_tab_content")
+        $(`.${className}` + ".tab-content-list>div")
+          .removeClass("selected-tab-content")
           .eq(new_selected_index)
-          .addClass("selected_tab_content");
+          .addClass("selected-tab-content");
       }
     }
   );
@@ -204,28 +204,28 @@ $(function () {
     "click",
     function (e) {
       const className = `.${$(this).attr("class")}`;
-      let tab_children = $(className + ".tab_children");
+      let tabChildren = $(className + ".tab-children");
       if (
-        tab_children.length > 1 &&
+        tabChildren.length > 1 &&
         ($(this).hasClass("modules") ||
           (is_subpacks_enable && $(this).hasClass("subpacks")) ||
           (is_dependencies_enable && $(this).hasClass("dependencies")))
       ) {
-        $(className + ".tab_children.selected").remove();
-        $(className + ".tab_content_list>.selected_tab_content").remove();
-        tab_children = $(className + ".tab_children");
-        const tab_contents = $(className + ".tab_content_list>div");
+        $(className + ".tabChildren.selected").remove();
+        $(className + ".tab-content-list>.selected-tab-content").remove();
+        tabChildren = $(className + ".tabChildren");
+        const tab_contents = $(className + ".tab-content-list>div");
         // 番号再振り当て
         let index_num = 0;
-        for (let i = 0; i < tab_children.length; i++) {
-          const tab_child = tab_children.eq(i);
+        for (let i = 0; i < tabChildren.length; i++) {
+          const tab_child = tabChildren.eq(i);
           const tab_content = tab_contents.eq(i);
           if (i == 0) {
             tab_child.addClass("selected");
-            tab_content.addClass("selected_tab_content");
+            tab_content.addClass("selected-tab-content");
           }
-          const tab_number = tab_child.children("div.tab_number");
-          tab_number.text(index_num);
+          const tabNumber = tab_child.children("div.tab-number");
+          tabNumber.text(index_num);
           index_num++;
         }
       }
@@ -246,40 +246,40 @@ $(function () {
   });
   //タブ追加
   function addTab(className = "") {
-    const tab_body = $(`.${className}` + ".tab_body");
-    const tab_number = tab_body.children("label").length;
-    tab_body.append(
+    const tabBody = $(`.${className}` + ".tab-body");
+    const tabNumber = tabBody.children("label").length;
+    tabBody.append(
       $("<label>")
-        .addClass(`${className} tab_children invisible-Control`)
+        .addClass(`${className} tab-children invisible-Control`)
         .append(
           $("<input>").attr({
             type: "button",
             class: className,
           }),
-          $("<div>").addClass("tab_number").text(tab_number),
-          $("<div>").addClass("tab_underBar")
+          $("<div>").addClass("tab-number").text(tabNumber),
+          $("<div>").addClass("tab-underBar")
         )
     );
-    tab_body.children("li:last-child").hide().show(150);
-    const tab_content_list = $(`.${className}` + ".tab_content_list");
-    tab_content_list.append(
-      tab_content_list
+    tabBody.children("li:last-child").hide().show(150);
+    const tabContentList = $(`.${className}` + ".tab-content-list");
+    tabContentList.append(
+      tabContentList
         .children("div:first-child")
         .clone()
-        .removeClass("selected_tab_content")
+        .removeClass("selected-tab-content")
     );
   }
   //author追加
-  $("#author_add").on("click", function () {
+  $("#author-add").on("click", function () {
     addAuthor();
     onChangedJSON();
   });
   function addAuthor(name = "") {
-    $("div.authors_list").append(
+    $("div.authors-list").append(
       $("<label>")
-        .addClass("author_name")
+        .addClass("author-name")
         .append(
-          $("<div>").addClass("author_num").text($(".author_name").length),
+          $("<div>").addClass("author-num").text($(".author-name").length),
           $("<input>").attr({
             type: "text",
             class: "metadata_author",
@@ -290,7 +290,7 @@ $(function () {
   }
   //author削除
   $("#author-delete").on("click", function () {
-    $("div.authors_list>.author_name:last-child").remove();
+    $("div.authors-list>.author-name:last-child").remove();
     onChangedJSON();
   });
   // 高頻度更新防止処理
@@ -322,7 +322,7 @@ $(function () {
 
   // インポート処理
   function importJsonFile() {
-    const data = $("#input_file").prop("files")[0];
+    const data = $("#input-file").prop("files")[0];
     const file_reader = new FileReader();
     file_reader.onload = function () {
       const json_text = file_reader.result;
@@ -338,30 +338,30 @@ $(function () {
   function switchHelp() {
     switch (help_page_num) {
       case 1:
-        $("#help_content_1").fadeOut("fast");
-        $("#help_content_2").slideToggle("fast");
+        $("#help-content-1").fadeOut("fast");
+        $("#help-content_2").slideToggle("fast");
         help_page_num++;
         return;
       case 2:
-        $("#help_content_2").slideToggle("fast");
-        $("#help_content_3").fadeIn("fast");
+        $("#help-content_2").slideToggle("fast");
+        $("#help-content-3").fadeIn("fast");
         help_page_num++;
         return;
       case 3:
-        $("#help_content_3").fadeOut("fast");
-        $("#page_help").hide();
+        $("#help-content-3").fadeOut("fast");
+        $("#page-help").hide();
         help_page_num = 0;
         return;
       case 5:
-        $("#help_content_1").hide();
-        $("#help_content_2").hide();
-        $("#help_content_3").hide();
-        $("#page_help").hide();
+        $("#help-content-1").hide();
+        $("#help-content_2").hide();
+        $("#help-content-3").hide();
+        $("#page-help").hide();
         help_page_num = 0;
         return;
       case 0:
       default:
-        $("#help_content_1").fadeIn("fast");
+        $("#help-content-1").fadeIn("fast");
         help_page_num++;
         return;
     }
@@ -391,7 +391,7 @@ $(function () {
       }
       title = result;
     }
-    $("#card_title").html(MinecraftText.toHTML(title));
+    $("#card-title").html(MinecraftText.toHTML(title));
     // 説明
     let description = $("#header_description").val().toString();
     if (description == "") description = "§c不明なパックの説明";
@@ -421,7 +421,7 @@ $(function () {
       }
       description = result;
     }
-    $("#card_description").html(MinecraftText.toHTML(description));
+    $("#card-description").html(MinecraftText.toHTML(description));
     MinecraftText.refeashObfuscate();
   }
   // 更新処理
@@ -435,7 +435,7 @@ $(function () {
     $("pre.language-json code.language-json").remove();
     const content = '<code class="language-json">' + json_code + "</code>";
     $("pre.language-json").append(content);
-    $("textarea#code_buffer").val(json_code);
+    $("textarea#code-buffer").val(json_code);
     updateDisplayPreview();
     Prism.highlightAll();
   }
@@ -447,23 +447,23 @@ $(function () {
         [is_dependencies_enable, is_subpacks_enable][num],
         [is_dependencies_enable, is_subpacks_enable][num],
         [is_dependencies_enable, is_subpacks_enable][num] &&
-          $(className + ".tab_children").length > 1,
+          $(className + ".tab-children").length > 1,
       ]);
     });
     // authors
-    if ($(".author_name").length > 1)
-      $(".remove_author")
+    if ($(".author-name").length > 1)
+      $(".remove-author")
         .removeClass("disabled")
         .find("input")
         .prop("disabled", false);
     else
-      $(".remove_author")
+      $(".remove-author")
         .addClass("disabled")
         .find("input")
         .prop("disabled", true);
   }
   function setTabControls(className = "", stat = [0, 0, 0]) {
-    [".tab_body", ".add_tab", ".remove_tab"].forEach((control, index) => {
+    [".tab-body", ".add-tab", ".remove-tab"].forEach((control, index) => {
       const element = $(className + control);
       if (stat[index] == 1) {
         element.removeClass("disabled").find("input").prop("disabled", false);
@@ -487,19 +487,19 @@ $(function () {
       $("#subpacks_enable").is(":checked") ||
       $("#subpacks_enable").is(":indeterminate");
     const dependencies_contents = $(
-      ".dependencies.tab_content_list div.value_element"
+      ".dependencies.tab-content-list div.value-element"
     );
     if (is_dependencies_enable) {
-      dependencies_contents.find("div.value_label").removeClass("disabled");
+      dependencies_contents.find("div.value-label").removeClass("disabled");
       dependencies_contents.find("input").prop("disabled", false);
       if ($("#dependencies_uuid").val() == "")
         $("#dependencies_enable").prop("indeterminate", true);
       else $("#dependencies_enable").prop("indeterminate", false);
     } else {
-      dependencies_contents.find("div.value_label").addClass("disabled");
+      dependencies_contents.find("div.value-label").addClass("disabled");
       dependencies_contents.find("input").prop("disabled", true);
     }
-    const capabilities_contents = $(".capabilities_list .value_element");
+    const capabilities_contents = $(".capabilities_list .value-element");
     if (is_capabilities_enable) {
       capabilities_contents.removeClass("disabled");
       capabilities_contents.find("input").prop("disabled", false);
@@ -510,7 +510,7 @@ $(function () {
       capabilities_contents.addClass("disabled");
       capabilities_contents.find("input").prop("disabled", true);
     }
-    const metadata_contents = $(".metadata_list .value_element");
+    const metadata_contents = $(".metadata_list .value-element");
     if (is_metadata_enable) {
       metadata_contents.removeClass("disabled");
       metadata_contents.find("input").prop("disabled", false);
@@ -529,9 +529,9 @@ $(function () {
       metadata_contents.addClass("disabled");
       metadata_contents.find("input").prop("disabled", true);
     }
-    const subpacks_contents = $(".subpacks.tab_content_list div.value_element");
+    const subpacks_contents = $(".subpacks.tab-content-list div.value-element");
     if (is_subpacks_enable) {
-      subpacks_contents.find("div.value_label").removeClass("disabled");
+      subpacks_contents.find("div.value-label").removeClass("disabled");
       subpacks_contents.find("input").prop("disabled", false);
       if (
         !(
@@ -542,7 +542,7 @@ $(function () {
         $("#subpacks_enable").prop("indeterminate", true);
       else $("#subpacks_enable").prop("indeterminate", false);
     } else {
-      subpacks_contents.find("div.value_label").addClass("disabled");
+      subpacks_contents.find("div.value-label").addClass("disabled");
       subpacks_contents.find("input").prop("disabled", true);
     }
   }
@@ -570,11 +570,11 @@ $(function () {
     const lock_template_options = $("#header_lock_template_options");
     lock_template_options.parent().addClass("disabled");
     lock_template_options.prop("disabled", true);
-    const controls_tab_length = $(".modules.tab_children").length;
+    const controls_tab_length = $(".modules.tab-children").length;
     // 使用切換
     for (let i = 1; i <= controls_tab_length; i++) {
       const modules_type = $(
-        ".modules.tab_content_list > div:nth-child(" + i + ") #modules_type"
+        ".modules.tab-content-list > div:nth-child(" + i + ") #modules_type"
       );
       modules_type.children("option").prop("disabled", false);
       const modules_type_val = modules_type.val();
@@ -619,7 +619,7 @@ $(function () {
     for (let i = 2; i <= len; i++) {
       for (let modules in module_num) {
         const module = $(
-          `.modules.tab_content_list > div:nth-child(${i}) #modules_type option[value=${modules}]`
+          `.modules.tab-content-list > div:nth-child(${i}) #modules_type option[value=${modules}]`
         );
         module.prop("disabled", !useable_module[module_num[modules]]);
       }
@@ -628,14 +628,14 @@ $(function () {
   // イシューチェック
   function checkIssue() {
     // イシュー削除
-    $("ul.issue_list li").remove();
-    $(".stat_warning,.stat_error").removeClass("stat_warning stat_error");
+    $("ul.issue-list li").remove();
+    $(".stat-warning,.stat_error").removeClass("stat-warning stat_error");
     const error_num = checkJSONError();
     const warning_num = checkJSONWarning();
     $("span.issue_warning_num").text("警告:" + warning_num);
     $("span.issue_error_num").text("エラー:" + error_num);
     if (warning_num <= 0 && error_num <= 0) {
-      $("ul.issue_list").append("<li>問題はありません</li>");
+      $("ul.issue-list").append("<li>問題はありません</li>");
     }
   }
   // 警告検査
@@ -678,11 +678,11 @@ $(function () {
       );
       warning_num++;
     }
-    const modules_length = $(".modules.tab_children").length;
+    const modules_length = $(".modules.tab-children").length;
     for (let i = 0; i < modules_length; i++) {
       const child_num = i + 1;
       const modules_description = $(
-        ".modules.tab_content_list > div:nth-child(" +
+        ".modules.tab-content-list > div:nth-child(" +
           child_num +
           ") #modules_description"
       );
@@ -712,16 +712,16 @@ $(function () {
       }
     }
     if (is_metadata_enable) {
-      const metadata_length = $("label.author_name").length;
+      const metadata_length = $("label.author-name").length;
       if (metadata_length) {
         for (let i = 0; i < metadata_length; i++) {
-          const author_name = $("input.metadata_author").eq(i);
-          if (author_name.val() == "") {
+          const authorName = $("input.metadata_author").eq(i);
+          if (authorName.val() == "") {
             // 名前が空です。
             addIssue(
               "warning",
               `[Metadata:author:${i}] 名前が空です。`,
-              author_name
+              authorName
             );
             warning_num++;
           }
@@ -731,7 +731,7 @@ $(function () {
         addIssue(
           "warning",
           "[Metadata:author] 名前が一つもありません。",
-          $("div.add_author")
+          $("div.add-author")
         );
         warning_num++;
       }
@@ -824,11 +824,11 @@ $(function () {
       );
       error_num++;
     }
-    const modules_length = $(".modules.tab_children").length;
+    const modules_length = $(".modules.tab-children").length;
     for (let i = 0; i < modules_length; i++) {
       const child_num = i + 1;
       const modules_type = $(
-        ".modules.tab_content_list > div:nth-child(" +
+        ".modules.tab-content-list > div:nth-child(" +
           child_num +
           ") #modules_type"
       );
@@ -843,7 +843,7 @@ $(function () {
         error_num++;
       }
       const modules_description = $(
-        ".modules.tab_content_list > div:nth-child(" +
+        ".modules.tab-content-list > div:nth-child(" +
           child_num +
           ") #modules_description"
       );
@@ -860,7 +860,7 @@ $(function () {
         error_num++;
       }
       const modules_uuid = $(
-        ".modules.tab_content_list > div:nth-child(" +
+        ".modules.tab-content-list > div:nth-child(" +
           child_num +
           ") #modules_uuid"
       );
@@ -877,11 +877,11 @@ $(function () {
       }
     }
     if (is_dependencies_enable) {
-      const dependencies_length = $(".dependencies.tab_children").length;
+      const dependencies_length = $(".dependencies.tab-children").length;
       for (let i = 0; i < dependencies_length; i++) {
         const child_num = i + 1;
         const dependencies_uuid = $(
-          "div.dependencies.tab_content_list > div:nth-child(" +
+          "div.dependencies.tab-content-list > div:nth-child(" +
             child_num +
             ") #dependencies_uuid"
         );
@@ -899,10 +899,10 @@ $(function () {
       }
     }
     if (is_metadata_enable) {
-      const metadata_length = $("label.author_name").length;
+      const metadata_length = $("label.author-name").length;
       for (let i = 0; i < metadata_length; i++) {
-        const author_name = $("input.metadata_author").eq(i);
-        element_val = author_name.val().replace(/\\\\/g, "");
+        const authorName = $("input.metadata_author").eq(i);
+        element_val = authorName.val().replace(/\\\\/g, "");
         if (element_val.slice(-1) == "\\") {
           //名前の最後の文字がバックスラッシュ
           addIssue(
@@ -910,7 +910,7 @@ $(function () {
             "[Metadata:author:" +
               i +
               '] 最後の文字がバックスラッシュ"\\"です。消去するかエスケープ文字にして再登録してください。',
-            author_name
+            authorName
           );
           error_num++;
         }
@@ -940,11 +940,11 @@ $(function () {
       }
     }
     if (is_subpacks_enable) {
-      const subpacks_length = $(".subpacks.tab_children").length;
+      const subpacks_length = $(".subpacks.tab-children").length;
       for (let i = 0; i < subpacks_length; i++) {
         const child_num = i + 1;
         const tab_content = $(
-          "div.subpacks.tab_content_list > div:nth-child(" + child_num + ")"
+          "div.subpacks.tab-content-list > div:nth-child(" + child_num + ")"
         );
         const subpacks_folder_name = tab_content.find("#subpacks_folder_name");
         if (
@@ -997,7 +997,7 @@ $(function () {
         }),
         $("<p>").text(issue_content)
       );
-      issue_element.addClass("stat_warning");
+      issue_element.addClass("stat-warning");
     } else if (type == "error") {
       content.append(
         $("<img>").attr({
@@ -1010,7 +1010,7 @@ $(function () {
       );
       issue_element.addClass("stat_error");
     }
-    $("ul.issue_list").append(content);
+    $("ul.issue-list").append(content);
   }
   // UUIDチェック
   function isUUID(uuid = "") {
@@ -1107,14 +1107,14 @@ $(function () {
           }
           if (json_data["header"]["modules"][i]["type"] != null) {
             $(
-              ".modules.tab_content_list > div:nth-child(" +
+              ".modules.tab-content-list > div:nth-child(" +
                 child_num +
                 ") #modules_type"
             ).val(json_data["header"]["modules"][i]["type"]);
           }
           if (json_data["header"]["modules"][i]["description"] != null) {
             $(
-              ".modules.tab_content_list > div:nth-child(" +
+              ".modules.tab-content-list > div:nth-child(" +
                 child_num +
                 ") #modules_description"
             ).val(json_data["header"]["modules"][i]["description"]);
@@ -1125,21 +1125,21 @@ $(function () {
             ].split(".");
             if (modules_version[0] != null) {
               $(
-                ".modules.tab_content_list > div:nth-child(" +
+                ".modules.tab-content-list > div:nth-child(" +
                   child_num +
                   ") #modules_version_major"
               ).val(modules_version[0]);
             }
             if (modules_version[1] != null) {
               $(
-                ".modules.tab_content_list > div:nth-child(" +
+                ".modules.tab-content-list > div:nth-child(" +
                   child_num +
                   ") #modules_version_minor"
               ).val(modules_version[1]);
             }
             if (modules_version[2] != null) {
               $(
-                ".modules.tab_content_list > div:nth-child(" +
+                ".modules.tab-content-list > div:nth-child(" +
                   child_num +
                   ") #modules_version_patch"
               ).val(modules_version[2]);
@@ -1147,7 +1147,7 @@ $(function () {
           }
           if (json_data["header"]["modules"][i]["uuid"] != null) {
             $(
-              ".modules.tab_content_list > div:nth-child(" +
+              ".modules.tab-content-list > div:nth-child(" +
                 child_num +
                 ") #modules_uuid"
             ).val(json_data["header"]["modules"][i]["uuid"]);
@@ -1162,7 +1162,7 @@ $(function () {
             addTab("dependencies");
           }
           const tab_content = $(
-            "div.dependencies.tab_content_list > div:nth-child(" +
+            "div.dependencies.tab-content-list > div:nth-child(" +
               child_num +
               ")"
           );
@@ -1272,14 +1272,14 @@ $(function () {
         }
         if (json_data["modules"][i]["type"] != null) {
           $(
-            ".modules.tab_content_list > div:nth-child(" +
+            ".modules.tab-content-list > div:nth-child(" +
               child_num +
               ") #modules_type"
           ).val(json_data["modules"][i]["type"]);
         }
         if (json_data["modules"][i]["description"] != null) {
           $(
-            ".modules.tab_content_list > div:nth-child(" +
+            ".modules.tab-content-list > div:nth-child(" +
               child_num +
               ") #modules_description"
           ).val(json_data["modules"][i]["description"]);
@@ -1287,21 +1287,21 @@ $(function () {
         if (json_data["modules"][i]["version"] != null) {
           if (json_data["modules"][i]["version"][0] != null) {
             $(
-              ".modules.tab_content_list > div:nth-child(" +
+              ".modules.tab-content-list > div:nth-child(" +
                 child_num +
                 ") #modules_version_major"
             ).val(json_data["modules"][i]["version"][0]);
           }
           if (json_data["modules"][i]["version"][1] != null) {
             $(
-              ".modules.tab_content_list > div:nth-child(" +
+              ".modules.tab-content-list > div:nth-child(" +
                 child_num +
                 ") #modules_version_minor"
             ).val(json_data["modules"][i]["version"][1]);
           }
           if (json_data["modules"][i]["version"][2] != null) {
             $(
-              ".modules.tab_content_list > div:nth-child(" +
+              ".modules.tab-content-list > div:nth-child(" +
                 child_num +
                 ") #modules_version_patch"
             ).val(json_data["modules"][i]["version"][2]);
@@ -1309,7 +1309,7 @@ $(function () {
         }
         if (json_data["modules"][i]["uuid"] != null) {
           $(
-            ".modules.tab_content_list > div:nth-child(" +
+            ".modules.tab-content-list > div:nth-child(" +
               child_num +
               ") #modules_uuid"
           ).val(json_data["modules"][i]["uuid"]);
@@ -1324,7 +1324,7 @@ $(function () {
           addTab("dependencies");
         }
         const tab_content = $(
-          "div.dependencies.tab_content_list > div:nth-child(" + child_num + ")"
+          "div.dependencies.tab-content-list > div:nth-child(" + child_num + ")"
         );
         if (json_data["dependencies"][i]["uuid"] != null) {
           tab_content
@@ -1392,7 +1392,7 @@ $(function () {
           addTab("subpacks");
         }
         const tab_content = $(
-          "div.subpacks.tab_content_list > div:nth-child(" + child_num + ")"
+          "div.subpacks.tab-content-list > div:nth-child(" + child_num + ")"
         );
         if (json_data["subpacks"][i]["folder_name"] != null) {
           tab_content
@@ -1440,30 +1440,30 @@ $(function () {
     }
 
     json_raw["modules"] = new Array();
-    const modules_length = $(".modules.tab_children").length;
+    const modules_length = $(".modules.tab-children").length;
     for (let i = 0; i < modules_length; i++) {
       const child_num = i + 1;
       json_raw["modules"][i] = new Object();
       json_raw["modules"][i]["type"] = $(
-        `.modules.tab_content_list > div:nth-child(${child_num}) #modules_type`
+        `.modules.tab-content-list > div:nth-child(${child_num}) #modules_type`
       ).val();
       json_raw["modules"][i][
         "description"
       ] = `replace_modules_${i}_description`;
       json_raw["modules"][i]["version"] = `replace_modules_${i}_version`;
       json_raw["modules"][i]["uuid"] = $(
-        ".modules.tab_content_list > div:nth-child(" +
+        ".modules.tab-content-list > div:nth-child(" +
           child_num +
           ") #modules_uuid"
       ).val();
     }
     if (is_dependencies_enable) {
       json_raw["dependencies"] = new Array();
-      const dependencies_length = $(".dependencies.tab_children").length;
+      const dependencies_length = $(".dependencies.tab-children").length;
       for (let i = 0; i < dependencies_length; i++) {
         const child_num = i + 1;
         const tab_content = $(
-          `div.dependencies.tab_content_list > div:nth-child(${child_num})`
+          `div.dependencies.tab-content-list > div:nth-child(${child_num})`
         );
         json_raw["dependencies"][i] = new Object();
         json_raw["dependencies"][i]["uuid"] = tab_content
@@ -1500,7 +1500,7 @@ $(function () {
       json_raw["metadata"] = new Object();
       if (isValue[0]) {
         json_raw["metadata"]["authors"] = new Array();
-        const metadata_length = $("label.author_name").length;
+        const metadata_length = $("label.author-name").length;
         for (let i = 0; i < metadata_length; i++) {
           json_raw["metadata"]["authors"].push(`replace_${i}_author`);
         }
@@ -1511,12 +1511,12 @@ $(function () {
     }
     if (is_subpacks_enable) {
       json_raw["subpacks"] = new Array();
-      const subpacks_length = $(".subpacks.tab_children").length;
+      const subpacks_length = $(".subpacks.tab-children").length;
       for (let i = 0; i < subpacks_length; i++) {
         const child_num = i + 1;
         json_raw["subpacks"][i] = new Object();
         const tab_content = $(
-          `div.subpacks.tab_content_list > div:nth-child(${child_num})`
+          `div.subpacks.tab-content-list > div:nth-child(${child_num})`
         );
         json_raw["subpacks"][i]["folder_name"] = tab_content
           .find("#subpacks_folder_name")
@@ -1574,28 +1574,28 @@ $(function () {
       );
     }
 
-    for (let i = 0; i < $(".modules.tab_children").length; i++) {
+    for (let i = 0; i < $(".modules.tab-children").length; i++) {
       const child_num = i + 1;
       string_raw = string_raw.replace(
         `replace_modules_${i}_description`,
         $(
-          `.modules.tab_content_list > div:nth-child(${child_num}) #modules_description`
+          `.modules.tab-content-list > div:nth-child(${child_num}) #modules_description`
         ).val()
       );
       const modules_version = JSON.stringify([
         Number(
           $(
-            `.modules.tab_content_list > div:nth-child(${child_num}) #modules_version_major`
+            `.modules.tab-content-list > div:nth-child(${child_num}) #modules_version_major`
           ).val()
         ),
         Number(
           $(
-            `.modules.tab_content_list > div:nth-child(${child_num}) #modules_version_minor`
+            `.modules.tab-content-list > div:nth-child(${child_num}) #modules_version_minor`
           ).val()
         ),
         Number(
           $(
-            `.modules.tab_content_list > div:nth-child(${child_num}) #modules_version_patch`
+            `.modules.tab-content-list > div:nth-child(${child_num}) #modules_version_patch`
           ).val()
         ),
       ])
@@ -1607,11 +1607,11 @@ $(function () {
       );
     }
     if (is_dependencies_enable) {
-      const dependencies_length = $(".dependencies.tab_children").length;
+      const dependencies_length = $(".dependencies.tab-children").length;
       for (let i = 0; i < dependencies_length; i++) {
         const child_num = i + 1;
         const tab_content = $(
-          `div.dependencies.tab_content_list > div:nth-child(${child_num})`
+          `div.dependencies.tab-content-list > div:nth-child(${child_num})`
         );
         const dependencies_version = JSON.stringify([
           Number(tab_content.find("#dependencies_version_major").val()),
@@ -1626,7 +1626,7 @@ $(function () {
         );
       }
     }
-    const metadata_length = $("label.author_name").length;
+    const metadata_length = $("label.author-name").length;
     for (let i = 0; i < metadata_length; i++) {
       string_raw = string_raw.replace(
         `replace_${i}_author`,
@@ -1641,12 +1641,12 @@ $(function () {
       "replace_metadata_license",
       $("#metadata_license").val()
     );
-    const subpacks_length = $(".subpacks.tab_children").length;
+    const subpacks_length = $(".subpacks.tab-children").length;
     for (let i = 0; i < subpacks_length; i++) {
       string_raw = string_raw.replace(
         "replace_subpacks_name",
         $(
-          `div.subpacks.tab_content_list > div:nth-child(${
+          `div.subpacks.tab-content-list > div:nth-child(${
             i + 1
           }) #subpacks_name`
         ).val()

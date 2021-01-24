@@ -13,6 +13,7 @@
 
   --color-list-secondary: var(--color-button-hover);
   --color-input-checkbox: var(--color-header);
+  --color-input-toggle-focus: var(--color-toolbar-hover);
   --color-input-toggle-indeterminate: var(--color-header-hover);
   --color-input-toggle-on: var(--color-header);
 
@@ -62,7 +63,8 @@
 
     --color-list-secondary: #4f4f4f;
     --color-input-checkbox: #e4e4e4;
-    --color-input-toggle-indeterminate: #adadad;
+    --color-input-toggle-focus: #a9a9a9;
+    --color-input-toggle-indeterminate: #c5c2c2;
     --color-input-toggle-on: #fff;
 
     --color-text: #f5f5f5;

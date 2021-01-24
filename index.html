@@ -56,24 +56,24 @@
 
   <body>
     <header class="header">
-      <div class="header_main">
-        <div class="title_icon">
+      <div class="header-main">
+        <div class="title-icon">
           <img src="/img/icon.svg" alt="" height="32px" width="32px">
         </div>
         <div class="title">
           <h1>とかさんの Manifest Generator</h1>
           <p>version:1.5.0_dev</p>
         </div>
-        <div class="header_menu">
-          <div class="header-menu-element import_file">
-            <label for="input_file">Import</label>
-            <div class="help_content top" id="help_content_1">
+        <div class="header-menu">
+          <div class="header-menu-element import-file">
+            <label for="input-file">Import</label>
+            <div class="help-content top" id="help-content-1">
               <p>すでファイルがある場合はデータをインポートします。</p>
             </div>
           </div>
-          <div class="header-menu-element" id="show_preview">
+          <div class="header-menu-element" id="show-preview">
             <span>Preview</span>
-            <div class="help_content top" id="help_content_3">
+            <div class="help-content top" id="help-content-3">
               <p>
                 入力・編集したデータの実際の表示、json閲覧とダウンロード・コピーをします。
               </p>
@@ -83,18 +83,18 @@
             <p id="show_help">help</p>
           </div>
           <div class="header-menu-element">
-            <label for="open_about">About</label>
+            <label for="open-about">About</label>
           </div>
         </div>
-        <div class="header_menu_alt">
-          <input type="file" name="input_file" id="input_file" accept=".json" class="invisible-Control" />
-          <label for="input_file" class="import_file">
+        <div class="header-menu-alt">
+          <input type="file" name="input-file" id="input-file" accept=".json" class="invisible-Control" />
+          <label for="input-file" class="import-file">
             <img src="img/import.svg" alt="import" width="32px" height="32px" />
             <p>Import</p>
           </label>
-          <details class="open_more_info">
-            <summary class="more_info_icon"><img src="img/more.svg" alt="more" width="32px" height="32px" /></summary>
-            <ul class="more_info">
+          <details class="open-more-info">
+            <summary class="more-info-icon"><img src="img/more.svg" alt="more" width="32px" height="32px" /></summary>
+            <ul class="more-info">
               <li>
                 <a href="https://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener noreferrer"><img src="img/homepage.svg" alt="" width="32px" height="32px" />
                   <p>Homepage</p>
@@ -121,8 +121,8 @@
                 </a>
               </li>
               <li>
-                <input type="button" id="open_about" class="invisible-Control">
-                <label class="open_about" for="open_about">
+                <input type="button" id="open-about" class="invisible-Control">
+                <label class="open-about" for="open-about">
                   <img src="/img/icon.svg" alt="" height="32px" width="32px">
                   <p>about</p>
                 </label>
@@ -131,23 +131,23 @@
           </details>
         </div>
       </div>
-      <div id="page_help"></div>
-      <div class="page_about about_hide">
-        <div class="about_area">
-          <div class="close_about">
-            <input type="button" id="close_about_btn" class="invisible-Control">
-            <label for="close_about_btn">
-              <img src="img/close.svg" alt="" id="close_about_image" width="50px" height="50px" />
+      <div id="page-help"></div>
+      <div class="page-about about-hide">
+        <div class="about-area">
+          <div class="close-about">
+            <input type="button" id="close-about-btn" class="invisible-Control">
+            <label for="close-about-btn">
+              <img src="img/close.svg" alt="" id="close-about_image" width="50px" height="50px" />
             </label>
           </div>
-          <div class="about_content">
+          <div class="about-content">
             <img src="/img/icon.svg" alt="" width="180px" height="180px">
-            <div class="about_title">
+            <div class="about-title">
               <h2>とかさんの Manifest Generator</h2>
               <p>version:1.5.0_dev</p>
             </div>
-            <div id="page_share"><img src="img/share.svg" alt="" width="32px" height="32px" /></div>
-            <div class="about_external_link">
+            <div id="page-share"><img src="img/share.svg" alt="" width="32px" height="32px" /></div>
+            <div class="about-external-link">
               <a href="https://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener noreferrer"><img src="img/homepage.svg" alt="" width="32px" height="32px" /></a>
               <a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener noreferrer"><img src="img/twitter.svg" alt="" width="32px" height="32px" /></a>
               <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener noreferrer"><img src="img/github.svg" alt="" width="32px" height="32px" /></a>
@@ -162,12 +162,12 @@
         </div>
       </div>
     </header>
-    <div class="help_content bottom" id="help_content_2">
+    <div class="help-content bottom" id="help-content_2">
       <p>データを編集します</p>
       <p>エラー等は下にある[問題]タブから見ることができます。</p>
     </div>
-    <div class="file_drop_zone hide">
-      <div class="file_drop_zone_textarea">
+    <div class="file-drop-zone hide">
+      <div class="file-drop-zone-textarea">
         <img src="img/import.svg" alt="import" width="50px" height="50px">
         <p>ファイルをドロップして&NewLine;インポートします。</p>
       </div>
@@ -175,15 +175,15 @@
     <div class="content">
       <div class="editor">
         <form name="editor_manifest">
-          <div class="editor_element">
-            <div class="editor_element_legend">
+          <div class="editor-element">
+            <div class="editor-element-legend">
               <p>Definition</p>
             </div>
-            <div class="value_element" title="このmanifest.jsonのフォーマットバージョンを設定します。">
-              <div class="value_label">
+            <div class="value-element" title="このmanifest.jsonのフォーマットバージョンを設定します。">
+              <div class="value-label">
                 <label for="format_version">フォーマットバージョン</label>
               </div>
-              <div class="value_input">
+              <div class="value-input">
                 <select name="format_version" id="format_version">
                   <option value="2">2</option>
                   <option value="1">1</option>
@@ -191,31 +191,31 @@
               </div>
             </div>
           </div>
-          <div class="editor_element">
-            <div class="editor_element_legend">
+          <div class="editor-element">
+            <div class="editor-element-legend">
               <p>Header</p>
             </div>
-            <div class="value_element" title="このパックの名前を設定します。">
-              <div class="value_label">
+            <div class="value-element" title="このパックの名前を設定します。">
+              <div class="value-label">
                 <label for="header_pack_name">名前</label>
               </div>
-              <div class="value_input">
+              <div class="value-input">
                 <input type="text" name="pack_name" id="header_pack_name" />
               </div>
             </div>
-            <div class="value_element" title="このパックの説明を設定します。">
-              <div class="value_label">
+            <div class="value-element" title="このパックの説明を設定します。">
+              <div class="value-label">
                 <label for="header_description">説明</label>
               </div>
-              <div class="value_input">
+              <div class="value-input">
                 <textarea type="text" name="description" id="header_description"></textarea>
               </div>
             </div>
-            <div class="value_element" title="このパックのバージョンを示します。">
-              <div class="value_label">
+            <div class="value-element" title="このパックのバージョンを示します。">
+              <div class="value-label">
                 <label for="header_version_major">バージョン</label>
               </div>
-              <div class="value_input type_version">
+              <div class="value-input type-version">
                 <label><input type="number" min="0" name="" id="header_version_major" value="1" /></label>
                 <span>.</span>
                 <label><input type="number" min="0" name="" id="header_version_minor" value="0" /></label>
@@ -223,11 +223,11 @@
                 <label><input type="number" min="0" name="" id="header_version_patch" value="0" /></label>
               </div>
             </div>
-            <div class="value_element" title="このパックが動作するMinecraftの最小バージョン(このパックの作成バージョン)を設定します。">
-              <div class="value_label">
+            <div class="value-element" title="このパックが動作するMinecraftの最小バージョン(このパックの作成バージョン)を設定します。">
+              <div class="value-label">
                 <label id="min_engine_version" for="header_min_engine_version_major">最小エンジンバージョン</label>
               </div>
-              <div class="value_input type_version" id="min_engine_version_input">
+              <div class="value-input type-version" id="min_engine_version_input">
                 <label><input type="number" min="0" name="" id="header_min_engine_version_major" value="1" /></label>
                 <span>.</span>
                 <label><input type="number" min="0" name="" id="header_min_engine_version_minor" value="13" /></label>
@@ -235,35 +235,35 @@
                 <label><input type="number" min="0" name="" id="header_min_engine_version_patch" value="0" /></label>
               </div>
             </div>
-            <div class="value_element" title="このパックのUUIDを設定します。">
-              <div class="value_label">
+            <div class="value-element" title="このパックのUUIDを設定します。">
+              <div class="value-label">
                 <label for="header_uuid">UUID</label>
               </div>
-              <div class="value_input type_uuid">
+              <div class="value-input type-uuid">
                 <label><input type="text" name="uuid" id="header_uuid" /></label>
                 <label>
                   <input type="button" value="Generate" class="generate_uuid" id="header_uuid_generate" />
                 </label>
               </div>
             </div>
-            <div class="value_element" title="このパックをマルチプラットフォーム環境で使用できないようにします。">
-              <div class="value_checkbox">
+            <div class="value-element" title="このパックをマルチプラットフォーム環境で使用できないようにします。">
+              <div class="value-checkbox">
                 <input type="checkbox" name="header_platform_locked" id="header_platform_locked" class="invisible-Control" />
-                <label for="header_platform_locked" class="checkbox_body">
-                  <div class="checkbox_body_box">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox_body_checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <label for="header_platform_locked" class="checkbox-body">
+                  <div class="checkbox-body-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox-body-checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                   </div>
-                  <p class="checkbox_body_text">プラットフォームロック</p>
+                  <p class="checkbox-body-text">プラットフォームロック</p>
                 </label>
               </div>
             </div>
-            <div class="value_element" title="このパックワールドの作成されたバージョンを設定します。">
-              <div class="value_label">
+            <div class="value-element" title="このパックワールドの作成されたバージョンを設定します。">
+              <div class="value-label">
                 <label id="base_game_version" for="header_base_game_version_major">基本ゲームバージョン</label>
               </div>
-              <div class="value_input type_version" id="base_game_version_input">
+              <div class="value-input type-version" id="base_game_version_input">
                 <label><input type="number" min="0" name="" id="header_base_game_version_major" value="1" disabled /></label>
                 <span>.</span>
                 <label><input type="number" min="0" name="" id="header_base_game_version_minor" value="13" disabled /></label>
@@ -271,52 +271,52 @@
                 <label><input type="number" min="0" name="" id="header_base_game_version_patch" value="0" disabled /></label>
               </div>
             </div>
-            <div class="value_element" title="ワールドテンプレートの導入時、ワールド設定をロックします。">
-              <div class="value_checkbox">
+            <div class="value-element" title="ワールドテンプレートの導入時、ワールド設定をロックします。">
+              <div class="value-checkbox">
                 <input type="checkbox" name="header_lock_template_options" id="header_lock_template_options" class="invisible-Control" disabled />
-                <label for="header_lock_template_options" class="checkbox_body">
-                  <div class="checkbox_body_box">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox_body_checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <label for="header_lock_template_options" class="checkbox-body">
+                  <div class="checkbox-body-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox-body-checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                   </div>
-                  <p class="checkbox_body_text">テンプレートオプションロック</p>
+                  <p class="checkbox-body-text">テンプレートオプションロック</p>
                 </label>
               </div>
             </div>
           </div>
-          <div class="editor_element" title="このマニフェストを含むパックがどのモジュールを使用するか設定します。">
-            <div class="editor_element_legend">
+          <div class="editor-element" title="このマニフェストを含むパックがどのモジュールを使用するか設定します。">
+            <div class="editor-element-legend">
               <p>Modules</p>
             </div>
-            <div class="modules tab_controls">
-              <div class="modules tab_body">
-                <label class="modules tab_children invisible-Control selected">
+            <div class="modules tab-controls">
+              <div class="modules tab-body">
+                <label class="modules tab-children invisible-Control selected">
                   <input type="button" class="modules">
-                  <div class="tab_number">0</div>
-                  <div class="tab_underBar"></div>
+                  <div class="tab-number">0</div>
+                  <div class="tab-underBar"></div>
                 </label>
               </div>
-              <div class="modules add_tab disabled">
+              <div class="modules add-tab disabled">
                 <label class="invisible-Control">
                   <input type="button" id="modules_add" class="modules" disabled>
-                  <div class="add_tab_text">+ 追加</div>
+                  <div class="add-tab-text">+ 追加</div>
                 </label>
               </div>
-              <div class="modules remove_tab disabled">
+              <div class="modules remove-tab disabled">
                 <label class="invisible-Control">
                   <input type="button" id="modules-delete" class="modules" disabled>
-                  <div class="remove_tab_text">- 削除</div>
+                  <div class="remove-tab-text">- 削除</div>
                 </label>
               </div>
             </div>
-            <div class="modules tab_content_list">
-              <div class="selected_tab_content">
-                <div class="value_element" title="このモジュールのタイプを設定します。">
-                  <div class="value_label">
+            <div class="modules tab-content-list">
+              <div class="selected-tab-content">
+                <div class="value-element" title="このモジュールのタイプを設定します。">
+                  <div class="value-label">
                     <label for="modules_type">タイプ</label>
                   </div>
-                  <div class="value_input">
+                  <div class="value-input">
                     <select name="modules_type" id="modules_type" required>
                       <option value="resources">resources</option>
                       <option value="data">data</option>
@@ -326,19 +326,19 @@
                     </select>
                   </div>
                 </div>
-                <div class="value_element" title="このモジュールの説明を設定します。">
-                  <div class="value_label">
+                <div class="value-element" title="このモジュールの説明を設定します。">
+                  <div class="value-label">
                     <label for="modules_description">説明</label>
                   </div>
-                  <div class="value_input">
+                  <div class="value-input">
                     <textarea type="text" name="description" id="modules_description"></textarea>
                   </div>
                 </div>
-                <div class="value_element" title="このモジュールのバージョンを設定します。">
-                  <div class="value_label">
+                <div class="value-element" title="このモジュールのバージョンを設定します。">
+                  <div class="value-label">
                     <label for="modules_version_major">バージョン</label>
                   </div>
-                  <div class="value_input type_version">
+                  <div class="value-input type-version">
                     <label><input type="number" min="0" name="" id="modules_version_major" value="1" /></label>
                     <span>.</span>
                     <label><input type="number" min="0" name="" id="modules_version_minor" value="0" /></label>
@@ -346,11 +346,11 @@
                     <label><input type="number" min="0" name="" id="modules_version_patch" value="0" /></label>
                   </div>
                 </div>
-                <div class="value_element" title="このモジュールのUUIDを設定します。">
-                  <div class="value_label">
+                <div class="value-element" title="このモジュールのUUIDを設定します。">
+                  <div class="value-label">
                     <label for="modules_uuid">UUID</label>
                   </div>
-                  <div class="value_input type_uuid">
+                  <div class="value-input type-uuid">
                     <label><input type="text" name="uuid" id="modules_uuid" /></label>
                     <label><input type="button" value="Generate" class="generate_uuid" /></label>
                   </div>
@@ -358,54 +358,54 @@
               </div>
             </div>
           </div>
-          <div class="editor_element" title="依存関係を設定します。">
-            <div class="editor_element_legend toggle">
+          <div class="editor-element" title="依存関係を設定します。">
+            <div class="editor-element-legend toggle">
               <input type="checkbox" name="dependencies" id="dependencies_enable" class="invisible-Control" />
-              <label for="dependencies_enable" class="toggle_body">
-                <p class="toggle_body_text">Dependencies</p>
-                <div class="toggle_body_box">
-                  <div class="toggle_body_padding"></div>
-                  <div class="toggle_body_thumb"></div>
+              <label for="dependencies_enable" class="toggle-body">
+                <p class="toggle-body-text">Dependencies</p>
+                <div class="toggle-body-box">
+                  <div class="toggle-body-padding"></div>
+                  <div class="toggle-body-thumb"></div>
                 </div>
               </label>
             </div>
             <div class="dependencies tab_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
-              <div class="dependencies tab_controls">
-                <div class="dependencies tab_body">
-                  <label class="dependencies tab_children invisible-Control selected">
+              <div class="dependencies tab-controls">
+                <div class="dependencies tab-body">
+                  <label class="dependencies tab-children invisible-Control selected">
                     <input type="button" class="dependencies">
-                    <div class="tab_number">0</div>
-                    <div class="tab_underBar"></div>
+                    <div class="tab-number">0</div>
+                    <div class="tab-underBar"></div>
                   </label>
                 </div>
-                <div class="dependencies add_tab disabled">
+                <div class="dependencies add-tab disabled">
                   <label class="invisible-Control">
                     <input type="button" id="dependencies_add" class="dependencies" disabled>
-                    <div class="add_tab_text">+ 追加</div>
+                    <div class="add-tab-text">+ 追加</div>
                   </label>
                 </div>
-                <div class="dependencies remove_tab disabled">
+                <div class="dependencies remove-tab disabled">
                   <label class="invisible-Control">
                     <input type="button" id="dependencies-delete" class="dependencies" disabled>
-                    <div class="remove_tab_text">- 削除</div>
+                    <div class="remove-tab-text">- 削除</div>
                   </label>
                 </div>
               </div>
-              <div class="dependencies tab_content_list">
-                <div class="selected_tab_content">
-                  <div class="value_element" title="依存関係にあるパックのUUIDを設定します。">
-                    <div class="value_label">
+              <div class="dependencies tab-content-list">
+                <div class="selected-tab-content">
+                  <div class="value-element" title="依存関係にあるパックのUUIDを設定します。">
+                    <div class="value-label">
                       <label for="dependencies_uuid">UUID</label>
                     </div>
-                    <div class="value_input">
+                    <div class="value-input">
                       <input type="text" name="uuid" id="dependencies_uuid" disabled />
                     </div>
                   </div>
-                  <div class="value_element" title="依存関係にあるパックのバージョンを設定します。">
-                    <div class="value_label">
+                  <div class="value-element" title="依存関係にあるパックのバージョンを設定します。">
+                    <div class="value-label">
                       <label for="dependencies_version_major">バージョン</label>
                     </div>
-                    <div class="value_input type_version">
+                    <div class="value-input type-version">
                       <label><input type="number" min="0" name="" id="dependencies_version_major" value="1" disabled /></label>
                       <span>.</span>
                       <label><input type="number" min="0" name="" id="dependencies_version_minor" value="0" disabled /></label>
@@ -417,178 +417,178 @@
               </div>
             </div>
           </div>
-          <div class="editor_element" title="特殊な機能を有効にする場合に使用します。">
-            <div class="editor_element_legend toggle">
+          <div class="editor-element" title="特殊な機能を有効にする場合に使用します。">
+            <div class="editor-element-legend toggle">
               <div>
                 <input type="checkbox" name="capabilities" id="capabilities_enable" class="invisible-Control" />
-                <label for="capabilities_enable" class="toggle_body">
-                  <p class="toggle_body_text">Capabilities</p>
-                  <div class="toggle_body_box">
-                    <div class="toggle_body_padding"></div>
-                    <div class="toggle_body_thumb"></div>
+                <label for="capabilities_enable" class="toggle-body">
+                  <p class="toggle-body-text">Capabilities</p>
+                  <div class="toggle-body-box">
+                    <div class="toggle-body-padding"></div>
+                    <div class="toggle-body-thumb"></div>
                   </div>
                 </label>
               </div>
             </div>
             <div class="capabilities_list" title="このパックで追加の機能を有効にします。">
-              <div class="value_element" title="カスタムUI機能を有効化します。">
-                <div class="value_checkbox">
+              <div class="value-element" title="カスタムUI機能を有効化します。">
+                <div class="value-checkbox">
                   <input type="checkbox" name="experimental_custom_ui" id="experimental_custom_ui" class="invisible-Control" disabled />
-                  <label for="experimental_custom_ui" class="checkbox_body">
-                    <div class="checkbox_body_box">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox_body_checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <label for="experimental_custom_ui" class="checkbox-body">
+                    <div class="checkbox-body-box">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox-body-checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="20 6 9 17 4 12"></polyline>
                       </svg>
                     </div>
-                    <p class="checkbox_body_text">experimental_<wbr>custom_ui</p>
+                    <p class="checkbox-body-text">experimental_<wbr>custom_ui</p>
                   </label>
                 </div>
               </div>
-              <div class="value_element" title="Education Chemistry の機能に追加、変更できるようにします。">
-                <div class="value_checkbox">
+              <div class="value-element" title="Education Chemistry の機能に追加、変更できるようにします。">
+                <div class="value-checkbox">
                   <input type="checkbox" name="chemistry" id="chemistry" class="invisible-Control" disabled />
-                  <label for="chemistry" class="checkbox_body">
-                    <div class="checkbox_body_box">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox_body_checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <label for="chemistry" class="checkbox-body">
+                    <div class="checkbox-body-box">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox-body-checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="20 6 9 17 4 12"></polyline>
                       </svg>
                     </div>
-                    <p class="checkbox_body_text">chemistry</p>
+                    <p class="checkbox-body-text">chemistry</p>
                   </label>
                 </div>
               </div>
-              <div class="value_element" title="レイトレーシングの機能をパックで使えるようにします。(1.15.x以上)">
-                <div class="value_checkbox">
+              <div class="value-element" title="レイトレーシングの機能をパックで使えるようにします。(1.15.x以上)">
+                <div class="value-checkbox">
                   <input type="checkbox" name="raytracing" id="raytracing" class="invisible-Control" disabled />
-                  <label for="raytracing" class="checkbox_body">
-                    <div class="checkbox_body_box">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox_body_checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <label for="raytracing" class="checkbox-body">
+                    <div class="checkbox-body-box">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox-body-checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="20 6 9 17 4 12"></polyline>
                       </svg>
                     </div>
-                    <p class="checkbox_body_text">raytracing</p>
+                    <p class="checkbox-body-text">raytracing</p>
                   </label>
                 </div>
               </div>
             </div>
           </div>
-          <div class="editor_element" title="製作者に関する情報を記載します。ゲームプレイへの影響はありません。">
-            <div class="editor_element_legend toggle">
+          <div class="editor-element" title="製作者に関する情報を記載します。ゲームプレイへの影響はありません。">
+            <div class="editor-element-legend toggle">
               <div>
                 <input type="checkbox" name="metadata" id="metadata_enable" class="invisible-Control" />
-                <label for="metadata_enable" class="toggle_body">
-                  <p class="toggle_body_text">Metadata</p>
-                  <div class="toggle_body_box">
-                    <div class="toggle_body_padding"></div>
-                    <div class="toggle_body_thumb"></div>
+                <label for="metadata_enable" class="toggle-body">
+                  <p class="toggle-body-text">Metadata</p>
+                  <div class="toggle-body-box">
+                    <div class="toggle-body-padding"></div>
+                    <div class="toggle-body-thumb"></div>
                   </div>
                 </label>
               </div>
             </div>
             <div class="metadata_list">
-              <div class="value_element" title="このパックの作者を設定します。">
-                <div class="value_label">
+              <div class="value-element" title="このパックの作者を設定します。">
+                <div class="value-label">
                   <label for="metadata_author">作者</label>
                 </div>
-                <div class="value_input type_authors">
-                  <div class="authors_list">
-                    <label class="author_name">
-                      <div class="author_num">0</div>
+                <div class="value-input type_authors">
+                  <div class="authors-list">
+                    <label class="author-name">
+                      <div class="author-num">0</div>
                       <input type="text" class="metadata_author" disabled />
                     </label>
                   </div>
-                  <div class="authors_list_control">
-                    <div class="add_author">
-                      <input type="button" id="author_add" class="invisible-Control" disabled>
-                      <label for="author_add">
-                        <div class="add_author_text">+ 作者を追加</div>
+                  <div class="authors-list-control">
+                    <div class="add-author">
+                      <input type="button" id="author-add" class="invisible-Control" disabled>
+                      <label for="author-add">
+                        <div class="add-author-text">+ 作者を追加</div>
                       </label>
                     </div>
-                    <div class="remove_author">
+                    <div class="remove-author">
                       <input type="button" id="author-delete" class="invisible-Control" disabled>
                       <label for="author-delete">
-                        <div class="remove_author_text">- 作者を削除</div>
+                        <div class="remove-author-text">- 作者を削除</div>
                       </label>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="value_element" title="このパックのホームページURLを設定します。">
-                <div class="value_label">
+              <div class="value-element" title="このパックのホームページURLを設定します。">
+                <div class="value-label">
                   <label for="metadata_url">URL</label>
                 </div>
-                <div class="value_input">
+                <div class="value-input">
                   <input type="url" name="metadata_url" id="metadata_url" disabled />
                 </div>
               </div>
-              <div class="value_element" title="このパックのライセンスを設定します。">
-                <div class="value_label">
+              <div class="value-element" title="このパックのライセンスを設定します。">
+                <div class="value-label">
                   <label for="metadata_license">ライセンス</label>
                 </div>
-                <div class="value_input">
+                <div class="value-input">
                   <input type="text" name="metadata_license" id="metadata_license" disabled />
                 </div>
               </div>
             </div>
           </div>
-          <div class="editor_element" title="サブパック機能の設定を行います。">
-            <div class="editor_element_legend toggle">
+          <div class="editor-element" title="サブパック機能の設定を行います。">
+            <div class="editor-element-legend toggle">
               <div>
                 <input type="checkbox" name="subpacks" id="subpacks_enable" class="invisible-Control" />
-                <label for="subpacks_enable" class="toggle_body">
-                  <p class="toggle_body_text">Subpacks</p>
-                  <div class="toggle_body_box">
-                    <div class="toggle_body_padding"></div>
-                    <div class="toggle_body_thumb"></div>
+                <label for="subpacks_enable" class="toggle-body">
+                  <p class="toggle-body-text">Subpacks</p>
+                  <div class="toggle-body-box">
+                    <div class="toggle-body-padding"></div>
+                    <div class="toggle-body-thumb"></div>
                   </div>
                 </label>
               </div>
             </div>
             <div class="subpacks tab_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
-              <div class="subpacks tab_controls">
-                <div class="subpacks tab_body">
-                  <label class="subpacks tab_children invisible-Control selected">
+              <div class="subpacks tab-controls">
+                <div class="subpacks tab-body">
+                  <label class="subpacks tab-children invisible-Control selected">
                     <input type="button" class="subpacks">
-                    <div class="tab_number">0</div>
-                    <div class="tab_underBar"></div>
+                    <div class="tab-number">0</div>
+                    <div class="tab-underBar"></div>
                   </label>
                 </div>
-                <div class="subpacks add_tab disabled">
+                <div class="subpacks add-tab disabled">
                   <label class="invisible-Control">
                     <input type="button" id="subpacks_add" class="subpacks" disabled>
-                    <div class="add_tab_text">+ 追加</div>
+                    <div class="add-tab-text">+ 追加</div>
                   </label>
                 </div>
-                <div class="subpacks remove_tab disabled">
+                <div class="subpacks remove-tab disabled">
                   <label class="invisible-Control">
                     <input type="button" id="subpacks-delete" class="subpacks" disabled>
-                    <div class="remove_tab_text">- 削除</div>
+                    <div class="remove-tab-text">- 削除</div>
                   </label>
                 </div>
               </div>
-              <div class="subpacks tab_content_list">
-                <div class="selected_tab_content">
-                  <div class="value_element" title="サブパックのフォルダー名を指定します。">
-                    <div class="value_label">
+              <div class="subpacks tab-content-list">
+                <div class="selected-tab-content">
+                  <div class="value-element" title="サブパックのフォルダー名を指定します。">
+                    <div class="value-label">
                       <label for="subpacks_folder_name">フォルダー名</label>
                     </div>
-                    <div class="value_input">
+                    <div class="value-input">
                       <input type="text" name="uuid" id="subpacks_folder_name" disabled />
                     </div>
                   </div>
-                  <div class="value_element" title="サブパックの実際に表示される名前を設定します。">
-                    <div class="value_label">
+                  <div class="value-element" title="サブパックの実際に表示される名前を設定します。">
+                    <div class="value-label">
                       <label for="subpacks_name">名前</label>
                     </div>
-                    <div class="value_input">
+                    <div class="value-input">
                       <input type="text" name="uuid" id="subpacks_name" disabled />
                     </div>
                   </div>
-                  <div class="value_element" title="このサブパックのメモリ使用量">
-                    <div class="value_label">
+                  <div class="value-element" title="このサブパックのメモリ使用量">
+                    <div class="value-label">
                       <label for="subpacks_memory_tier">メモリティア</label>
                     </div>
-                    <div class="value_input">
+                    <div class="value-input">
                       <input type="number" min="0" name="subpacks_memory_tier" id="subpacks_memory_tier" value="0" disabled />
                     </div>
                   </div>
@@ -599,62 +599,64 @@
         </form>
       </div>
       <div class="separator"></div>
-      <div class="data_check">
+      <div class="data-check">
         <div class="preview">
-          <div class="preview_control_bar">
-            <div class="preview_control_child">
+          <div class="preview-control-bar">
+            <div class="preview-control-child">
               <input type="button" id="control_copy" class="invisible-Control">
-              <label for="control_copy" class="control_text">
+              <label for="control_copy" class="control-text">
                 <p id="control_copy_text">Copy</p>
               </label>
             </div>
-            <div class="preview_control_child">
+            <div class="preview-control-child">
               <input type="button" id="control_download" class="invisible-Control">
-              <label for="control_download" class="control_text">
+              <label for="control_download" class="control-text">
                 <p>Download</p>
               </label>
             </div>
           </div>
           <div class="display_preview">
-            <div class="display_preview_card">
-              <div class="card_icon">
+            <div class="display-preview-card">
+              <div class="card-icon">
                 <img src="/img/icon.svg" alt="" width="64px" height="64px">
               </div>
-              <div class="card_text">
-                <p id="card_title"></p>
-                <p id="card_description"></p>
+              <div class="card-text">
+                <p id="card-title"></p>
+                <p id="card-description"></p>
               </div>
             </div>
           </div>
-          <div class="code_preview">
+          <div class="code-preview">
             <pre class="language-json">
               <code class="language-json"></code>
             </pre>
             <label>
-              <textarea name="code_buffer" id="code_buffer" tabindex="-1"></textarea>
+              <textarea name="code-buffer" id="code-buffer" tabindex="-1"></textarea>
             </label>
           </div>
         </div>
         <div class="issue">
-          <input type="checkbox" name="issue_control" id="issue_control" class="invisible-Control">
-          <label for="issue_control" class="issue_status_bar">
-            <div class="issue_status_label">
-              <img src="img/chevron-up.svg" alt="img" class="close" width="24px" height="24px" />
+          <input type="checkbox" name="issue-control" id="issue-control" class="invisible-Control">
+          <label for="issue-control" class="issue-status-bar">
+            <div class="issue-status-label">
+              <svg xmlns="http://www.w3.org/2000/svg" class="close" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 15l-6-6-6 6" />
+              </svg>
               <span>問題</span>
             </div>
-            <div class="issue_status_num">
-              <div class="issue_status_warning">
+            <div class="issue-status-num">
+              <div class="issue-status-warning">
                 <img src="img/warning.svg" alt="" width="19px" height="19px" />
                 <span class="issue_warning_num">警告:0</span>
               </div>
-              <div class="issue_status_error">
+              <div class="issue-status-error">
                 <img src="img/error.svg" alt="" width="19px" height="19px" />
                 <span class="issue_error_num">エラー:0</span>
               </div>
             </div>
           </label>
           <div class="issue_content" style="display: none;">
-            <ul class="issue_list"></ul>
+            <ul class="issue-list"></ul>
           </div>
         </div>
       </div>

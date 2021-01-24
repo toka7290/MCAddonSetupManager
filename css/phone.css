@@ -1,10 +1,10 @@
-.value_element {
+.value-element {
   grid-template-columns: 1fr;
 }
-.value_checkbox {
+.value-checkbox {
   grid-column: 1;
 }
-.value_input.type_uuid {
+.value-input.type-uuid {
   grid-template-columns: 1fr;
 }
 @media (max-width: 41rem) {
@@ -12,26 +12,26 @@
     /* ヘッダー */
     display: none;
   }
-  .title_icon {
+  .title-icon {
     display: block;
   }
-  div.header_menu_alt {
+  div.header-menu-alt {
     display: none;
   }
-  div.header_menu {
+  div.header-menu {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
   }
-  div.import_file {
+  div.import-file {
     display: inline-block;
     padding: 0.5rem;
     position: relative;
   }
-  div.import_file label {
+  div.import-file label {
     margin: 0;
   }
-  div.import_file input {
+  div.import-file input {
     display: none;
   }
   .header-menu-element {
@@ -49,13 +49,13 @@
   .header-menu-element > p {
     margin: 0;
   }
-  div#show_preview {
+  div#show-preview {
     position: relative;
   }
-  div#show_preview.active {
+  div#show-preview.active {
     background-color: var(--color-header-hover);
   }
-  div#page_share {
+  div#page-share {
     display: block;
   }
   div.content {
@@ -65,14 +65,14 @@
     position: relative;
     overflow-y: hidden;
   }
-  div.value_input > input {
+  div.value-input > input {
     /* エディタ */
     width: auto;
     max-width: inherit;
     min-width: 0;
   }
-  div.value_input.type_uuid input,
-  div.author_adder input {
+  div.value-input.type-uuid input,
+  div.author-adder input {
     width: auto;
     max-width: inherit;
     min-width: 0;
@@ -81,7 +81,7 @@
     min-width: 0;
     width: auto;
   }
-  div.data_check {
+  div.data-check {
     /* データチェック */
     overflow-y: unset;
     height: auto;
