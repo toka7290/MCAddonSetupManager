@@ -439,14 +439,15 @@ $(function () {
     updateDisplayPreview();
     Prism.highlightAll();
   }
-  //
+  // コントロールの状態を設定
   function setControls(module = [0, 0]) {
     setTabControls(".modules", [true, ...module]);
     [".dependencies", ".subpacks"].forEach((className, num) => {
       setTabControls(className, [
         [is_dependencies_enable, is_subpacks_enable][num],
         [is_dependencies_enable, is_subpacks_enable][num],
-        $(className + ".tab_children").length > 1,
+        [is_dependencies_enable, is_subpacks_enable][num] &&
+          $(className + ".tab_children").length > 1,
       ]);
     });
     // authors

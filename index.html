@@ -20,7 +20,7 @@
     <meta name="twitter:site" content="@toka7290" />
     <meta name="google-site-verification" content="Gvi-XrJEZRsxJgsNLv5NOddbD6COJo804pUgyPvpi34" />
     <!-- css -->
-    <link rel="preload" href="css/style.min.css" as="style">
+    <!-- <link rel="preload" href="css/style.min.css" as="style"> -->
     <link rel="stylesheet" href="css/color.min.css" async />
     <link rel="stylesheet" href="css/style.min.css" async />
     <link rel="stylesheet" href="css/prism.min.css" async defer />
@@ -57,19 +57,21 @@
   <body>
     <header class="header">
       <div class="header_main">
-        <img src="/img/icon.svg" alt="" height="32px" width="32px" class="title_icon">
+        <div class="title_icon">
+          <img src="/img/icon.svg" alt="" height="32px" width="32px">
+        </div>
         <div class="title">
           <h1>とかさんの Manifest Generator</h1>
           <p>version:1.5.0_dev</p>
         </div>
         <div class="header_menu">
-          <div class="import_file">
+          <div class="header-menu-element import_file">
             <label for="input_file">Import</label>
             <div class="help_content top" id="help_content_1">
               <p>すでファイルがある場合はデータをインポートします。</p>
             </div>
           </div>
-          <div id="show_preview">
+          <div class="header-menu-element" id="show_preview">
             <span>Preview</span>
             <div class="help_content top" id="help_content_3">
               <p>
@@ -77,8 +79,12 @@
               </p>
             </div>
           </div>
-          <p id="show_help">help</p>
-          <p class="open_about">About</p>
+          <div class="header-menu-element">
+            <p id="show_help">help</p>
+          </div>
+          <div class="header-menu-element">
+            <label for="open_about">About</label>
+          </div>
         </div>
         <div class="header_menu_alt">
           <input type="file" name="input_file" id="input_file" accept=".json" class="invisible-Control" />
@@ -653,6 +659,10 @@
         </div>
       </div>
     </div>
+    <div class="unsupported">
+      <p>ご利用のブラウザ(Internet Explorer)では利用できません。</p>
+      <p><a href="microsoft-edge:https://toka7290.github.io/MCAddonSetupManager/" target="_blank" rel="noopener noreferrer">Edge</a>,Chrome,Firefox,Safariをご利用ください</p>
+    </div>
     <!-- sw -->
     <script>
       if ("serviceWorker" in navigator) {
@@ -693,7 +703,7 @@
     <script src="lib/prism.js" defer></script>
     <script src="lib/minecraft_text.min.js" defer></script>
     <!-- js -->
-    <script type="text/javascript" src="js/main.js" defer></script>
+    <script type="text/javascript" src="js/main.min.js" defer></script>
   </body>
 
 </html>

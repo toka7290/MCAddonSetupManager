@@ -69,14 +69,14 @@ pre[class*="language-"] {
 .token.constant,
 .token.symbol,
 .token.deleted {
-  color: var(--color-prism_symbol);
+  color: var(--color-prism-symbol);
 }
 
 .token.boolean {
-  color: var(--color-prism_boolean);
+  color: var(--color-prism-boolean);
 }
 .token.number {
-  color: var(--color-prism_number);
+  color: var(--color-prism-number);
 }
 
 .token.selector,
@@ -85,7 +85,7 @@ pre[class*="language-"] {
 .token.char,
 .token.builtin,
 .token.inserted {
-  color: var(--color-prism_string);
+  color: var(--color-prism-string);
 }
 
 .token.operator,
@@ -105,7 +105,7 @@ pre[class*="language-"] {
 }
 
 .token.keyword {
-  color: var(--color-prism_keyword);
+  color: var(--color-prism-keyword);
 }
 
 .token.regex,

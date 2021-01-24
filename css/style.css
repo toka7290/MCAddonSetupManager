@@ -9,8 +9,8 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -39,6 +39,7 @@ textarea {
   min-width: 0;
   box-shadow: none;
   transition: all 0.5s;
+  -webkit-appearance: none !important;
 }
 input:focus,
 textarea:focus,
@@ -80,7 +81,7 @@ label.invisible-Control > input {
 }
 header {
   /* ヘッダー */
-  color: var(--color-header_text);
+  color: var(--color-header-text);
   background-color: var(--color-header);
 }
 div.header_main {
@@ -129,6 +130,9 @@ div.header_menu_alt {
   -moz-user-select: none;
   -webkit-user-select: none;
 }
+.open_more_info {
+  height: 3rem;
+}
 summary.more_info_icon,
 div.header_menu_alt > label,
 div.header_menu_alt > div {
@@ -169,11 +173,12 @@ ul.more_info label {
   align-items: center;
   padding: 0.5rem;
   text-decoration: none;
-  color: var(--color-header_text);
+  color: var(--color-header-text);
   transition-duration: 0.5s;
   transition-property: background-color;
 }
 ul.more_info p {
+  white-space: pre;
   padding-left: 0.5rem;
 }
 div.header_menu_alt > label:hover,
@@ -207,9 +212,9 @@ div.help_content {
   min-width: 12rem;
   max-width: 15rem;
   font-size: 16px;
-  background: var(--color-help_content);
+  background: var(--color-help-content);
   text-align: center;
-  border: solid 3px var(--color-help_content_border);
+  border: solid 3px var(--color-help-content-border);
   border-radius: 1rem;
 }
 div.help_content.bottom {
@@ -224,7 +229,7 @@ div.help_content.top::before {
   top: -24px;
   margin-left: -15px;
   border: 12px solid transparent;
-  border-bottom: 12px solid var(--color-help_content);
+  border-bottom: 12px solid var(--color-help-content);
   z-index: 12;
 }
 div.help_content.top:after {
@@ -233,7 +238,7 @@ div.help_content.top:after {
   top: -30px;
   margin-left: -17px;
   border: 14px solid transparent;
-  border-bottom: 14px solid var(--color-help_content_border);
+  border-bottom: 14px solid var(--color-help-content-border);
   z-index: 11;
 }
 div.help_content.bottom:before {
@@ -243,7 +248,7 @@ div.help_content.bottom:before {
   left: 50%;
   margin-left: -15px;
   border: 12px solid transparent;
-  border-top: 12px solid var(--color-help_content);
+  border-top: 12px solid var(--color-help-content);
   z-index: 12;
 }
 div.help_content.bottom:after {
@@ -253,7 +258,7 @@ div.help_content.bottom:after {
   left: 50%;
   margin-left: -17px;
   border: 14px solid transparent;
-  border-top: 14px solid var(--color-help_content_border);
+  border-top: 14px solid var(--color-help-content-border);
   z-index: 11;
 }
 div.help_content#help_content_1 {
@@ -275,7 +280,7 @@ div.help_content#help_content_3:after {
   right: 4.9rem;
 }
 div.help_content p {
-  color: var(--color-help_content_text);
+  color: var(--color-help-content-text);
 }
 div.header_menu_alt img,
 div.about_external_link img,
@@ -294,7 +299,7 @@ div#page_share img {
   z-index: 100;
   width: 100%;
   height: 100%;
-  background: var(--color-focus_background);
+  background: var(--color-focus-background);
 }
 .file_drop_zone.hide {
   display: none;
@@ -305,9 +310,9 @@ div#page_share img {
   height: auto;
   padding: 20px;
   font-weight: 600;
-  color: var(--color-focus_text);
+  color: var(--color-focus-text);
   text-align: center;
-  background: var(--color-focus_foreground);
+  background: var(--color-focus-foreground);
   border-radius: 6px;
   user-select: none;
   -ms-user-select: none;
@@ -327,7 +332,7 @@ div#page_share img {
 .page_about {
   /* about */
   visibility: visible;
-  transition: 1s;
+  transition: 0.5s;
   opacity: 1;
   transition-property: opacity hidden;
   display: grid;
@@ -338,11 +343,11 @@ div#page_share img {
   z-index: 15;
   width: 100%;
   height: 100%;
-  background: var(--color-focus_background);
+  background: var(--color-focus-background);
 }
 .about_hide {
   visibility: hidden;
-  transition: 1s;
+  transition: 0.5s;
   opacity: 0;
   transition-property: opacity hidden;
 }
@@ -453,8 +458,8 @@ div.editor form {
 }
 .disabled {
   /* 無効状態 */
-  color: var(--color-disabled_text);
-  transition-duration: 1s;
+  color: var(--color-disabled-text);
+  transition-duration: 0.5s;
   transition-property: color;
 }
 .disabled:hover {
@@ -581,7 +586,7 @@ input:not(:checked) + .checkbox_body:hover .checkbox_body_box {
 }
 input:not(:disabled):checked + .checkbox_body > .checkbox_body_box {
   /* チェック時の色 */
-  background-color: var(--color-header);
+  background-color: var(--color-input-checkbox);
 }
 input:disabled:checked + .checkbox_body > .checkbox_body_box {
   /* 無効時の色 */
@@ -596,7 +601,9 @@ input:disabled:checked + .checkbox_body > .checkbox_body_box {
 input:not(:disabled):not(:checked):focus
   + .checkbox_body
   .checkbox_body_checkMark,
-input:not(:checked) + .checkbox_body:hover .checkbox_body_checkMark {
+input:not(:disabled):not(:checked)
+  + .checkbox_body:hover
+  .checkbox_body_checkMark {
   /* フォーカス、ホバー時に色変更 */
   color: var(--color-textNeither);
 }
@@ -634,7 +641,7 @@ input:not(:checked) + .checkbox_body:hover .checkbox_body_checkMark {
   height: 1.5rem;
   align-items: center;
   justify-items: start;
-  transition: all 1s ease;
+  transition: all 0.5s ease;
 }
 input:focus + .toggle_body .toggle_body_box {
   /* フォーカス */
@@ -643,16 +650,16 @@ input:focus + .toggle_body .toggle_body_box {
 input:indeterminate + .toggle_body .toggle_body_box,
 input:checked:indeterminate + .toggle_body .toggle_body_box {
   /* 中間状態 */
-  background-color: var(--color-header-hover);
+  background-color: var(--color-input-toggle-indeterminate);
 }
 input:checked + .toggle_body .toggle_body_box {
   /* オン */
-  background-color: var(--color-header);
+  background-color: var(--color-input-toggle-on);
 }
 .toggle_body_padding {
   /* 間隔調整用 */
   width: 0.25rem;
-  transition: width 1s ease 0s;
+  transition: width 0.5s ease 0s;
 }
 input:indeterminate + .toggle_body .toggle_body_padding,
 input:checked:indeterminate + .toggle_body .toggle_body_padding {
@@ -728,16 +735,9 @@ input:checked + .toggle_body .toggle_body_padding {
 }
 .add_tab_text,
 .remove_tab_text {
-  /* 追加削除文字 */
+  /* 追加削除の文字 */
   padding: 0.25rem;
   margin: 0;
-}
-.disabled.tab_body,
-.disabled.add_tab,
-.disabled.remove_tab {
-  /* 無効時 */
-  cursor: auto;
-  color: var(--color-disabled_text);
 }
 .tab_body:not(.disabled) .tab_number:hover,
 input:focus + .tab_number {
@@ -878,7 +878,7 @@ input:focus + label.control_text {
   height: 4rem;
   padding: 0.25rem;
   margin: 1rem;
-  background-color: var(--color-display_preview_background);
+  background-color: var(--color-display-preview-background);
   color: white;
   border-radius: 0.3em;
   user-select: none;
@@ -987,13 +987,13 @@ div.issue_status_error span {
   width: 1.2rem;
   vertical-align: middle;
   pointer-events: none;
-  animation: blinking_shadow_warning 1s ease-in-out 0s infinite alternate;
+  animation: blinking_shadow_warning 0.5s ease-in-out 0s infinite alternate;
 }
 .issue_status_error img {
   width: 1.2rem;
   vertical-align: middle;
   pointer-events: none;
-  animation: blinking_shadow_error 1s ease-in-out 0s infinite alternate;
+  animation: blinking_shadow_error 0.5s ease-in-out 0s infinite alternate;
 }
 @keyframes blinking_shadow_warning {
   from {
@@ -1025,7 +1025,7 @@ ul.issue_list li {
   background-color: var(--color-background);
 }
 ul.issue_list li:nth-child(2n) {
-  background-color: var(--color-background);
+  background-color: var(--color-list-secondary);
 }
 ul.issue_list li img {
   width: 1.2rem;
@@ -1044,13 +1044,13 @@ ul.issue_list li p {
 .stat_warning,
 .stat_warning:focus {
   /* input issue */
-  animation: blinking_shadow_warning 1s ease-in-out 0s infinite alternate;
-  background: var(--color-warning_background);
+  animation: blinking_shadow_warning 0.5s ease-in-out 0s infinite alternate;
+  background: var(--color-warning-background);
 }
-.stat_error,
-.stat_warning.stat_error {
-  animation: blinking_shadow_error 1s ease-in-out 0s infinite alternate;
-  background: var(--color-error_background);
+.stat-error,
+.stat-warning.stat-error {
+  animation: blinking-shadow-error 0.5s ease-in-out 0s infinite alternate;
+  background: var(--color-error-background);
 }
 div.separator {
   /* セパレータ */
@@ -1062,4 +1062,38 @@ div.separator {
 }
 div.separator:hover {
   cursor: e-resize;
+}
+.unsupported {
+  display: none;
+}
+@media all and (-ms-high-contrast: none) {
+  html {
+    background-color: #ddedde;
+  }
+  .header {
+    background-color: #127815;
+    color: #fff;
+  }
+  div.title > p {
+    display: none;
+  }
+  div.content {
+    display: none;
+  }
+  .editor_element {
+    background-color: white;
+  }
+  input,
+  select,
+  textarea {
+    border: #1d8320 solid 3px;
+  }
+  div.header_menu_alt {
+    display: none;
+  }
+  /* IE使用不可に */
+  .unsupported {
+    display: block;
+    text-align: center;
+  }
 }
