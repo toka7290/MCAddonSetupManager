@@ -54,7 +54,7 @@
     --color-toolbar-hover: #1b1b1b;
     --color-background: #212121;
     --color-header-hover: #373737;
-    --color-toolbar: #757575;
+    --color-toolbar: #434343;
     --color-input-focus: #cfcfcf;
     --color-input-disabled: #5a5a5a;
     --color-button-hover: #e4e4e4;
@@ -74,7 +74,7 @@
     --color-input-background: #000;
     --color-header-text: #f5f5f5;
     --color-selected-tab: #000;
-    --color-disabled-text: #616161;
+    --color-disabled-text: #777777;
     --color-focus-text: #000;
     --color-focus-foreground: #fff;
     --color-focus-background: rgba(0, 0, 0, 0.5);
