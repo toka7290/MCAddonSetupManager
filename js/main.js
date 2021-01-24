@@ -178,27 +178,23 @@ $(function () {
   });
 
   //tab変更
-  $(document).on(
-    "click",
-    '.tab-children:not(:selected)>input[type="button"]',
-    function () {
-      const className = $(this).attr("class");
-      if (
-        className == "modules" ||
-        (is_dependencies_enable && className == "dependencies") ||
-        (is_subpacks_enable && className == "subpacks")
-      ) {
-        const new_selected_tab = $(this).parent();
-        const new_selected_index = new_selected_tab.index();
-        $(`.${className}` + ".tab-children").removeClass("selected");
-        new_selected_tab.addClass("selected");
-        $(`.${className}` + ".tab-content-list>div")
-          .removeClass("selected-tab-content")
-          .eq(new_selected_index)
-          .addClass("selected-tab-content");
-      }
+  $(document).on("click", ".tab-children:not(.selected)>input", function () {
+    const className = $(this).attr("class");
+    if (
+      className == "modules" ||
+      (is_dependencies_enable && className == "dependencies") ||
+      (is_subpacks_enable && className == "subpacks")
+    ) {
+      const new_selected_tab = $(this).parent();
+      const new_selected_index = new_selected_tab.index();
+      $(`.${className}` + ".tab-children").removeClass("selected");
+      new_selected_tab.addClass("selected");
+      $(`.${className}` + ".tab-content-list>div")
+        .removeClass("selected-tab-content")
+        .eq(new_selected_index)
+        .addClass("selected-tab-content");
     }
-  );
+  });
   //tab削除
   $("#modules-delete,#dependencies-delete,#subpacks-delete").on(
     "click",
@@ -252,10 +248,7 @@ $(function () {
       $("<label>")
         .addClass(`${className} tab-children invisible-Control`)
         .append(
-          $("<input>").attr({
-            type: "button",
-            class: className,
-          }),
+          $("<input>").attr("type", "button").addClass(className),
           $("<div>").addClass("tab-number").text(tabNumber),
           $("<div>").addClass("tab-underBar")
         )
@@ -1008,7 +1001,7 @@ $(function () {
         }),
         $("<p>").text(issue_content)
       );
-      issue_element.addClass("stat_error");
+      issue_element.addClass("stat-error");
     }
     $("ul.issue-list").append(content);
   }
@@ -1033,7 +1026,7 @@ $(function () {
       (element) => element == "position"
     );
     if (lineIndex != -1) {
-      const line = parseInt(splitText[lineIndex + 1]);
+      const line = parseInt(splitText[lineIndex + 1], 10);
       const getBeginningOfLineIndex = (maxLine) => {
         let lastIndex = 0;
         for (let i = 1; i < maxLine; i++) {
