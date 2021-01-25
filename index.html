@@ -289,76 +289,78 @@
             <div class="editor-element-legend">
               <p>Modules</p>
             </div>
-            <div class="modules tab-controls">
-              <div class="modules tab-body">
-                <label class="modules tab-children invisible-Control selected">
-                  <input type="button" class="modules">
-                  <div class="tab-number">0</div>
-                  <div class="tab-underBar"></div>
-                </label>
-              </div>
-              <div class="modules add-tab disabled">
-                <label class="invisible-Control">
-                  <input type="button" id="modules_add" class="modules" disabled>
-                  <div class="add-tab-text">+ 追加</div>
-                </label>
-              </div>
-              <div class="modules remove-tab disabled">
-                <label class="invisible-Control">
-                  <input type="button" id="modules-delete" class="modules" disabled>
-                  <div class="remove-tab-text">- 削除</div>
-                </label>
-              </div>
-            </div>
-            <div class="modules tab-content-list">
-              <div class="selected-tab-content">
-                <div class="value-element" title="このモジュールのタイプを設定します。">
-                  <div class="value-label">
-                    <label for="modules_type">タイプ</label>
-                  </div>
-                  <div class="value-input">
-                    <select name="modules_type" id="modules_type" required>
-                      <option value="resources">resources</option>
-                      <option value="data">data</option>
-                      <option value="client_data">client_data</option>
-                      <option value="interface">interface</option>
-                      <option value="world_template">world_template</option>
-                    </select>
-                  </div>
+            <div class="modules tab_contents">
+              <div class="modules tab-controls">
+                <div class="modules tab-body" title="編集するモジュールが複数ある場合、切り替えます。">
+                  <label class="modules tab-children invisible-Control selected">
+                    <input type="button" class="modules">
+                    <div class="tab-number">0</div>
+                    <div class="tab-underBar"></div>
+                  </label>
                 </div>
-                <div class="value-element" title="このモジュールの説明を設定します。">
-                  <div class="value-label">
-                    <label for="modules_description">説明</label>
-                  </div>
-                  <div class="value-input">
-                    <textarea type="text" name="description" id="modules_description"></textarea>
-                  </div>
+                <div class="modules add-tab disabled">
+                  <label class="invisible-Control" title="モジュールを追加します。">
+                    <input type="button" id="modules_add" class="modules" disabled>
+                    <div class="add-tab-text">+ 追加</div>
+                  </label>
                 </div>
-                <div class="value-element" title="このモジュールのバージョンを設定します。">
-                  <div class="value-label">
-                    <label for="modules_version_major">バージョン</label>
-                  </div>
-                  <div class="value-input type-version">
-                    <label><input type="number" min="0" name="" id="modules_version_major" value="1" /></label>
-                    <span>.</span>
-                    <label><input type="number" min="0" name="" id="modules_version_minor" value="0" /></label>
-                    <span>.</span>
-                    <label><input type="number" min="0" name="" id="modules_version_patch" value="0" /></label>
-                  </div>
+                <div class="modules remove-tab disabled">
+                  <label class="invisible-Control" title="選択しているモジュールを削除します。">
+                    <input type="button" id="modules-delete" class="modules" disabled>
+                    <div class="remove-tab-text">- 削除</div>
+                  </label>
                 </div>
-                <div class="value-element" title="このモジュールのUUIDを設定します。">
-                  <div class="value-label">
-                    <label for="modules_uuid">UUID</label>
+              </div>
+              <div class="modules tab-content-list">
+                <div class="selected-tab-content">
+                  <div class="value-element" title="このモジュールのタイプを設定します。">
+                    <div class="value-label">
+                      <label for="modules_type">タイプ</label>
+                    </div>
+                    <div class="value-input">
+                      <select name="modules_type" id="modules_type" required>
+                        <option value="resources">resources</option>
+                        <option value="data">data</option>
+                        <option value="client_data">client_data</option>
+                        <option value="interface">interface</option>
+                        <option value="world_template">world_template</option>
+                      </select>
+                    </div>
                   </div>
-                  <div class="value-input type-uuid">
-                    <label><input type="text" name="uuid" id="modules_uuid" /></label>
-                    <label><input type="button" value="Generate" class="generate_uuid" /></label>
+                  <div class="value-element" title="このモジュールの説明を設定します。">
+                    <div class="value-label">
+                      <label for="modules_description">説明</label>
+                    </div>
+                    <div class="value-input">
+                      <textarea type="text" name="description" id="modules_description"></textarea>
+                    </div>
+                  </div>
+                  <div class="value-element" title="このモジュールのバージョンを設定します。">
+                    <div class="value-label">
+                      <label for="modules_version_major">バージョン</label>
+                    </div>
+                    <div class="value-input type-version">
+                      <label><input type="number" min="0" name="" id="modules_version_major" value="1" /></label>
+                      <span>.</span>
+                      <label><input type="number" min="0" name="" id="modules_version_minor" value="0" /></label>
+                      <span>.</span>
+                      <label><input type="number" min="0" name="" id="modules_version_patch" value="0" /></label>
+                    </div>
+                  </div>
+                  <div class="value-element" title="このモジュールのUUIDを設定します。">
+                    <div class="value-label">
+                      <label for="modules_uuid">UUID</label>
+                    </div>
+                    <div class="value-input type-uuid">
+                      <label><input type="text" name="uuid" id="modules_uuid" /></label>
+                      <label><input type="button" value="Generate" class="generate_uuid" /></label>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="editor-element" title="依存関係を設定します。">
+          <div class="editor-element" title="依存関係を設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
             <div class="editor-element-legend toggle">
               <input type="checkbox" name="dependencies" id="dependencies_enable" class="invisible-Control" />
               <label for="dependencies_enable" class="toggle-body">
@@ -369,22 +371,22 @@
                 </div>
               </label>
             </div>
-            <div class="dependencies tab_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
+            <div class="dependencies tab_contents">
               <div class="dependencies tab-controls">
-                <div class="dependencies tab-body">
+                <div class="dependencies tab-body" title="編集する依存関係が複数ある場合、切り替えます。">
                   <label class="dependencies tab-children invisible-Control selected">
                     <input type="button" class="dependencies">
                     <div class="tab-number">0</div>
                     <div class="tab-underBar"></div>
                   </label>
                 </div>
-                <div class="dependencies add-tab disabled">
+                <div class="dependencies add-tab disabled" title="依存関係にあるパックを追加します。">
                   <label class="invisible-Control">
                     <input type="button" id="dependencies_add" class="dependencies" disabled>
                     <div class="add-tab-text">+ 追加</div>
                   </label>
                 </div>
-                <div class="dependencies remove-tab disabled">
+                <div class="dependencies remove-tab disabled" title="選択しているパックを削除します。">
                   <label class="invisible-Control">
                     <input type="button" id="dependencies-delete" class="dependencies" disabled>
                     <div class="remove-tab-text">- 削除</div>
@@ -486,7 +488,7 @@
               </div>
             </div>
             <div class="metadata_list">
-              <div class="value-element" title="このパックの作者を設定します。">
+              <div class="value-element" title="このパックの作者を設定します。作者は複数追加することができます。">
                 <div class="value-label">
                   <label for="metadata_author">作者</label>
                 </div>
@@ -497,14 +499,14 @@
                       <input type="text" class="metadata_author" disabled />
                     </label>
                   </div>
-                  <div class="authors-list-control">
+                  <div class="authors-list-control" title="作者入力欄を追加します。">
                     <div class="add-author">
                       <input type="button" id="author-add" class="invisible-Control" disabled>
                       <label for="author-add">
                         <div class="add-author-text">+ 作者を追加</div>
                       </label>
                     </div>
-                    <div class="remove-author">
+                    <div class="remove-author" title="作者入力欄を消します。">
                       <input type="button" id="author-delete" class="invisible-Control" disabled>
                       <label for="author-delete">
                         <div class="remove-author-text">- 作者を削除</div>
@@ -531,7 +533,7 @@
               </div>
             </div>
           </div>
-          <div class="editor-element" title="サブパック機能の設定を行います。">
+          <div class="editor-element" title="サブパック機能の設定を行います。アドオンの導入画面で内容を切り替えられる機能です。">
             <div class="editor-element-legend toggle">
               <div>
                 <input type="checkbox" name="subpacks" id="subpacks_enable" class="invisible-Control" />
@@ -544,22 +546,22 @@
                 </label>
               </div>
             </div>
-            <div class="subpacks tab_contents" title="依存関係にあるパックを設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
+            <div class="subpacks tab_contents">
               <div class="subpacks tab-controls">
-                <div class="subpacks tab-body">
+                <div class="subpacks tab-body" title="編集するサブパックが複数ある場合、切り替えます。">
                   <label class="subpacks tab-children invisible-Control selected">
                     <input type="button" class="subpacks">
                     <div class="tab-number">0</div>
                     <div class="tab-underBar"></div>
                   </label>
                 </div>
-                <div class="subpacks add-tab disabled">
+                <div class="subpacks add-tab disabled" title="サブパックのフォルダを追加します。">
                   <label class="invisible-Control">
                     <input type="button" id="subpacks_add" class="subpacks" disabled>
                     <div class="add-tab-text">+ 追加</div>
                   </label>
                 </div>
-                <div class="subpacks remove-tab disabled">
+                <div class="subpacks remove-tab disabled" title="選択されているサブパックを削除します。">
                   <label class="invisible-Control">
                     <input type="button" id="subpacks-delete" class="subpacks" disabled>
                     <div class="remove-tab-text">- 削除</div>
@@ -602,13 +604,13 @@
       <div class="data-check">
         <div class="preview">
           <div class="preview-control-bar">
-            <div class="preview-control-child">
+            <div class="preview-control-child" title="jsonをクリップボードにコピーします。">
               <input type="button" id="control_copy" class="invisible-Control">
               <label for="control_copy" class="control-text">
                 <p id="control_copy_text">Copy</p>
               </label>
             </div>
-            <div class="preview-control-child">
+            <div class="preview-control-child" title="manifest.jsonをダウンロードします。">
               <input type="button" id="control_download" class="invisible-Control">
               <label for="control_download" class="control-text">
                 <p>Download</p>
@@ -647,11 +649,11 @@
             <div class="issue-status-num">
               <div class="issue-status-warning">
                 <img src="img/warning.svg" alt="" width="19px" height="19px" />
-                <span class="issue_warning_num">警告:0</span>
+                <span class="issue-warning-num">警告:0</span>
               </div>
               <div class="issue-status-error">
                 <img src="img/error.svg" alt="" width="19px" height="19px" />
-                <span class="issue_error_num">エラー:0</span>
+                <span class="issue-error-num">エラー:0</span>
               </div>
             </div>
           </label>
