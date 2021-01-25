@@ -207,9 +207,9 @@ $(function () {
           (is_subpacks_enable && $(this).hasClass("subpacks")) ||
           (is_dependencies_enable && $(this).hasClass("dependencies")))
       ) {
-        $(className + ".tabChildren.selected").remove();
+        $(className + ".tab-children.selected").remove();
         $(className + ".tab-content-list>.selected-tab-content").remove();
-        tabChildren = $(className + ".tabChildren");
+        tabChildren = $(className + ".tab-children");
         const tab_contents = $(className + ".tab-content-list>div");
         // 番号再振り当て
         let index_num = 0;
@@ -622,11 +622,11 @@ $(function () {
   function checkIssue() {
     // イシュー削除
     $("ul.issue-list li").remove();
-    $(".stat-warning,.stat_error").removeClass("stat-warning stat_error");
+    $(".stat-warning, .stat-error").removeClass("stat-warning stat-error");
     const error_num = checkJSONError();
     const warning_num = checkJSONWarning();
-    $("span.issue_warning_num").text("警告:" + warning_num);
-    $("span.issue_error_num").text("エラー:" + error_num);
+    $("span.issue-warning-num").text("警告:" + warning_num);
+    $("span.issue-error-num").text("エラー:" + error_num);
     if (warning_num <= 0 && error_num <= 0) {
       $("ul.issue-list").append("<li>問題はありません</li>");
     }
