@@ -1483,9 +1483,13 @@ $(function () {
       }
     }
     const isValue = [
-      $(".metadata_author").length > 0
-        ? $(".metadata_author").val() != ""
-        : false,
+      (() => {
+        const author_length = $("label.metadata_author").length;
+        for (let index = 0; index < author_length; index++) {
+          if ($(".metadata_author").eq(index).val() != "") return true;
+        }
+        return false;
+      })(),
       $("#metadata_url").val() != "",
       $("#metadata_license").val() != "",
     ];
