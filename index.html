@@ -6,8 +6,8 @@
     <title>とかさんの Manifest Generator</title>
     <!-- metadata -->
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="keywords" content="manifest.json,manifest,Manifest,マニフェスト,Generator,generator,Minecraft,マインクラフト,BE,Bedrock Edition,tool,ツール,Addon,Add-on,アドオン,subpacks,metadata,dependencies,modules,capabilities,とかさん" />
-    <meta name="Description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツール。manifest.jsonを簡単手軽に編集、変換できます。すべての用途に完全対応！プレビュー表示機能で装飾文字の編集も簡単！" />
+    <meta name="keywords" content="manifest.json,manifest,Manifest,マニフェスト,Generator,generator,Minecraft,minecraft,マインクラフト,BE,Bedrock Edition,bedrock,tool,ツール,Addon,Add-on,アドオン,resource,behavior,subpacks,metadata,dependencies,modules,capabilities,とかさん" />
+    <meta name="Description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツール。 manifest.jsonを簡単手軽に編集、変換、生成、プレビューできます。 リソースパック、ビヘイビアパック、ワールドテンプレートの他、すべての用途に完全対応！ プレビュー表示機能で装飾文字の編集も簡単！" />
     <meta http-equiv="content-language" content="ja" />
     <meta name="theme-color" content="#60ad5e" />
     <meta property="og:url" content="https://toka7290.github.io/MCAddonSetupManager/" />
@@ -20,7 +20,7 @@
     <meta name="twitter:site" content="@toka7290" />
     <meta name="google-site-verification" content="Gvi-XrJEZRsxJgsNLv5NOddbD6COJo804pUgyPvpi34" />
     <!-- css -->
-    <!-- <link rel="preload" href="css/style.min.css" as="style"> -->
+    <link rel="preload" href="css/style.min.css" as="style">
     <link rel="stylesheet" href="css/color.min.css" async />
     <link rel="stylesheet" href="css/style.min.css" async />
     <link rel="stylesheet" href="css/prism.min.css" async defer />
@@ -33,6 +33,7 @@
       {
         "@context": "http://schema.org",
         "@type": "WebApplication",
+        "browserRequirements": "requires HTML5 support",
         "name": "とかさんの Manifest Generator",
         "applicationCategory": "DeveloperApplication",
         "applicationSubCategory": "Minecraft Manifest json",
@@ -47,6 +48,10 @@
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "JPN"
+        },
+        "aggregateRating":{
+          "ratingValue": 5,
+          "reviewCount": 100
         },
         "url": "https://toka7290.github.io/MCAddonSetupManager/",
         "operatingSystem": "Any. It is a Web Application"
@@ -707,7 +712,7 @@
     <script src="lib/prism.js" defer></script>
     <script src="lib/minecraft_text.min.js" defer></script>
     <!-- js -->
-    <script type="text/javascript" src="js/main.js" defer></script>
+    <script type="text/javascript" src="js/main.min.js" defer></script>
   </body>
 
 </html>
