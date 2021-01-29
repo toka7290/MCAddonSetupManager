@@ -42,8 +42,7 @@ var oldCacheKeys = [
 self.addEventListener("install", function (event) {
   event.waitUntil(
     caches.open(CACHE_NAME).then(async function (cache) {
-      skipWaiting();
-      cache.addAll(urlsToCache);
+      return cache.addAll(urlsToCache);
     })
   );
 });
@@ -68,24 +67,19 @@ self.addEventListener("activate", function (event) {
 // リソースフェッチ時のキャッシュロード処理
 self.addEventListener("fetch", function (event) {
   event.respondWith(
-    caches
-      .match(event.request)
-      .then(function (resp) {
         // respレスポンスで見つかったキャッシュもしくはリクエスト
-        return (
-          resp ||
-          fetch(event.request).then(function (response) {
-            let responseClone = response.clone();
-            caches.open(CACHE_NAME).then(function (cache) {
-              cache.put(event.request, responseClone);
-            });
+    caches
+      .match(event.request).then(function(resp) {
+        return resp || fetch(event.request).then(function(response) {
+          return caches.open(CACHE_NAME).then(function(cache) {
+            cache.put(event.request, response.clone());
             return response;
-          })
-        );
+          });
+        });
       })
       .catch(function () {
         console.error("Fetch failed:", error);
         throw error;
-      })
+      });
   );
 });
