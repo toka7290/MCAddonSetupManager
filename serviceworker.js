@@ -73,7 +73,8 @@ self.addEventListener("fetch", function (event) {
         return (
           response ||
           fetch(event.request).then((responseCache) => {
-            cache.put(event.request, responseCache.clone());
+            if (event.request.method != "POST")
+              cache.put(event.request, responseCache.clone());
             console.log(event.request);
             console.log(responseCache);
             return responseCache;
