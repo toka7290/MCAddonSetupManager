@@ -426,8 +426,9 @@ $(function () {
     setDelayIssue();
     const json_code = getJSONData();
     $("pre.language-json code.language-json").remove();
-    const content = '<code class="language-json">' + json_code + "</code>";
-    $("pre.language-json").append(content);
+    $("pre.language-json").append(
+      $("<code>").addClass("language-json").text(json_code)
+    );
     $("textarea#code-buffer").val(json_code);
     updateDisplayPreview();
     Prism.highlightAll();
