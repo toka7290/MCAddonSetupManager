@@ -984,7 +984,7 @@ $(function () {
     if (type == "warning") {
       content.append(
         $("<img>").attr({
-          src: "img/warning.svg",
+          src: "./img/warning.svg",
           alt: "",
           width: "19px",
           height: "19px",
@@ -995,7 +995,7 @@ $(function () {
     } else if (type == "error") {
       content.append(
         $("<img>").attr({
-          src: "img/error.svg",
+          src: "./img/error.svg",
           alt: "",
           width: "19px",
           height: "19px",
