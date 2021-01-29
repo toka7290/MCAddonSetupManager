@@ -68,21 +68,18 @@ self.addEventListener("activate", function (event) {
 self.addEventListener("fetch", function (event) {
   console.log("service worker fetch ... " + event.request);
   event.respondWith(
-    // リクエストに一致するデータがキャッシュにあるかどうか
-    caches.match(event.request).then(function (cacheResponse) {
-      // キャッシュがあればそれを返す、なければリクエストを投げる
-      return (
-        cacheResponse ||
-        fetch(event.request).then(function (response) {
-          return caches.open(CACHE_NAME).then(function (cache) {
-            // レスポンスをクローンしてキャッシュに入れる
-            cache.put(event.request, response.clone());
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.match(event.request).then((response) => {
+        return (
+          response ||
+          fetch(event.request).then((responseCache) => {
+            cache.put(event.request, responseCache.clone());
             console.log(event.request);
-            // オリジナルのレスポンスはそのまま返す
-            return response;
-          });
-        })
-      );
+            console.log(responseCache);
+            return responseCache;
+          })
+        );
+      });
     })
   );
   // event.respondWith(
