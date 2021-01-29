@@ -1,4 +1,4 @@
-var CACHE_NAME = "toka-202101-----";
+var CACHE_NAME = "toka-20210129";
 var urlsToCache = [
   "/MCAddonSetupManager/",
   "/MCAddonSetupManager/index.html",
