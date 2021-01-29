@@ -67,6 +67,24 @@ self.addEventListener("activate", function (event) {
 // リソースフェッチ時のキャッシュロード処理
 self.addEventListener("fetch", function (event) {
   console.log("service worker fetch ... " + event.request);
+  event.respondWith(
+    // リクエストに一致するデータがキャッシュにあるかどうか
+    caches.match(event.request).then(function (cacheResponse) {
+      // キャッシュがあればそれを返す、なければリクエストを投げる
+      return (
+        cacheResponse ||
+        fetch(event.request).then(function (response) {
+          return caches.open(CACHE_NAME).then(function (cache) {
+            // レスポンスをクローンしてキャッシュに入れる
+            cache.put(event.request, response.clone());
+            console.log(event.request);
+            // オリジナルのレスポンスはそのまま返す
+            return response;
+          });
+        })
+      );
+    })
+  );
   // event.respondWith(
   // respレスポンスで見つかったキャッシュもしくはリクエスト
   // caches
