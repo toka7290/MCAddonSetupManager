@@ -67,19 +67,23 @@ self.addEventListener("activate", function (event) {
 // リソースフェッチ時のキャッシュロード処理
 self.addEventListener("fetch", function (event) {
   event.respondWith(
-        // respレスポンスで見つかったキャッシュもしくはリクエスト
+    // respレスポンスで見つかったキャッシュもしくはリクエスト
     caches
-      .match(event.request).then(function(resp) {
-        return resp || fetch(event.request).then(function(response) {
-          return caches.open(CACHE_NAME).then(function(cache) {
-            cache.put(event.request, response.clone());
-            return response;
-          });
-        });
+      .match(event.request)
+      .then(function (resp) {
+        return (
+          resp ||
+          fetch(event.request).then(function (response) {
+            return caches.open(CACHE_NAME).then(function (cache) {
+              cache.put(event.request, response.clone());
+              return response;
+            });
+          })
+        );
       })
       .catch(function () {
         console.error("Fetch failed:", error);
         throw error;
-      });
+      })
   );
 });
