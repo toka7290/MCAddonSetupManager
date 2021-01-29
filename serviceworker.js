@@ -67,23 +67,31 @@ self.addEventListener("activate", function (event) {
 // リソースフェッチ時のキャッシュロード処理
 self.addEventListener("fetch", function (event) {
   event.respondWith(
+    async function () {
+      // キャッシュからレスポンスを取得しようとします。
+      const cachedResponse = await caches.match(event.request);
+      // 見つかったらそれを返します。
+      if (cachedResponse) return cachedResponse;
+      // キャッシュ内に一致するものが見つからなかった場合は、ネットワークを使用します。
+      return fetch(event.request);
+    }
     // respレスポンスで見つかったキャッシュもしくはリクエスト
-    caches
-      .match(event.request)
-      .then(function (resp) {
-        return (
-          resp ||
-          fetch(event.request).then(function (response) {
-            return caches.open(CACHE_NAME).then(function (cache) {
-              cache.put(event.request, response.clone());
-              return response;
-            });
-          })
-        );
-      })
-      .catch(function () {
-        console.error("Fetch failed:", error);
-        throw error;
-      })
+    // caches
+    //   .match(event.request)
+    //   .then(function (resp) {
+    //     return (
+    //       resp ||
+    //       fetch(event.request).then(function (response) {
+    //         return caches.open(CACHE_NAME).then(function (cache) {
+    //           cache.put(event.request, response.clone());
+    //           return response;
+    //         });
+    //       })
+    //     );
+    //   })
+    //   .catch(function () {
+    //     console.error("Fetch failed:", error);
+    //     throw error;
+    //   })
   );
 });
