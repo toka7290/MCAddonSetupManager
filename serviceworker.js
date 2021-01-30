@@ -66,7 +66,6 @@ self.addEventListener("activate", function (event) {
 
 // リソースフェッチ時のキャッシュロード処理
 self.addEventListener("fetch", function (event) {
-  console.log("service worker fetch ... " + event.request);
   event.respondWith(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.match(event.request).then((response) => {
@@ -75,8 +74,6 @@ self.addEventListener("fetch", function (event) {
           fetch(event.request).then((responseCache) => {
             if (event.request.method != "POST")
               cache.put(event.request, responseCache.clone());
-            console.log(event.request);
-            console.log(responseCache);
             return responseCache;
           })
         );
