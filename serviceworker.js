@@ -1,4 +1,4 @@
-var CACHE_NAME = "toka-20210129";
+var CACHE_NAME = "toka-20210130";
 var urlsToCache = [
   "/MCAddonSetupManager/",
   "/MCAddonSetupManager/index.html",
@@ -83,24 +83,4 @@ self.addEventListener("fetch", function (event) {
       });
     })
   );
-  // event.respondWith(
-  // respレスポンスで見つかったキャッシュもしくはリクエスト
-  // caches
-  //   .match(event.request)
-  //   .then(function (resp) {
-  //     return (
-  //       resp ||
-  //       fetch(event.request).then(function (response) {
-  //         return caches.open(CACHE_NAME).then(function (cache) {
-  //           cache.put(event.request, response.clone());
-  //           return response;
-  //         });
-  //       })
-  //     );
-  //   })
-  //   .catch(function () {
-  //     console.error("Fetch failed:", error);
-  //     throw error;
-  //   })
-  // );
 });
