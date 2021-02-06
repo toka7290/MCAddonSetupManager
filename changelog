@@ -130,5 +130,6 @@
 
 TODO
 - 壊れたjson抽出
-- localStorageでjson保存
+- IndexedDBでjson保存
 - 404
+- "pack_scope"実装
