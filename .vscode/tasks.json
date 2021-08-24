@@ -1,50 +1,47 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "process",
-			"label": "closure-compiler : js compile",
-			"command": "java",
-			"options": {
-				"cwd": ".\\.jsoptimize"
-			},
-			"args": [
-				"-jar",
-				".\\closure-compiler-v20201207.jar",
-				"--js=..\\js\\main.js",
-				"--js_output_file=..\\js\\main.min.js",
-				"--compilation_level=ADVANCED_OPTIMIZATIONS",
-				"--externs=jquery-3.3.js",
-				"--externs=prism.js",
-				"--externs=minecraft_text.js"
-			],
-			"presentation": {
-				"echo": true,
-				"reveal": "silent",
-				"focus": false,
-				"panel": "shared",
-				"showReuseMessage": true,
-				"clear": false
-			},
-			"problemMatcher": []
-		},
-		{
-			"type": "shell",
-			"label": "http-server : open",
-			"command": "http-server",
-			"args": [
-				"./",
-				"-o"
-			],
-			"presentation": {
-				"echo": true,
-				"reveal": "silent",
-				"focus": false,
-				"panel": "shared",
-				"showReuseMessage": true,
-				"clear": false
-			},
-			"problemMatcher": []
-		}
-	]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "process",
+      "label": "closure-compiler : js compile",
+      "command": "java",
+      "options": {
+        "cwd": ".\\.jsoptimize"
+      },
+      "args": [
+        "-jar",
+        ".\\closure-compiler-v20201207.jar",
+        "--js=..\\js\\main.js",
+        "--js_output_file=..\\js\\main.min.js",
+        "--compilation_level=ADVANCED_OPTIMIZATIONS",
+        "--externs=jquery-3.3.js",
+        "--externs=prism.js",
+        "--externs=minecraft_text.js"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "shell",
+      "label": "http-server : open",
+      "command": "python",
+      "args": ["-m", "http.server"],
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": []
+    }
+  ]
 }

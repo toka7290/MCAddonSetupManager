@@ -5,6 +5,7 @@ html {
   height: 100%;
   background-color: var(--color-background);
   overscroll-behavior: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
   display: flex;
@@ -67,8 +68,8 @@ input[type="button"]:not(:disabled):hover {
   cursor: pointer;
   background-color: var(--color-button-hover);
 }
-input.invisible-Control,
-label.invisible-Control > input {
+input.invisible_Control,
+label.invisible_Control > input {
   /* 不可視ボタン */
   width: 0;
   filter: alpha(opacity=0);
@@ -89,8 +90,7 @@ div.header-main {
   height: 100%;
   justify-content: space-between;
   position: relative;
-  box-shadow: rgba(0, 0, 0, 0.133) 0px 6.4px 14.4px 0px,
-    rgba(0, 0, 0, 0.11) 0px 1.2px 3.6px 0px;
+  box-shadow: rgba(0, 0, 0, 0.133) 0px 6.4px 14.4px 0px, rgba(0, 0, 0, 0.11) 0px 1.2px 3.6px 0px;
 }
 div.title {
   font-size: clamp(10px, 1.5vw, 16px);
@@ -283,8 +283,7 @@ div.help-content p {
   color: var(--color-help-content-text);
 }
 div.header-menu-alt img,
-div.about-external-link img,
-div#page-share img {
+div.about-external-link img {
   width: 2rem;
   height: 2rem;
   pointer-events: none;
@@ -401,10 +400,14 @@ div.copyright {
 div#page-share {
   display: none;
 }
+div#page-share.supported {
+  display: inline-block;
+}
 div.about-external-link {
   display: block;
 }
-div.about-external-link a {
+div.about-external-link a,
+div.about-external-link div {
   display: inline-block;
   line-height: 0;
   padding: 0.5rem;
@@ -414,7 +417,8 @@ div.about-external-link a {
 }
 div.about-external-link a:hover,
 div.about-external-link a:focus,
-div#page-share:hover {
+div.about-external-link div:hover,
+div.about-external-link div:focus {
   transition: 0.5s;
   background-color: var(--color-header-hover);
 }
@@ -470,15 +474,15 @@ div.editor form {
   margin: 1rem;
   border-radius: 4px;
   background: var(--color-element-background);
-  box-shadow: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.132),
-    0 0.3px 0.9px 0 rgba(0, 0, 0, 0.108);
+  box-shadow: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.132), 0 0.3px 0.9px 0 rgba(0, 0, 0, 0.108);
   overflow: hidden;
 }
 .editor-element-legend {
   padding: 1rem 1.5rem;
   border-bottom: var(--color-input-disabled) solid 2px;
 }
-.editor-element-legend > p {
+.editor-element-legend > p,
+.editor-element-legend > label {
   margin: 0;
   font-size: large;
   font-weight: bolder;
@@ -598,12 +602,8 @@ input:disabled:checked + .checkbox-body > .checkbox-body-box {
   color: var(--color-textAlt);
   text-align: center;
 }
-input:not(:disabled):not(:checked):focus
-  + .checkbox-body
-  .checkbox-body-checkMark,
-input:not(:disabled):not(:checked)
-  + .checkbox-body:hover
-  .checkbox-body-checkMark {
+input:not(:disabled):not(:checked):focus + .checkbox-body .checkbox-body-checkMark,
+input:not(:disabled):not(:checked) + .checkbox-body:hover .checkbox-body-checkMark {
   /* フォーカス、ホバー時に色変更 */
   color: var(--color-textNeither);
 }
@@ -624,13 +624,11 @@ input:not(:disabled):not(:checked)
   -webkit-user-select: none;
   cursor: pointer;
 }
-.toggle-body-text {
+.toggle_body_text {
   /* テキスト */
   margin: 0 0.5rem 0 0;
-  font-size: large;
-  font-weight: bolder;
 }
-.toggle-body-box {
+.toggle_body_box {
   /* トグル本体 */
   display: grid;
   grid-template-rows: 1fr;
@@ -643,34 +641,34 @@ input:not(:disabled):not(:checked)
   justify-items: start;
   transition: all 0.5s ease;
 }
-input:focus + .toggle-body .toggle-body-box {
+input:focus + .toggle-body .toggle_body_box {
   /* フォーカス */
   background-color: var(--color-input-toggle-focus);
 }
-input:indeterminate + .toggle-body .toggle-body-box,
-input:checked:indeterminate + .toggle-body .toggle-body-box {
+input:indeterminate + .toggle-body .toggle_body_box,
+input:checked:indeterminate + .toggle-body .toggle_body_box {
   /* 中間状態 */
   background-color: var(--color-input-toggle-indeterminate);
 }
-input:checked + .toggle-body .toggle-body-box {
+input:checked + .toggle-body .toggle_body_box {
   /* オン */
   background-color: var(--color-input-toggle-on);
 }
-.toggle-body-padding {
+.toggle_body_padding {
   /* 間隔調整用 */
   width: 0.25rem;
   transition: width 0.5s ease 0s;
 }
-input:indeterminate + .toggle-body .toggle-body-padding,
-input:checked:indeterminate + .toggle-body .toggle-body-padding {
+input:indeterminate + .toggle-body .toggle_body_padding,
+input:checked:indeterminate + .toggle-body .toggle_body_padding {
   /* 間隔調整 中間 */
   width: 1rem;
 }
-input:checked + .toggle-body .toggle-body-padding {
+input:checked + .toggle-body .toggle_body_padding {
   /* 間隔調整 オン */
   width: 1.75rem;
 }
-.toggle-body-thumb {
+.toggle_body_thumb {
   /* 丸いやつ */
   border-radius: 50%;
   width: 1rem;
@@ -768,38 +766,38 @@ input:not(:disabled):focus + .remove-tab-text {
   display: none;
 }
 
-.authors-list {
+.authors_list {
   /* オーナーリスト */
   display: grid;
   grid-gap: 0.5rem;
 }
-.author-name {
+.author_name {
   /* オーナー名子要素 */
   display: grid;
   grid-template-columns: auto 1fr;
   place-items: normal;
 }
-.author-num {
+.author_num {
   /* 通し番号 */
   place-self: center;
   padding: 0.25rem;
   width: 1.5rem;
   text-align: center;
 }
-.authors-list-control {
+.authors_list_control {
   /* コントロール */
   display: flex;
   font-size: small;
   margin: 0.25rem;
   flex-wrap: wrap;
 }
-.add-author,
-.remove-author {
+.add_author,
+.remove_author {
   /* 追加削除 */
   position: relative;
 }
-.add-author-text,
-.remove-author-text {
+.add_author_text,
+.remove_author_text {
   /* 追加削除文字 */
   padding: 0.25rem 0.5rem;
   user-select: none;
@@ -818,7 +816,7 @@ input#author-delete:not(:disabled):focus + label {
   color: var(--color-remove);
 }
 
-div.data-check {
+div.data_check {
   /* データチェック */
   display: flex;
   flex-grow: 1;
@@ -830,7 +828,7 @@ div.data-check {
   scrollbar-width: thin;
   scrollbar-color: var(--color-scrollbar-track) transparent;
 }
-div.data-check.drag-lock {
+div.data_check.drag-lock {
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -844,7 +842,7 @@ div.preview {
   flex-grow: 1;
   background-color: var(--color-background);
 }
-div.preview-control-bar {
+div.preview_control_bar {
   display: flex;
   justify-content: flex-end;
   background-color: var(--color-toolbar);
@@ -852,21 +850,25 @@ div.preview-control-bar {
   -ms-user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
-  box-shadow: rgba(0, 0, 0, 0.133) 0 6.4px 14.4px 0,
-    rgba(0, 0, 0, 0.11) 0 1.2px 3.6px 0;
+  box-shadow: rgba(0, 0, 0, 0.133) 0 6.4px 14.4px 0, rgba(0, 0, 0, 0.11) 0 1.2px 3.6px 0;
 }
-.preview-control-child label {
+.preview_control_child label {
   transition: 0.5s;
-  display: block;
+  display: grid;
   padding: 0.5em;
 }
-.preview-control-child p {
+.control_text p {
   margin: 0;
 }
-.preview-control-child label:hover,
-input:focus + label.control-text {
+.preview_control_child label:hover,
+input:focus + label.control_text {
   cursor: pointer;
   background-color: var(--color-toolbar-hover);
+}
+.preview_control_child_toggle label {
+  transition: 0.5s;
+  display: grid;
+  padding: 0.5em;
 }
 .display-preview-card {
   /* display preview */
@@ -885,8 +887,7 @@ input:focus + label.control-text {
   -ms-user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
-  box-shadow: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.132),
-    0 0.3px 0.9px 0 rgba(0, 0, 0, 0.108);
+  box-shadow: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.132), 0 0.3px 0.9px 0 rgba(0, 0, 0, 0.108);
 }
 .card-icon {
   height: 100%;
@@ -916,8 +917,7 @@ div.code-preview pre {
   white-space: initial;
   scrollbar-width: thin;
   scrollbar-color: var(--color-scrollbar-track) transparent;
-  box-shadow: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.132),
-    0 0.3px 0.9px 0 rgba(0, 0, 0, 0.108);
+  box-shadow: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.132), 0 0.3px 0.9px 0 rgba(0, 0, 0, 0.108);
 }
 textarea#code-buffer {
   position: absolute;

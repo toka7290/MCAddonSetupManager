@@ -81,7 +81,7 @@
     min-width: 0;
     width: auto;
   }
-  div.data-check {
+  div.data_check {
     /* データチェック */
     overflow-y: unset;
     height: auto;

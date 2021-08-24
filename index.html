@@ -2,33 +2,34 @@
 <html lang="ja">
 
   <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/websaite#">
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>とかさんの Manifest Generator</title>
     <!-- metadata -->
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="keywords" content="manifest.json,manifest,Manifest,マニフェスト,Generator,generator,Minecraft,minecraft,マインクラフト,BE,Bedrock Edition,bedrock,tool,ツール,Addon,Add-on,アドオン,resource,behavior,subpacks,metadata,dependencies,modules,capabilities,とかさん" />
-    <meta name="Description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツール。 manifest.jsonを簡単手軽に編集、変換、生成、プレビューできます。 リソースパック、ビヘイビアパック、ワールドテンプレートの他、すべての用途に完全対応！ プレビュー表示機能で装飾文字の編集も簡単！" />
-    <meta http-equiv="content-language" content="ja" />
-    <meta name="theme-color" content="#60ad5e" />
-    <meta property="og:url" content="https://toka7290.github.io/MCAddonSetupManager/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="とかさんの Manifest Generator" />
-    <meta property="og:title" content="Manifest Generator" />
-    <meta property="og:description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。" />
-    <meta property="og:image" content="https://toka7290.github.io/MCAddonSetupManager/img/icon_2000.png" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@toka7290" />
-    <meta name="google-site-verification" content="Gvi-XrJEZRsxJgsNLv5NOddbD6COJo804pUgyPvpi34" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="keywords" content="manifest.json,manifest,Manifest,マニフェスト,Generator,generator,Minecraft,minecraft,マインクラフト,BE,Bedrock Edition,bedrock,tool,ツール,Addon,Add-on,アドオン,resource,behavior,subpacks,metadata,dependencies,modules,capabilities,とかさん">
+    <meta name="Description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツール。 manifest.jsonを簡単手軽に編集、変換、生成、プレビューできます。 リソースパック、ビヘイビアパック、ワールドテンプレートの他、すべての用途に完全対応！ プレビュー表示機能で装飾文字の編集も簡単！">
+    <meta http-equiv="content-language" content="ja">
+    <meta name="theme-color" content="#60ad5e" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+    <meta property="og:url" content="https://toka7290.github.io/MCAddonSetupManager/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="とかさんの Manifest Generator">
+    <meta property="og:title" content="Manifest Generator">
+    <meta property="og:description" content="Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。">
+    <meta property="og:image" content="https://toka7290.github.io/MCAddonSetupManager/img/icon_2000.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@toka7290">
+    <meta name="google-site-verification" content="Gvi-XrJEZRsxJgsNLv5NOddbD6COJo804pUgyPvpi34">
     <!-- css -->
     <link rel="preload" href="./css/style.min.css" as="style">
-    <link rel="stylesheet" href="./css/color.min.css" async />
-    <link rel="stylesheet" href="./css/style.min.css" async />
-    <link rel="stylesheet" href="./css/prism.min.css" async defer />
-    <link rel="stylesheet" href="./css/phone.min.css" media="(max-width: 59rem)" async />
+    <link rel="stylesheet" href="./css/color.min.css" async>
+    <link rel="stylesheet" href="./css/style.min.css" async>
+    <link rel="stylesheet" href="./css/prism.min.css" async defer>
+    <link rel="stylesheet" href="./css/phone.min.css" media="(max-width: 59rem)" async>
     <!-- icon etc -->
-    <link rel="apple-touch-icon" href="img/icon_apple-touch-icon.png" />
-    <link rel="icon" href="img/icon.webp" />
-    <link rel="manifest" href="./json/webapp.webmanifest" />
+    <link rel="apple-touch-icon" href="img/icon_apple-touch-icon.png">
+    <link rel="icon" href="img/icon.webp">
+    <link rel="manifest" href="./json/webapp.webmanifest">
     <script type="application/ld+json">
       {
         "@context": "http://schema.org",
@@ -67,7 +68,7 @@
         </div>
         <div class="title">
           <h1>とかさんの Manifest Generator</h1>
-          <p>version:1.5.0</p>
+          <p>version:1.6.0_dev</p>
         </div>
         <div class="header-menu">
           <div class="header-menu-element import-file">
@@ -92,41 +93,41 @@
           </div>
         </div>
         <div class="header-menu-alt">
-          <input type="file" name="input-file" id="input-file" accept=".json" class="invisible-Control" />
+          <input type="file" name="input-file" id="input-file" accept=".json" class="invisible_Control">
           <label for="input-file" class="import-file">
-            <img src="img/import.svg" alt="import" width="32px" height="32px" />
+            <img src="img/import.svg" alt="import" width="32px" height="32px">
             <p>Import</p>
           </label>
           <details class="open-more-info">
-            <summary class="more-info-icon"><img src="img/more.svg" alt="more" width="32px" height="32px" /></summary>
+            <summary class="more-info-icon"><img src="img/more.svg" alt="more" width="32px" height="32px"></summary>
             <ul class="more-info">
               <li>
-                <a href="https://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener noreferrer"><img src="img/homepage.svg" alt="" width="32px" height="32px" />
+                <a href="https://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener noreferrer"><img src="img/homepage.svg" alt="" width="32px" height="32px">
                   <p>Homepage</p>
                 </a>
               </li>
               <li>
-                <a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener noreferrer"><img src="img/twitter.svg" alt="" width="32px" height="32px" />
+                <a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener noreferrer"><img src="img/twitter.svg" alt="" width="32px" height="32px">
                   <p>Twitter</p>
                 </a>
               </li>
               <li>
-                <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener noreferrer"><img src="img/github.svg" alt="" width="32px" height="32px" />
+                <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener noreferrer"><img src="img/github.svg" alt="" width="32px" height="32px">
                   <p>GitHub</p>
                 </a>
               </li>
               <li>
-                <a href="https://tokamcwin10.blog.jp/article-38495158" target="_blank" title="manifest.jsonの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/help.svg" alt="" width="32px" height="32px" />
+                <a href="https://tokamcwin10.blog.jp/article-38495158" target="_blank" title="manifest.jsonの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/help.svg" alt="" width="32px" height="32px">
                   <p>Manifest Help</p>
                 </a>
               </li>
               <li>
-                <a href="https://tokamcwin10.blog.jp/article-39181630" target="_blank" title="Subpacksの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/subpacks.svg" alt="" width="32px" height="32px" />
+                <a href="https://tokamcwin10.blog.jp/article-39181630" target="_blank" title="Subpacksの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/subpacks.svg" alt="" width="32px" height="32px">
                   <p>Subpacks Help</p>
                 </a>
               </li>
               <li>
-                <input type="button" id="open-about" class="invisible-Control">
+                <input type="button" id="open-about" class="invisible_Control">
                 <label class="open-about" for="open-about">
                   <img src="img/icon.svg" alt="" height="32px" width="32px">
                   <p>about</p>
@@ -140,24 +141,24 @@
       <div class="page-about about-hide">
         <div class="about-area">
           <div class="close-about">
-            <input type="button" id="close-about-btn" class="invisible-Control">
+            <input type="button" id="close-about-btn" class="invisible_Control">
             <label for="close-about-btn">
-              <img src="img/close.svg" alt="" id="close-about_image" width="50px" height="50px" />
+              <img src="img/close.svg" alt="" id="close-about_image" width="50px" height="50px">
             </label>
           </div>
           <div class="about-content">
             <img src="img/icon.svg" alt="" width="180px" height="180px">
             <div class="about-title">
               <h2>とかさんの Manifest Generator</h2>
-              <p>version:1.5.0</p>
+              <p>version:1.6.0_dev</p>
             </div>
-            <div id="page-share"><img src="img/share.svg" alt="" width="32px" height="32px" /></div>
             <div class="about-external-link">
-              <a href="https://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener noreferrer"><img src="img/homepage.svg" alt="" width="32px" height="32px" /></a>
-              <a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener noreferrer"><img src="img/twitter.svg" alt="" width="32px" height="32px" /></a>
-              <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener noreferrer"><img src="img/github.svg" alt="" width="32px" height="32px" /></a>
-              <a href="https://tokamcwin10.blog.jp/article-38495158" target="_blank" title="manifest.jsonの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/help.svg" alt="" width="32px" height="32px" /></a>
-              <a href="https://tokamcwin10.blog.jp/article-39181630" target="_blank" title="Subpacksの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/subpacks.svg" alt="" width="32px" height="32px" /></a>
+              <a href="https://tokamcwin10.blog.jp/" target="_blank" title="とかさんのホームページ" rel="noopener noreferrer"><img src="img/homepage.svg" alt="" width="32px" height="32px"></a>
+              <a href="https://twitter.com/toka7290" target="_blank" title="Twitter" rel="noopener noreferrer"><img src="img/twitter.svg" alt="" width="32px" height="32px"></a>
+              <a href="https://github.com/toka7290/MCAddonSetupManager" target="_blank" title="Github" rel="noopener noreferrer"><img src="img/github.svg" alt="" width="32px" height="32px"></a>
+              <a href="https://tokamcwin10.blog.jp/article-38495158" target="_blank" title="manifest.jsonの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/help.svg" alt="" width="32px" height="32px"></a>
+              <a href="https://tokamcwin10.blog.jp/article-39181630" target="_blank" title="Subpacksの解説ページに飛びます。" rel="noopener noreferrer"><img src="img/subpacks.svg" alt="" width="32px" height="32px"></a>
+              <div id="page-share"><img src="img/share.svg" alt="" width="32px" height="32px"></div>
             </div>
             <div class="copyright">
               <p>Copyright (c) 2016-2019 OnikurYH</p>
@@ -205,7 +206,7 @@
                 <label for="header_pack_name">名前</label>
               </div>
               <div class="value-input">
-                <input type="text" name="pack_name" id="header_pack_name" />
+                <input type="text" name="pack_name" id="header_pack_name">
               </div>
             </div>
             <div class="value-element" title="このパックの説明を設定します。">
@@ -221,23 +222,23 @@
                 <label for="header_version_major">バージョン</label>
               </div>
               <div class="value-input type-version">
-                <label><input type="number" min="0" name="" id="header_version_major" value="1" /></label>
+                <label><input type="number" min="0" name="" id="header_version_major" value="1"></label>
                 <span>.</span>
-                <label><input type="number" min="0" name="" id="header_version_minor" value="0" /></label>
+                <label><input type="number" min="0" name="" id="header_version_minor" value="0"></label>
                 <span>.</span>
-                <label><input type="number" min="0" name="" id="header_version_patch" value="0" /></label>
+                <label><input type="number" min="0" name="" id="header_version_patch" value="0"></label>
               </div>
             </div>
             <div class="value-element" title="このパックが動作するMinecraftの最小バージョン(このパックの作成バージョン)を設定します。">
               <div class="value-label">
-                <label id="min_engine_version" for="header_min_engine_version_major">最小エンジンバージョン</label>
+                <label id="header_min_engine_version" for="header_min_engine_version_major">最小エンジンバージョン</label>
               </div>
-              <div class="value-input type-version" id="min_engine_version_input">
-                <label><input type="number" min="0" name="" id="header_min_engine_version_major" value="1" /></label>
+              <div class="value-input type-version" id="header_min_engine_version_input">
+                <label><input type="number" min="0" name="" id="header_min_engine_version_major" value="1"></label>
                 <span>.</span>
-                <label><input type="number" min="0" name="" id="header_min_engine_version_minor" value="13" /></label>
+                <label><input type="number" min="0" name="" id="header_min_engine_version_minor" value="13"></label>
                 <span>.</span>
-                <label><input type="number" min="0" name="" id="header_min_engine_version_patch" value="0" /></label>
+                <label><input type="number" min="0" name="" id="header_min_engine_version_patch" value="0"></label>
               </div>
             </div>
             <div class="value-element" title="このパックのUUIDを設定します。">
@@ -245,15 +246,15 @@
                 <label for="header_uuid">UUID</label>
               </div>
               <div class="value-input type-uuid">
-                <label><input type="text" name="uuid" id="header_uuid" /></label>
+                <label><input type="text" name="uuid" id="header_uuid"></label>
                 <label>
-                  <input type="button" value="Generate" class="generate_uuid" id="header_uuid_generate" />
+                  <input type="button" value="Generate" class="generate_uuid" id="header_uuid_generate">
                 </label>
               </div>
             </div>
             <div class="value-element" title="このパックをマルチプラットフォーム環境で使用できないようにします。">
               <div class="value-checkbox">
-                <input type="checkbox" name="header_platform_locked" id="header_platform_locked" class="invisible-Control" />
+                <input type="checkbox" name="header_platform_locked" id="header_platform_locked" class="invisible_Control">
                 <label for="header_platform_locked" class="checkbox-body">
                   <div class="checkbox-body-box">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox-body-checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
@@ -266,19 +267,19 @@
             </div>
             <div class="value-element" title="このパックワールドの作成されたバージョンを設定します。">
               <div class="value-label">
-                <label id="base_game_version" for="header_base_game_version_major">基本ゲームバージョン</label>
+                <label id="header_base_game_version" for="header_base_game_version_major">基本ゲームバージョン</label>
               </div>
-              <div class="value-input type-version" id="base_game_version_input">
-                <label><input type="number" min="0" name="" id="header_base_game_version_major" value="1" disabled /></label>
+              <div class="value-input type-version" id="header_base_game_version_input">
+                <label><input type="number" min="0" name="" id="header_base_game_version_major" value="1" disabled></label>
                 <span>.</span>
-                <label><input type="number" min="0" name="" id="header_base_game_version_minor" value="13" disabled /></label>
+                <label><input type="number" min="0" name="" id="header_base_game_version_minor" value="13" disabled></label>
                 <span>.</span>
-                <label><input type="number" min="0" name="" id="header_base_game_version_patch" value="0" disabled /></label>
+                <label><input type="number" min="0" name="" id="header_base_game_version_patch" value="0" disabled></label>
               </div>
             </div>
             <div class="value-element" title="ワールドテンプレートの導入時、ワールド設定をロックします。">
               <div class="value-checkbox">
-                <input type="checkbox" name="header_lock_template_options" id="header_lock_template_options" class="invisible-Control" disabled />
+                <input type="checkbox" name="header_lock_template_options" id="header_lock_template_options" class="invisible_Control" disabled>
                 <label for="header_lock_template_options" class="checkbox-body">
                   <div class="checkbox-body-box">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox-body-checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
@@ -289,6 +290,18 @@
                 </label>
               </div>
             </div>
+            <div class="value-element" title="導入画面の制限を行います">
+              <div class="value-label">
+                <label id="header_pack_scope_label" for="header_pack_scope">パックスコープ</label>
+              </div>
+              <div class="value-input">
+                <select name="header_pack_scope" id="header_pack_scope">
+                  <option value="none">なし</option>
+                  <option value="global">グローバル</option>
+                  <option value="world">ワールド</option>
+                </select>
+              </div>
+            </div>
           </div>
           <div class="editor-element" title="このマニフェストを含むパックがどのモジュールを使用するか設定します。">
             <div class="editor-element-legend">
@@ -297,20 +310,20 @@
             <div class="modules tab_contents">
               <div class="modules tab-controls">
                 <div class="modules tab-body" title="編集するモジュールが複数ある場合、切り替えます。">
-                  <label class="modules tab-children invisible-Control selected">
+                  <label class="modules tab-children invisible_Control selected">
                     <input type="button" class="modules">
                     <div class="tab-number">0</div>
                     <div class="tab-underBar"></div>
                   </label>
                 </div>
                 <div class="modules add-tab disabled">
-                  <label class="invisible-Control" title="モジュールを追加します。">
+                  <label class="invisible_Control" title="モジュールを追加します。">
                     <input type="button" id="modules_add" class="modules" disabled>
                     <div class="add-tab-text">+ 追加</div>
                   </label>
                 </div>
                 <div class="modules remove-tab disabled">
-                  <label class="invisible-Control" title="選択しているモジュールを削除します。">
+                  <label class="invisible_Control" title="選択しているモジュールを削除します。">
                     <input type="button" id="modules-delete" class="modules" disabled>
                     <div class="remove-tab-text">- 削除</div>
                   </label>
@@ -324,11 +337,13 @@
                     </div>
                     <div class="value-input">
                       <select name="modules_type" id="modules_type" required>
-                        <option value="resources">resources</option>
                         <option value="data">data</option>
+                        <option value="resources">resources</option>
                         <option value="client_data">client_data</option>
+                        <option value="javascript">javascript</option>
                         <option value="interface">interface</option>
                         <option value="world_template">world_template</option>
+                        <option value="skin_pack">skin_pack</option>
                       </select>
                     </div>
                   </div>
@@ -345,11 +360,11 @@
                       <label for="modules_version_major">バージョン</label>
                     </div>
                     <div class="value-input type-version">
-                      <label><input type="number" min="0" name="" id="modules_version_major" value="1" /></label>
+                      <label><input type="number" min="0" name="" id="modules_version_major" value="1"></label>
                       <span>.</span>
-                      <label><input type="number" min="0" name="" id="modules_version_minor" value="0" /></label>
+                      <label><input type="number" min="0" name="" id="modules_version_minor" value="0"></label>
                       <span>.</span>
-                      <label><input type="number" min="0" name="" id="modules_version_patch" value="0" /></label>
+                      <label><input type="number" min="0" name="" id="modules_version_patch" value="0"></label>
                     </div>
                   </div>
                   <div class="value-element" title="このモジュールのUUIDを設定します。">
@@ -357,8 +372,16 @@
                       <label for="modules_uuid">UUID</label>
                     </div>
                     <div class="value-input type-uuid">
-                      <label><input type="text" name="uuid" id="modules_uuid" /></label>
-                      <label><input type="button" value="Generate" class="generate_uuid" /></label>
+                      <label><input type="text" name="uuid" id="modules_uuid"></label>
+                      <label><input type="button" value="Generate" class="generate_uuid"></label>
+                    </div>
+                  </div>
+                  <div class="value-element" title="スクリプトプライマリファイルを設定します。">
+                    <div class="value-label">
+                      <label for="modules_entry" id="modules_entry_label">エントリー</label>
+                    </div>
+                    <div class="value-input">
+                      <input type="text" name="pack_name" id="modules_entry">
                     </div>
                   </div>
                 </div>
@@ -367,32 +390,32 @@
           </div>
           <div class="editor-element" title="依存関係を設定します。依存関係にあるパックが存在する場合、導入時に依存関係にあるパックも同時に導入します。">
             <div class="editor-element-legend toggle">
-              <input type="checkbox" name="dependencies" id="dependencies_enable" class="invisible-Control" />
+              <input type="checkbox" name="dependencies" id="dependencies_enable" class="invisible_Control">
               <label for="dependencies_enable" class="toggle-body">
-                <p class="toggle-body-text">Dependencies</p>
-                <div class="toggle-body-box">
-                  <div class="toggle-body-padding"></div>
-                  <div class="toggle-body-thumb"></div>
+                <p class="toggle_body_text">Dependencies</p>
+                <div class="toggle_body_box">
+                  <div class="toggle_body_padding"></div>
+                  <div class="toggle_body_thumb"></div>
                 </div>
               </label>
             </div>
             <div class="dependencies tab_contents">
               <div class="dependencies tab-controls">
                 <div class="dependencies tab-body" title="編集する依存関係が複数ある場合、切り替えます。">
-                  <label class="dependencies tab-children invisible-Control selected">
+                  <label class="dependencies tab-children invisible_Control selected">
                     <input type="button" class="dependencies">
                     <div class="tab-number">0</div>
                     <div class="tab-underBar"></div>
                   </label>
                 </div>
                 <div class="dependencies add-tab disabled" title="依存関係にあるパックを追加します。">
-                  <label class="invisible-Control">
+                  <label class="invisible_Control">
                     <input type="button" id="dependencies_add" class="dependencies" disabled>
                     <div class="add-tab-text">+ 追加</div>
                   </label>
                 </div>
                 <div class="dependencies remove-tab disabled" title="選択しているパックを削除します。">
-                  <label class="invisible-Control">
+                  <label class="invisible_Control">
                     <input type="button" id="dependencies-delete" class="dependencies" disabled>
                     <div class="remove-tab-text">- 削除</div>
                   </label>
@@ -405,7 +428,7 @@
                       <label for="dependencies_uuid">UUID</label>
                     </div>
                     <div class="value-input">
-                      <input type="text" name="uuid" id="dependencies_uuid" disabled />
+                      <input type="text" name="uuid" id="dependencies_uuid" disabled>
                     </div>
                   </div>
                   <div class="value-element" title="依存関係にあるパックのバージョンを設定します。">
@@ -413,11 +436,11 @@
                       <label for="dependencies_version_major">バージョン</label>
                     </div>
                     <div class="value-input type-version">
-                      <label><input type="number" min="0" name="" id="dependencies_version_major" value="1" disabled /></label>
+                      <label><input type="number" min="0" name="" id="dependencies_version_major" value="1" disabled></label>
                       <span>.</span>
-                      <label><input type="number" min="0" name="" id="dependencies_version_minor" value="0" disabled /></label>
+                      <label><input type="number" min="0" name="" id="dependencies_version_minor" value="0" disabled></label>
                       <span>.</span>
-                      <label><input type="number" min="0" name="" id="dependencies_version_patch" value="0" disabled /></label>
+                      <label><input type="number" min="0" name="" id="dependencies_version_patch" value="0" disabled></label>
                     </div>
                   </div>
                 </div>
@@ -426,21 +449,19 @@
           </div>
           <div class="editor-element" title="特殊な機能を有効にする場合に使用します。">
             <div class="editor-element-legend toggle">
-              <div>
-                <input type="checkbox" name="capabilities" id="capabilities_enable" class="invisible-Control" />
-                <label for="capabilities_enable" class="toggle-body">
-                  <p class="toggle-body-text">Capabilities</p>
-                  <div class="toggle-body-box">
-                    <div class="toggle-body-padding"></div>
-                    <div class="toggle-body-thumb"></div>
-                  </div>
-                </label>
-              </div>
+              <input type="checkbox" name="capabilities" id="capabilities_enable" class="invisible_Control">
+              <label for="capabilities_enable" class="toggle-body">
+                <p class="toggle_body_text">Capabilities</p>
+                <div class="toggle_body_box">
+                  <div class="toggle_body_padding"></div>
+                  <div class="toggle_body_thumb"></div>
+                </div>
+              </label>
             </div>
             <div class="capabilities_list" title="このパックで追加の機能を有効にします。">
               <div class="value-element" title="カスタムUI機能を有効化します。">
                 <div class="value-checkbox">
-                  <input type="checkbox" name="experimental_custom_ui" id="experimental_custom_ui" class="invisible-Control" disabled />
+                  <input type="checkbox" name="experimental_custom_ui" id="experimental_custom_ui" class="invisible_Control" disabled>
                   <label for="experimental_custom_ui" class="checkbox-body">
                     <div class="checkbox-body-box">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox-body-checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
@@ -453,7 +474,7 @@
               </div>
               <div class="value-element" title="Education Chemistry の機能に追加、変更できるようにします。">
                 <div class="value-checkbox">
-                  <input type="checkbox" name="chemistry" id="chemistry" class="invisible-Control" disabled />
+                  <input type="checkbox" name="chemistry" id="chemistry" class="invisible_Control" disabled>
                   <label for="chemistry" class="checkbox-body">
                     <div class="checkbox-body-box">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox-body-checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
@@ -466,7 +487,7 @@
               </div>
               <div class="value-element" title="レイトレーシングの機能をパックで使えるようにします。(1.15.x以上)">
                 <div class="value-checkbox">
-                  <input type="checkbox" name="raytracing" id="raytracing" class="invisible-Control" disabled />
+                  <input type="checkbox" name="raytracing" id="raytracing" class="invisible_Control" disabled>
                   <label for="raytracing" class="checkbox-body">
                     <div class="checkbox-body-box">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox-body-checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
@@ -481,16 +502,14 @@
           </div>
           <div class="editor-element" title="製作者に関する情報を記載します。ゲームプレイへの影響はありません。">
             <div class="editor-element-legend toggle">
-              <div>
-                <input type="checkbox" name="metadata" id="metadata_enable" class="invisible-Control" />
-                <label for="metadata_enable" class="toggle-body">
-                  <p class="toggle-body-text">Metadata</p>
-                  <div class="toggle-body-box">
-                    <div class="toggle-body-padding"></div>
-                    <div class="toggle-body-thumb"></div>
-                  </div>
-                </label>
-              </div>
+              <input type="checkbox" name="metadata" id="metadata_enable" class="invisible_Control">
+              <label for="metadata_enable" class="toggle-body">
+                <p class="toggle_body_text">Metadata</p>
+                <div class="toggle_body_box">
+                  <div class="toggle_body_padding"></div>
+                  <div class="toggle_body_thumb"></div>
+                </div>
+              </label>
             </div>
             <div class="metadata_list">
               <div class="value-element" title="このパックの作者を設定します。作者は複数追加することができます。">
@@ -498,23 +517,23 @@
                   <label for="metadata_author">作者</label>
                 </div>
                 <div class="value-input type_authors">
-                  <div class="authors-list">
-                    <label class="author-name">
-                      <div class="author-num">0</div>
-                      <input type="text" class="metadata_author" disabled />
+                  <div class="authors_list">
+                    <label class="author_name">
+                      <div class="author_num">0</div>
+                      <input type="text" class="metadata_author" disabled>
                     </label>
                   </div>
-                  <div class="authors-list-control" title="作者入力欄を追加します。">
-                    <div class="add-author">
-                      <input type="button" id="author-add" class="invisible-Control" disabled>
+                  <div class="authors_list_control" title="作者入力欄を追加します。">
+                    <div class="add_author">
+                      <input type="button" id="author-add" class="invisible_Control" disabled>
                       <label for="author-add">
-                        <div class="add-author-text">+ 作者を追加</div>
+                        <div class="add_author_text">+ 作者を追加</div>
                       </label>
                     </div>
-                    <div class="remove-author" title="作者入力欄を消します。">
-                      <input type="button" id="author-delete" class="invisible-Control" disabled>
+                    <div class="remove_author" title="作者入力欄を消します。">
+                      <input type="button" id="author-delete" class="invisible_Control" disabled>
                       <label for="author-delete">
-                        <div class="remove-author-text">- 作者を削除</div>
+                        <div class="remove_author_text">- 作者を削除</div>
                       </label>
                     </div>
                   </div>
@@ -525,7 +544,7 @@
                   <label for="metadata_url">URL</label>
                 </div>
                 <div class="value-input">
-                  <input type="url" name="metadata_url" id="metadata_url" disabled />
+                  <input type="url" name="metadata_url" id="metadata_url" disabled>
                 </div>
               </div>
               <div class="value-element" title="このパックのライセンスを設定します。">
@@ -533,41 +552,39 @@
                   <label for="metadata_license">ライセンス</label>
                 </div>
                 <div class="value-input">
-                  <input type="text" name="metadata_license" id="metadata_license" disabled />
+                  <input type="text" name="metadata_license" id="metadata_license" disabled>
                 </div>
               </div>
             </div>
           </div>
           <div class="editor-element" title="サブパック機能の設定を行います。アドオンの導入画面で内容を切り替えられる機能です。">
             <div class="editor-element-legend toggle">
-              <div>
-                <input type="checkbox" name="subpacks" id="subpacks_enable" class="invisible-Control" />
-                <label for="subpacks_enable" class="toggle-body">
-                  <p class="toggle-body-text">Subpacks</p>
-                  <div class="toggle-body-box">
-                    <div class="toggle-body-padding"></div>
-                    <div class="toggle-body-thumb"></div>
-                  </div>
-                </label>
-              </div>
+              <input type="checkbox" name="subpacks" id="subpacks_enable" class="invisible_Control">
+              <label for="subpacks_enable" class="toggle-body">
+                <p class="toggle_body_text">Subpacks</p>
+                <div class="toggle_body_box">
+                  <div class="toggle_body_padding"></div>
+                  <div class="toggle_body_thumb"></div>
+                </div>
+              </label>
             </div>
             <div class="subpacks tab_contents">
               <div class="subpacks tab-controls">
                 <div class="subpacks tab-body" title="編集するサブパックが複数ある場合、切り替えます。">
-                  <label class="subpacks tab-children invisible-Control selected">
+                  <label class="subpacks tab-children invisible_Control selected">
                     <input type="button" class="subpacks">
                     <div class="tab-number">0</div>
                     <div class="tab-underBar"></div>
                   </label>
                 </div>
                 <div class="subpacks add-tab disabled" title="サブパックのフォルダを追加します。">
-                  <label class="invisible-Control">
+                  <label class="invisible_Control">
                     <input type="button" id="subpacks_add" class="subpacks" disabled>
                     <div class="add-tab-text">+ 追加</div>
                   </label>
                 </div>
                 <div class="subpacks remove-tab disabled" title="選択されているサブパックを削除します。">
-                  <label class="invisible-Control">
+                  <label class="invisible_Control">
                     <input type="button" id="subpacks-delete" class="subpacks" disabled>
                     <div class="remove-tab-text">- 削除</div>
                   </label>
@@ -580,7 +597,7 @@
                       <label for="subpacks_folder_name">フォルダー名</label>
                     </div>
                     <div class="value-input">
-                      <input type="text" name="uuid" id="subpacks_folder_name" disabled />
+                      <input type="text" name="uuid" id="subpacks_folder_name" disabled>
                     </div>
                   </div>
                   <div class="value-element" title="サブパックの実際に表示される名前を設定します。">
@@ -588,7 +605,7 @@
                       <label for="subpacks_name">名前</label>
                     </div>
                     <div class="value-input">
-                      <input type="text" name="uuid" id="subpacks_name" disabled />
+                      <input type="text" name="uuid" id="subpacks_name" disabled>
                     </div>
                   </div>
                   <div class="value-element" title="このサブパックのメモリ使用量">
@@ -596,7 +613,7 @@
                       <label for="subpacks_memory_tier">メモリティア</label>
                     </div>
                     <div class="value-input">
-                      <input type="number" min="0" name="subpacks_memory_tier" id="subpacks_memory_tier" value="0" disabled />
+                      <input type="number" min="0" name="subpacks_memory_tier" id="subpacks_memory_tier" value="0" disabled>
                     </div>
                   </div>
                 </div>
@@ -606,18 +623,28 @@
         </form>
       </div>
       <div class="separator"></div>
-      <div class="data-check">
+      <div class="data_check">
         <div class="preview">
-          <div class="preview-control-bar">
-            <div class="preview-control-child" title="jsonをクリップボードにコピーします。">
-              <input type="button" id="control_copy" class="invisible-Control">
-              <label for="control_copy" class="control-text">
+          <div class="preview_control_bar">
+            <div class="preview_control_child_toggle" title="改行、空白文字をなくしサイズを小さくします。">
+              <input type="checkbox" name="compact" id="control_compact" class="invisible_Control">
+              <label for="control_compact" class="toggle-body">
+                <p class="toggle_body_text">Compact</p>
+                <div class="toggle_body_box">
+                  <div class="toggle_body_padding"></div>
+                  <div class="toggle_body_thumb"></div>
+                </div>
+              </label>
+            </div>
+            <div class="preview_control_child" title="jsonをクリップボードにコピーします。">
+              <input type="button" id="control_copy" class="invisible_Control">
+              <label for="control_copy" class="control_text">
                 <p id="control_copy_text">Copy</p>
               </label>
             </div>
-            <div class="preview-control-child" title="manifest.jsonをダウンロードします。">
-              <input type="button" id="control_download" class="invisible-Control">
-              <label for="control_download" class="control-text">
+            <div class="preview_control_child" title="manifest.jsonをダウンロードします。">
+              <input type="button" id="control_download" class="invisible_Control">
+              <label for="control_download" class="control_text">
                 <p>Download</p>
               </label>
             </div>
@@ -643,21 +670,21 @@
           </div>
         </div>
         <div class="issue">
-          <input type="checkbox" name="issue-control" id="issue-control" class="invisible-Control">
+          <input type="checkbox" name="issue-control" id="issue-control" class="invisible_Control">
           <label for="issue-control" class="issue-status-bar">
             <div class="issue-status-label">
               <svg xmlns="http://www.w3.org/2000/svg" class="close" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 15l-6-6-6 6" />
+                <path d="M18 15l-6-6-6 6">
               </svg>
               <span>問題</span>
             </div>
             <div class="issue-status-num">
               <div class="issue-status-warning">
-                <img src="img/warning.svg" alt="" width="19px" height="19px" />
+                <img src="img/warning.svg" alt="" width="19px" height="19px">
                 <span class="issue-warning-num">警告:0</span>
               </div>
               <div class="issue-status-error">
-                <img src="img/error.svg" alt="" width="19px" height="19px" />
+                <img src="img/error.svg" alt="" width="19px" height="19px">
                 <span class="issue-error-num">エラー:0</span>
               </div>
             </div>
@@ -674,7 +701,7 @@
     </div>
     <!-- sw -->
     <script>
-      if ("serviceWorker" in navigator) {
+      if ("serviceWorker" in navigator && location.protocol == "https:") {
         window.addEventListener("load", function () {
           navigator.serviceWorker
             .register("/MCAddonSetupManager/serviceworker.js", {
@@ -699,20 +726,20 @@
       });
     </script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEW7Y56GND"></script>
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEW7Y56GND"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
-
       gtag('config', 'G-MEW7Y56GND');
-    </script>
+    </script> -->
     <!-- lib -->
-    <script src="lib/jquery-3.5.1.min.js" defer></script>
+    <script src="lib/jquery-3.6.0.min.js" defer></script>
     <script src="lib/prism.js" defer></script>
     <script src="lib/minecraft_text.min.js" defer></script>
     <!-- js -->
-    <script type="text/javascript" src="js/main.min.js" defer></script>
+    <!-- <script type="text/javascript" src="js/main.min.js" defer></script> -->
+    <script type="text/javascript" src="js/main.js" defer></script>
   </body>
 
 </html>

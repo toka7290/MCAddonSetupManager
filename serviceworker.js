@@ -1,4 +1,5 @@
-var CACHE_NAME = "toka-20210130";
+const CACHE_VERSION = "2021040720";
+const CACHE_NAME = `${registration.scope}!${CACHE_VERSION}`;
 var urlsToCache = [
   "/MCAddonSetupManager/",
   "/MCAddonSetupManager/index.html",
@@ -25,58 +26,76 @@ var urlsToCache = [
   "/MCAddonSetupManager/img/warning.svg",
   "/MCAddonSetupManager/js/main.min.js",
   "/MCAddonSetupManager/json/webapp.webmanifest",
-  "/MCAddonSetupManager/lib/jquery-3.5.1.min.js",
+  "/MCAddonSetupManager/lib/jquery-3.6.0.min.js",
   "/MCAddonSetupManager/lib/minecraft_text.min.js",
   "/MCAddonSetupManager/lib/prism.js",
   "/MCAddonSetupManager/lib/minecraft_text.min.js.map",
 ];
-var oldCacheKeys = [
-  "toka-20210105",
-  "toka-20201119",
-  "toka-20200904",
-  "toka-20200831",
-  "pwa-caches",
-];
 
 // インストール処理
-self.addEventListener("install", function (event) {
+self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(async function (cache) {
+    caches.open(CACHE_NAME).then((cache) => {
+      // 指定されたファイルをキャッシュに追加する
       return cache.addAll(urlsToCache);
     })
   );
 });
+
 // アクティブ時
-self.addEventListener("activate", function (event) {
+self.addEventListener("activate", (event) => {
   event.waitUntil(
-    (function () {
-      caches.keys().then(function (oldCaches) {
-        oldCaches
-          .filter(function (key) {
-            return key !== CACHE_NAME;
+    caches
+      .keys()
+      .then((cacheNames) => {
+        return cacheNames.filter((cacheName) => {
+          // このスコープに所属していて且つCACHE_NAMEではないキャッシュを探す
+          return cacheName.startsWith(`${registration.scope}!`) && cacheName !== CACHE_NAME;
+        });
+      })
+      .then((cachesToDelete) => {
+        return Promise.all(
+          cachesToDelete.map((cacheName) => {
+            // いらないキャッシュを削除する
+            return caches.delete(cacheName);
           })
-          .map(function (key) {
-            return caches.delete(key);
-          });
-      });
-      clients.claim();
-    })()
+        );
+      })
   );
 });
 
 // リソースフェッチ時のキャッシュロード処理
-self.addEventListener("fetch", function (event) {
+self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.match(event.request).then((response) => {
-        return (
-          response ||
-          fetch(event.request).then((responseCache) => {
-            if (event.request.method != "POST")
-              cache.put(event.request, responseCache.clone());
-            return responseCache;
-          })
-        );
+    caches.match(event.request).then((response) => {
+      // キャッシュ内に該当レスポンスがあれば、それを返す
+      if (response) {
+        return response;
+      }
+
+      // 重要：リクエストを clone する。リクエストは Stream なので
+      // 一度しか処理できない。ここではキャッシュ用、fetch 用と2回
+      // 必要なので、リクエストは clone しないといけない
+      let fetchRequest = event.request.clone();
+
+      return fetch(fetchRequest).then((requestResponse) => {
+        if (
+          !requestResponse ||
+          requestResponse.status !== 200 ||
+          requestResponse.type !== "basic"
+        ) {
+          // キャッシュする必要のないタイプのレスポンスならそのまま返す
+        } else {
+          // 重要：レスポンスを clone する。レスポンスは Stream で
+          // ブラウザ用とキャッシュ用の2回必要。なので clone して
+          // 2つの Stream があるようにする
+          let responseToCache = requestResponse.clone();
+
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+        }
+        return requestResponse;
       });
     })
   );
