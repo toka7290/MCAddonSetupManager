@@ -177,6 +177,8 @@
         <img src="img/import.svg" alt="import" width="50px" height="50px">
         <p>ファイルをドロップして&NewLine;インポートします。</p>
       </div>
+      <div class="file-drop-zone-pick">
+      </div>
     </div>
     <div class="content">
       <div class="editor">
@@ -620,22 +622,29 @@
               </div>
             </div>
           </div>
+          <div class="editor-element">
+            <div class="editor-element-legend">
+              <p>JSON Option</p>
+            </div>
+            <div class="value-element" title="改行、空白文字をなくしサイズを小さくします。">
+              <div class="value-toggle">
+                <input type="checkbox" name="compact" id="control_compact" class="invisible_Control">
+                <label for="control_compact" class="toggle-body">
+                  <p class="toggle_body_text">最小化</p>
+                  <div class="toggle_body_box">
+                    <div class="toggle_body_padding"></div>
+                    <div class="toggle_body_thumb"></div>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
         </form>
       </div>
       <div class="separator"></div>
       <div class="data_check">
         <div class="preview">
           <div class="preview_control_bar">
-            <div class="preview_control_child_toggle" title="改行、空白文字をなくしサイズを小さくします。">
-              <input type="checkbox" name="compact" id="control_compact" class="invisible_Control">
-              <label for="control_compact" class="toggle-body">
-                <p class="toggle_body_text">Compact</p>
-                <div class="toggle_body_box">
-                  <div class="toggle_body_padding"></div>
-                  <div class="toggle_body_thumb"></div>
-                </div>
-              </label>
-            </div>
             <div class="preview_control_child" title="jsonをクリップボードにコピーします。">
               <input type="button" id="control_copy" class="invisible_Control">
               <label for="control_copy" class="control_text">

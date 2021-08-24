@@ -424,14 +424,11 @@ $(document).on("dragenter dragover", function (/** @type {jQuery.Event} */ event
   event.preventDefault();
   $(".file-drop-zone").removeClass("hide");
 });
-$(".file-drop-zone,.file-drop-zone-textarea").on(
-  "dragleave",
-  function (/** @type {Event} */ event) {
-    event.stopPropagation();
-    event.preventDefault();
-    $(".file-drop-zone").addClass("hide");
-  }
-);
+$(".file-drop-zone-pick").on("dragleave", function (/** @type {Event} */ event) {
+  event.stopPropagation();
+  event.preventDefault();
+  $(".file-drop-zone").addClass("hide");
+});
 $(document).on("drop", function (/** @type {jQuery.Event} */ _event) {
   isChanged = true;
   $(".file-drop-zone").addClass("hide");

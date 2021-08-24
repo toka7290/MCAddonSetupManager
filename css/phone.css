@@ -1,7 +1,8 @@
 .value-element {
   grid-template-columns: 1fr;
 }
-.value-checkbox {
+.value-checkbox,
+.value-toggle {
   grid-column: 1;
 }
 .value-input.type-uuid {
