@@ -210,6 +210,19 @@ $(window).resize(function () {
   help_page_num = 5;
   switchHelp();
 });
+// リンク一覧の範囲外クリック
+$(document).on("click", function (ev) {
+  if ($("details.open-more-info").attr("open")) {
+    if ($(ev.target).is("details.open-more-info>summary")) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+    $("details.open-more-info").attr("open", false);
+  }
+});
+$("details.open-more-info").on("mouseenter mouseleave", function (ev) {
+  $("details.open-more-info").attr("open", $(ev.target).is(":hover"));
+});
 // ヘルプを表示
 $("#show_help").on("click", function () {
   $("#page-help").fadeIn("fast");
@@ -263,6 +276,9 @@ $("#open-about").on("click", function () {
 // about閉じる
 $("#close-about-btn").on("click", function () {
   $("div.page-about").addClass("about-hide");
+});
+$(".page-about").on("click", function (ev) {
+  if ($(ev.target).is(".page-about")) $("div.page-about").addClass("about-hide");
 });
 //tab変更
 $(document).on("click", ".tab-children:not(.selected)>input", function () {
@@ -670,13 +686,13 @@ function setSelectRestriction() {
   // モジュール制限
   let disabled_module = [false, false, false, false, false, false, false];
   const m_num = {
-    data: 0,
-    resources: 1,
-    client_data: 2,
-    javascript: 3,
-    interface: 4,
-    world_template: 5,
-    skin_pack: 6,
+    ["data"]: 0,
+    ["resources"]: 1,
+    ["client_data"]: 2,
+    ["javascript"]: 3,
+    ["interface"]: 4,
+    ["world_template"]: 5,
+    ["skin_pack"]: 6,
   };
   for (let index = 0; index < selected_modules.length; index++) {
     // 切替
