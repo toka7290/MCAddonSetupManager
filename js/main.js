@@ -20,10 +20,10 @@ class JSONReplace {
   /**
    *
    * @param {*} data
-   * @returns {string}
+   * @returns {*}
    */
   register(data) {
-    let key = null;
+    let key = undefined;
     if (Array.isArray(data)) {
       // 配列
       if (
@@ -52,27 +52,24 @@ class JSONReplace {
     }
     return key;
   }
-  replaceAll(/**@type {String} */ string_json, compact = false) {
+  replaceAll(/**@type {string} */ string_json, compact = false) {
     const keys = Object.keys(this.replace_point);
     for (let index = 0; index < keys.length; index++) {
       const key = keys[index];
       const data = this.replace_point[key];
-      string_json = string_json.replace(
-        key,
-        (() => {
-          if (Array.isArray(data))
-            return compact
-              ? JSON.stringify(data)
-              : JSON.stringify(data)
-                  .split(/^\[/)
-                  .join("[ ")
-                  .split(/,/)
-                  .join(", ")
-                  .split(/\]$/)
-                  .join(" ]");
-          else if (typeof data == "string") return `"${data}"`;
-        })()
-      );
+      string_json = string_json.replace(key, () => {
+        if (Array.isArray(data))
+          return compact
+            ? JSON.stringify(data)
+            : JSON.stringify(data)
+                .split(/^\[/)
+                .join("[ ")
+                .split(/,/)
+                .join(", ")
+                .split(/\]$/)
+                .join(" ]");
+        else if (typeof data == "string") return `"${data}"`;
+      });
     }
     return string_json;
   }
@@ -217,11 +214,11 @@ $(document).on("click", function (ev) {
       ev.preventDefault();
       ev.stopPropagation();
     }
-    $("details.open-more-info").attr("open", false);
+    $("details.open-more-info").prop("open", false);
   }
 });
 $("details.open-more-info").on("mouseenter mouseleave", function (ev) {
-  $("details.open-more-info").attr("open", $(ev.target).is(":hover"));
+  $("details.open-more-info").prop("open", $(ev.target).is(":hover"));
 });
 // ヘルプを表示
 $("#show_help").on("click", function () {
@@ -431,6 +428,7 @@ function importJsonFile() {
   try {
     file_reader.readAsText(data);
   } catch (e) {
+    window.alert("このファイルはmanifest.jsonではありません。manifest.jsonを選択してください。");
     console.error("error:" + e);
   }
 }
@@ -738,7 +736,7 @@ function checkIssue() {
   const issue_control = new Issue();
   // format_version固有
   let element = $("#header_min_engine_version_major");
-  let element_val = Number(element.val());
+  let element_val = element.val();
   switch (format_version) {
     case 1:
       if (element_val > 1 || Number($("#header_min_engine_version_minor").val()) >= 13) {
@@ -770,7 +768,7 @@ function checkIssue() {
       break;
   }
   element = $("#header_pack_name");
-  element_val = /**@type {String} */ (element.val());
+  element_val = element.val();
   if (element_val == "") {
     //名前がありません
     issue_control.addWarning(
@@ -994,7 +992,7 @@ function setErrorText(text = "", message = "") {
   } else if (positionIndex != -1) {
     const position = splitText[positionIndex + 1];
     const prevLineIndex = text.lastIndexOf("\n", text.lastIndexOf("\n", position) - 1) + 1;
-    const prevLineNum = text.substr(0, prevLineIndex).match(/\n/g).length + 1;
+    const prevLineNum = text.substr(0, prevLineIndex).match(/\n/g)?.length ?? 0 + 1;
     messageText += `\n${prevLineNum}~${prevLineNum + 1}行で問題が発生しました。\n${text.substring(
       prevLineIndex,
       text.indexOf("\n", position - 1)
@@ -1118,23 +1116,12 @@ function setJSONData(json_text = "") {
     onChangedJSON();
     return;
   }
-  if (json_data["header"]["name"] != null) {
-    $("#header_pack_name").val(json_data["header"]["name"]);
-  }
-  if (json_data["header"]["description"] != null) {
-    $("#header_description").val(json_data["header"]["description"]);
-  }
-  if (json_data["header"]["version"] != null) {
-    if (json_data["header"]["version"][0] != null) {
-      $("#header_version_major").val(json_data["header"]["version"][0]);
-    }
-    if (json_data["header"]["version"][1] != null) {
-      $("#header_version_minor").val(json_data["header"]["version"][1]);
-    }
-    if (json_data["header"]["version"][2] != null) {
-      $("#header_version_patch").val(json_data["header"]["version"][2]);
-    }
-  }
+  $("#header_pack_name").val(json_data["header"]?.["name"] ?? "");
+  $("#header_description").val(json_data["header"]?.["description"] ?? "");
+  $("#header_version_major").val(json_data["header"]?.["version"]?.[0] ?? 1);
+  $("#header_version_minor").val(json_data["header"]?.["version"]?.[1] ?? 0);
+  $("#header_version_patch").val(json_data["header"]?.["version"]?.[2] ?? 0);
+  // return;
   if (json_data["header"]["min_engine_version"] != null) {
     if (json_data["header"]["min_engine_version"][0] != null) {
       $("#header_min_engine_version_major").val(json_data["header"]["min_engine_version"][0]);
@@ -1425,7 +1412,7 @@ function getJSONData() {
     }
   }
   return DataReplacer.replaceAll(
-    JSON.stringify(json_raw, null, is_compact ? undefined : "  "),
+    JSON.stringify(json_raw, undefined, is_compact ? undefined : "  "),
     is_compact
   );
 }
