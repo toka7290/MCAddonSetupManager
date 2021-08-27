@@ -1006,12 +1006,20 @@ function setJSONData(json_text = "") {
   try {
     json_data = JSON.parse(json_text);
   } catch (e) {
-    window.alert(`${setErrorText(json_text, e.message)}\nコメントアウトを除去して再度試みます。\n`);
-    try {
-      var data = json_text.replace(/\/\*[\s\S]*?\*\/ | \/\/(?=.*)(?!.*(\"\,|\")).*/g, "");
-      json_data = JSON.parse(data);
-    } catch (e) {
-      window.alert(setErrorText(data, e.message));
+    if (json_text.match(/\/\*[\s\S]*?\*\/ | \/\/(?=.*)(?!.*(\"\,|\")).*/g)) {
+      window.alert(
+        `${setErrorText(json_text, e.message)}\nコメントアウトを除去して再度試みます。\n`
+      );
+      try {
+        var data = json_text.replace(/\/\*[\s\S]*?\*\/ | \/\/(?=.*)(?!.*(\"\,|\")).*/g, "");
+        json_data = JSON.parse(data);
+      } catch (er) {
+        window.alert(setErrorText(data, er.message));
+        console.error("error:" + er);
+        return;
+      }
+    } else {
+      window.alert(setErrorText(json_text, e.message));
       console.error("error:" + e);
       return;
     }
