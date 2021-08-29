@@ -1,5 +1,5 @@
 {
-  "name": "とかさんの Manifest Generator",
+  "name": "MCBE Manifest Generator",
   "short_name": "ManifestGenerator",
   "description": "Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。",
   "display": "standalone",

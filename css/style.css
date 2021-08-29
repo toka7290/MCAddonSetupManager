@@ -133,9 +133,7 @@ div.header-menu-alt {
 .open-more-info {
   height: 3rem;
 }
-summary.more-info-icon,
-div.header-menu-alt > label,
-div.header-menu-alt > div {
+summary.more-info-icon {
   display: inline-flex;
   position: relative;
   align-items: center;
@@ -444,11 +442,11 @@ div.content {
 }
 div.editor {
   /* エディタ */
-  display: block;
+  display: grid;
   flex-basis: 100%;
   flex-grow: 2;
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: hidden;
   scrollbar-width: thin;
   scrollbar-color: var(--color-scrollbar-track) transparent;
 }
@@ -463,6 +461,9 @@ div.editor form {
   width: 100%;
   padding: 1em;
   box-sizing: border-box;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-scrollbar-track) transparent;
 }
 .disabled {
   /* 無効状態 */

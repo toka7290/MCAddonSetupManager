@@ -1,5 +1,7 @@
 // 宣言
 var isChanged = false;
+var is_compact = false;
+var is_simple_mode = false;
 var format_version = 2;
 var is_separator_drag = false;
 var is_dependencies_enable = false;
@@ -8,10 +10,10 @@ var is_metadata_enable = false;
 var is_subpacks_enable = false;
 var is_world_template = false;
 var is_skin_pack = false;
-var is_compact = false;
 var timeoutID;
 var is_can_issue = true;
 var help_page_num = 0;
+var module_description = "";
 
 class JSONReplace {
   constructor() {
@@ -160,9 +162,9 @@ $(window).bind("beforeunload", function () {
 
 /* ------------------------- UI 制御 ------------------------- */
 // input,textarea,select変更
-$(document).on("change keyup", "input,textarea,select", function () {
+$(document).on("change keyup", "input,textarea,select", function (e) {
   onChangedJSON();
-  isChanged = true;
+  isChanged = $(e.target).is("[ui]") ? isChanged : true;
 });
 $(window).on("load", function () {
   onChangedJSON();
@@ -172,7 +174,7 @@ $("textarea").on("keydown", function (e) {
   if (e.key == "Enter") return false;
 });
 // セパレータ移動
-$(".separator").on("mousedown", function (e) {
+$(".separator").on("mousedown", function () {
   if (!is_separator_drag) {
     is_separator_drag = true;
   } else if (is_separator_drag) {
@@ -335,34 +337,37 @@ function addTab(className = "") {
 //tab削除
 $("#modules-delete,#dependencies-delete,#subpacks-delete").on("click", function (e) {
   const className = `.${$(this).attr("class")}`;
-  let tabChildren = $(className + ".tab-children");
   if (
-    tabChildren.length > 1 &&
-    ($(this).hasClass("modules") ||
-      (is_subpacks_enable && $(this).hasClass("subpacks")) ||
-      (is_dependencies_enable && $(this).hasClass("dependencies")))
+    $(this).hasClass("modules") ||
+    (is_subpacks_enable && $(this).hasClass("subpacks")) ||
+    (is_dependencies_enable && $(this).hasClass("dependencies"))
   ) {
-    $(className + ".tab-children.selected").remove();
-    $(className + ".tab-content-list>.selected-tab-content").remove();
-    tabChildren = $(className + ".tab-children");
-    const tab_contents = $(className + ".tab-content-list>div");
-    // 番号再振り当て
-    let index_num = 0;
-    for (let i = 0; i < tabChildren.length; i++) {
-      const tab_child = tabChildren.eq(i);
-      const tab_content = tab_contents.eq(i);
-      if (i == 0) {
-        tab_child.addClass("selected");
-        tab_content.addClass("selected-tab-content");
-      }
-      const tabNumber = tab_child.children("div.tab-number");
-      tabNumber.text(index_num);
-      index_num++;
-    }
+    deleteTab(className);
   }
   onChangedJSON();
   e.stopPropagation();
 });
+function deleteTab(className = "") {
+  let tabChildren = $(className + ".tab-children");
+  if (className == "" || tabChildren.length <= 1) return;
+  $(className + ".tab-children.selected").remove();
+  $(className + ".tab-content-list>.selected-tab-content").remove();
+  tabChildren = $(className + ".tab-children");
+  const tab_contents = $(className + ".tab-content-list>div");
+  // 番号再振り当て
+  let index_num = 0;
+  for (let i = 0; i < tabChildren.length; i++) {
+    const tab_child = tabChildren.eq(i);
+    const tab_content = tab_contents.eq(i);
+    if (i == 0) {
+      tab_child.addClass("selected");
+      tab_content.addClass("selected-tab-content");
+    }
+    const tabNumber = tab_child.children("div.tab-number");
+    tabNumber.text(index_num);
+    index_num++;
+  }
+}
 //author追加
 $("#author-add").on("click", function () {
   addAuthor();
@@ -407,16 +412,119 @@ if (navigator.share) {
     .addClass("supported")
     .on("click", async () => {
       await navigator.share({
-        title: "とかさんの Manifest Generator",
-        text: "とかさんの Manifest Generator -manifest.jsonを簡単に作成・編集-",
+        title: "MCBE Manifest Generator",
+        text: "MCBE Manifest Generator -manifest.jsonを簡単に作成・編集-",
         url: "https://toka7290.github.io/MCAddonSetupManager/",
       });
     });
 }
-// 外部インポート
-$("#input-file").on("change", function () {
-  importJsonFile();
+// ショートカットキー
+$(window).on("keydown", function (e) {
+  if (e.defaultPrevented) {
+    return;
+  }
+  if (e.ctrlKey) {
+    switch (e.key.toLowerCase()) {
+      case "s":
+        if (e.shiftKey) writeFile($("textarea#code-buffer").val(), true);
+        else writeFile($("textarea#code-buffer").val());
+        break;
+    }
+    e.stopPropagation();
+    e.preventDefault();
+  }
 });
+// 各種ファイル入出力処理
+var native_file_system = !!window.showOpenFilePicker;
+// ファイルハンドラ
+var file_handle = undefined;
+// Native file systemが使える場合
+if (native_file_system) {
+  console.log("File System Access APIs");
+  // 切替
+  $(".import_button.file_system_access").removeClass("disabled");
+  $(".import_button.file_reader").addClass("disabled");
+  $(".preview_control_child.save").removeClass("disabled");
+  // インポート処理
+  $("#input_file_fsa").on("click", async () => {
+    [file_handle] = await window.showOpenFilePicker({
+      // 複数ファイルの受け入れ
+      multiple: false,
+      // "すべて" のファイルオプション無効
+      excludeAcceptAllOption: false,
+      // 任意のファイルオプション
+      types: [
+        {
+          description: "JSON",
+          accept: {
+            "application/json": [".json"],
+          },
+        },
+      ],
+    });
+    readFile();
+  });
+  // 保存
+  $("#control_save").on("click", async () => {
+    writeFile($("textarea#code-buffer").val());
+  });
+  // 外部で変更があった場合に表示を更新
+  $(window).on("focus", () => {
+    if (!isChanged && file_handle) {
+      readFile();
+    }
+  });
+} else {
+  // File reader
+  $(".import_button.file_system_access").addClass("disabled");
+  $(".import_button.file_reader").removeClass("disabled");
+  $(".preview_control_child.save").addClass("disabled");
+  $("#input-file").on("change", function () {
+    importJsonFile();
+  });
+}
+// 読み込み処理
+async function readFile() {
+  if (!file_handle) return;
+  // ハンドルからファイルを取得
+  const file = await file_handle.getFile();
+  // テキスト取得
+  const fileContents = await file.text();
+  console.log("read");
+  setJSONData(fileContents);
+}
+// 書き込み処理
+async function writeFile(contents, save_as = false) {
+  let handle;
+  if (!save_as) handle = file_handle;
+  // ファイルハンドルが指定されていないとき
+  if (!handle) {
+    // ハンドルを取得＆ファイルを新規作成
+    handle = await window.showSaveFilePicker({
+      // "すべて" のファイルオプション無効
+      excludeAcceptAllOption: false,
+      // 任意のファイルオプション
+      types: [
+        {
+          description: "JSON",
+          accept: {
+            "application/json": [".json"],
+          },
+        },
+      ],
+    });
+  }
+  // Create a FileSystemWritableFileStream to write to.
+  const writable = await handle.createWritable();
+  // Write the contents of the file to the stream.
+  await writable.write(contents);
+  // Close the file and write the contents to disk.
+  await writable.close();
+  // 保存できたら離脱可に
+  isChanged = false;
+  // ハンドラを保存
+  if (!save_as) file_handle = handle;
+}
 // インポート処理
 function importJsonFile() {
   const data = $("#input-file").prop("files")[0];
@@ -455,10 +563,6 @@ $(document).on("drop", function (/** @type {jQuery.Event} */ _event) {
   $("#input-file").prop("files", event.dataTransfer.files);
   importJsonFile();
 });
-// コンパクト
-$("#control_compact").on("click", function (ev) {
-  is_compact = ev.target.checked;
-});
 // コピー
 $("#control_copy").on("click", function () {
   const codeBuffer = $("textarea#code-buffer");
@@ -479,6 +583,58 @@ $("#control_download").on("click", function () {
     target: "_blank",
   })[0].click();
 });
+// シンプルモード
+$("#control_simple").on("click", function (ev) {
+  is_simple_mode = ev.target.checked;
+  syncEditorMode();
+});
+function syncEditorMode() {
+  $(".editor_element_group.editor_normal_mode").toggleClass("hide", is_simple_mode);
+  $(".editor_element_group.editor_simple_mode").toggleClass("hide", !is_simple_mode);
+  const simple_name_elem = $("#simple_pack_name");
+  const simple_name_elem_val = simple_name_elem.val();
+  const simple_description_elem = $("#simple_description");
+  const simple_description_elem_val = simple_description_elem.val();
+  const name_elem = $("#header_pack_name");
+  const name_elem_val = name_elem.val();
+  const description_elem = $("#header_description");
+  const description_elem_val = description_elem.val();
+  // シンプルモードへ移行時
+  if (is_simple_mode) {
+    if (simple_name_elem_val == "" && name_elem_val != "") {
+      simple_name_elem.val(name_elem_val);
+    }
+    if (simple_description_elem_val == "" && description_elem_val != "") {
+      simple_description_elem.val(description_elem_val);
+    }
+    module_description = $(
+      `.modules.tab-content-list > div:nth-child(1) #modules_description`
+    ).val();
+    let type = "behavior";
+    switch ($(`.modules.tab-content-list > div:nth-child(1) #modules_type`).val()) {
+      case "resources":
+        type = "texture";
+        break;
+      case "world_template":
+        type = "world";
+        break;
+      case "skin_pack":
+        type = "skin";
+        break;
+      default:
+        break;
+    }
+    $(`input[type="radio"][name="simple_type_child"][value="${type}"]`).prop("checked", true);
+  } else {
+    // シンプルモードリセット
+    simple_name_elem.val("");
+    simple_description_elem.val("");
+  }
+}
+// コンパクト
+$("#control_compact").on("click", function (ev) {
+  is_compact = ev.target.checked;
+});
 
 /* ------------------------- json 処理 ------------------------- */
 // フォーマットバージョン変更
@@ -492,6 +648,7 @@ $(document).on("click", 'input[type="button"].generate_uuid', function () {
 });
 // 更新処理
 function onChangedJSON() {
+  if (is_simple_mode) syncSimpleData();
   setDisabled();
   setControls();
   setSelectRestriction();
@@ -678,9 +835,6 @@ function setSelectRestriction() {
   $("#header_pack_scope_label").toggleClass("disabled", is_world_template || is_skin_pack);
   $("#header_pack_scope").prop("disabled", is_world_template || is_skin_pack);
   // モジュールの追加制限
-  // 共存不可のモジュールがある場合は終了
-  if (is_world_template || is_skin_pack || selected_modules.some((m) => m == "resources"))
-    return setTabControls(".modules", [true, 0, 0]);
   // モジュール制限
   let disabled_module = [false, false, false, false, false, false, false];
   const m_num = {
@@ -692,6 +846,9 @@ function setSelectRestriction() {
     ["world_template"]: 5,
     ["skin_pack"]: 6,
   };
+  // 共存不可のモジュールがある場合は終了
+  let exclusive =
+    is_world_template || is_skin_pack || selected_modules.some((m) => m == "resources");
   for (let index = 0; index < selected_modules.length; index++) {
     // 切替
     disabled_module.forEach((val, i) => {
@@ -717,6 +874,7 @@ function setSelectRestriction() {
       ["resources", "world_template", "skin_pack"].forEach((val) => {
         disabled_module[m_num[val]] = true;
       });
+    if (exclusive) disabled_module.fill(true);
     // "entry"の切替
     $(`.modules.tab-content-list > div:nth-child(${index + 1}) #modules_entry_label`).toggleClass(
       "disabled",
@@ -728,7 +886,13 @@ function setSelectRestriction() {
     );
   }
   // まだ追加できるモジュールがあれば追加を許可
-  return setTabControls(".modules", [true, disabled_module.some((v) => v == false), 1]);
+  return exclusive
+    ? setTabControls(".modules", [false, 0, 0])
+    : setTabControls(".modules", [
+        true,
+        disabled_module.some((v) => v == false),
+        selected_modules.length - 1,
+      ]);
 }
 // イシューチェック
 function checkIssue() {
@@ -1290,6 +1454,7 @@ function setJSONData(json_text = "") {
       }
     }
   }
+  syncEditorMode();
   onChangedJSON();
 }
 // json 出力
@@ -1334,8 +1499,10 @@ function getJSONData() {
   for (let i = 0; i < modules_length; i++) {
     const child_num = i + 1;
     const modules_content = $(`.modules.tab-content-list > div:nth-child(${child_num})`);
+    const modules_type = modules_content.find(`#modules_type`).val();
+    if (modules_type == null || modules_type == undefined) continue;
     json_raw["modules"][i] = new Object();
-    json_raw["modules"][i]["type"] = modules_content.find(`#modules_type`).val();
+    json_raw["modules"][i]["type"] = modules_type;
     json_raw["modules"][i]["description"] = DataReplacer.register(
       modules_content.find(`#modules_description`).val()
     );
@@ -1423,4 +1590,71 @@ function getJSONData() {
     JSON.stringify(json_raw, undefined, is_compact ? undefined : "  "),
     is_compact
   );
+}
+
+/**
+ * シンプルモードのデータ同期
+ */
+function syncSimpleData() {
+  const simple_name_elem = $("#simple_pack_name");
+  const simple_name_elem_val = simple_name_elem.val();
+  const simple_description_elem = $("#simple_description");
+  const simple_description_elem_val = simple_description_elem.val();
+  const name_elem = $("#header_pack_name");
+  const name_elem_val = name_elem.val();
+  const description_elem = $("#header_description");
+  const description_elem_val = description_elem.val();
+  name_elem.val(simple_name_elem_val);
+  description_elem.val(simple_description_elem_val);
+  // UUID自動セット
+  const header_uuid = $("#header_uuid");
+  if (header_uuid.val() == "") {
+    header_uuid.val(getUuid_v4());
+  }
+  // モジュールの設定
+  const modules_length = $(".modules.tab-children").length;
+  for (let i = 0; i < modules_length; i++) {
+    const child_num = i + 1;
+    const modules_content = $(`.modules.tab-content-list > div:nth-child(${child_num})`);
+    const modules_type = modules_content.find(`#modules_type`);
+    let type = "data",
+      module_name = "behavior";
+    switch ($(`input[type="radio"][name="simple_type_child"]:checked`).val()) {
+      case "behavior":
+        type = "data";
+        module_name = "behavior";
+        break;
+      case "texture":
+        type = "resources";
+        module_name = "resources";
+        break;
+      case "world":
+        type = "world_template";
+        module_name = "world template";
+        break;
+      case "skin":
+        type = "skin_pack";
+        module_name = "skin pack";
+        break;
+      default:
+        break;
+    }
+    // モジュール変更
+    if (modules_type.val() != type) {
+      module_description = "";
+    }
+    modules_type.val(type);
+    // description モジュール変更＆もともと空のときセット
+    const modules_description = modules_content.find(`#modules_description`);
+    if (module_description == "") {
+      modules_description.val(
+        `${simple_name_elem_val.replace(/§.|\\n/g, "")} ${module_name} module`
+      );
+    }
+    // モジュールUUIDセット
+    const modules_uuid = modules_content.find("#modules_uuid");
+    if (modules_uuid.val() == "") {
+      modules_uuid.val(getUuid_v4());
+    }
+  }
 }
