@@ -66,6 +66,9 @@
     position: relative;
     overflow-y: hidden;
   }
+  .editor-element-legend {
+    padding: 1rem;
+  }
   div.value-input > input {
     /* エディタ */
     width: auto;
