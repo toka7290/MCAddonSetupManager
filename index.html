@@ -109,28 +109,6 @@
               </label>
             </div>
           </div>
-          <style>
-            .import_button label.import_file {
-              display: inline-flex;
-              position: relative;
-              align-items: center;
-              padding: 0.5rem;
-              transition-duration: 0.5s;
-              transition-property: background-color;
-              position: relative;
-              margin: 0;
-              white-space: nowrap;
-            }
-
-            label.import_file p {
-              margin: 0;
-              padding-left: 0.5rem;
-            }
-
-            .import_button.disabled {
-              display: none;
-            }
-          </style>
           <details class="open-more-info">
             <summary class="more-info-icon"><img src="img/more.svg" alt="more" width="32px" height="32px"></summary>
             <ul class="more-info">
@@ -686,11 +664,6 @@
               </div>
             </div>
           </div>
-          <style>
-            .editor_element_group.hide {
-              display: none;
-            }
-          </style>
           <div class="editor_element_group editor_simple_mode hide">
             <div class="editor-element">
               <div class="editor-element-legend">
@@ -699,13 +672,13 @@
               <div class="simple_type_description_element">
                 <p>このmanifest.jsonの用途を選択します。</p>
               </div>
-              <div class="simple_type_toggle_element">
+              <div class="simple_radio_element">
                 <div class="simple_radio_child">
                   <input type="radio" name="simple_type_child" id="simple_type_behavior" class="invisible_Control" value="behavior" checked>
                   <label for="simple_type_behavior" class="simple_radio_child_label">
                     <div class="simple_radio_child_img">
                       <svg width="16" height="16" version="1.1" viewBox="0 0 4.2333 4.2333" xmlns="http://www.w3.org/2000/svg">
-                        <path transform="matrix(.41314 0 0 .41314 .064696 .21613)" d="m9.4038 7.1619-4.437 2.5617-4.437-2.5617 3e-8 -5.1234 4.437-2.5617 4.437 2.5617z" fill="currentColor" stroke-dashoffset="80" stroke-width="8.935" style="-inkscape-stroke:none" />
+                        <path transform="matrix(.41314 0 0 .41314 .064696 .21613)" d="m9.4038 7.1619-4.437 2.5617-4.437-2.5617 3e-8 -5.1234 4.437-2.5617 4.437 2.5617z" fill="currentColor" />
                       </svg>
                     </div>
                     <div class="simple_radio_child_text">
@@ -782,71 +755,6 @@
                 </div>
               </div>
             </div>
-            <style>
-              .simple_type_description_element {
-                /* かんたんモード */
-                margin: 0.5rem 0.8rem;
-                padding: 0.5rem 0.7rem;
-              }
-
-              .simple_type_description_element p {
-                margin: 0;
-              }
-
-              .simple_type_toggle_element {
-                margin: 0.5rem 0.8rem;
-                padding: 0.5rem 0.7rem;
-                display: grid;
-                grid-template-rows: repeat(auto-fill, minmax(1rem, 1fr));
-                grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
-                width: auto;
-                place-items: center normal;
-                grid-gap: 1rem;
-              }
-
-              .simple_radio_child {}
-
-              .simple_radio_child_label {
-                padding: 0.5rem;
-                display: grid;
-                border: 1px solid green;
-                border-radius: 8px;
-              }
-
-              .simple_radio_child_img {
-                display: grid;
-                place-content: center;
-              }
-
-              .simple_radio_child_img svg {
-                width: 3rem;
-                height: 3rem;
-              }
-
-              .simple_radio_child_text {
-                place-content: center;
-                display: grid;
-              }
-
-              .simple_radio_child_text p {
-                margin: 0.5rem 0 0 0;
-              }
-
-              input.invisible_Control:checked+.simple_radio_child_label {
-                background-color: green;
-                color: white;
-              }
-
-              .simple_value_element {
-                /* 入力要素 */
-                margin: 0.5rem 0.8rem;
-                padding: 0.5rem 0.7rem;
-                display: grid;
-                grid-template-rows: 1fr;
-                width: auto;
-                place-items: center normal;
-              }
-            </style>
           </div>
         </form>
       </div>
@@ -872,19 +780,6 @@
                 <p><span id="save_text">Save</span><span id="edit_state">*</span></p>
               </label>
             </div>
-            <style>
-              .preview_control_child.disabled {
-                display: none;
-              }
-
-              #edit_state {
-                color: transparent;
-              }
-
-              #edit_state.changed {
-                color: black;
-              }
-            </style>
           </div>
           <div class="display_preview">
             <div class="display-preview-card">

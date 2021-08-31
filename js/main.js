@@ -11,10 +11,18 @@ var is_subpacks_enable = false;
 var is_world_template = false;
 var is_skin_pack = false;
 var timeoutID;
+// 高頻度防止
 var is_can_issue = true;
+// ヘルプの表示
 var help_page_num = 0;
+// シンプルモード用
 var module_description = "";
+// JSON Data
 var json_code = "";
+// 各種ファイル入出力処理
+var native_file_system = !!window.showOpenFilePicker;
+// ファイルハンドラ
+var file_handle = undefined;
 
 class JSONReplace {
   constructor() {
@@ -436,10 +444,6 @@ $(window).on("keydown", function (e) {
     e.preventDefault();
   }
 });
-// 各種ファイル入出力処理
-var native_file_system = !!window.showOpenFilePicker;
-// ファイルハンドラ
-var file_handle = undefined;
 // Native file systemが使える場合
 if (native_file_system) {
   console.log("File System Access APIs");
@@ -1177,8 +1181,8 @@ function setJSONData(json_text = "") {
       window.alert(
         `${setErrorText(json_text, e.message)}\nコメントアウトを除去して再度試みます。\n`
       );
+      let data = json_text.replace(/\/\*[\s\S]*?\*\/ | \/\/(?=.*)(?!.*(\"\,|\")).*/g, "");
       try {
-        var data = json_text.replace(/\/\*[\s\S]*?\*\/ | \/\/(?=.*)(?!.*(\"\,|\")).*/g, "");
         json_data = JSON.parse(data);
       } catch (er) {
         window.alert(setErrorText(data, er.message));
