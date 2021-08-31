@@ -929,14 +929,6 @@ div.code-preview pre {
   scrollbar-color: var(--color-scrollbar-track) transparent;
   box-shadow: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.132), 0 0.3px 0.9px 0 rgba(0, 0, 0, 0.108);
 }
-textarea#code-buffer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -100;
-  width: 1px;
-  height: 1px;
-}
 div.issue {
   /* イシュー */
   position: relative;

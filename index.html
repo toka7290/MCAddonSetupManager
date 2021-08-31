@@ -95,14 +95,14 @@
         <div class="header-menu-alt">
           <div class="file_import">
             <div class="file_system_access import_button disabled">
-              <input type="button" value="" id="input_file_fsa" class="invisible_Control" ui>
+              <input type="button" id="input_file_fsa" class="invisible_Control" ui>
               <label for="input_file_fsa" class="import_file">
                 <img src="img/import.svg" alt="import" width="32px" height="32px">
-                <p>ImportSA</p>
+                <p>Import</p>
               </label>
             </div>
             <div class="file_reader import_button">
-              <input type="file" name="input-file" id="input-file" accept=".json" class="invisible_Control" ui>
+              <input type="file" name="input-file" id="input-file" accept=".json" class="invisible_Control">
               <label for="input-file" class="import_file">
                 <img src="img/import.svg" alt="import" width="32px" height="32px">
                 <p>Import</p>
@@ -854,8 +854,8 @@
       <div class="data_check">
         <div class="preview">
           <div class="preview_control_bar">
-            <div class="preview_control_child" title="jsonをクリップボードにコピーします。" ui>
-              <input type="button" id="control_copy" class="invisible_Control">
+            <div class="preview_control_child copy" title="jsonをクリップボードにコピーします。">
+              <input type="button" id="control_copy" class="invisible_Control" ui>
               <label for="control_copy" class="control_text">
                 <p id="control_copy_text">Copy</p>
               </label>
@@ -866,15 +866,23 @@
                 <p>Download</p>
               </label>
             </div>
-            <div class="preview_control_child save disabled" title="manifest.jsonを保存します。">
+            <div class="preview_control_child save disabled" title="manifest.jsonを保存します。 Ctrl+S">
               <input type="button" id="control_save" class="invisible_Control" ui>
               <label for="control_save" class="control_text">
-                <p>Save</p>
+                <p><span id="save_text">Save</span><span id="edit_state">*</span></p>
               </label>
             </div>
             <style>
               .preview_control_child.disabled {
                 display: none;
+              }
+
+              #edit_state {
+                color: transparent;
+              }
+
+              #edit_state.changed {
+                color: black;
               }
             </style>
           </div>
@@ -893,9 +901,6 @@
             <pre class="language-json">
               <code class="language-json"></code>
             </pre>
-            <label>
-              <textarea name="code-buffer" id="code-buffer" tabindex="-1"></textarea>
-            </label>
           </div>
         </div>
         <div class="issue">

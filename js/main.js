@@ -14,6 +14,7 @@ var timeoutID;
 var is_can_issue = true;
 var help_page_num = 0;
 var module_description = "";
+var json_code = "";
 
 class JSONReplace {
   constructor() {
@@ -162,9 +163,10 @@ $(window).bind("beforeunload", function () {
 
 /* ------------------------- UI 制御 ------------------------- */
 // input,textarea,select変更
-$(document).on("change keyup", "input,textarea,select", function (e) {
+$(document).on("change keyup click", "input,textarea,select", function (e) {
   onChangedJSON();
   isChanged = $(e.target).is("[ui]") ? isChanged : true;
+  $("#edit_state").toggleClass("changed", isChanged);
 });
 $(window).on("load", function () {
   onChangedJSON();
@@ -426,8 +428,8 @@ $(window).on("keydown", function (e) {
   if (e.ctrlKey) {
     switch (e.key.toLowerCase()) {
       case "s":
-        if (e.shiftKey) writeFile($("textarea#code-buffer").val(), true);
-        else writeFile($("textarea#code-buffer").val());
+        if (e.shiftKey) writeFile(json_code, true);
+        else writeFile(json_code);
         break;
     }
     e.stopPropagation();
@@ -466,9 +468,9 @@ if (native_file_system) {
   });
   // 保存
   $("#control_save").on("click", async () => {
-    writeFile($("textarea#code-buffer").val());
+    writeFile(json_code);
   });
-  // 外部で変更があった場合に表示を更新
+  // 外部のエディタで変更があった場合に表示を更新
   $(window).on("focus", () => {
     if (!isChanged && file_handle) {
       readFile();
@@ -490,7 +492,6 @@ async function readFile() {
   const file = await file_handle.getFile();
   // テキスト取得
   const fileContents = await file.text();
-  console.log("read");
   setJSONData(fileContents);
 }
 // 書き込み処理
@@ -522,6 +523,7 @@ async function writeFile(contents, save_as = false) {
   await writable.close();
   // 保存できたら離脱可に
   isChanged = false;
+  $("#edit_state").toggleClass("changed", isChanged);
   // ハンドラを保存
   if (!save_as) file_handle = handle;
 }
@@ -564,21 +566,23 @@ $(document).on("drop", function (/** @type {jQuery.Event} */ _event) {
   importJsonFile();
 });
 // コピー
-$("#control_copy").on("click", function () {
-  const codeBuffer = $("textarea#code-buffer");
-  codeBuffer.select();
-  document.execCommand("copy");
-  $("p#control_copy_text").text("Copied");
-  codeBuffer.blur();
-  setTimeout(function () {
-    $("p#control_copy_text").text("Copy");
-  }, 1000);
-});
+if (!!navigator.clipboard) {
+  $(".preview_control_child.copy").removeClass("disabled");
+  $("#control_copy").on("click", async function () {
+    console.log("Clipboard");
+    await navigator.clipboard.writeText(json_code);
+    $("p#control_copy_text").text("Copied");
+    setTimeout(function () {
+      $("p#control_copy_text").text("Copy");
+    }, 1000);
+  });
+} else {
+  $(".preview_control_child.copy").addClass("disabled");
+}
 // ダウンロード
 $("#control_download").on("click", function () {
-  let content = $("textarea#code-buffer").val();
   $("<a></a>", {
-    href: window.URL.createObjectURL(new Blob([content])),
+    href: window.URL.createObjectURL(new Blob([json_code])),
     download: "manifest.json",
     target: "_blank",
   })[0].click();
@@ -655,10 +659,9 @@ function onChangedJSON() {
 
   if (is_can_issue) checkIssue();
   setDelayIssue();
-  const json_code = getJSONData();
+  json_code = getJSONData();
   $("pre.language-json code.language-json").remove();
   $("pre.language-json").append($("<code>").addClass("language-json").text(json_code));
-  $("textarea#code-buffer").val(json_code);
   updateDisplayPreview();
   Prism.highlightAll();
 }
@@ -1601,15 +1604,14 @@ function syncSimpleData() {
   const simple_description_elem = $("#simple_description");
   const simple_description_elem_val = simple_description_elem.val();
   const name_elem = $("#header_pack_name");
-  const name_elem_val = name_elem.val();
   const description_elem = $("#header_description");
-  const description_elem_val = description_elem.val();
   name_elem.val(simple_name_elem_val);
   description_elem.val(simple_description_elem_val);
   // UUID自動セット
   const header_uuid = $("#header_uuid");
   if (header_uuid.val() == "") {
     header_uuid.val(getUuid_v4());
+    isChanged = true;
   }
   // モジュールの設定
   const modules_length = $(".modules.tab-children").length;
@@ -1650,11 +1652,13 @@ function syncSimpleData() {
       modules_description.val(
         `${simple_name_elem_val.replace(/§.|\\n/g, "")} ${module_name} module`
       );
+      isChanged = true;
     }
     // モジュールUUIDセット
     const modules_uuid = modules_content.find("#modules_uuid");
     if (modules_uuid.val() == "") {
       modules_uuid.val(getUuid_v4());
+      isChanged = true;
     }
   }
 }
