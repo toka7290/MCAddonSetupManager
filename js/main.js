@@ -1196,102 +1196,47 @@ function setJSONData(json_text = "") {
     }
   }
   // format_versionがない場合pack_manifest検査
-  if (json_data["format_version"] != null) {
+  if (json_data?.["format_version"]) {
     $("#format_version").val(json_data["format_version"]);
-  } else if (json_data["header"]["modules"] != null) {
-    // pack_manifest.json
-    if (json_data["header"]["pack_id"] != null) {
-      $("#header_uuid").val(json_data["header"]["pack_id"]);
-    }
-    if (json_data["header"]["name"] != null) {
-      $("#header_pack_name").val(json_data["header"]["name"]);
-    }
-    if (json_data["header"]["packs_version"] != null) {
-      const header_version = json_data["header"]["packs_version"].split(".");
-      if (header_version[0] != null) {
-        $("#header_version_major").val(header_version[0]);
-      }
-      if (header_version[1] != null) {
-        $("#header_version_minor").val(header_version[1]);
-      }
-      if (header_version[2] != null) {
-        $("#header_version_patch").val(header_version[2]);
-      }
-    }
-    if (json_data["header"]["description"] != null) {
-      $("#header_description").val(json_data["header"]["description"]);
-    }
-    if (json_data["header"]["modules"] != null) {
-      for (let i = 0; i < json_data["header"]["modules"].length; i++) {
-        const child_num = i + 1;
-        if (i > 0) {
-          addTab("modules");
-        }
-        if (json_data["header"]["modules"][i]["type"] != null) {
-          $(".modules.tab-content-list > div:nth-child(" + child_num + ") #modules_type").val(
-            json_data["header"]["modules"][i]["type"]
-          );
-        }
-        if (json_data["header"]["modules"][i]["description"] != null) {
-          $(
-            ".modules.tab-content-list > div:nth-child(" + child_num + ") #modules_description"
-          ).val(json_data["header"]["modules"][i]["description"]);
-        }
-        if (json_data["header"]["modules"][i]["version"] != null) {
-          const modules_version = json_data["header"]["modules"][i]["version"].split(".");
-          if (modules_version[0] != null) {
-            $(
-              ".modules.tab-content-list > div:nth-child(" + child_num + ") #modules_version_major"
-            ).val(modules_version[0]);
-          }
-          if (modules_version[1] != null) {
-            $(
-              ".modules.tab-content-list > div:nth-child(" + child_num + ") #modules_version_minor"
-            ).val(modules_version[1]);
-          }
-          if (modules_version[2] != null) {
-            $(
-              ".modules.tab-content-list > div:nth-child(" + child_num + ") #modules_version_patch"
-            ).val(modules_version[2]);
-          }
-        }
-        if (json_data["header"]["modules"][i]["uuid"] != null) {
-          $(".modules.tab-content-list > div:nth-child(" + child_num + ") #modules_uuid").val(
-            json_data["header"]["modules"][i]["uuid"]
-          );
-        }
-      }
-    }
-    if (json_data["header"]["dependencies"] != null) {
-      $("#dependencies_enable").prop("checked", true);
-      for (let i = 0; i < json_data["header"]["dependencies"].length; i++) {
-        const child_num = i + 1;
-        if (i > 0) {
-          addTab("dependencies");
-        }
-        const tab_content = $(
-          "div.dependencies.tab-content-list > div:nth-child(" + child_num + ")"
-        );
-        if (json_data["header"]["dependencies"][i]["uuid"] != null) {
-          tab_content
-            .find("#dependencies_uuid")
-            .val(json_data["header"]["dependencies"][i]["uuid"]);
-        }
-        if (json_data["header"]["dependencies"][i]["version"] != null) {
-          const modules_version = json_data["header"]["dependencies"][i]["version"].split(".");
-          if (modules_version[0] != null) {
-            tab_content.find("#dependencies_version_major").val(modules_version[0]);
-          }
-          if (modules_version[1] != null) {
-            tab_content.find("#dependencies_version_minor").val(modules_version[1]);
-          }
-          if (modules_version[2] != null) {
-            tab_content.find("#dependencies_version_patch").val(modules_version[2]);
-          }
-        }
-      }
-    }
+  } else if (json_data?.["header"]?.["modules"]) {
     window.alert("古い形式(pack_manifest.json)から変換します。");
+    // pack_manifest.json
+    const header = json_data["header"];
+    $("#header_pack_name").val(header?.["name"] ?? "");
+    $("#header_description").val(header?.["description"] ?? "");
+    $("#header_uuid").val(header?.["pack_id"] ?? "");
+    const header_version = (header?.["packs_version"] ?? "1.0.0").split(".");
+    $("#header_version_major").val(header_version?.[0] ?? 1);
+    $("#header_version_minor").val(header_version?.[1] ?? 0);
+    $("#header_version_patch").val(header_version?.[2] ?? 0);
+
+    if (header["modules"] != null) {
+      for (let i = 0; i < header["modules"].length; i++) {
+        if (0 < i) addTab("modules");
+        const module = header["modules"][i];
+        const module_element = $(`.modules.tab-content-list > div:nth-child(${i + 1})`);
+        module_element.find("#modules_type").val(module?.["type"] ?? "data");
+        module_element.find("#modules_description").val(module?.["description"] ?? "");
+        const modules_version = (module?.["version"] ?? "1.0.0").split(".");
+        module_element.find("#modules_version_major").val(modules_version?.[0] ?? 1);
+        module_element.find("#modules_version_minor").val(modules_version?.[1] ?? 0);
+        module_element.find("#modules_version_patch").val(modules_version?.[2] ?? 0);
+        module_element.find("#modules_uuid").val(module?.["uuid"] ?? "");
+      }
+    }
+    if (header["dependencies"] != null) {
+      $("#dependencies_enable").prop("checked", true);
+      for (let i = 0; i < header["dependencies"].length; i++) {
+        if (0 < i) addTab("dependencies");
+        const dependency = header["dependencies"][i];
+        const tab_content = $(`div.dependencies.tab-content-list > div:nth-child(${i + 1})`);
+        tab_content.find("#dependencies_uuid").val(dependency?.["uuid"] ?? "");
+        const modules_version = (dependency?.["version"] ?? "1.0.0").split(".");
+        tab_content.find("#dependencies_version_major").val(modules_version?.[0] ?? 1);
+        tab_content.find("#dependencies_version_minor").val(modules_version?.[1] ?? 0);
+        tab_content.find("#dependencies_version_patch").val(modules_version?.[2] ?? 0);
+      }
+    }
     onChangedJSON();
     return;
   }
@@ -1300,116 +1245,47 @@ function setJSONData(json_text = "") {
   $("#header_version_major").val(json_data["header"]?.["version"]?.[0] ?? 1);
   $("#header_version_minor").val(json_data["header"]?.["version"]?.[1] ?? 0);
   $("#header_version_patch").val(json_data["header"]?.["version"]?.[2] ?? 0);
-  // return;
-  if (json_data["header"]["min_engine_version"] != null) {
-    if (json_data["header"]["min_engine_version"][0] != null) {
-      $("#header_min_engine_version_major").val(json_data["header"]["min_engine_version"][0]);
-    }
-    if (json_data["header"]["min_engine_version"][1] != null) {
-      $("#header_min_engine_version_minor").val(json_data["header"]["min_engine_version"][1]);
-    }
-    if (json_data["header"]["min_engine_version"][2] != null) {
-      $("#header_min_engine_version_patch").val(json_data["header"]["min_engine_version"][2]);
-    }
-  }
-  if (json_data["header"]["uuid"] != null) {
-    $("#header_uuid").val(json_data["header"]["uuid"]);
-  }
-  if (json_data["header"]["platform_locked"] != null && json_data["header"]["platform_locked"]) {
-    $("#header_platform_locked").prop("checked", true);
-  }
-  if (json_data["header"]["base_game_version"] != null) {
-    if (json_data["header"]["base_game_version"][0] != null) {
-      $("#header_base_game_version_major").val(json_data["header"]["base_game_version"][0]);
-    }
-    if (json_data["header"]["base_game_version"][1] != null) {
-      $("#header_base_game_version_minor").val(json_data["header"]["base_game_version"][1]);
-    }
-    if (json_data["header"]["base_game_version"][2] != null) {
-      $("#header_base_game_version_patch").val(json_data["header"]["base_game_version"][2]);
-    }
-  }
+  $("#header_min_engine_version_major").val(json_data["header"]?.["min_engine_version"]?.[0] ?? 1);
+  $("#header_min_engine_version_minor").val(json_data["header"]?.["min_engine_version"]?.[1] ?? 13);
+  $("#header_min_engine_version_patch").val(json_data["header"]?.["min_engine_version"]?.[2] ?? 0);
+  $("#header_uuid").val(json_data["header"]?.["uuid"] ?? "");
+  $("#header_platform_locked").prop("checked", json_data["header"]?.["platform_locked"] ?? false);
+  $("#header_base_game_version_major").val(json_data["header"]?.["base_game_version"]?.[0] ?? 1);
+  $("#header_base_game_version_minor").val(json_data["header"]?.["base_game_version"]?.[1] ?? 13);
+  $("#header_base_game_version_patch").val(json_data["header"]?.["base_game_version"]?.[2] ?? 0);
   $("#header_lock_template_options").prop(
     "checked",
-    json_data["header"]["lock_template_options"] ?? false
+    json_data["header"]?.["lock_template_options"] ?? false
   );
-  $("#header_pack_scope").val(json_data["header"]["pack_scope"] ?? "none");
+  $("#header_pack_scope").val(json_data["header"]?.["pack_scope"] ?? "none");
 
-  if (json_data["modules"] != null) {
+  if (json_data?.["modules"]) {
     for (let i = 0; i < json_data["modules"].length; i++) {
-      const child_num = i + 1;
-      if (i > 0) {
-        addTab("modules");
-      }
-      if (json_data["modules"][i]["type"] != null) {
-        $(".modules.tab-content-list > div:nth-child(" + child_num + ") #modules_type").val(
-          json_data["modules"][i]["type"]
-        );
-      }
-      if (json_data["modules"][i]["description"] != null) {
-        $(".modules.tab-content-list > div:nth-child(" + child_num + ") #modules_description").val(
-          json_data["modules"][i]["description"]
-        );
-      }
-      if (json_data["modules"][i]["version"] != null) {
-        if (json_data["modules"][i]["version"][0] != null) {
-          $(
-            ".modules.tab-content-list > div:nth-child(" + child_num + ") #modules_version_major"
-          ).val(json_data["modules"][i]["version"][0]);
-        }
-        if (json_data["modules"][i]["version"][1] != null) {
-          $(
-            ".modules.tab-content-list > div:nth-child(" + child_num + ") #modules_version_minor"
-          ).val(json_data["modules"][i]["version"][1]);
-        }
-        if (json_data["modules"][i]["version"][2] != null) {
-          $(
-            ".modules.tab-content-list > div:nth-child(" + child_num + ") #modules_version_patch"
-          ).val(json_data["modules"][i]["version"][2]);
-        }
-      }
-      if (json_data["modules"][i]["uuid"] != null) {
-        $(".modules.tab-content-list > div:nth-child(" + child_num + ") #modules_uuid").val(
-          json_data["modules"][i]["uuid"]
-        );
-      }
-      $(".modules.tab-content-list > div:nth-child(" + child_num + ") #modules_entry").val(
-        json_data["modules"][i]?.["entry"]
-      );
+      if (0 < i) addTab("modules");
+      const module = json_data["modules"][i];
+      const module_element = $(`.modules.tab-content-list > div:nth-child(${i + 1})`);
+      module_element.find(`#modules_type`).val(module?.["type"] ?? "data");
+      module_element.find(`#modules_description`).val(module?.["description"] ?? "");
+      module_element.find(`#modules_version_major`).val(module?.["version"]?.[0] ?? 1);
+      module_element.find(`#modules_version_minor`).val(module?.["version"]?.[1] ?? 0);
+      module_element.find(`#modules_version_patch`).val(module?.["version"]?.[2] ?? 0);
+      module_element.find(`#modules_uuid`).val(module?.["uuid"] ?? "");
+      module_element.find(`#modules_entry`).val(module?.["entry"] ?? "");
     }
   }
-  if (json_data["dependencies"] != null) {
+  if (json_data?.["dependencies"]) {
     $("#dependencies_enable").prop("checked", true);
     for (let i = 0; i < json_data["dependencies"].length; i++) {
-      const child_num = i + 1;
-      if (i > 0) {
-        addTab("dependencies");
-      }
-      const tab_content = $("div.dependencies.tab-content-list > div:nth-child(" + child_num + ")");
-      if (json_data["dependencies"][i]["uuid"] != null) {
-        tab_content.find("#dependencies_uuid").val(json_data["dependencies"][i]["uuid"]);
-      }
-      if (json_data["dependencies"][i]["version"] != null) {
-        if (json_data["dependencies"][i]["version"][0] != null) {
-          tab_content
-            .find("#dependencies_version_major")
-            .val(json_data["dependencies"][i]["version"][0]);
-        }
-        if (json_data["dependencies"][i]["version"][1] != null) {
-          tab_content
-            .find("#dependencies_version_minor")
-            .val(json_data["dependencies"][i]["version"][1]);
-        }
-        if (json_data["dependencies"][i]["version"][2] != null) {
-          tab_content
-            .find("#dependencies_version_patch")
-            .val(json_data["dependencies"][i]["version"][2]);
-        }
-      }
+      if (0 < i) addTab("dependencies");
+      const dependency = json_data["dependencies"][i];
+      const tab_content = $(`div.dependencies.tab-content-list > div:nth-child(${i + 1})`);
+      tab_content.find("#dependencies_uuid").val(dependency?.["uuid"] ?? "");
+      tab_content.find("#dependencies_version_major").val(dependency?.["version"]?.[0] ?? 1);
+      tab_content.find("#dependencies_version_minor").val(dependency?.["version"]?.[1] ?? 0);
+      tab_content.find("#dependencies_version_patch").val(dependency?.["version"]?.[2] ?? 0);
     }
   }
-
-  if (json_data["capabilities"] != null) {
+  if (json_data?.["capabilities"]) {
     $("#capabilities_enable").prop("checked", true);
     for (const capabilities of json_data["capabilities"]) {
       switch (capabilities) {
@@ -1428,37 +1304,26 @@ function setJSONData(json_text = "") {
     }
   }
 
-  if (json_data["metadata"] != null) {
+  if (json_data?.["metadata"]) {
     $("#metadata_enable").prop("checked", true);
-    if (json_data["metadata"]["authors"] != null) {
-      for (const author of json_data["metadata"]["authors"]) {
+    const metadata = json_data["metadata"];
+    if (metadata?.["authors"]) {
+      for (const author of metadata["authors"]) {
         addAuthor(author);
       }
     }
-    if (json_data["metadata"]["url"] != null) {
-      $("#metadata_url").val(json_data["metadata"]["url"]);
-    }
-    if (json_data["metadata"]["license"] != null) {
-      $("#metadata_license").val(json_data["metadata"]["license"]);
-    }
+    $("#metadata_url").val(metadata?.["url"] ?? "");
+    $("#metadata_license").val(metadata?.["license"] ?? "");
   }
-  if (json_data["subpacks"] != null) {
+  if (json_data?.["subpacks"]) {
     $("#subpacks_enable").prop("checked", true);
     for (let i = 0; i < json_data["subpacks"].length; i++) {
-      const child_num = i + 1;
-      if (i > 0) {
-        addTab("subpacks");
-      }
-      const tab_content = $("div.subpacks.tab-content-list > div:nth-child(" + child_num + ")");
-      if (json_data["subpacks"][i]["folder_name"] != null) {
-        tab_content.find("#subpacks_folder_name").val(json_data["subpacks"][i]["folder_name"]);
-      }
-      if (json_data["subpacks"][i]["name"] != null) {
-        tab_content.find("#subpacks_name").val(json_data["subpacks"][i]["name"]);
-      }
-      if (json_data["subpacks"][i]["memory_tier"] != null) {
-        tab_content.find("#subpacks_memory_tier").val(json_data["subpacks"][i]["memory_tier"]);
-      }
+      if (0 < i) addTab("subpacks");
+      const subpack = json_data["subpacks"][i];
+      const tab_content = $(`div.subpacks.tab-content-list > div:nth-child(${i + 1})`);
+      tab_content.find("#subpacks_folder_name").val(subpack?.["folder_name"] ?? "");
+      tab_content.find("#subpacks_name").val(subpack?.["name"] ?? "");
+      tab_content.find("#subpacks_memory_tier").val(subpack?.["memory_tier"] ?? 0);
     }
   }
   syncEditorMode();
