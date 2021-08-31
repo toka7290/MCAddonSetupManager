@@ -10,13 +10,14 @@
       },
       "args": [
         "-jar",
-        ".\\closure-compiler-v20201207.jar",
+        ".\\closure-compiler-v20210808.jar",
         "--js=..\\js\\main.js",
         "--js_output_file=..\\js\\main.min.js",
         "--compilation_level=ADVANCED_OPTIMIZATIONS",
         "--externs=jquery-3.3.js",
         "--externs=prism.js",
-        "--externs=minecraft_text.js"
+        "--externs=minecraft_text.js",
+        "--externs=main.js"
       ],
       "presentation": {
         "echo": true,

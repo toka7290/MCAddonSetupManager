@@ -453,7 +453,7 @@ if (native_file_system) {
   $(".preview_control_child.save").removeClass("disabled");
   // インポート処理
   $("#input_file_fsa").on("click", async () => {
-    [file_handle] = await window.showOpenFilePicker({
+    const option = {
       // 複数ファイルの受け入れ
       multiple: false,
       // "すべて" のファイルオプション無効
@@ -467,7 +467,12 @@ if (native_file_system) {
           },
         },
       ],
-    });
+    };
+    [file_handle] = (() => {
+      return async () => {
+        await window.showOpenFilePicker(option);
+      };
+    })();
     readFile();
   });
   // 保存
@@ -604,9 +609,9 @@ function syncEditorMode() {
   const simple_description_elem = $("#simple_description");
   const simple_description_elem_val = simple_description_elem.val();
   const name_elem = $("#header_pack_name");
-  const name_elem_val = name_elem.val();
+  const name_elem_val = /**@type {string} */ (name_elem.val());
   const description_elem = $("#header_description");
-  const description_elem_val = description_elem.val();
+  const description_elem_val = /**@type {string} */ (description_elem.val());
   // シンプルモードへ移行時
   if (is_simple_mode) {
     if (simple_name_elem_val == "" && name_elem_val != "") {
@@ -1469,9 +1474,9 @@ function getJSONData() {
  */
 function syncSimpleData() {
   const simple_name_elem = $("#simple_pack_name");
-  const simple_name_elem_val = simple_name_elem.val();
+  const simple_name_elem_val = /** @type {string}*/ (simple_name_elem.val());
   const simple_description_elem = $("#simple_description");
-  const simple_description_elem_val = simple_description_elem.val();
+  const simple_description_elem_val = /**@type {string} */ (simple_description_elem.val());
   const name_elem = $("#header_pack_name");
   const description_elem = $("#header_description");
   name_elem.val(simple_name_elem_val);
