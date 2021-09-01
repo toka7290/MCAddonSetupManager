@@ -422,8 +422,8 @@ if (navigator.share) {
     .addClass("supported")
     .on("click", async () => {
       await navigator.share({
-        title: "MCBE Manifest Generator",
-        text: "MCBE Manifest Generator -manifest.jsonを簡単に作成・編集-",
+        title: "Manifest Generator",
+        text: "Manifest Generator -manifest.jsonを簡単に作成・編集-",
         url: "https://toka7290.github.io/MCAddonSetupManager/",
       });
     });
@@ -438,10 +438,10 @@ $(window).on("keydown", function (e) {
       case "s":
         if (e.shiftKey) writeFile(json_code, true);
         else writeFile(json_code);
+        e.stopPropagation();
+        e.preventDefault();
         break;
     }
-    e.stopPropagation();
-    e.preventDefault();
   }
 });
 // Native file systemが使える場合

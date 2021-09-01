@@ -1,6 +1,6 @@
 {
-  "name": "MCBE Manifest Generator",
-  "short_name": "ManifestGenerator",
+  "name": "Manifest Generator by TokaTools",
+  "short_name": "Manifest Generator",
   "description": "Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。",
   "display": "standalone",
   "icons": [

@@ -415,8 +415,20 @@ div.about-content > img {
   max-width: 20rem;
   height: auto;
 }
+.about-title .sub_title {
+  display: block;
+  font-size: medium;
+}
+.about-area {
+  max-width: 25rem;
+}
+.about-description {
+  font-weight: normal;
+  text-align: initial;
+}
 div.about-title,
-div.copyright {
+div.copyright,
+.about-description {
   user-select: text;
   -ms-user-select: text;
   -moz-user-select: text;
