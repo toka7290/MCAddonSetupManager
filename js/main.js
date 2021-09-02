@@ -418,15 +418,14 @@ $("#issue-control").on("click", function () {
 /* ------------------------- page 入出力 ------------------------- */
 // シェア
 if (navigator.share) {
-  $("#page-share")
-    .addClass("supported")
-    .on("click", async () => {
-      await navigator.share({
-        title: "Manifest Generator",
-        text: "Manifest Generator -manifest.jsonを簡単に作成・編集-",
-        url: "https://toka7290.github.io/MCAddonSetupManager/",
-      });
+  $(".about-external-link .share").addClass("supported");
+  $("#page-share").on("click", async () => {
+    await navigator.share({
+      title: "Manifest Generator",
+      text: "Manifest Generator -manifest.jsonを簡単に作成・編集-",
+      url: "https://toka7290.github.io/MCAddonSetupManager/",
     });
+  });
 }
 // ショートカットキー
 $(window).on("keydown", function (e) {
@@ -468,11 +467,8 @@ if (native_file_system) {
         },
       ],
     };
-    [file_handle] = (() => {
-      return async () => {
-        await window.showOpenFilePicker(option);
-      };
-    })();
+    let handle = await window.showOpenFilePicker(option);
+    [file_handle] = handle;
     readFile();
   });
   // 保存

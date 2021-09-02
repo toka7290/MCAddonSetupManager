@@ -167,10 +167,6 @@ summary.more-info-icon {
   margin: 0;
   white-space: nowrap;
 }
-div.header-menu-alt > label p {
-  margin: 0;
-  padding-left: 0.5rem;
-}
 ul.more-info {
   list-style: none;
   position: absolute;
@@ -202,15 +198,20 @@ ul.more-info p {
   white-space: pre;
   padding-left: 0.5rem;
 }
-div.header-menu-alt > label:hover,
-div.header-menu-alt > div:hover,
+div.header-menu-alt .import_file:hover,
+div.header-menu-alt input:focus + .import_file:hover,
+div.header-menu-alt input:focus:focus-visible + .import_file,
 ul.more-info a:hover,
-ul.more-info a:focus,
+ul.more-info a:focus:hover,
+ul.more-info a:focus:focus-visible,
 ul.more-info label:hover,
-input#open-about:focus + label,
+ul.more-info input:focus + label:hover,
+ul.more-info input:focus:focus-visible + label,
 summary.more-info-icon:hover,
-summary.more-info-icon:focus,
-input#input-file:focus + label {
+summary.more-info-icon:hover:focus,
+summary.more-info-icon:focus:focus-visible,
+input#input-file:focus + label:hover,
+input#input-file:focus:focus-visible + label {
   outline: none;
   cursor: pointer;
   background-color: var(--color-header-hover);
@@ -434,17 +435,14 @@ div.copyright,
   -moz-user-select: text;
   -webkit-user-select: text;
 }
-div#page-share {
+div.about-external-link div.share {
   display: none;
 }
-div#page-share.supported {
+div.about-external-link div.share.supported {
   display: inline-block;
 }
-div.about-external-link {
-  display: block;
-}
 div.about-external-link a,
-div.about-external-link div {
+div.about-external-link label {
   display: inline-block;
   line-height: 0;
   padding: 0.5rem;
@@ -453,9 +451,11 @@ div.about-external-link div {
   outline: none;
 }
 div.about-external-link a:hover,
-div.about-external-link a:focus,
-div.about-external-link div:hover,
-div.about-external-link div:focus {
+div.about-external-link a:focus:hover,
+div.about-external-link a:focus:focus-visible,
+div.about-external-link label:hover,
+div.about-external-link input:focus + label:hover,
+div.about-external-link input:focus:focus-visible + label {
   cursor: pointer;
   transition: 0.5s;
   background-color: var(--color-header-hover);
@@ -610,9 +610,6 @@ div.editor form {
   -moz-user-select: none;
   -webkit-user-select: none;
 }
-.checkbox-body {
-  cursor: pointer;
-}
 .checkbox-body-text {
   margin: 0 0 0 0.5rem;
   min-width: 8rem;
@@ -630,17 +627,22 @@ input:disabled + .checkbox-body:hover {
   height: 1.5rem;
   place-items: center;
 }
-input:not(:disabled):focus + .checkbox-body .checkbox-body-box,
-input:not(:checked) + .checkbox-body:hover .checkbox-body-box {
+input:not(:disabled) + .checkbox-body:hover .checkbox-body-box,
+input:not(:disabled):focus + .checkbox-body:hover .checkbox-body-box,
+input:not(:disabled):focus:focus-visible + .checkbox-body .checkbox-body-box {
   /* フォーカス時に枠色変更 */
-  border-color: var(--color-input-border);
+  border-color: var(--color-input-focus);
 }
 input:not(:disabled):checked + .checkbox-body > .checkbox-body-box {
   /* チェック時の色 */
   background-color: var(--color-input-checkbox);
 }
-input:disabled:checked + .checkbox-body > .checkbox-body-box {
+input:disabled + .checkbox-body > .checkbox-body-box {
   /* 無効時の色 */
+  border-color: var(--color-input-disabled);
+}
+input:disabled:checked + .checkbox-body > .checkbox-body-box {
+  /* 無効時の色 チェック */
   background-color: var(--color-input-disabled);
 }
 .checkbox-body-checkMark {
@@ -649,8 +651,9 @@ input:disabled:checked + .checkbox-body > .checkbox-body-box {
   color: var(--color-textAlt);
   text-align: center;
 }
-input:not(:disabled):not(:checked):focus + .checkbox-body .checkbox-body-checkMark,
-input:not(:disabled):not(:checked) + .checkbox-body:hover .checkbox-body-checkMark {
+input:not(:disabled):not(:checked) + .checkbox-body:hover .checkbox-body-checkMark,
+input:not(:disabled):not(:checked):focus + .checkbox-body:hover .checkbox-body-checkMark,
+input:not(:disabled):not(:checked):focus:focus-visible + .checkbox-body .checkbox-body-checkMark {
   /* フォーカス、ホバー時に色変更 */
   color: var(--color-textNeither);
 }
@@ -674,6 +677,7 @@ input:not(:disabled):not(:checked) + .checkbox-body:hover .checkbox-body-checkMa
 .toggle_body_text {
   /* テキスト */
   margin: 0 0.5rem 0 0;
+  word-break: break-word;
 }
 .toggle_body_box {
   /* トグル本体 */
@@ -688,7 +692,9 @@ input:not(:disabled):not(:checked) + .checkbox-body:hover .checkbox-body-checkMa
   justify-items: start;
   transition: all 0.5s ease;
 }
-input:focus + .toggle-body .toggle_body_box {
+.toggle-body .toggle_body_box:hover,
+input:focus + .toggle-body .toggle_body_box:hover,
+input:focus:focus-visible + .toggle-body .toggle_body_box {
   /* フォーカス */
   background-color: var(--color-input-toggle-focus);
 }
@@ -758,7 +764,6 @@ input:checked + .toggle-body .toggle_body_padding {
   display: block;
   flex-grow: 1;
   position: relative;
-  transition: all 0.5s cubic-bezier(0.77, 0, 0.18, 1);
 }
 .tab-number {
   /* 番号 */
@@ -773,10 +778,10 @@ input:checked + .toggle-body .toggle_body_padding {
   right: 25%;
   bottom: 0;
 }
-.selected .tab-underBar {
+.tab-body:not(.disabled) .selected .tab-underBar {
   /* 選択時の下線 */
-  background-color: var(--color-toolbar);
-  transition: all 0.5s cubic-bezier(0.77, 0, 0.18, 1);
+  background-color: var(--color-input-checkbox);
+  transition: all 0.5s ease-out;
 }
 .add-tab,
 .remove-tab {
@@ -790,25 +795,30 @@ input:checked + .toggle-body .toggle_body_padding {
   margin: 0;
 }
 .tab-body:not(.disabled) .tab-number:hover,
-input:focus + .tab-number {
+input:focus + .tab-number:hover,
+input:focus:focus-visible + .tab-number {
   /* タブホバー */
+  cursor: pointer;
   background-color: var(--color-toolbar-hover);
 }
 .tab-body:not(.disabled) .tab-number:hover + .tab-underBar,
-input:focus ~ .tab-underBar {
+input:focus ~ .tab-underBar:hover,
+input:focus:focus-visible ~ .tab-underBar {
   /* タブ下線ホバー */
   width: 100%;
   left: 0;
   right: 0;
 }
 .add-tab:not(.disabled):hover .add-tab-text,
-input:not(:disabled):focus + .add-tab-text {
+input:not(:disabled):focus + .add-tab-text:hover,
+input:not(:disabled):focus:focus-visible + .add-tab-text {
   /* 追加ホバーフォーカス */
   cursor: pointer;
   color: var(--color-add);
 }
 .remove-tab:not(.disabled):hover .remove-tab-text,
-input:not(:disabled):focus + .remove-tab-text {
+input:not(:disabled):focus + .remove-tab-text:hover,
+input:not(:disabled):focus:focus-visible + .remove-tab-text {
   /* さくじょホバーフォーカス */
   cursor: pointer;
   color: var(--color-remove);
@@ -858,12 +868,14 @@ input:not(:disabled):focus + .remove-tab-text {
   -webkit-user-select: none;
 }
 input#author-add:not(:disabled) + label:hover,
-input#author-add:not(:disabled):focus + label {
+input#author-add:not(:disabled):focus + label:hover,
+input#author-add:not(:disabled):focus:focus-visible + label {
   cursor: pointer;
   color: var(--color-add);
 }
 input#author-delete:not(:disabled) + label:hover,
-input#author-delete:not(:disabled):focus + label {
+input#author-delete:not(:disabled):focus + label:hover,
+input#author-delete:not(:disabled):focus:focus-visible + label {
   cursor: pointer;
   color: var(--color-remove);
 }
@@ -882,7 +894,7 @@ input#author-delete:not(:disabled):focus + label {
 .simple_radio_child_label {
   padding: 0.5rem;
   display: grid;
-  border: 1px solid green;
+  border: 1px solid var(--color-input-checkbox);
   border-radius: 8px;
 }
 .simple_radio_child_img {
@@ -901,8 +913,21 @@ input#author-delete:not(:disabled):focus + label {
   margin: 0.5rem 0 0 0;
 }
 input.invisible_Control:checked + .simple_radio_child_label {
-  background-color: green;
-  color: white;
+  background-color: var(--color-input-checkbox);
+  color: var(--color-textAlt);
+}
+.simple_radio_child_label:hover,
+input:focus + .simple_radio_child_label:hover,
+input:focus:focus-visible + .simple_radio_child_label {
+  cursor: pointer;
+  background-color: var(--color-toolbar-hover);
+}
+input.invisible_Control:checked + .simple_radio_child_label:hover,
+input:focus:checked + .simple_radio_child_label:hover,
+input:focus:focus-visible:checked + .simple_radio_child_label {
+  cursor: pointer;
+  background-color: var(--color-input-checkbox);
+  color: var(--color-focus-text);
 }
 
 .simple_type_description_element {
@@ -972,7 +997,8 @@ div.preview_control_bar {
   margin: 0;
 }
 .preview_control_child label:hover,
-input:focus + label.control_text {
+input:focus + label.control_text:hover,
+input:focus:focus-visible + label.control_text {
   cursor: pointer;
   background-color: var(--color-toolbar-hover);
 }
@@ -981,7 +1007,10 @@ input:focus + label.control_text {
   color: transparent;
 }
 #edit_state.changed {
-  color: black;
+  color: var(--color-text);
+}
+.display_preview {
+  padding: 1rem;
 }
 .display-preview-card {
   /* display preview */
@@ -991,16 +1020,26 @@ input:focus + label.control_text {
   grid-template-columns: 4rem 80%;
   grid-gap: 0.25rem;
   height: 4rem;
-  padding: 0.25rem;
-  margin: 1rem;
+  padding: 0.5rem;
   background-color: var(--color-display-preview-background);
   color: white;
-  border-radius: 0.3em;
+  border-radius: 0 0.3rem 0.3rem 0.3rem;
   user-select: none;
   -ms-user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   box-shadow: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.132), 0 0.3px 0.9px 0 rgba(0, 0, 0, 0.108);
+}
+.preview_header {
+  display: inline;
+  color: #fff;
+  border-radius: 0.3rem 0.3rem 0 0;
+  box-shadow: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.132), 0 0.3px 0.9px 0 rgba(0, 0, 0, 0.108);
+  background: var(--color-display-preview-background);
+  display: inline-grid;
+}
+.preview_header > span {
+  margin: 0.25rem 0.5rem;
 }
 .card-icon {
   height: 100%;
@@ -1008,6 +1047,9 @@ input:focus + label.control_text {
 .card-icon img {
   pointer-events: none;
   height: 100%;
+}
+.card-text {
+  margin-left: 0.25rem;
 }
 .card-text p {
   margin: 0;
@@ -1024,9 +1066,16 @@ input:focus + label.control_text {
   white-space: pre;
   height: 3rem;
 }
+.code-preview {
+  padding: 1rem;
+}
+.code-preview .preview_header {
+  background: #272822;
+}
 div.code-preview pre {
   /* code */
-  margin: 1rem;
+  margin: 0;
+  border-radius: 0 0.3rem 0.3rem 0.3rem;
   white-space: initial;
   scrollbar-width: thin;
   scrollbar-color: var(--color-scrollbar-track) transparent;
@@ -1050,7 +1099,8 @@ div.issue {
   transition: 0.5s;
 }
 .issue-status-bar:hover,
-input#issue-control:focus + label.issue-status-bar {
+input#issue-control:focus + label.issue-status-bar:hover,
+input#issue-control:focus:focus-visible + label.issue-status-bar {
   cursor: pointer;
   background-color: var(--color-toolbar-hover);
 }

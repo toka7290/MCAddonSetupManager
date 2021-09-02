@@ -138,11 +138,7 @@ pre[data-line] {
   margin-top: 1em; /* Same as .prism’s padding-top */
 
   background: hsla(24, 20%, 50%, 0.08);
-  background: linear-gradient(
-    to right,
-    hsla(24, 20%, 50%, 0.1) 70%,
-    hsla(24, 20%, 50%, 0)
-  );
+  background: linear-gradient(to right, hsla(24, 20%, 50%, 0.1) 70%, hsla(24, 20%, 50%, 0));
 
   pointer-events: none;
 
@@ -261,6 +257,7 @@ div.code-toolbar > .toolbar button {
   -webkit-user-select: none; /* for button */
   -moz-user-select: none;
   -ms-user-select: none;
+  user-select: none;
 }
 
 div.code-toolbar > .toolbar a,

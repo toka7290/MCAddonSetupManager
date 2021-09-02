@@ -56,9 +56,6 @@
   div#show-preview.active {
     background-color: var(--color-header-hover);
   }
-  div#page-share {
-    display: block;
-  }
   div.content {
     /* コンテンツ */
     display: flex;
