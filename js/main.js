@@ -445,7 +445,6 @@ $(window).on("keydown", function (e) {
 });
 // Native file systemが使える場合
 if (native_file_system) {
-  console.log("File System Access APIs");
   // 切替
   $(".import_button.file_system_access").removeClass("disabled");
   $(".import_button.file_reader").addClass("disabled");
@@ -574,7 +573,6 @@ $(document).on("drop", function (/** @type {jQuery.Event} */ _event) {
 if (!!navigator.clipboard) {
   $(".preview_control_child.copy").removeClass("disabled");
   $("#control_copy").on("click", async function () {
-    console.log("Clipboard");
     await navigator.clipboard.writeText(json_code);
     $("p#control_copy_text").text("Copied");
     setTimeout(function () {

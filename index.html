@@ -844,13 +844,6 @@
       <p>ご利用のブラウザ(Internet Explorer)では利用できません。</p>
       <p><a href="microsoft-edge:https://toka7290.github.io/MCAddonSetupManager/" target="_blank" rel="noopener noreferrer">Edge</a>,Chrome,Firefox,Safariをご利用ください</p>
     </div>
-    <!-- lib -->
-    <script src="lib/jquery-3.6.0.min.js" defer></script>
-    <script src="lib/prism.js" defer></script>
-    <script src="lib/minecraft_text.min.js" defer></script>
-    <!-- js -->
-    <!-- <script type="text/javascript" src="js/main.min.js" defer></script> -->
-    <script type="text/javascript" src="js/main.js" defer></script>
     <!-- sw -->
     <script>
       if ("serviceWorker" in navigator && location.protocol == "https:") {
@@ -877,9 +870,16 @@
         deferredPrompt = e;
       });
     </script>
+    <!-- lib -->
+    <script src="lib/jquery-3.6.0.min.js" defer></script>
+    <script src="lib/prism.js" defer></script>
+    <script src="lib/minecraft_text.min.js" defer></script>
+    <!-- js -->
+    <!-- <script type="text/javascript" src="js/main.min.js" defer></script> -->
+    <script type="text/javascript" src="js/main.js" defer></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEW7Y56GND" referrerpolicy="strict-origin"></script>
-    <script>
+    <script async defer src="https://www.googletagmanager.com/gtag/js?id=G-MEW7Y56GND"></script>
+    <script defer>
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
