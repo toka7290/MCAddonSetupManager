@@ -1,4 +1,4 @@
-const CACHE_VERSION = "20210827";
+const CACHE_VERSION = "20210905";
 const CACHE_NAME = `${registration.scope}!${CACHE_VERSION}`;
 var urlsToCache = [
   "/MCAddonSetupManager/",
