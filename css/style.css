@@ -132,23 +132,26 @@ div.header-menu-alt {
   -webkit-user-select: none;
 }
 
-.import_button label.import_file {
+label.alt_menu_button_label {
   /* インポートボタン */
   display: inline-flex;
   position: relative;
   align-items: center;
   padding: 0.5rem;
+  height: 2rem;
   transition-duration: 0.5s;
   transition-property: background-color;
   position: relative;
   margin: 0;
   white-space: nowrap;
 }
-label.import_file p {
-  margin: 0;
-  padding-left: 0.5rem;
+.alt_menu_button_label > img {
+  margin-right: 0.5rem;
 }
-.import_button.disabled {
+label.alt_menu_button_label > p {
+  margin: 0;
+}
+.alt_menu_button.disabled {
   display: none;
 }
 
@@ -198,9 +201,9 @@ ul.more-info p {
   white-space: pre;
   padding-left: 0.5rem;
 }
-div.header-menu-alt .import_file:hover,
-div.header-menu-alt input:focus + .import_file:hover,
-div.header-menu-alt input:focus:focus-visible + .import_file,
+div.header-menu-alt .alt_menu_button_label:hover,
+div.header-menu-alt input:focus + .alt_menu_button_label:hover,
+div.header-menu-alt input:focus:focus-visible + .alt_menu_button_label,
 ul.more-info a:hover,
 ul.more-info a:focus:hover,
 ul.more-info a:focus:focus-visible,

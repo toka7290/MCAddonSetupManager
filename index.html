@@ -74,13 +74,16 @@
           <p>version:1.7.0_dev</p>
         </div>
         <div class="header-menu">
-          <div class="header-menu-element import_file">
-            <label for="input-file">Import</label>
-            <div class="help-content top" id="help-content-1">
-              <p>すでファイルがある場合はデータをインポートします。</p>
-            </div>
+          <div class="menu_button file_load_button disabled">
+            <label for="load_file">Load</label>
           </div>
-          <div class="header-menu-element" id="show-preview">
+          <div class="menu_button import_button">
+            <label for="input-file">Import</label>
+          </div>
+          <div class="help-content top" id="help-content-1">
+            <p>ファイルを読み込みます</p>
+          </div>
+          <div class="menu_button" id="show-preview">
             <span>Preview</span>
             <div class="help-content top" id="help-content-3">
               <p>
@@ -88,29 +91,27 @@
               </p>
             </div>
           </div>
-          <div class="header-menu-element">
+          <div class="menu_button">
             <p id="show_help">help</p>
           </div>
-          <div class="header-menu-element">
+          <div class="menu_button">
             <label for="open-about">About</label>
           </div>
         </div>
         <div class="header-menu-alt">
-          <div class="file_import">
-            <div class="file_system_access import_button disabled">
-              <input type="button" id="input_file_fsa" class="invisible_Control" ui>
-              <label for="input_file_fsa" class="import_file">
-                <img src="img/import.svg" alt="import" width="32px" height="32px">
-                <p>Import</p>
-              </label>
-            </div>
-            <div class="file_reader import_button">
-              <input type="file" name="input-file" id="input-file" accept=".json" class="invisible_Control">
-              <label for="input-file" class="import_file">
-                <img src="img/import.svg" alt="import" width="32px" height="32px">
-                <p>Import</p>
-              </label>
-            </div>
+          <div class="alt_menu_button file_load_button disabled">
+            <input type="button" id="load_file" class="invisible_Control" ui>
+            <label for="load_file" class="alt_menu_button_label" title="">
+              <img src="img/file.svg" alt="file" width="32px" height="32px">
+              <p>Open</p>
+            </label>
+          </div>
+          <div class="alt_menu_button import_button">
+            <input type="file" name="input-file" id="input-file" accept=".json" class="invisible_Control">
+            <label for="input-file" class="alt_menu_button_label">
+              <img src="img/import.svg" alt="import" width="32px" height="32px">
+              <p>Import</p>
+            </label>
           </div>
           <details class="open-more-info">
             <summary class="more-info-icon"><img src="img/more.svg" alt="more" width="32px" height="32px"></summary>

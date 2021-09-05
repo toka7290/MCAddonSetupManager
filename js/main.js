@@ -428,17 +428,22 @@ if (navigator.share) {
   });
 }
 // ショートカットキー
-$(window).on("keydown", function (e) {
+$(window).on("keydown", async function (e) {
   if (e.defaultPrevented) {
     return;
   }
   if (e.ctrlKey) {
     switch (e.key.toLowerCase()) {
       case "s":
-        if (e.shiftKey) writeFile(json_code, true);
-        else writeFile(json_code);
         e.stopPropagation();
         e.preventDefault();
+        if (e.shiftKey) await writeFile(json_code, true);
+        else await writeFile(json_code);
+        break;
+      case "o":
+        e.stopPropagation();
+        e.preventDefault();
+        await setJSONData(await openFile());
         break;
     }
   }
@@ -446,29 +451,13 @@ $(window).on("keydown", function (e) {
 // Native file systemが使える場合
 if (native_file_system) {
   // 切替
-  $(".import_button.file_system_access").removeClass("disabled");
-  $(".import_button.file_reader").addClass("disabled");
+  $(".file_load_button").removeClass("disabled");
+  $(".import_button").addClass("disabled");
   $(".preview_control_child.save").removeClass("disabled");
   // インポート処理
-  $("#input_file_fsa").on("click", async () => {
-    const option = {
-      // 複数ファイルの受け入れ
-      multiple: false,
-      // "すべて" のファイルオプション無効
-      excludeAcceptAllOption: false,
-      // 任意のファイルオプション
-      types: [
-        {
-          description: "JSON",
-          accept: {
-            "application/json": [".json"],
-          },
-        },
-      ],
-    };
-    let handle = await window.showOpenFilePicker(option);
-    [file_handle] = handle;
-    readFile();
+  $("#load_file").on("click", async () => {
+    // console.log(await openFile());
+    setJSONData(await openFile());
   });
   // 保存
   $("#control_save").on("click", async () => {
@@ -482,12 +471,32 @@ if (native_file_system) {
   });
 } else {
   // File reader
-  $(".import_button.file_system_access").addClass("disabled");
-  $(".import_button.file_reader").removeClass("disabled");
+  $(".file_load_button").addClass("disabled");
+  $(".import_button").removeClass("disabled");
   $(".preview_control_child.save").addClass("disabled");
   $("#input-file").on("change", function () {
     importJsonFile();
   });
+}
+async function openFile() {
+  const option = {
+    // 複数ファイルの受け入れ
+    multiple: false,
+    // "すべて" のファイルオプション無効
+    excludeAcceptAllOption: false,
+    // 任意のファイルオプション
+    types: [
+      {
+        description: "JSON",
+        accept: {
+          "application/json": [".json"],
+        },
+      },
+    ],
+  };
+  let handle = await window.showOpenFilePicker(option);
+  [file_handle] = handle;
+  return await readFile();
 }
 // 読み込み処理
 async function readFile() {
@@ -495,8 +504,7 @@ async function readFile() {
   // ハンドルからファイルを取得
   const file = await file_handle.getFile();
   // テキスト取得
-  const fileContents = await file.text();
-  setJSONData(fileContents);
+  return await file.text();
 }
 // 書き込み処理
 async function writeFile(contents, save_as = false) {
@@ -557,7 +565,7 @@ $(".file-drop-zone-pick").on("dragleave", function (/** @type {Event} */ event) 
   event.preventDefault();
   $(".file-drop-zone").addClass("hide");
 });
-$(document).on("drop", function (/** @type {jQuery.Event} */ _event) {
+$(document).on("drop", async function (/** @type {jQuery.Event} */ _event) {
   isChanged = true;
   $(".file-drop-zone").addClass("hide");
   var event = _event;
@@ -566,8 +574,13 @@ $(document).on("drop", function (/** @type {jQuery.Event} */ _event) {
   }
   event.stopPropagation();
   event.preventDefault();
-  $("#input-file").prop("files", event.dataTransfer.files);
-  importJsonFile();
+  if (native_file_system) {
+    console.log("native");
+    setJSONData(await event.dataTransfer.files[0].text());
+  } else {
+    $("#input-file").prop("files", event.dataTransfer.files);
+    importJsonFile();
+  }
 });
 // コピー
 if (!!navigator.clipboard) {
@@ -1171,27 +1184,26 @@ function setErrorText(text = "", message = "") {
   return messageText;
 }
 // jsonデータ取り出し
-function setJSONData(json_text = "") {
+async function setJSONData(json_text = "") {
   let json_data = {};
   try {
     json_data = JSON.parse(json_text);
   } catch (e) {
-    if (json_text.match(/\/\*[\s\S]*?\*\/ | \/\/(?=.*)(?!.*(\"\,|\")).*/g)) {
-      window.alert(
-        `${setErrorText(json_text, e.message)}\nコメントアウトを除去して再度試みます。\n`
-      );
+    if (
+      json_text.match(/\/\*[\s\S]*?\*\/ | \/\/(?=.*)(?!.*(\"\,|\")).*/g) &&
+      window.confirm(
+        `${setErrorText(json_text, e.message)}\nコメントアウトを除去して再試行しますか？\n`
+      )
+    ) {
       let data = json_text.replace(/\/\*[\s\S]*?\*\/ | \/\/(?=.*)(?!.*(\"\,|\")).*/g, "");
       try {
         json_data = JSON.parse(data);
       } catch (er) {
         window.alert(setErrorText(data, er.message));
         console.error("error:" + er);
-        return;
       }
     } else {
-      window.alert(setErrorText(json_text, e.message));
       console.error("error:" + e);
-      return;
     }
   }
   // format_versionがない場合pack_manifest検査

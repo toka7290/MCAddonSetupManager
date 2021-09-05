@@ -24,18 +24,7 @@
     flex-wrap: wrap;
     justify-content: flex-end;
   }
-  div.import_file {
-    display: inline-block;
-    padding: 0.5rem;
-    position: relative;
-  }
-  div.import_file label {
-    margin: 0;
-  }
-  div.import_file input {
-    display: none;
-  }
-  .header-menu-element {
+  .menu_button {
     color: var(--color-header-text);
     display: inline-block;
     margin: 0;
@@ -43,12 +32,15 @@
     transition-duration: 0.5s;
     transition-property: background-color;
   }
-  .header-menu-element:hover {
+  .menu_button:hover {
     cursor: pointer;
     background-color: var(--color-header-hover);
   }
-  .header-menu-element > p {
+  .menu_button > p {
     margin: 0;
+  }
+  .menu_button.disabled {
+    display: none;
   }
   div#show-preview {
     position: relative;
