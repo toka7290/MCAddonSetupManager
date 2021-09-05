@@ -1,5 +1,5 @@
 {
-  "name": "Manifest Generator by TokaTools",
+  "name": "Manifest Generator - TokaTools",
   "short_name": "Manifest Generator",
   "description": "Minecraft Bedrock Edition 向けのアドオン作成補助ツールです。manifest.jsonを簡単に作ることができます。",
   "display": "standalone",

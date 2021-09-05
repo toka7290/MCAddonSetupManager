@@ -145,7 +145,8 @@ label.alt_menu_button_label {
   margin: 0;
   white-space: nowrap;
 }
-.alt_menu_button_label > img {
+.alt_menu_button_label > img,
+.alt_menu_button_label > svg {
   margin-right: 0.5rem;
 }
 label.alt_menu_button_label > p {

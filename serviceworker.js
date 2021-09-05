@@ -9,7 +9,6 @@ var urlsToCache = [
   "/MCAddonSetupManager/css/style.min.css",
   "/MCAddonSetupManager/img/close.svg",
   "/MCAddonSetupManager/img/error.svg",
-  "/MCAddonSetupManager/img/file.svg",
   "/MCAddonSetupManager/img/github.svg",
   "/MCAddonSetupManager/img/help.svg",
   "/MCAddonSetupManager/img/homepage.svg",
