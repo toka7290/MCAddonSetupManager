@@ -456,7 +456,6 @@ if (native_file_system) {
   $(".preview_control_child.save").removeClass("disabled");
   // インポート処理
   $("#load_file").on("click", async () => {
-    // console.log(await openFile());
     setJSONData(await openFile());
   });
   // 保存
@@ -575,7 +574,6 @@ $(document).on("drop", async function (/** @type {jQuery.Event} */ _event) {
   event.stopPropagation();
   event.preventDefault();
   if (native_file_system) {
-    console.log("native");
     setJSONData(await event.dataTransfer.files[0].text());
   } else {
     $("#input-file").prop("files", event.dataTransfer.files);

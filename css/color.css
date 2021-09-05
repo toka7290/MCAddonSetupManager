@@ -31,7 +31,7 @@
   --color-help-content: #fff;
   --color-focus-text: #fff;
   --color-focus-foreground: rgba(0, 0, 0, 0.75);
-  --color-focus-background: rgba(0, 0, 0, 0.25);
+  --color-focus-background: rgba(0, 0, 0, 0.4);
   --color-display-preview-background: rgba(0, 0, 0, 0.85);
 
   --color-add: #0969cf;

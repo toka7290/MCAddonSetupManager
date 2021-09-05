@@ -382,8 +382,11 @@ div.about-external-link img {
 }
 .about-area {
   position: absolute;
+  max-height: 100vh;
+  max-width: 25rem;
   width: auto;
   height: auto;
+  overflow: auto;
   padding: 20px;
   font-weight: 600;
   color: #fff;
@@ -423,9 +426,6 @@ div.about-content > img {
 .about-title .sub_title {
   display: block;
   font-size: medium;
-}
-.about-area {
-  max-width: 25rem;
 }
 .about-description {
   font-weight: normal;
