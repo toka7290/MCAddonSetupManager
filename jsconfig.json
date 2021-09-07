@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "commonJS",
+    "target": "es2020",
+    "baseUrl": "."
+  },
+  "typeAcquisition": {
+    "include": ["lib/prism.js", "lib/minecraft_text.*", "jquery", "node_modules"]
+  }
+}

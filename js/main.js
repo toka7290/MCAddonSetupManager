@@ -1,3 +1,5 @@
+const Prism = require("../lib/prism");
+
 // 宣言
 var isChanged = false;
 var is_compact = false;
