@@ -1,0 +1,79 @@
+.mcf-text {
+  color: #ffffff;
+}
+.mcf-0 {
+  color: #000000;
+}
+.mcf-1 {
+  color: #0000aa;
+}
+.mcf-2 {
+  color: #00aa00;
+}
+.mcf-3 {
+  color: #00aaaa;
+}
+.mcf-4 {
+  color: #aa0000;
+}
+.mcf-5 {
+  color: #aa00aa;
+}
+.mcf-6 {
+  color: #ffaa00;
+}
+.mcf-7 {
+  color: #aaaaaa;
+}
+.mcf-8 {
+  color: #555555;
+}
+.mcf-9 {
+  color: #5555ff;
+}
+.mcf-a {
+  color: #55ff55;
+}
+.mcf-b {
+  color: #55ffff;
+}
+.mcf-c {
+  color: #ff5555;
+}
+.mcf-d {
+  color: #ff55ff;
+}
+.mcf-e {
+  color: #ffff55;
+}
+.mcf-f {
+  color: #ffffff;
+}
+.mcf-g {
+  color: #ddd605;
+}
+
+.mcf-k {
+  font-family: monospace, serif;
+}
+.mcf-l {
+  font-weight: bolder;
+}
+.mcf-m {
+  text-decoration: line-through;
+}
+.mcf-n {
+  text-decoration: underline;
+}
+.mcf-o {
+  font-style: italic;
+}
+
+/* #card-description {
+  height: auto;
+  background-color: #000000;
+}
+.display-preview-card {
+  grid-template-rows: auto;
+  height: auto;
+} */

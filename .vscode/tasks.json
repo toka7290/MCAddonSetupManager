@@ -17,7 +17,7 @@
         "--externs=jquery-3.3.js",
         "--externs=prism.js",
         "--externs=minecraft_text.js",
-        "--externs=main.js"
+        "--externs=mc_format.js"
       ],
       "presentation": {
         "echo": true,
@@ -34,6 +34,29 @@
       "label": "http-server : open",
       "command": "python",
       "args": ["-m", "http.server"],
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "process",
+      "label": "closure-compiler : mc_format.js compile",
+      "command": "java",
+      "options": {
+        "cwd": ".\\.jsoptimize"
+      },
+      "args": [
+        "-jar",
+        ".\\closure-compiler-v20210808.jar",
+        "--js=..\\lib\\mc_format.js",
+        "--js_output_file=..\\lib\\mc_format.min.js"
+      ],
       "presentation": {
         "echo": true,
         "reveal": "silent",

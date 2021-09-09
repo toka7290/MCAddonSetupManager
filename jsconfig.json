@@ -5,6 +5,6 @@
     "baseUrl": "."
   },
   "typeAcquisition": {
-    "include": ["lib/prism.js", "lib/minecraft_text.*", "jquery", "node_modules"]
+    "include": ["lib/prism.js", "lib/minecraft_text.*", "lib/mc_format.*", "jquery"]
   }
 }

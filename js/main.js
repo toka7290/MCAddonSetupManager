@@ -1,5 +1,3 @@
-const Prism = require("../lib/prism");
-
 // 宣言
 var isChanged = false;
 var is_compact = false;
@@ -58,7 +56,7 @@ class JSONReplace {
     } else if (typeof data == "string") {
       // 文字列
       key = getUuid_v4();
-      this.replace_point[`"${key}"`] = data.replace(/\\[^n\\]|\\$/g, "");
+      this.replace_point[`"${key}"`] = data.replace(/\\[^n\\]|\\$/g, "").replace(/\n|\\n/g, "\\n");
     } else {
       // それ以外
       key = data;
@@ -182,9 +180,9 @@ $(window).on("load", function () {
   onChangedJSON();
 });
 // 改行入力制限
-$("textarea").on("keydown", function (e) {
-  if (e.key == "Enter") return false;
-});
+// $("textarea").on("keydown", function (e) {
+//   if (e.key == "Enter") return false;
+// });
 // セパレータ移動
 $(".separator").on("mousedown", function () {
   if (!is_separator_drag) {
@@ -495,7 +493,13 @@ async function openFile() {
       },
     ],
   };
-  let handle = await window.showOpenFilePicker(option);
+  let handle;
+  try {
+    handle = await window.showOpenFilePicker(option);
+  } catch (e) {
+    // ピッカーキャンセル
+    return;
+  }
   [file_handle] = handle;
   return await readFile();
 }
@@ -514,19 +518,24 @@ async function writeFile(contents, save_as = false) {
   // ファイルハンドルが指定されていないとき
   if (!handle) {
     // ハンドルを取得＆ファイルを新規作成
-    handle = await window.showSaveFilePicker({
-      // "すべて" のファイルオプション無効
-      excludeAcceptAllOption: false,
-      // 任意のファイルオプション
-      types: [
-        {
-          description: "JSON",
-          accept: {
-            "application/json": [".json"],
+    try {
+      handle = await window.showSaveFilePicker({
+        // "すべて" のファイルオプション無効
+        excludeAcceptAllOption: false,
+        // 任意のファイルオプション
+        types: [
+          {
+            description: "JSON",
+            accept: {
+              "application/json": [".json"],
+            },
           },
-        },
-      ],
-    });
+        ],
+      });
+    } catch (e) {
+      // ピッカーキャンセル
+      return;
+    }
   }
   // Create a FileSystemWritableFileStream to write to.
   const writable = await handle.createWritable();
@@ -538,7 +547,7 @@ async function writeFile(contents, save_as = false) {
   isChanged = false;
   $("#edit_state").toggleClass("changed", isChanged);
   // ハンドラを保存
-  if (!save_as) file_handle = handle;
+  if (!save_as && handle) file_handle = handle;
 }
 // インポート処理
 function importJsonFile() {
@@ -780,12 +789,12 @@ function setTabControls(className = "", stat = [0, 0, 0]) {
 // 実表示
 function updateDisplayPreview() {
   // タイトル
-  let title = $("#header_pack_name").val().toString();
+  let title = /**@type {string} */ ($("#header_pack_name").val());
   if (title == "") title = "名前がありません";
   else if (title.match(/\\/g) != null) {
     let split_text = title.split("\\\\");
     let result = "";
-    for (const index in split_text) {
+    for (let index = 0; index < split_text.length; index++) {
       let i = split_text[index].indexOf("\\n");
       if (index >= 1) result += `\\\\`;
       if (i != -1) {
@@ -800,16 +809,17 @@ function updateDisplayPreview() {
     }
     title = result;
   }
-  $("#card-title").html(MinecraftText.toHTML(title));
+  // $("#card-title").html(MinecraftText.toHTML(title));
+  $("#card-title").text(title);
   // 説明
-  let description = $("#header_description").val().toString();
+  let description = /**@type {string} */ ($("#header_description").val());
   if (description == "") description = "§c不明なパックの説明";
   else if (description.match(/\\/g) != null) {
     let position = 0;
     let i = 0;
     let result = "";
     let split_text = description.split("\\\\");
-    for (const index in split_text) {
+    for (let index = 0; index < split_text.length; index++) {
       do {
         i++;
         position = split_text[index].indexOf("\\n", position + 1);
@@ -827,8 +837,10 @@ function updateDisplayPreview() {
     }
     description = result;
   }
-  $("#card-description").html(MinecraftText.toHTML(description));
-  MinecraftText.refeashObfuscate();
+  // $("#card-description").html(MinecraftText.toHTML(description));
+  // MinecraftText.refeashObfuscate();
+  $("#card-description").text(description);
+  MCFormat.formatAll();
 }
 // モジュールタイプ変更
 function setSelectRestriction() {
