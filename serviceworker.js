@@ -1,4 +1,4 @@
-const CACHE_VERSION = "20210905";
+const CACHE_VERSION = "20210909";
 const CACHE_NAME = `${registration.scope}!${CACHE_VERSION}`;
 var urlsToCache = [
   "/MCAddonSetupManager/",
@@ -6,6 +6,7 @@ var urlsToCache = [
   "/MCAddonSetupManager/css/color.min.css",
   "/MCAddonSetupManager/css/phone.min.css",
   "/MCAddonSetupManager/css/prism.min.css",
+  "/MCAddonSetupManager/css/mc_format.min.css",
   "/MCAddonSetupManager/css/style.min.css",
   "/MCAddonSetupManager/img/close.svg",
   "/MCAddonSetupManager/img/error.svg",
@@ -27,9 +28,8 @@ var urlsToCache = [
   "/MCAddonSetupManager/js/main.min.js",
   "/MCAddonSetupManager/json/webapp.webmanifest",
   "/MCAddonSetupManager/lib/jquery-3.6.0.min.js",
-  "/MCAddonSetupManager/lib/minecraft_text.min.js",
   "/MCAddonSetupManager/lib/prism.js",
-  "/MCAddonSetupManager/lib/minecraft_text.min.js.map",
+  "/MCAddonSetupManager/lib/mc_format.min.js",
 ];
 
 // インストール処理
