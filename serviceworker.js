@@ -50,7 +50,6 @@ self.addEventListener("activate", (event) => {
       .then((cacheNames) => {
         return cacheNames.filter((cacheName) => {
           // このスコープに所属していて且つCACHE_NAMEではないキャッシュを探す
-          console.log(cacheName);
           return cacheName.startsWith(`${registration.scope}!`) && cacheName !== CACHE_NAME;
         });
       })
@@ -58,7 +57,6 @@ self.addEventListener("activate", (event) => {
         return Promise.all(
           cachesToDelete.map((cacheName) => {
             // いらないキャッシュを削除する
-            console.log(cacheName);
             return caches.delete(cacheName);
           })
         );
