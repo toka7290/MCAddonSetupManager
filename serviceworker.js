@@ -1,4 +1,4 @@
-const CACHE_VERSION = "20210909";
+const CACHE_VERSION = "20211117";
 const CACHE_NAME = `${registration.scope}!${CACHE_VERSION}`;
 var urlsToCache = [
   "/MCAddonSetupManager/",
@@ -58,6 +58,7 @@ self.addEventListener("activate", (event) => {
         return Promise.all(
           cachesToDelete.map((cacheName) => {
             // いらないキャッシュを削除する
+            console.log(cacheName);
             return caches.delete(cacheName);
           })
         );
