@@ -9,6 +9,8 @@ manifest.json の仕様については[manifest.json の手引き](https://tokam
 ### 画面のみかた
 
 お使いの環境によってダークモードで表示される可能性があります
+![MCAddonSetupManager](https://user-images.githubusercontent.com/46467578/157014676-3cf1834f-e1f6-44c7-b7f7-415b8aaac120.png)
+
 
 #### ヘッダーメニュー
 
