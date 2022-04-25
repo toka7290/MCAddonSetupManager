@@ -211,6 +211,87 @@
       <div class="file-drop-zone-pick">
       </div>
     </div>
+    <style>
+      body {
+
+        display: grid;
+        grid-auto-rows: 3rem 1fr;
+      }
+
+      .welcome {
+        height: 100%;
+        display: grid;
+        grid-row: 2;
+      }
+
+      .welcome-container {
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .start-actions {
+        display: grid;
+        grid-gap: 1rem;
+        padding: 1rem;
+      }
+
+      .action-btn {
+        background: green;
+        color: white;
+        border-radius: 0.5rem;
+        padding: 1rem;
+
+      }
+
+      .action-title {
+        font-size: large;
+      }
+
+      div.content {
+        display: none;
+      }
+    </style>
+    <div class="welcome">
+      <div class="welcome-container">
+        <div class="welcome-about">
+          <div class="guidance-text">ようこそManifest Generatorへ</div>
+        </div>
+        <div class="start-actions">
+          <div class="action-item quick-start">
+            <!-- 簡単作成 -->
+            <label class="invisible_Control">
+              <input type="button" value="" id="create-quick-btn">
+              <div class="action-btn">
+                <div class="action-title">かんたん作成</div>
+                <div class="action-description">シンプルエディタでかんたん作成!ほんの数個の設定するだけ</div>
+              </div>
+            </label>
+          </div>
+          <div class="action-item edit-start">
+            <!-- 詳細 -->
+            <label class="invisible_Control">
+              <input type="button" value="" id="create-new-btn">
+              <div class="action-btn">
+
+                <div class="action-title">新規作成</div>
+                <div class="action-description">manifest.jsonを一から作成します</div>
+              </div>
+            </label>
+          </div>
+          <div class="action-item file-start">
+            <!-- ファイル開く -->
+            <label class="invisible_Control">
+              <input type="button" value="" id="open-file-btn">
+              <div class="action-btn">
+                <div class="action-title">ファイルを開く</div>
+                <div class="action-description">すでにあるmanifest.jsonを開きます</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="content">
       <div class="editor">
         <form name="editor_common">
