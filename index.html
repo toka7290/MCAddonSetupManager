@@ -222,6 +222,7 @@
         height: 100%;
         display: grid;
         grid-row: 2;
+        display: none;
       }
 
       .welcome-container {
@@ -248,9 +249,9 @@
         font-size: large;
       }
 
-      div.content {
+      /* div.content {
         display: none;
-      }
+      } */
     </style>
     <div class="welcome">
       <div class="welcome-container">
@@ -895,7 +896,177 @@
                 <p id="card-description" class="mcf-text"></p>
               </div>
             </div>
+            <style>
+              /* todo:
+              複数パック導入した際の移動再現
+              優先度移動のときはdescriptionを閉じる
+              description何行でもOK,スペース強制1つ,スペースで折り返し,\n使用不可
+
+               */
+              .ore-ui-base {
+                background-color: #48494a;
+                padding: 1rem;
+                user-select: none;
+              }
+
+              .ore-ui-base summary {
+                list-style: none;
+              }
+
+              .ore-ui-base details {
+                transition: height 100ms linear;
+              }
+
+              .ore-ui-card {
+                display: grid;
+                align-items: center;
+                grid-template-columns: 1fr 5rem;
+                background-color: #313233;
+                color: #b1b2b5;
+                border-style: solid;
+                border: solid 3px #1e1e1f;
+              }
+
+              .ore-ui-card:not(:first-child) {
+                border-top: none;
+              }
+
+              .ore-ui-card-body {
+                display: grid;
+                font-size: large;
+                color: white;
+                background-color: #48494a;
+                /* padding: 1.6rem; */
+                box-shadow: inset -3px 0 0 #373737, inset 3px 0 0 rgba(255, 255, 255, 0.1), inset 0 3px 0 rgba(255, 255, 255, 0.1), inset 0 -3px 0 #373737;
+                padding: .5rem;
+              }
+
+
+              .ore-ui-card-body:hover {
+                background-color: #696969;
+                border-left-color: #7f7f7f;
+                border-right-color: #7f7f7f;
+                border-top-color: #7f7f7f;
+                color: #ffffff;
+                cursor: pointer;
+              }
+
+              .ore-ui-card-body:active {
+                background-color: transparent;
+              }
+
+              .ore-ui-card-body>label {
+                display: grid;
+                grid-gap: .5rem;
+                align-items: center;
+                grid-template-columns: auto 1fr auto;
+              }
+
+              .ore-ui-card-img,
+              .ore-ui-card-toggle,
+              .ore-ui-card-add {
+                aspect-ratio: 1/1;
+                width: 4rem;
+                height: 4rem;
+                display: grid;
+                justify-content: space-around;
+                align-items: center;
+                pointer-events: none;
+              }
+
+              .ore-ui-card-toggle img {
+                aspect-ratio: 1/1;
+                width: 1rem;
+                height: 1rem;
+                transform: scale(1, -1);
+              }
+
+              .ore-ui-card-toggle.close img {
+                transform: none;
+              }
+
+              .ore-ui-card-add img {
+                aspect-ratio: 1/1;
+                width: 2rem;
+                height: 2rem;
+              }
+
+              .ore-ui-card-description {
+                margin: 1rem;
+                color: white;
+              }
+
+              #preview-ore-ui-details {
+                max-height: 100vh;
+                transition: max-height 0.25s ease-in;
+              }
+
+
+              #preview-ore-ui-details.close {
+                max-height: 0;
+                border: none;
+              }
+
+              #preview-ore-ui-details.close div {
+                display: none;
+              }
+            </style>
+            <div class="preview-body">
+              <div class="ore-ui-base">
+                <div class="ore-ui-card">
+                  <div class="ore-ui-card-body">
+                    <input type="button" id="preview-ore-ui-summary" class="invisible_Control" ui>
+                    <label for="preview-ore-ui-summary" class="">
+                      <div class="ore-ui-card-img">
+                        <img src="img/icon.svg" alt="" width="64px" height="64px">
+                      </div>
+                      <div class="ore-ui-card-title">
+                        <p>test</p>
+                      </div>
+                      <div class="ore-ui-card-toggle" id="preview-ore-ui-toggle">
+                        <img src="img/arrowUp.svg" alt="" width="64px" height="64px">
+                      </div>
+                    </label>
+                  </div>
+                  <div class="ore-ui-card-body">
+                    <div class="ore-ui-card-add">
+                      <img src="img/add.svg" alt="" width="64px" height="64px">
+                    </div>
+                  </div>
+                </div>
+                <div class="ore-ui-card" id="preview-ore-ui-details">
+                  <div class="ore-ui-card-description">
+                    abcd ,awoi,jegj.awvijcg;.xiaw,jgv;o ,aig,a jgiaj meigmjia egu hupe, eigh,a3. jehij,a e
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+          <script>
+            const summary = document.getElementById("preview-ore-ui-summary");
+            // console.log(summary);
+            let key = [{
+              height: "3.5rem",
+              opacity: 1
+            },
+            {
+              height: 0,
+              opacity: 0
+            }];
+            summary.addEventListener('click', event => {
+              document.getElementById("preview-ore-ui-toggle").classList.toggle("close");
+              const details = document.getElementById("preview-ore-ui-details");
+              details.classList.toggle("close");
+              // details.animate(
+              //   key,
+              //   {
+              //     fill: "both",
+              //     duration: 1000,
+              //     direction: 'alternate'
+              //   });
+              // key.reverse();
+            });
+          </script>
           <div class="code-preview">
             <div class="preview_header">
               <span>Code</span>
