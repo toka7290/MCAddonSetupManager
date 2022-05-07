@@ -23,6 +23,12 @@ var json_code = "";
 var native_file_system = !!window.showOpenFilePicker;
 // ファイルハンドラ
 var file_handle = undefined;
+// 無効なインデックス
+var disabled_module_index = [];
+// バージョン
+const VERSION = "1.8.0";
+// generated with object
+var generated_with = {};
 
 class JSONReplace {
   constructor() {
@@ -74,11 +80,11 @@ class JSONReplace {
             ? JSON.stringify(data)
             : JSON.stringify(data)
                 .split(/^\[/)
-                .join("[ ")
+                .join("[")
                 .split(/,/)
                 .join(", ")
                 .split(/\]$/)
-                .join(" ]");
+                .join("]");
         else if (typeof data == "string") return `"${data}"`;
       });
     }
@@ -163,9 +169,10 @@ function isUUID(uuid = "") {
 }
 
 // ページ離脱時に警告表示
-$(window).bind("beforeunload", function () {
+window.addEventListener("beforeunload", (event) => {
   if (isChanged) {
-    return "このページを離れようとしています。";
+    event.preventDefault();
+    event.returnValue = "このページを離れようとしています。";
   }
 });
 
@@ -176,7 +183,11 @@ $(document).on("change keyup click", "input,textarea,select", function (e) {
   isChanged = $(e.target).is("[ui]") ? isChanged : true;
   $("#edit_state").toggleClass("changed", isChanged);
 });
-$(window).on("load", function () {
+window.addEventListener("load", function () {
+  $('input[type="button"].generate_uuid')
+    .parents("div.type-uuid")
+    .find('input[type="text"]')
+    .val(getUuid_v4);
   onChangedJSON();
 });
 // 改行入力制限
@@ -212,7 +223,7 @@ $(document).on("mousemove", function (e) {
   }
 });
 // ウィンドウワイズ変更時にcss削除
-$(window).resize(function () {
+window.addEventListener("resize", function () {
   $("div.preview").css("display", "");
   $("div.editor").css("flex-basis", "");
   $("div.data_check").css("flex-basis", "");
@@ -391,7 +402,7 @@ function addAuthor(name = "") {
         $("<div>").addClass("author_num").text($(".author_name").length),
         $("<input>").attr({
           type: "text",
-          class: "metadata_author",
+          ["class"]: "metadata_author",
           value: name,
         })
       )
@@ -844,77 +855,108 @@ function updateDisplayPreview() {
 }
 // モジュールタイプ変更
 function setSelectRestriction() {
-  //type取得
+  //typeをすべて取得
   let selected_modules = Array.prototype.map.call(
     $(`.modules.tab-content-list > div #modules_type`),
     (elem) => elem.value
   );
+
   // 共通制限
+  // ワールドテンプレートの判定
   is_world_template = selected_modules.some((m) => m == "world_template");
+  // スキンパックの判定
   is_skin_pack = selected_modules.some((m) => m == "skin_pack");
+  // min_engine_version の無効切替
   $("#header_min_engine_version").toggleClass("disabled", is_world_template || is_skin_pack);
   $("#header_min_engine_version_input input").prop("disabled", is_world_template || is_skin_pack);
+  // base_game_version の無効切替
   $("#header_base_game_version").toggleClass("disabled", format_version >= 2 && !is_world_template);
   $("#header_base_game_version_input input").prop(
     "disabled",
     format_version >= 2 && !is_world_template
   );
+  // lock_templateの無効切替
   $("#header_lock_template_options")
     .prop("disabled", !is_world_template)
     .parent()
     .toggleClass("disabled", !is_world_template);
+  // pack_scopeの無効切替
   $("#header_pack_scope_label").toggleClass("disabled", is_world_template || is_skin_pack);
   $("#header_pack_scope").prop("disabled", is_world_template || is_skin_pack);
+
   // モジュールの追加制限
   // モジュール制限
-  let disabled_module = [false, false, false, false, false, false, false];
+  let disabled_module = [false, false, false, false, false, false, false, false, false];
+  // enum
   const m_num = {
     ["data"]: 0,
     ["resources"]: 1,
     ["client_data"]: 2,
-    ["javascript"]: 3,
+    ["script"]: 3,
     ["interface"]: 4,
     ["world_template"]: 5,
     ["skin_pack"]: 6,
+    ["javascript"]: 7,
+    ["plugin"]: 8,
   };
-  // 共存不可のモジュールがある場合は終了
+  // 共存不可のモジュールがあるか
   let exclusive =
     is_world_template || is_skin_pack || selected_modules.some((m) => m == "resources");
+
+  // 無効なインデックスのリセット
+  disabled_module_index = [];
+  // 各モジュールに対する処理
   for (let index = 0; index < selected_modules.length; index++) {
-    // 切替
+    const module = $(`.modules.tab-content-list > div:nth-child(${index + 1})`);
+    // タイプ選択の選択肢を制限
+    const type_select = module.find(" #modules_type");
     disabled_module.forEach((val, i) => {
-      $(
-        `.modules.tab-content-list > div:nth-child(${index + 1}) #modules_type option:nth-child(${
-          i + 1
-        })`
-      ).prop("disabled", val);
+      type_select.find(`option:nth-child(${i + 1})`).prop("disabled", val);
     });
+
     // 無効なモジュールを選択している場合に変更
     if (disabled_module[m_num[selected_modules[index]]]) {
+      // 選択可能なインデックスを取得
       const enable_module = disabled_module.indexOf(false);
-      const type_elem = $(
-        `.modules.tab-content-list > div:nth-child(${index + 1}) #modules_type`
-      ).prop("selectedIndex", enable_module);
-      disabled_module[enable_module] = true;
-      selected_modules[index] = type_elem.val();
+      // 選択可能なtypeがない場合
+      if (enable_module == -1) {
+        disabled_module_index.push(index);
+        continue;
+      }
+      // 選択可能なインデックスに値を変更
+      type_select.prop("selectedIndex", enable_module);
+      // モジュールタイプ一覧を変更
+      selected_modules[index] = type_select.val();
     }
-    // 選択しているモジュールを除外
-    disabled_module[m_num[selected_modules[index]]] = true;
-    // もともとの除外項目
-    if (!index)
-      ["resources", "world_template", "skin_pack"].forEach((val) => {
-        disabled_module[m_num[val]] = true;
-      });
-    if (exclusive) disabled_module.fill(true);
+
+    // 選択しているモジュールを選択不可能に
+    disabled_module[m_num[selected_modules[index]]] ||= true;
+
+    // gametestの判定
+    let is_gametest =
+      selected_modules[index] == "script" ||
+      selected_modules[index] == "javascript" ||
+      selected_modules[index] == "plugin";
+    // gametestモジュールの重複を不可に
+    disabled_module[m_num["script"]] ||= is_gametest;
+    disabled_module[m_num["javascript"]] ||= is_gametest;
+    disabled_module[m_num["plugin"]] ||= is_gametest;
+
+    // 複数モジュールを許可していないtypeを選択不可に強制
+    disabled_module[m_num["resources"]] ||= true;
+    disabled_module[m_num["world_template"]] ||= true;
+    disabled_module[m_num["skin_pack"]] ||= true;
+
+    // gametestの選択制限
+    // "language"の切替
+    module.find("#modules_language_label").toggleClass("disabled", !is_gametest);
+    module.find("#modules_language").prop("disabled", !is_gametest);
     // "entry"の切替
-    $(`.modules.tab-content-list > div:nth-child(${index + 1}) #modules_entry_label`).toggleClass(
-      "disabled",
-      selected_modules[index] != "javascript"
-    );
-    $(`.modules.tab-content-list > div:nth-child(${index + 1}) #modules_entry`).prop(
-      "disabled",
-      selected_modules[index] != "javascript"
-    );
+    module.find("#modules_entry_label").toggleClass("disabled", !is_gametest);
+    module.find("#modules_entry").prop("disabled", !is_gametest);
+
+    // 複数モジュールを許可していないtypeが選択されている場合は複数モジュール不可に
+    if (exclusive) disabled_module.fill(true);
   }
   // まだ追加できるモジュールがあれば追加を許可
   return exclusive
@@ -1006,12 +1048,19 @@ function checkIssue() {
   // モジュール
   const modules_length = $(".modules.tab-children").length;
   for (let i = 0; i < modules_length; i++) {
+    if (disabled_module_index.some((v) => v == i)) continue;
     const c_num = i + 1;
     element = $(`.modules.tab-content-list > div:nth-child(${c_num}) #modules_type`);
-    let module_name = element.val();
-    if (module_name == null) {
+    let module_type = element.val();
+    if (module_type == null) {
       issue_control.addError(
         `[Modules:${i}:type] typeがnullになっています。typeを選択してください。`,
+        element
+      );
+    }
+    if (module_type == "javascript" || module_type == "plugin") {
+      issue_control.addWarning(
+        `[Modules:${i}:type] "${module_type}"は過去のバージョンでサポートされたtypeです。最新バージョンでは動作しません。"script"を使用してください。`,
         element
       );
     }
@@ -1038,7 +1087,7 @@ function checkIssue() {
         element
       );
     }
-    if (module_name == "javascript") {
+    if (module_type == "script" || module_type == "javascript" || module_type == "plugin") {
       element = $(`.modules.tab-content-list > div:nth-child(${c_num}) #modules_entry`);
       element_val = element.val();
       if (element_val == "") {
@@ -1293,6 +1342,7 @@ async function setJSONData(json_text = "") {
       module_element.find(`#modules_version_minor`).val(module?.["version"]?.[1] ?? 0);
       module_element.find(`#modules_version_patch`).val(module?.["version"]?.[2] ?? 0);
       module_element.find(`#modules_uuid`).val(module?.["uuid"] ?? "");
+      module_element.find(`#modules_language`).val(module?.["language"] ?? "javascript");
       module_element.find(`#modules_entry`).val(module?.["entry"] ?? "");
     }
   }
@@ -1328,15 +1378,20 @@ async function setJSONData(json_text = "") {
   }
 
   if (json_data?.["metadata"]) {
-    $("#metadata_enable").prop("checked", true);
     const metadata = json_data["metadata"];
+    generated_with = metadata?.["generated_with"];
+    let is_metadata_enable = false;
     if (metadata?.["authors"]) {
       for (const author of metadata["authors"]) {
         addAuthor(author);
       }
+      is_metadata_enable ||= true;
     }
+    if (metadata?.["url"]) is_metadata_enable ||= true;
     $("#metadata_url").val(metadata?.["url"] ?? "");
+    if (metadata?.["license"]) is_metadata_enable ||= true;
     $("#metadata_license").val(metadata?.["license"] ?? "");
+    $("#metadata_enable").prop("checked", is_metadata_enable);
   }
   if (json_data?.["subpacks"]) {
     $("#subpacks_enable").prop("checked", true);
@@ -1392,24 +1447,29 @@ function getJSONData() {
   json_raw["modules"] = new Array();
   const modules_length = $(".modules.tab-children").length;
   for (let i = 0; i < modules_length; i++) {
+    if (disabled_module_index.some((v) => v == i)) continue;
     const child_num = i + 1;
-    const modules_content = $(`.modules.tab-content-list > div:nth-child(${child_num})`);
-    const modules_type = modules_content.find(`#modules_type`).val();
-    if (modules_type == null || modules_type == undefined) continue;
+    const module_content = $(`.modules.tab-content-list > div:nth-child(${child_num})`);
+    const module_type = module_content.find(`#modules_type`).val();
+    if (module_type == null || module_type == undefined) continue;
     json_raw["modules"][i] = new Object();
-    json_raw["modules"][i]["type"] = modules_type;
+    json_raw["modules"][i]["type"] = module_type;
     json_raw["modules"][i]["description"] = DataReplacer.register(
-      modules_content.find(`#modules_description`).val()
+      module_content.find(`#modules_description`).val()
     );
     json_raw["modules"][i]["version"] = DataReplacer.register([
-      Number(modules_content.find(`#modules_version_major`).val()),
-      Number(modules_content.find(`#modules_version_minor`).val()),
-      Number(modules_content.find(`#modules_version_patch`).val()),
+      Number(module_content.find(`#modules_version_major`).val()),
+      Number(module_content.find(`#modules_version_minor`).val()),
+      Number(module_content.find(`#modules_version_patch`).val()),
     ]);
-    json_raw["modules"][i]["uuid"] = modules_content.find("#modules_uuid").val();
+    json_raw["modules"][i]["uuid"] = module_content.find("#modules_uuid").val();
+    json_raw["modules"][i]["language"] =
+      module_type == "script" || module_type == "javascript"
+        ? DataReplacer.register(module_content.find(`#modules_language`).val())
+        : undefined;
     json_raw["modules"][i]["entry"] =
-      json_raw["modules"][i]["type"] == "javascript"
-        ? DataReplacer.register(modules_content.find(`#modules_entry`).val())
+      module_type == "script" || module_type == "javascript" || module_type == "plugin"
+        ? DataReplacer.register(module_content.find(`#modules_entry`).val())
         : undefined;
   }
   if (is_dependencies_enable) {
@@ -1439,31 +1499,37 @@ function getJSONData() {
       json_raw["capabilities"].push("raytracing");
     }
   }
-  const isValue = [
-    (() => {
-      const author_length = $("label.author_name").length;
-      for (let index = 0; index < author_length; index++) {
-        if ($(".metadata_author").eq(index).val() != "") return true;
-      }
-      return false;
-    })(),
-    $("#metadata_url").val() != "",
-    $("#metadata_license").val() != "",
-  ];
-  if (is_metadata_enable && isValue.some((ele) => ele)) {
-    json_raw["metadata"] = new Object();
-    if (isValue[0]) {
+  json_raw["metadata"] = new Object();
+  if (is_metadata_enable) {
+    // authors
+    const authors = $("input.metadata_author");
+    if (
+      (() => {
+        for (let index = 0; index < authors.length; index++) {
+          if (authors.eq(index).val() != "") return true;
+        }
+        return false;
+      })()
+    ) {
       json_raw["metadata"]["authors"] = new Array();
-      const metadata_length = $("label.author_name").length;
-      for (let i = 0; i < metadata_length; i++) {
-        json_raw["metadata"]["authors"].push(
-          DataReplacer.register($("input.metadata_author").eq(i).val())
-        );
+      for (let i = 0; i < authors.length; i++) {
+        json_raw["metadata"]["authors"].push(DataReplacer.register(authors.eq(i).val()));
       }
     }
-    if (isValue[1]) json_raw["metadata"]["url"] = DataReplacer.register($("#metadata_url").val());
-    if (isValue[2])
+    // url
+    if ($("#metadata_url").val() != "")
+      json_raw["metadata"]["url"] = DataReplacer.register($("#metadata_url").val());
+    // license
+    if ($("#metadata_license").val() != "")
       json_raw["metadata"]["license"] = DataReplacer.register($("#metadata_license").val());
+  }
+  // generated_with
+  json_raw["metadata"]["generated_with"] = new Object();
+  generated_with["TokaTools-Manifest-Generator"] = Array.from(
+    new Set([...(generated_with["TokaTools-Manifest-Generator"] ?? new Array())]).add(VERSION)
+  );
+  for (const key in generated_with) {
+    json_raw["metadata"]["generated_with"][key] = DataReplacer.register(generated_with[key]);
   }
   if (is_subpacks_enable) {
     json_raw["subpacks"] = new Array();
@@ -1541,8 +1607,11 @@ function syncSimpleData() {
     // description モジュール変更＆もともと空のときセット
     const modules_description = modules_content.find(`#modules_description`);
     if (module_description == "") {
+      // §とバックスラッシュを削除
       modules_description.val(
-        `${simple_name_elem_val.replace(/§.|\\n/g, "")} ${module_name} module`
+        `${[simple_name_elem_val.replace(/§.|\\n/g, ""), module_name]
+          .filter((v) => v)
+          .join(" ")} module`
       );
       isChanged = true;
     }

@@ -72,7 +72,7 @@
         </div>
         <div class="title">
           <h1>Manifest Generator</h1>
-          <p>version: 1.7.0</p>
+          <p>version: 1.8.0</p>
         </div>
         <div class="header-menu">
           <div class="menu_button file_load_button disabled">
@@ -174,7 +174,7 @@
             <img src="img/icon.svg" alt="" width="180px" height="180px">
             <div class="about-title">
               <h2><span class="sub_title">TokaTools</span>Manifest Generator</h2>
-              <p>version: 1.7.0</p>
+              <p>version: 1.8.0</p>
             </div>
             <div class="about-description">
               <p>Minecraft Bedrock Edition (BE) でアドオン(リソースパック、ビヘイビアパック、ワールドテンプレート、スキンパック等)で必須となる manifest.json を生成するツールです。</p>
@@ -403,10 +403,12 @@
                           <option value="data">data</option>
                           <option value="resources">resources</option>
                           <option value="client_data">client_data</option>
-                          <option value="javascript">javascript</option>
+                          <option value="script">script</option>
                           <option value="interface">interface</option>
                           <option value="world_template">world_template</option>
                           <option value="skin_pack">skin_pack</option>
+                          <option value="javascript">javascript(~1.18.x)</option>
+                          <option value="plugin">plugin(~1.16.x)</option>
                         </select>
                       </div>
                     </div>
@@ -437,6 +439,16 @@
                       <div class="value-input type-uuid">
                         <label><input type="text" name="uuid" id="modules_uuid"></label>
                         <label><input type="button" value="Generate" class="generate_uuid"></label>
+                      </div>
+                    </div>
+                    <div class="value-element" title="スクリプト言語を設定します">
+                      <div class="value-label">
+                        <label for="modules_language" id="modules_language_label">言語</label>
+                      </div>
+                      <div class="value-input">
+                        <select name="modules_language" id="modules_language">
+                          <option value="javascript" selected>javascript</option>
+                        </select>
                       </div>
                     </div>
                     <div class="value-element" title="スクリプトプライマリファイルを設定します。">
@@ -581,10 +593,6 @@
                   </div>
                   <div class="value-input type_authors">
                     <div class="authors_list">
-                      <label class="author_name">
-                        <div class="author_num">0</div>
-                        <input type="text" class="metadata_author" disabled>
-                      </label>
                     </div>
                     <div class="authors_list_control" title="作者入力欄を追加します。">
                       <div class="add_author">
