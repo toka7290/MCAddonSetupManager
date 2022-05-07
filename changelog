@@ -165,10 +165,10 @@
 - 改行が正しく"\n"に変換されるように
 1.8.0
 - 画面読み込み時にUUIDを自動挿入するように変更
-- script,pluginを使用可能に
-- javascript,pluginに警告を追加
-- generated_withを表示するように
-- languageを追加
+- "script","plugin"を使用可能に
+- "javascript","plugin"に警告を追加
+- "generated_with"の出力に対応
+- "language"を追加
 - 配列の表示仕様変更
 - シンプルエディタで自動入力されるmodules descriptionの不自然な空白の修正
 - 選択不可能なモジュールのエラーチェックが発生する不具合の修正
