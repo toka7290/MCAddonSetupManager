@@ -895,7 +895,13 @@
             <div class="preview_header">
               <span>Minecraft Preview</span>
             </div>
-            <div class="display-preview-card">
+            <div class="preview-toggle">
+              <input type="button" id="toggle-preview" class="invisible_Control" ui>
+              <label for="toggle-preview" class="preview-toggle-label">
+                <div class="preview-toggle-text">💎</div>
+              </label>
+            </div>
+            <!-- <div class="display-preview-card">
               <div class="card-icon">
                 <img src="img/icon.svg" alt="" width="64px" height="64px">
               </div>
@@ -903,7 +909,7 @@
                 <p id="card-title" class="mcf-text"></p>
                 <p id="card-description" class="mcf-text"></p>
               </div>
-            </div>
+            </div> -->
             <style>
               /* todo:
               複数パック導入した際の移動再現
@@ -911,46 +917,59 @@
               description何行でもOK,スペース強制1つ,スペースで折り返し,\n使用不可
 
                */
-              .ore-ui-base {
+              :root {
+                --border-width: 2px;
+                --border-width_alt: -2px;
+              }
+
+              .preview-card.hide {
+                display: none;
+              }
+
+              .preview-ore-ui-card {
+                font-family: Arial, Helvetica, sans-serif;
+                display: grid;
                 background-color: #48494a;
                 padding: 1rem;
                 user-select: none;
+                border-radius: 0.2rem;
+                overflow-x: auto;
               }
 
-              .ore-ui-base summary {
-                list-style: none;
+              .preview-ore-ui-card.hide {
+                display: none;
               }
 
-              .ore-ui-base details {
-                transition: height 100ms linear;
-              }
-
-              .ore-ui-card {
+              .ore-ui-frame {
                 display: grid;
                 align-items: center;
                 grid-template-columns: 1fr 5rem;
                 background-color: #313233;
                 color: #b1b2b5;
                 border-style: solid;
-                border: solid 3px #1e1e1f;
+                border: solid var(--border-width) #1e1e1f;
               }
 
-              .ore-ui-card:not(:first-child) {
+              .ore-ui-frame:not(:first-child) {
+                grid-template-columns: 1fr;
                 border-top: none;
               }
 
-              .ore-ui-card-body {
+              .ore-ui-accordion-body {
                 display: grid;
                 font-size: large;
                 color: white;
                 background-color: #48494a;
                 /* padding: 1.6rem; */
-                box-shadow: inset -3px 0 0 #373737, inset 3px 0 0 rgba(255, 255, 255, 0.1), inset 0 3px 0 rgba(255, 255, 255, 0.1), inset 0 -3px 0 #373737;
+                box-shadow: inset var(--border-width_alt) 0 0 #373737,
+                  inset var(--border-width) 0 0 rgba(255, 255, 255, 0.1),
+                  inset 0 var(--border-width) 0 rgba(255, 255, 255, 0.1),
+                  inset 0 var(--border-width_alt) 0 #373737;
                 padding: .5rem;
               }
 
 
-              .ore-ui-card-body:hover {
+              .ore-ui-accordion-body:hover {
                 background-color: #696969;
                 border-left-color: #7f7f7f;
                 border-right-color: #7f7f7f;
@@ -959,18 +978,28 @@
                 cursor: pointer;
               }
 
-              .ore-ui-card-body:active {
+              .ore-ui-accordion-body:active {
                 background-color: transparent;
               }
 
-              .ore-ui-card-body>label {
+              .ore-ui-accordion-body>label {
                 display: grid;
                 grid-gap: .5rem;
                 align-items: center;
                 grid-template-columns: auto 1fr auto;
               }
 
-              .ore-ui-card-img,
+              .ore-ui-card-title {
+                /* min-width: 54rem; */
+                max-width: 70rem;
+                text-overflow: ellipsis;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                line-height: 1;
+                overflow: hidden;
+              }
+
+              .ore-ui-card-icon,
               .ore-ui-card-toggle,
               .ore-ui-card-add {
                 aspect-ratio: 1/1;
@@ -1000,6 +1029,8 @@
               }
 
               .ore-ui-card-description {
+                white-space: break-spaces;
+                overflow: hidden;
                 margin: 1rem;
                 color: white;
               }
@@ -1018,34 +1049,83 @@
               #preview-ore-ui-details.close div {
                 display: none;
               }
+
+              /*  */
+              .display_preview {
+                display: grid;
+                grid-template-areas:
+                  "header toggle"
+                  "body body";
+              }
+
+              .preview_header {
+                grid-area: header;
+                justify-self: start;
+              }
+
+              .preview-toggle {
+                display: grid;
+                align-items: center;
+                justify-self: end;
+                aspect-ratio: 1;
+                border-radius: 0.3rem 0.3rem 0 0;
+                border: 3px solid var(--color-display-preview-background);
+                border-bottom: none;
+                user-select: none;
+                grid-area: toggle;
+                background: #48494a;
+                cursor: pointer;
+              }
+
+              .preview-toggle-label {
+                cursor: pointer;
+              }
+
+              .preview-toggle-text {
+                display: grid;
+                justify-items: center;
+                align-items: center;
+              }
+
+              .display-preview-body {
+                grid-area: body;
+                border-radius: 0 0 0.3rem 0.3rem;
+                background: var(--color-display-preview-background);
+                padding: 0.2rem;
+              }
             </style>
-            <div class="preview-body">
-              <div class="ore-ui-base">
-                <div class="ore-ui-card">
-                  <div class="ore-ui-card-body">
+            <div class="display-preview-body">
+              <div class="preview-card">
+                <div class="card-icon">
+                  <img src="img/icon.svg" alt="" width="64px" height="64px">
+                </div>
+                <div class="card-text">
+                  <p id="card-title" class="mcf-text"></p>
+                  <p id="card-description" class="mcf-text"></p>
+                </div>
+              </div>
+              <div class="preview-ore-ui-card hide">
+                <div class="ore-ui-frame">
+                  <div class="ore-ui-accordion-body">
                     <input type="button" id="preview-ore-ui-summary" class="invisible_Control" ui>
                     <label for="preview-ore-ui-summary" class="">
-                      <div class="ore-ui-card-img">
+                      <div class="ore-ui-card-icon">
                         <img src="img/icon.svg" alt="" width="64px" height="64px">
                       </div>
-                      <div class="ore-ui-card-title">
-                        <p>test</p>
-                      </div>
+                      <div class="ore-ui-card-title" id="ore-ui-card-title"></div>
                       <div class="ore-ui-card-toggle" id="preview-ore-ui-toggle">
                         <img src="img/arrowUp.svg" alt="" width="64px" height="64px">
                       </div>
                     </label>
                   </div>
-                  <div class="ore-ui-card-body">
+                  <div class="ore-ui-accordion-body">
                     <div class="ore-ui-card-add">
                       <img src="img/add.svg" alt="" width="64px" height="64px">
                     </div>
                   </div>
                 </div>
-                <div class="ore-ui-card" id="preview-ore-ui-details">
-                  <div class="ore-ui-card-description">
-                    abcd ,awoi,jegj.awvijcg;.xiaw,jgv;o ,aig,a jgiaj meigmjia egu hupe, eigh,a3. jehij,a e
-                  </div>
+                <div class="ore-ui-frame" id="preview-ore-ui-details">
+                  <div class="ore-ui-card-description" id="ore-ui-card-description"></div>
                 </div>
               </div>
             </div>
@@ -1074,6 +1154,21 @@
               //   });
               // key.reverse();
             });
+            let btn_anim = new Animation(new KeyframeEffect(
+              document.getElementsByClassName("preview-toggle-text")[0],
+              [
+                { transform: 'rotate(0deg)' },
+                { transform: 'rotate(180deg)' },
+                { transform: 'rotate(360deg)' }
+              ],
+              { duration: 500, direction: 'alternate', easing: 'ease' }
+            ));
+            document.getElementById("toggle-preview").addEventListener("click", (ev) => {
+              document.getElementsByClassName("preview-ore-ui-card")[0].classList.toggle("hide");
+              document.getElementsByClassName("preview-card")[0].classList.toggle("hide");
+              is_ore_ui = !is_ore_ui;
+              btn_anim.play();
+            })
           </script>
           <div class="code-preview">
             <div class="preview_header">
@@ -1145,7 +1240,7 @@
     <script src="lib/prism.js" defer></script>
     <script src="lib/mc_format.min.js" defer></script>
     <!-- js -->
-    <script type="text/javascript" src="js/main.min.js" defer></script>
+    <script type="text/javascript" src="js/main.js" defer></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async defer src="https://www.googletagmanager.com/gtag/js?id=G-MEW7Y56GND"></script>
     <script defer>

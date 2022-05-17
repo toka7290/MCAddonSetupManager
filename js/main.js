@@ -3,6 +3,7 @@ var isChanged = false;
 var is_compact = false;
 var is_simple_mode = false;
 var format_version = 2;
+var is_ore_ui = false;
 var is_separator_drag = false;
 var is_dependencies_enable = false;
 var is_capabilities_enable = false;
@@ -799,59 +800,71 @@ function setTabControls(className = "", stat = [0, 0, 0]) {
 }
 // 実表示
 function updateDisplayPreview() {
-  // タイトル
+  // タイトルと説明を取得
   let title = /**@type {string} */ ($("#header_pack_name").val());
-  if (title == "") title = "名前がありません";
-  else if (title.match(/\\/g) != null) {
-    let split_text = title.split("\\\\");
-    let result = "";
-    for (let index = 0; index < split_text.length; index++) {
-      let i = split_text[index].indexOf("\\n");
-      if (index >= 1) result += `\\\\`;
-      if (i != -1) {
-        result += `${
-          split_text[index].slice(0, split_text[index].indexOf("\\n") - split_text[index].length) +
-          "\u2026"
-        }`;
-        break;
-      } else {
-        result += `${split_text[index]}`;
-      }
-    }
-    title = result;
-  }
-  // $("#card-title").html(MinecraftText.toHTML(title));
-  $("#card-title").text(title);
-  // 説明
   let description = /**@type {string} */ ($("#header_description").val());
-  if (description == "") description = "§c不明なパックの説明";
-  else if (description.match(/\\/g) != null) {
-    let position = 0;
-    let i = 0;
-    let result = "";
-    let split_text = description.split("\\\\");
-    for (let index = 0; index < split_text.length; index++) {
-      do {
-        i++;
-        position = split_text[index].indexOf("\\n", position + 1);
-        if (position == -1) break;
-      } while (i < 3);
-      if (index >= 1) result += `\\\\`;
-      if (position != -1) {
-        result += `${
-          split_text[index].slice(0, position + 1 - split_text[index].length) + "\u2026"
-        }`;
-        break;
-      } else {
-        result += `${split_text[index]}`;
+  // OreUIの場合
+  if (is_ore_ui) {
+    title = title.replace(/\s+|\\n/g, " ").replace(/§[0-9a-gklmnor]/g, "");
+    $("#ore-ui-card-title").text(title);
+    $("#ore-ui-card-description").text(
+      description.replace(/\s+|\\n/g, " ").replace(/§[0-9a-gklmnor]/g, "")
+    );
+  } else {
+    // タイトル
+    if (title == "") title = "名前がありません";
+    else if (title.match(/\\/g) != null) {
+      let split_text = title.split("\\\\");
+      let result = "";
+      for (let index = 0; index < split_text.length; index++) {
+        let i = split_text[index].indexOf("\\n");
+        if (index >= 1) result += `\\\\`;
+        if (i != -1) {
+          result += `${
+            split_text[index].slice(
+              0,
+              split_text[index].indexOf("\\n") - split_text[index].length
+            ) + "\u2026"
+          }`;
+          break;
+        } else {
+          result += `${split_text[index]}`;
+        }
       }
+      title = result;
     }
-    description = result;
+    // $("#card-title").html(MinecraftText.toHTML(title));
+    $("#card-title").text(title);
+    // 説明
+    if (description == "") description = "§c不明なパックの説明";
+    else if (description.match(/\\/g) != null) {
+      let position = 0;
+      let i = 0;
+      let result = "";
+      let split_text = description.split("\\\\");
+      for (let index = 0; index < split_text.length; index++) {
+        do {
+          i++;
+          position = split_text[index].indexOf("\\n", position + 1);
+          if (position == -1) break;
+        } while (i < 3);
+        if (index >= 1) result += `\\\\`;
+        if (position != -1) {
+          result += `${
+            split_text[index].slice(0, position + 1 - split_text[index].length) + "\u2026"
+          }`;
+          break;
+        } else {
+          result += `${split_text[index]}`;
+        }
+      }
+      description = result;
+    }
+    // $("#card-description").html(MinecraftText.toHTML(description));
+    // MinecraftText.refeashObfuscate();
+    $("#card-description").text(description);
+    MCFormat.formatAll();
   }
-  // $("#card-description").html(MinecraftText.toHTML(description));
-  // MinecraftText.refeashObfuscate();
-  $("#card-description").text(description);
-  MCFormat.formatAll();
 }
 // モジュールタイプ変更
 function setSelectRestriction() {
@@ -1210,6 +1223,7 @@ function checkIssue() {
   }
   issue_control.setIssueList();
 }
+
 // エラー時のテキスト
 function setErrorText(text = "", message = "") {
   let messageText = "有効なjsonではありません。";
