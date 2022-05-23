@@ -20,6 +20,7 @@ var urlsToCache = [
   "/MCAddonSetupManager/img/icon_2000.png",
   "/MCAddonSetupManager/img/icon_apple-touch-icon.png",
   "/MCAddonSetupManager/img/import.svg",
+  "/MCAddonSetupManager/img/maskable_icon.png",
   "/MCAddonSetupManager/img/more.svg",
   "/MCAddonSetupManager/img/share.svg",
   "/MCAddonSetupManager/img/subpacks.svg",

@@ -5,20 +5,25 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "https://toka7290.github.io/MCAddonSetupManager/img/icon_256.png",
+      "src": "../img/icon_256.png",
       "sizes": "256x256",
       "purpose": "any maskable"
     },
     {
-      "src": "https://toka7290.github.io/MCAddonSetupManager/img/icon_512.png",
+      "src": "../img/icon_512.png",
       "sizes": "512x512"
     },
     {
-      "src": "https://toka7290.github.io/MCAddonSetupManager/img/icon_2000.png",
+      "src": "../img/icon_2000.png",
       "sizes": "2000x2000"
+    },
+    {
+      "src": "../img/maskable_icon.png",
+      "sizes": "2500x2500",
+      "purpose": "maskable"
     }
   ],
-  "start_url": "/MCAddonSetupManager/index.html",
+  "start_url": "./index.html",
   "theme_color": "#60ad5e",
   "background_color": "#e8f5e9"
 }
