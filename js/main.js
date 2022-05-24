@@ -457,6 +457,30 @@ $("#author-delete").on("click", function () {
   $("div.authors_list>.author_name:last-child").remove();
   onChangedJSON();
 });
+// preview切替ボタンのアニメーション
+let btn_anim = new Animation(
+  new KeyframeEffect(
+    document.getElementsByClassName("preview-toggle-text")[0],
+    [
+      { transform: "rotate(0deg)" },
+      { transform: "rotate(180deg)" },
+      { transform: "rotate(360deg)" },
+    ],
+    { duration: 500, direction: "alternate", easing: "ease" }
+  )
+);
+// preview表示の切替
+document.getElementById("toggle-preview").addEventListener("click", (ev) => {
+  document.getElementsByClassName("preview-ore-ui-card")[0].classList.toggle("hide");
+  document.getElementsByClassName("preview-card")[0].classList.toggle("hide");
+  is_ore_ui = !is_ore_ui;
+  btn_anim.play();
+});
+// ore uiのdetails切替
+document.getElementById("preview-ore-ui-summary").addEventListener("click", (event) => {
+  document.getElementById("preview-ore-ui-toggle").classList.toggle("close");
+  document.getElementById("preview-ore-ui-details").classList.toggle("close");
+});
 // イシューリスト開閉
 $("#issue-control").on("click", function () {
   const control_bar_img = $("div.issue-status-label svg");
