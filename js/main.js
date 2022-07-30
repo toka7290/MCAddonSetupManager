@@ -154,8 +154,8 @@ class Issue {
             $("<img>").attr({
               src: "./img/error.svg",
               alt: "",
-              width: "19px",
-              height: "19px",
+              width: "24px",
+              height: "24px",
             }),
             $("<p>").text(val[0])
           )
@@ -168,8 +168,8 @@ class Issue {
             $("<img>").attr({
               src: "./img/warning.svg",
               alt: "",
-              width: "19px",
-              height: "19px",
+              width: "24px",
+              height: "24px",
             }),
             $("<p>").text(val[0])
           )

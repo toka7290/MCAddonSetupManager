@@ -1,0 +1,6 @@
+<svg id="SVGRoot" width="32px" height="32px" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <g fill="none" stroke="#fff" stroke-linejoin="round" stroke-width="2">
+  <path d="m18 4v7h7m-18-7h11l7 7v17h-18z"/>
+  <path d="m12 19 4-4 4 4m-4 6v-10" stroke-linecap="round"/>
+ </g>
+</svg>

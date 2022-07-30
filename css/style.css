@@ -1254,7 +1254,7 @@ div.issue {
 .issue-status-bar {
   display: flex;
   background-color: var(--color-toolbar);
-  padding: 2px;
+  padding: 5px 2px;
   vertical-align: middle;
   user-select: none;
   -ms-user-select: none;
@@ -1306,13 +1306,11 @@ div.issue-status-error span {
   align-self: center;
 }
 .issue-status-warning img {
-  width: 1.2rem;
   vertical-align: middle;
   pointer-events: none;
   animation: blinking-shadow-warning 0.5s ease-in-out 0s infinite alternate;
 }
 .issue-status-error img {
-  width: 1.2rem;
   vertical-align: middle;
   pointer-events: none;
   animation: blinking-shadow-error 0.5s ease-in-out 0s infinite alternate;
@@ -1350,7 +1348,6 @@ ul.issue-list li:nth-child(2n) {
   background-color: var(--color-list-secondary);
 }
 ul.issue-list li img {
-  width: 1.2rem;
   vertical-align: middle;
   user-select: none;
   -ms-user-select: none;

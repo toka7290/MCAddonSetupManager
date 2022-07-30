@@ -76,27 +76,63 @@
         </div>
         <div class="header-menu">
           <div class="menu_button file_load_button disabled">
-            <label for="load_file">Load</label>
+            <label for="load_file">
+              <svg width="32" height="32" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <path d="m4 25 3-12h21l-3 12m0 0h-21v-19h7v3h14v4" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+              </svg>
+            </label>
           </div>
           <div class="menu_button import_button">
-            <label for="input-file">Import</label>
+            <label for="input-file">
+              <svg id="SVGRoot" width="32px" height="32px" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="#fff" stroke-linejoin="round" stroke-width="2">
+                  <path d="m18 4v7h7m-18-7h11l7 7v17h-18z" />
+                  <path d="m12 19 4-4 4 4m-4 6v-10" stroke-linecap="round" />
+                </g>
+              </svg>
+            </label>
           </div>
           <div class="help-content top" id="help-content-1">
             <p>ファイルを読み込みます</p>
           </div>
           <div class="menu_button" id="show-preview">
-            <span>Preview</span>
+            <span>
+              <svg id="SVGRoot" width="32px" height="32px" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="#fff">
+                  <circle cx="13" cy="14" r="3.8" stroke-dashoffset="80" stroke-linecap="round" stroke-linejoin="round" style="paint-order:markers fill stroke" />
+                  <path d="m11 21h-6v-18h13v6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                  <g stroke-width="1px">
+                    <path d="m7 6h9" />
+                    <path d="m7 8h9" />
+                    <path d="m7 10h3" />
+                    <path d="m16 17 4 4" />
+                  </g>
+                </g>
+              </svg>
+            </span>
             <div class="help-content top" id="help-content-3">
               <p>
                 入力・編集したデータの実際の表示、json閲覧とダウンロード・コピーをします。
               </p>
             </div>
           </div>
-          <div class="menu_button">
+          <!-- <div class="menu_button">
             <p id="show_help">help</p>
-          </div>
+          </div> -->
           <div class="menu_button">
-            <label for="open-about">About</label>
+            <label for="open-about">
+              <svg width="32" height="32" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="#fff" stroke-dashoffset="80" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="paint-order:markers fill stroke" />
+                <path d="m12 11v7" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2" />
+                <circle cx="12" cy="8" r="1" fill="#fff" style="paint-order:markers fill stroke" />
+              </svg>
+              <!-- <img src="img/info.svg" alt="about" width="32px" height="32px"> -->
+            </label>
+            <style>
+              .menu_button svg {
+                display: block;
+              }
+            </style>
           </div>
         </div>
         <div class="header-menu-alt">
@@ -210,6 +246,11 @@
       </div>
       <div class="file-drop-zone-pick">
       </div>
+      <style>
+        .file-drop-zone-pick {
+          background: radial-gradient(circle at 45% 1%, rgb(0 0 0 / 0%) 4rem, rgb(0 0 0 / 48%) 5rem);
+        }
+      </style>
     </div>
     <style>
       body {
@@ -238,11 +279,15 @@
       }
 
       .action-btn {
-        background: green;
+        background: var(--color-header);
         color: white;
         border-radius: 0.5rem;
         padding: 1rem;
+      }
 
+      label:hover>.action-btn {
+        background: var(--color-header-hover);
+        cursor: pointer;
       }
 
       .action-title {
@@ -957,11 +1002,11 @@
             </div>
             <div class="issue-status-num">
               <div class="issue-status-warning">
-                <img src="img/warning.svg" alt="" width="19px" height="19px">
+                <img src="img/warning.svg" alt="" width="24px" height="24px">
                 <div>警告:<span class="issue-warning-num">0</span></div>
               </div>
               <div class="issue-status-error">
-                <img src="img/error.svg" alt="" width="19px" height="19px">
+                <img src="img/error.svg" alt="" width="24px" height="24px">
                 <div>エラー:<span class="issue-error-num">0</span></div>
               </div>
             </div>
