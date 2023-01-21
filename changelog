@@ -174,10 +174,12 @@
 - 選択不可能なモジュールのエラーチェックが発生する不具合の修正
 - インポート時に空のauthor欄ができてしまう問題の修正
 next
-- Ore UI導入画面
+- Ore UI導入画面の追加
 - 404ページの追加
 - マスクアイコンの追加
 - エラー/注意アイコン変更
+- 1.19.30対応 "version"のString対応
+- "dependencies"->"version"のString対応
 
 TODO
 - ウェルカムスクリーン
@@ -190,7 +192,5 @@ TODO
 - 難読化パックjsonの読み込み
 - phone ランドマーク対策
 - ダウンロード/保存/コピーアイコン化
-- 1.19.30対応 "module_name"対応
-- "version"のString対応
-- "dependencies"->"version"のString対応
+- 1.19.30対応 dependencies uuid /"module_name"切替対応
 - "generated_with"短縮オプション

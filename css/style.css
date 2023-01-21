@@ -1132,7 +1132,7 @@ input:focus:focus-visible + label.control_text {
   padding: 1rem;
   user-select: none;
   border-radius: 0.2rem;
-  overflow-x: auto;
+  overflow: auto;
 }
 .preview-ore-ui-card.hide {
   display: none;
@@ -1140,7 +1140,7 @@ input:focus:focus-visible + label.control_text {
 .ore-ui-frame {
   display: grid;
   align-items: center;
-  grid-template-columns: 1fr 5rem;
+  grid-template-columns: 1fr 4rem;
   background-color: var(--ore-frame-background-color);
   color: var(--ore-frame-text-color);
   border-style: solid;
@@ -1176,33 +1176,47 @@ input:focus:focus-visible + label.control_text {
   display: grid;
   grid-gap: 0.5rem;
   align-items: center;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: 3rem auto 2rem;
   cursor: pointer;
+}
+.ore-ui-card-icon,
+.ore-ui-card-add {
+  aspect-ratio: 1/1;
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  justify-content: space-around;
+  align-items: center;
+  justify-items: center;
+  pointer-events: none;
+}
+.ore-ui-card-icon > img {
+  width: 3rem;
+  height: 3rem;
 }
 .ore-ui-card-title {
   /* min-width: 54rem; */
   max-width: 70rem;
   text-overflow: ellipsis;
-  text-overflow: ellipsis;
   white-space: nowrap;
   line-height: 1;
   overflow: hidden;
+  font-size: medium;
 }
-.ore-ui-card-icon,
-.ore-ui-card-toggle,
-.ore-ui-card-add {
-  aspect-ratio: 1/1;
-  width: 4rem;
-  height: 4rem;
+.ore-ui-card-toggle {
   display: grid;
+  aspect-ratio: 1/1;
+  width: 2.5rem;
+  height: 2.5rem;
   justify-content: space-around;
   align-items: center;
   pointer-events: none;
+  justify-self: end;
 }
 .ore-ui-card-toggle img {
   aspect-ratio: 1/1;
-  width: 1rem;
-  height: 1rem;
+  width: 0.75rem;
+  height: 0.75rem;
   transform: scale(1, -1);
 }
 .ore-ui-card-toggle.close img {
@@ -1210,8 +1224,13 @@ input:focus:focus-visible + label.control_text {
 }
 .ore-ui-card-add img {
   aspect-ratio: 1/1;
-  width: 2rem;
-  height: 2rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  image-rendering: pixelated;
+}
+.ore-ui-card-add p {
+  margin: 0;
+  font-size: 0.5rem;
 }
 .ore-ui-card-description {
   white-space: break-spaces;

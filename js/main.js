@@ -1181,10 +1181,13 @@ function checkIssue() {
       );
       element_val = element.val();
       if (element_val == "") {
-        issue_control.addError(`[Dependencies:${i}:uuid] ${LOCATE.issue.text.uuid_empty}`, element);
+        issue_control.addWarning(
+          `[Dependencies:${i}:uuid] ${LOCATE.issue.text.uuid_empty}`,
+          element
+        );
       } else if (!isUUID(element_val)) {
         //UUIDではありません
-        issue_control.addError(
+        issue_control.addWarning(
           `[Dependencies:${i}:uuid] ${LOCATE.issue.text.uuid_not_valid}`,
           element
         );
@@ -1354,10 +1357,7 @@ async function setJSONData(json_text = "") {
     $("#header_pack_name").val(header?.["name"] ?? "");
     $("#header_description").val(header?.["description"] ?? "");
     $("#header_uuid").val(header?.["pack_id"] ?? "");
-    const header_version = (header?.["packs_version"] ?? "1.0.0").split(".");
-    $("#header_version_major").val(header_version?.[0] ?? 1);
-    $("#header_version_minor").val(header_version?.[1] ?? 0);
-    $("#header_version_patch").val(header_version?.[2] ?? 0);
+    $("#header_version").val(header?.["packs_version"] ?? "1.0.0");
 
     if (header["modules"] != null) {
       for (let i = 0; i < header["modules"].length; i++) {
@@ -1381,9 +1381,7 @@ async function setJSONData(json_text = "") {
         const tab_content = $(`div.dependencies.tab-content-list > div:nth-child(${i + 1})`);
         tab_content.find("#dependencies_uuid").val(dependency?.["uuid"] ?? "");
         const modules_version = (dependency?.["version"] ?? "1.0.0").split(".");
-        tab_content.find("#dependencies_version_major").val(modules_version?.[0] ?? 1);
-        tab_content.find("#dependencies_version_minor").val(modules_version?.[1] ?? 0);
-        tab_content.find("#dependencies_version_patch").val(modules_version?.[2] ?? 0);
+        $("#dependencies_version").val(modules_version ?? "1.0.0");
       }
     }
     onChangedJSON();
@@ -1391,9 +1389,13 @@ async function setJSONData(json_text = "") {
   }
   $("#header_pack_name").val(json_data["header"]?.["name"] ?? "");
   $("#header_description").val(json_data["header"]?.["description"] ?? "");
-  $("#header_version_major").val(json_data["header"]?.["version"]?.[0] ?? 1);
-  $("#header_version_minor").val(json_data["header"]?.["version"]?.[1] ?? 0);
-  $("#header_version_patch").val(json_data["header"]?.["version"]?.[2] ?? 0);
+  if (typeof json_data["header"]?.["version"] == "string") {
+    $("#header_version").val(json_data["header"]?.["version"]);
+  } else if (Array.isArray(json_data["header"]?.["version"])) {
+    $("#header_version").val(json_data["header"]?.["version"].join("."));
+  } else {
+    $("#header_version").val("1.0.0");
+  }
   $("#header_min_engine_version_major").val(json_data["header"]?.["min_engine_version"]?.[0] ?? 1);
   $("#header_min_engine_version_minor").val(json_data["header"]?.["min_engine_version"]?.[1] ?? 13);
   $("#header_min_engine_version_patch").val(json_data["header"]?.["min_engine_version"]?.[2] ?? 0);
@@ -1429,10 +1431,16 @@ async function setJSONData(json_text = "") {
       if (0 < i) addTab("dependencies");
       const dependency = json_data["dependencies"][i];
       const tab_content = $(`div.dependencies.tab-content-list > div:nth-child(${i + 1})`);
-      tab_content.find("#dependencies_uuid").val(dependency?.["uuid"] ?? "");
-      tab_content.find("#dependencies_version_major").val(dependency?.["version"]?.[0] ?? 1);
-      tab_content.find("#dependencies_version_minor").val(dependency?.["version"]?.[1] ?? 0);
-      tab_content.find("#dependencies_version_patch").val(dependency?.["version"]?.[2] ?? 0);
+      tab_content
+        .find("#dependencies_uuid")
+        .val(dependency?.["uuid"] ?? dependency?.["module_name"] ?? "");
+      if (typeof dependency?.["version"] == "string") {
+        tab_content.find("#dependencies_version").val(dependency?.["version"]);
+      } else if (Array.isArray(dependency?.["version"])) {
+        tab_content.find("#dependencies_version").val(dependency?.["version"].join("."));
+      } else {
+        tab_content.find("#dependencies_version").val("1.0.0-e");
+      }
     }
   }
   if (json_data?.["capabilities"]) {
@@ -1493,11 +1501,20 @@ function getJSONData() {
   json_raw["header"] = new Object();
   json_raw["header"]["name"] = DataReplacer.register($("#header_pack_name").val());
   json_raw["header"]["description"] = DataReplacer.register($("#header_description").val());
-  json_raw["header"]["version"] = DataReplacer.register([
-    Number($("#header_version_major").val()),
-    Number($("#header_version_minor").val()),
-    Number($("#header_version_patch").val()),
-  ]);
+  let version_raw = $("#header_version").val();
+  if (new RegExp(/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/).test(version_raw)) {
+    json_raw["header"]["version"] = DataReplacer.register(
+      version_raw.split(/\./).map((v) => Number(v))
+    );
+  } else if (
+    new RegExp(
+      /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
+    ).test(version_raw)
+  ) {
+    json_raw["header"]["version"] = version_raw;
+  } else {
+    json_raw["header"]["version"] = DataReplacer.register([1, 0, 0]);
+  }
   json_raw["header"]["uuid"] = $("#header_uuid").val();
   json_raw["header"]["platform_locked"] = $("#header_platform_locked").is(":checked")
     ? true
@@ -1556,12 +1573,26 @@ function getJSONData() {
       const child_num = i + 1;
       const tab_content = $(`div.dependencies.tab-content-list > div:nth-child(${child_num})`);
       json_raw["dependencies"][i] = new Object();
-      json_raw["dependencies"][i]["uuid"] = tab_content.find("#dependencies_uuid").val();
-      json_raw["dependencies"][i]["version"] = DataReplacer.register([
-        Number(tab_content.find("#dependencies_version_major").val()),
-        Number(tab_content.find("#dependencies_version_minor").val()),
-        Number(tab_content.find("#dependencies_version_patch").val()),
-      ]);
+      let name_raw = tab_content.find("#dependencies_uuid").val();
+      if (isUUID(name_raw)) {
+        json_raw["dependencies"][i]["uuid"] = name_raw;
+      } else {
+        json_raw["dependencies"][i]["module_name"] = name_raw;
+      }
+      let version_raw = tab_content.find("#dependencies_version").val();
+      if (new RegExp(/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/).test(version_raw)) {
+        json_raw["dependencies"][i]["version"] = DataReplacer.register(
+          version_raw.split(/\./).map((v) => Number(v))
+        );
+      } else if (
+        new RegExp(
+          /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
+        ).test(version_raw)
+      ) {
+        json_raw["dependencies"][i]["version"] = version_raw;
+      } else {
+        json_raw["dependencies"][i]["version"] = DataReplacer.register([1, 0, 0]);
+      }
     }
   }
   if (is_capabilities_enable && $("div.capabilities_list div input").is(":checked")) {

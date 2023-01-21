@@ -409,14 +409,10 @@
               </div>
               <div class="value-element" title="このパックのバージョンを示します。">
                 <div class="value-label">
-                  <label for="header_version_major">バージョン</label>
+                  <label for="header_version">バージョン</label>
                 </div>
-                <div class="value-input type-version">
-                  <label><input type="number" min="0" name="" id="header_version_major" value="1"></label>
-                  <span>.</span>
-                  <label><input type="number" min="0" name="" id="header_version_minor" value="0"></label>
-                  <span>.</span>
-                  <label><input type="number" min="0" name="" id="header_version_patch" value="0"></label>
+                <div class="value-input">
+                  <input type="text" name="version" id="header_version" value="1.0.0">
                 </div>
               </div>
               <div class="value-element" title="このパックが動作するMinecraftの最小バージョン(このパックの作成バージョン)を設定します。">
@@ -625,24 +621,27 @@
                 </div>
                 <div class="dependencies tab-content-list">
                   <div class="selected-tab-content">
-                    <div class="value-element" title="依存関係にあるパックのUUIDを設定します。">
+                    <div class="value-element" title="依存関係にあるパックのUUID/モジュール名を設定します。">
                       <div class="value-label">
-                        <label for="dependencies_uuid">UUID</label>
+                        <label for="dependencies_uuid">UUID/モジュール名</label>
                       </div>
                       <div class="value-input">
-                        <input type="text" name="uuid" id="dependencies_uuid" disabled>
+                        <input type="text" name="uuid" id="dependencies_uuid" list="module_name_list" disabled>
                       </div>
                     </div>
+                    <datalist id="module_name_list">
+                      <option value="mojang-minecraft"></option>
+                      <option value="mojang-gametest"></option>
+                      <option value="mojang-minecraft-ui"></option>
+                      <option value="mojang-minecraft-server-admin"></option>
+                      <option value="mojang-net"></option>
+                    </datalist>
                     <div class="value-element" title="依存関係にあるパックのバージョンを設定します。">
                       <div class="value-label">
                         <label for="dependencies_version_major">バージョン</label>
                       </div>
-                      <div class="value-input type-version">
-                        <label><input type="number" min="0" name="" id="dependencies_version_major" value="1" disabled></label>
-                        <span>.</span>
-                        <label><input type="number" min="0" name="" id="dependencies_version_minor" value="0" disabled></label>
-                        <span>.</span>
-                        <label><input type="number" min="0" name="" id="dependencies_version_patch" value="0" disabled></label>
+                      <div class="value-input">
+                        <input type="text" name="version" id="dependencies_version" value="1.0.0">
                       </div>
                     </div>
                   </div>
@@ -972,7 +971,8 @@
                   </div>
                   <div class="ore-ui-accordion-body">
                     <div class="ore-ui-card-add">
-                      <img src="img/add.svg" alt="" width="64px" height="64px">
+                      <img src="img/add.svg" alt="" width="20px" height="20px">
+                      <p>有効化</p>
                     </div>
                   </div>
                 </div>
