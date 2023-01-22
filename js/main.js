@@ -58,6 +58,10 @@ const LOCATE = {
       modules_not_specified: "プライマリファイルが指定されていません",
       modules_not_extension:
         "指定されたファイルは .js の拡張子を持っていません。 プライマリファイルはJavaScriptファイル以外をサポートしません。",
+      dependencies_uuid_module_name_empty:
+        "UUID/モジュール名が空です。UUIDを指定するかモジュール名を指定してください。",
+      dependencies_uuid_module_name_uuid_not_valid:
+        "入力されている文字列は有効なUUID/モジュール名ではありません。",
       capabilities_not_selected: "一つも項目が選択されていません。",
       metadata_author_not_one: "名前が一つもありません。",
       metadata_url_empty: "URLが入力されていません。",
@@ -73,6 +77,14 @@ const LOCATE = {
     no_description: "§c不明なパックの説明",
   },
 };
+// module name list
+const VANILLA_SCRIPT_MODULES = [
+  "@minecraft/server",
+  "@minecraft/server-gametest",
+  "@minecraft/server-ui",
+  "@minecraft/server-admin",
+  "@minecraft/server-net",
+];
 
 class JSONReplace {
   constructor() {
@@ -1182,13 +1194,15 @@ function checkIssue() {
       element_val = element.val();
       if (element_val == "") {
         issue_control.addWarning(
-          `[Dependencies:${i}:uuid] ${LOCATE.issue.text.uuid_empty}`,
+          `[Dependencies:${i}:uuid/module_name] ${LOCATE.issue.text.dependencies_uuid_module_name_empty}`,
           element
         );
+      } else if (VANILLA_SCRIPT_MODULES.some((str) => str == element_val)) {
+        // module_nameを指定しているとき
       } else if (!isUUID(element_val)) {
-        //UUIDではありません
+        // 有効なUUID/module_nameではありません
         issue_control.addWarning(
-          `[Dependencies:${i}:uuid] ${LOCATE.issue.text.uuid_not_valid}`,
+          `[Dependencies:${i}:uuid/module_name] ${LOCATE.issue.text.dependencies_uuid_module_name_uuid_not_valid}`,
           element
         );
       }

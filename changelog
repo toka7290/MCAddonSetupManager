@@ -180,7 +180,8 @@ next
 - エラー/注意アイコン変更
 - 1.19.30対応 "version"のString対応
 - "dependencies"->"version"のString対応
-- "script_eval"対応
+- capabilities "script_eval"対応
+- 1.19.30対応 dependencies->"module_name"に対応
 
 TODO
 - ウェルカムスクリーン
@@ -193,5 +194,4 @@ TODO
 - 難読化パックjsonの読み込み
 - phone ランドマーク対策
 - ダウンロード/保存/コピーアイコン化
-- 1.19.30対応 dependencies uuid /"module_name"切替対応
 - "generated_with"短縮オプション
