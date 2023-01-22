@@ -180,6 +180,7 @@ next
 - エラー/注意アイコン変更
 - 1.19.30対応 "version"のString対応
 - "dependencies"->"version"のString対応
+- "script_eval"対応
 
 TODO
 - ウェルカムスクリーン

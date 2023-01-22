@@ -1198,7 +1198,8 @@ function checkIssue() {
     if (
       !$("#experimental_custom_ui").is(":checked") &&
       !$("#chemistry").is(":checked") &&
-      !$("#raytracing").is(":checked")
+      !$("#raytracing").is(":checked") &&
+      !$("#script_eval").is(":checked")
     ) {
       //空です
       issue_control.addWarning(
@@ -1456,6 +1457,9 @@ async function setJSONData(json_text = "") {
         case "raytracing":
           $("#raytracing").prop("checked", true);
           break;
+        case "script_eval":
+          $("#script_eval").prop("checked", true);
+          break;
         default:
           break;
       }
@@ -1605,6 +1609,9 @@ function getJSONData() {
     }
     if ($("#raytracing").is(":checked")) {
       json_raw["capabilities"].push("raytracing");
+    }
+    if ($("#script_eval").is(":checked")) {
+      json_raw["capabilities"].push("script_eval");
     }
   }
   json_raw["metadata"] = new Object();
