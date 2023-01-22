@@ -183,6 +183,7 @@ next
 - capabilities "script_eval"対応
 - 1.19.30対応 dependencies->"module_name"に対応
 
+
 TODO
 - ウェルカムスクリーン
 - UI上でのインストールボタン
@@ -195,3 +196,4 @@ TODO
 - phone ランドマーク対策
 - ダウンロード/保存/コピーアイコン化
 - "generated_with"短縮オプション
+- 画像のD&D
