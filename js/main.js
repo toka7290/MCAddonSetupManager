@@ -1177,10 +1177,16 @@ function checkIssue() {
       element_val = element.val();
       if (element_val == "") {
         //空です
-        issue_control.addError(`[Modules:${i}:entry] ${modules_not_specified}`, element);
+        issue_control.addError(
+          `[Modules:${i}:entry] ${LOCATE.issue.text.modules_not_specified}`,
+          element
+        );
       } else if (!element_val.match(/\.js$/)) {
         //JSではありません
-        issue_control.addError(`[Modules:${i}:entry] ${modules_not_extension}`, element);
+        issue_control.addError(
+          `[Modules:${i}:entry] ${LOCATE.issue.text.modules_not_extension}`,
+          element
+        );
       }
     }
   }
