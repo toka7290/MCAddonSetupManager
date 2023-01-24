@@ -1319,29 +1319,18 @@ function setErrorText(text = "", message = "") {
   const splitText = message.split(" ");
   const lineIndex = splitText.findIndex((element) => element == "line");
   const positionIndex = splitText.findIndex((element) => element == "position");
+  const lineText = text.split(/\n/g);
   if (lineIndex != -1) {
     const line = parseInt(splitText[lineIndex + 1], 10);
-    const getBeginningOfLineIndex = (maxLine) => {
-      let lastIndex = 0;
-      for (let i = 1; i < maxLine; i++) {
-        lastIndex = text.indexOf("\n", lastIndex) + 1;
-      }
-      return lastIndex;
-    };
-    const prevLineIndex = getBeginningOfLineIndex(line - 1);
-    const LineLastIndex = getBeginningOfLineIndex(line + 1) - 1;
-    messageText += `\n${line - 1}~${line}行で問題が発生しました。\n${text.substring(
-      prevLineIndex,
-      LineLastIndex
-    )}`;
+    messageText += `\n${line}行目で問題が発生しました。\n${lineText
+      .slice(line - 2, line + 1)
+      .join("\n")}`;
   } else if (positionIndex != -1) {
     const position = splitText[positionIndex + 1];
-    const prevLineIndex = text.lastIndexOf("\n", text.lastIndexOf("\n", position) - 1) + 1;
-    const prevLineNum = text.substr(0, prevLineIndex).match(/\n/g)?.length ?? 0 + 1;
-    messageText += `\n${prevLineNum}~${prevLineNum + 1}行で問題が発生しました。\n${text.substring(
-      prevLineIndex,
-      text.indexOf("\n", position - 1)
-    )}`;
+    const LineNum = text.substring(0, position).match(/\n/g)?.length + 1 ?? 0 + 1;
+    messageText += `\n${LineNum}行目で問題が発生しました。\n${lineText
+      .slice(LineNum - 2, LineNum + 1)
+      .join("\n")}`;
   }
   return messageText;
 }
