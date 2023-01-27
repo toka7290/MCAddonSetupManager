@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonJS",
-    "target": "es2021",
+    "target": "ES2023",
     "baseUrl": "."
   },
   "typeAcquisition": {
