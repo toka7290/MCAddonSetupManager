@@ -7,15 +7,17 @@
     {
       "src": "../img/icon_256.png",
       "sizes": "256x256",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "../img/icon_512.png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any"
     },
     {
       "src": "../img/icon_2000.png",
-      "sizes": "2000x2000"
+      "sizes": "2000x2000",
+      "purpose": "any"
     },
     {
       "src": "../img/maskable_icon.png",

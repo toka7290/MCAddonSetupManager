@@ -1391,7 +1391,7 @@ async function setJSONData(json_text = "") {
         const tab_content = $(`div.dependencies.tab-content-list > div:nth-child(${i + 1})`);
         tab_content.find("#dependencies_uuid").val(dependency?.["uuid"] ?? "");
         const modules_version = (dependency?.["version"] ?? "1.0.0").split(".");
-        $("#dependencies_version").val(modules_version ?? "1.0.0");
+        $("#dependencies-version").val(modules_version ?? "1.0.0");
       }
     }
     onChangedJSON();
@@ -1445,11 +1445,11 @@ async function setJSONData(json_text = "") {
         .find("#dependencies_uuid")
         .val(dependency?.["uuid"] ?? dependency?.["module_name"] ?? "");
       if (typeof dependency?.["version"] == "string") {
-        tab_content.find("#dependencies_version").val(dependency?.["version"]);
+        tab_content.find("#dependencies-version").val(dependency?.["version"]);
       } else if (Array.isArray(dependency?.["version"])) {
-        tab_content.find("#dependencies_version").val(dependency?.["version"].join("."));
+        tab_content.find("#dependencies-version").val(dependency?.["version"].join("."));
       } else {
-        tab_content.find("#dependencies_version").val("1.0.0-e");
+        tab_content.find("#dependencies-version").val("1.0.0-e");
       }
     }
   }
@@ -1592,7 +1592,7 @@ function getJSONData() {
       } else {
         json_raw["dependencies"][i]["module_name"] = name_raw;
       }
-      let version_raw = tab_content.find("#dependencies_version").val();
+      let version_raw = tab_content.find("#dependencies-version").val();
       if (new RegExp(/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/).test(version_raw)) {
         json_raw["dependencies"][i]["version"] = DataReplacer.register(
           version_raw.split(/\./).map((v) => Number(v))
