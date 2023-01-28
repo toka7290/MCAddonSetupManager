@@ -67,6 +67,9 @@ self.addEventListener("activate", (event) => {
 
 // リソースフェッチ時のキャッシュロード処理
 self.addEventListener("fetch", (event) => {
+  // httpプロトコルを使用していない場合は、リクエストをスキップする。
+  if (!(evt.request.url.indexOf("http") === 0)) return;
+
   event.respondWith(
     caches.match(event.request).then((response) => {
       // キャッシュ内に該当レスポンスがあれば、それを返す
