@@ -72,31 +72,67 @@
         </div>
         <div class="title">
           <h1>Manifest Generator</h1>
-          <p>version: 1.8.0</p>
+          <p>version: 1.9.0</p>
         </div>
         <div class="header-menu">
           <div class="menu_button file_load_button disabled">
-            <label for="load_file">Load</label>
+            <label for="load_file">
+              <svg width="32" height="32" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <path d="m4 25 3-12h21l-3 12m0 0h-21v-19h7v3h14v4" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+              </svg>
+            </label>
           </div>
           <div class="menu_button import_button">
-            <label for="input-file">Import</label>
+            <label for="input-file">
+              <svg id="SVGRoot" width="32px" height="32px" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="#fff" stroke-linejoin="round" stroke-width="2">
+                  <path d="m18 4v7h7m-18-7h11l7 7v17h-18z" />
+                  <path d="m12 19 4-4 4 4m-4 6v-10" stroke-linecap="round" />
+                </g>
+              </svg>
+            </label>
           </div>
           <div class="help-content top" id="help-content-1">
             <p>ファイルを読み込みます</p>
           </div>
           <div class="menu_button" id="show-preview">
-            <span>Preview</span>
+            <span>
+              <svg id="SVGRoot" width="32px" height="32px" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="#fff">
+                  <circle cx="13" cy="14" r="3.8" stroke-dashoffset="80" stroke-linecap="round" stroke-linejoin="round" style="paint-order:markers fill stroke" />
+                  <path d="m11 21h-6v-18h13v6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                  <g stroke-width="1px">
+                    <path d="m7 6h9" />
+                    <path d="m7 8h9" />
+                    <path d="m7 10h3" />
+                    <path d="m16 17 4 4" />
+                  </g>
+                </g>
+              </svg>
+            </span>
             <div class="help-content top" id="help-content-3">
               <p>
                 入力・編集したデータの実際の表示、json閲覧とダウンロード・コピーをします。
               </p>
             </div>
           </div>
-          <div class="menu_button">
+          <!-- <div class="menu_button">
             <p id="show_help">help</p>
-          </div>
+          </div> -->
           <div class="menu_button">
-            <label for="open-about">About</label>
+            <label for="open-about">
+              <svg width="32" height="32" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="#fff" stroke-dashoffset="80" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="paint-order:markers fill stroke" />
+                <path d="m12 11v7" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2" />
+                <circle cx="12" cy="8" r="1" fill="#fff" style="paint-order:markers fill stroke" />
+              </svg>
+              <!-- <img src="img/info.svg" alt="about" width="32px" height="32px"> -->
+            </label>
+            <style>
+              .menu_button svg {
+                display: block;
+              }
+            </style>
           </div>
         </div>
         <div class="header-menu-alt">
@@ -174,7 +210,7 @@
             <img src="img/icon.svg" alt="" width="180px" height="180px">
             <div class="about-title">
               <h2><span class="sub_title">TokaTools</span>Manifest Generator</h2>
-              <p>version: 1.8.0</p>
+              <p>version: 1.9.0</p>
             </div>
             <div class="about-description">
               <p>Minecraft Bedrock Edition (BE) でアドオン(リソースパック、ビヘイビアパック、ワールドテンプレート、スキンパック等)で必須となる manifest.json を生成するツールです。</p>
@@ -193,7 +229,7 @@
               </div>
             </div>
             <div class="copyright">
-              <p>Copyright (c) 2021 とかさん</p>
+              <p>Copyright (c) 2019-2023 とかさん</p>
             </div>
           </div>
         </div>
@@ -209,6 +245,97 @@
         <p>ファイルをドロップして&NewLine;インポートします。</p>
       </div>
       <div class="file-drop-zone-pick">
+      </div>
+      <style>
+        .file-drop-zone-pick {
+          background: radial-gradient(circle at 45% 1%, rgb(0 0 0 / 0%) 4rem, rgb(0 0 0 / 48%) 5rem);
+        }
+      </style>
+    </div>
+    <style>
+      body {
+
+        display: grid;
+        grid-auto-rows: 3rem 1fr;
+      }
+
+      .welcome {
+        height: 100%;
+        display: grid;
+        grid-row: 2;
+        display: none;
+      }
+
+      .welcome-container {
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .start-actions {
+        display: grid;
+        grid-gap: 1rem;
+        padding: 1rem;
+      }
+
+      .action-btn {
+        background: var(--color-header);
+        color: white;
+        border-radius: 0.5rem;
+        padding: 1rem;
+      }
+
+      label:hover>.action-btn {
+        background: var(--color-header-hover);
+        cursor: pointer;
+      }
+
+      .action-title {
+        font-size: large;
+      }
+
+      /* div.content {
+        display: none;
+      } */
+    </style>
+    <div class="welcome">
+      <div class="welcome-container">
+        <div class="welcome-about">
+          <div class="guidance-text">ようこそManifest Generatorへ</div>
+        </div>
+        <div class="start-actions">
+          <div class="action-item quick-start">
+            <!-- 簡単作成 -->
+            <label class="invisible_Control">
+              <input type="button" value="" id="create-quick-btn">
+              <div class="action-btn">
+                <div class="action-title">かんたん作成</div>
+                <div class="action-description">シンプルエディタでかんたん作成!ほんの数個の設定するだけ</div>
+              </div>
+            </label>
+          </div>
+          <div class="action-item edit-start">
+            <!-- 詳細 -->
+            <label class="invisible_Control">
+              <input type="button" value="" id="create-new-btn">
+              <div class="action-btn">
+
+                <div class="action-title">新規作成</div>
+                <div class="action-description">manifest.jsonを一から作成します</div>
+              </div>
+            </label>
+          </div>
+          <div class="action-item file-start">
+            <!-- ファイル開く -->
+            <label class="invisible_Control">
+              <input type="button" value="" id="open-file-btn">
+              <div class="action-btn">
+                <div class="action-title">ファイルを開く</div>
+                <div class="action-description">すでにあるmanifest.jsonを開きます</div>
+              </div>
+            </label>
+          </div>
+        </div>
       </div>
     </div>
     <div class="content">
@@ -282,14 +409,10 @@
               </div>
               <div class="value-element" title="このパックのバージョンを示します。">
                 <div class="value-label">
-                  <label for="header_version_major">バージョン</label>
+                  <label for="header_version">バージョン</label>
                 </div>
-                <div class="value-input type-version">
-                  <label><input type="number" min="0" name="" id="header_version_major" value="1"></label>
-                  <span>.</span>
-                  <label><input type="number" min="0" name="" id="header_version_minor" value="0"></label>
-                  <span>.</span>
-                  <label><input type="number" min="0" name="" id="header_version_patch" value="0"></label>
+                <div class="value-input">
+                  <input type="text" name="version" id="header_version" value="1.0.0">
                 </div>
               </div>
               <div class="value-element" title="このパックが動作するMinecraftの最小バージョン(このパックの作成バージョン)を設定します。">
@@ -498,24 +621,32 @@
                 </div>
                 <div class="dependencies tab-content-list">
                   <div class="selected-tab-content">
-                    <div class="value-element" title="依存関係にあるパックのUUIDを設定します。">
+                    <div class="value-element" title="依存関係にあるパックのUUID/モジュール名を設定します。">
                       <div class="value-label">
-                        <label for="dependencies_uuid">UUID</label>
+                        <label for="dependencies_uuid">UUID/モジュール名</label>
                       </div>
                       <div class="value-input">
-                        <input type="text" name="uuid" id="dependencies_uuid" disabled>
+                        <input type="text" name="uuid" id="dependencies_uuid" list="module_name_list" disabled>
                       </div>
                     </div>
+                    <datalist id="module_name_list">
+                      <option value="mojang-minecraft"></option>
+                      <option value="mojang-gametest"></option>
+                      <option value="mojang-minecraft-ui"></option>
+                      <option value="mojang-minecraft-server-admin"></option>
+                      <option value="mojang-net"></option>
+                      <option value="@minecraft/server"></option>
+                      <option value="@minecraft/server-gametest"></option>
+                      <option value="@minecraft/server-ui"></option>
+                      <option value="@minecraft/server-admin"></option>
+                      <option value="@minecraft/server-net"></option>
+                    </datalist>
                     <div class="value-element" title="依存関係にあるパックのバージョンを設定します。">
                       <div class="value-label">
                         <label for="dependencies_version_major">バージョン</label>
                       </div>
-                      <div class="value-input type-version">
-                        <label><input type="number" min="0" name="" id="dependencies_version_major" value="1" disabled></label>
-                        <span>.</span>
-                        <label><input type="number" min="0" name="" id="dependencies_version_minor" value="0" disabled></label>
-                        <span>.</span>
-                        <label><input type="number" min="0" name="" id="dependencies_version_patch" value="0" disabled></label>
+                      <div class="value-input">
+                        <input type="text" name="version" id="dependencies_version" value="1.0.0">
                       </div>
                     </div>
                   </div>
@@ -570,6 +701,19 @@
                         </svg>
                       </div>
                       <p class="checkbox-body-text">raytracing</p>
+                    </label>
+                  </div>
+                </div>
+                <div class="value-element" title="avaScript API上でeval(),Function()を利用できるようにします。(1.19.40.23以降)">
+                  <div class="value-checkbox">
+                    <input type="checkbox" name="script_eval" id="script_eval" class="invisible_Control" disabled>
+                    <label for="script_eval" class="checkbox-body">
+                      <div class="checkbox-body-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox-body-checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      </div>
+                      <p class="checkbox-body-text">script_eval</p>
                     </label>
                   </div>
                 </div>
@@ -809,23 +953,56 @@
               </label>
             </div>
           </div>
-          <div class="display_preview">
-            <div class="preview_header">
-              <span>Minecraft Preview</span>
+          <div class="display-preview">
+            <div class="preview-header">
+              <span>Display Preview</span>
             </div>
-            <div class="display-preview-card">
-              <div class="card-icon">
-                <img src="img/icon.svg" alt="" width="64px" height="64px">
+            <div class="preview-toggle">
+              <input type="button" id="toggle-preview" class="invisible_Control" ui>
+              <label for="toggle-preview" class="preview-toggle-label">
+                <div class="preview-toggle-text">💎</div>
+              </label>
+            </div>
+            <div class="display-preview-body">
+              <div class="preview-card">
+                <div class="card-icon">
+                  <img src="img/icon.svg" alt="" width="64px" height="64px">
+                </div>
+                <div class="card-text">
+                  <p id="card-title" class="mcf-text"></p>
+                  <p id="card-description" class="mcf-text"></p>
+                </div>
               </div>
-              <div class="card-text">
-                <p id="card-title" class="mcf-text"></p>
-                <p id="card-description" class="mcf-text"></p>
+              <div class="preview-ore-ui-card hide">
+                <div class="ore-ui-frame">
+                  <div class="ore-ui-accordion-body">
+                    <input type="button" id="preview-ore-ui-summary" class="invisible_Control" ui>
+                    <label for="preview-ore-ui-summary" class="">
+                      <div class="ore-ui-card-icon">
+                        <img src="img/icon.svg" alt="" width="64px" height="64px">
+                      </div>
+                      <div class="ore-ui-card-title" id="ore-ui-card-title"></div>
+                      <div class="ore-ui-card-toggle" id="preview-ore-ui-toggle">
+                        <img src="img/arrowUp.svg" alt="" width="64px" height="64px">
+                      </div>
+                    </label>
+                  </div>
+                  <div class="ore-ui-accordion-body">
+                    <div class="ore-ui-card-add">
+                      <img src="img/add.svg" alt="" width="20px" height="20px">
+                      <p>有効化</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="ore-ui-frame" id="preview-ore-ui-details">
+                  <div class="ore-ui-card-description" id="ore-ui-card-description"></div>
+                </div>
               </div>
             </div>
           </div>
           <div class="code-preview">
-            <div class="preview_header">
-              <span>Code</span>
+            <div class="preview-header">
+              <span>JSON Code</span>
             </div>
             <pre class="language-json">
               <code class="language-json"></code>
@@ -843,12 +1020,12 @@
             </div>
             <div class="issue-status-num">
               <div class="issue-status-warning">
-                <img src="img/warning.svg" alt="" width="19px" height="19px">
-                <span class="issue-warning-num">警告:0</span>
+                <img src="img/warning.svg" alt="" width="24px" height="24px">
+                <div>警告:<span class="issue-warning-num">0</span></div>
               </div>
               <div class="issue-status-error">
-                <img src="img/error.svg" alt="" width="19px" height="19px">
-                <span class="issue-error-num">エラー:0</span>
+                <img src="img/error.svg" alt="" width="24px" height="24px">
+                <div>エラー:<span class="issue-error-num">0</span></div>
               </div>
             </div>
           </label>

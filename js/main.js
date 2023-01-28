@@ -3,6 +3,7 @@ var isChanged = false;
 var is_compact = false;
 var is_simple_mode = false;
 var format_version = 2;
+var is_ore_ui = false;
 var is_separator_drag = false;
 var is_dependencies_enable = false;
 var is_capabilities_enable = false;
@@ -29,6 +30,61 @@ var disabled_module_index = [];
 const VERSION = "1.8.0";
 // generated with object
 var generated_with = {};
+// Locate text
+const LOCATE = {
+  window: {
+    page_leave: "このページを離れようとしています。",
+  },
+  issue: {
+    clear: "問題はありません",
+    text: {
+      uuid_empty: "UUIDが空です。UUIDを入力してください。",
+      uuid_not_valid: "入力されている文字列は有効なUUIDではありません。",
+      name_empty: "名前が空です。",
+      last_character_backslash:
+        '最後の文字がバックスラッシュ"\\"です。エスケープ文字にするか消去してください。',
+
+      header_min_engine_version_higher:
+        "フォーマットバージョン1では1.13より低いバージョンに設定する必要があります。これより高いバージョンはフォーマットバージョン2でサポートしています。",
+      header_min_engine_version_lower: "version1.12以下を指定することはできません。",
+      header_base_game_version_lower: "version1.12以下を指定することはできません。",
+      header_name_empty: '名前が空です。名前が空の場合、"名前がありません"と表示されます。',
+      header_description_empty:
+        '説明がありません。説明が空の場合、"不明なパックの説明"と表示されます。',
+      modules_module_null: "typeがnullになっています。typeを選択してください。",
+      modules_module_past_versions:
+        '"%s"は過去のバージョンでサポートされたtypeです。最新バージョンでは動作しません。"script"を使用してください。',
+      modules_description_empty: "説明がありません。",
+      modules_not_specified: "プライマリファイルが指定されていません",
+      modules_not_extension:
+        "指定されたファイルは .js の拡張子を持っていません。 プライマリファイルはJavaScriptファイル以外をサポートしません。",
+      dependencies_uuid_module_name_empty:
+        "UUID/モジュール名が空です。UUIDを指定するかモジュール名を指定してください。",
+      dependencies_uuid_module_name_uuid_not_valid:
+        "入力されている文字列は有効なUUID/モジュール名ではありません。",
+      capabilities_not_selected: "一つも項目が選択されていません。",
+      metadata_author_not_one: "名前が一つもありません。",
+      metadata_url_empty: "URLが入力されていません。",
+      metadata_license_empty: "ライセンスが入力されていません。",
+      subpacks_folder_empty: "フォルダー名が空です。",
+    },
+  },
+  import: {
+    not_manifest: "このファイルはmanifest.jsonではありません。manifest.jsonを選択してください。",
+  },
+  display_preview: {
+    no_title: "名前がありません",
+    no_description: "§c不明なパックの説明",
+  },
+};
+// module name list
+const VANILLA_SCRIPT_MODULES = [
+  "@minecraft/server",
+  "@minecraft/server-gametest",
+  "@minecraft/server-ui",
+  "@minecraft/server-admin",
+  "@minecraft/server-net",
+];
 
 class JSONReplace {
   constructor() {
@@ -99,19 +155,19 @@ class Issue {
     $(".stat-warning,.stat-error").removeClass("stat-warning stat-error");
   }
   setIssueList() {
-    $("span.issue-error-num").text("エラー:" + this.error_list.length);
-    $("span.issue-warning-num").text("警告:" + this.warning_list.length);
+    $("span.issue-error-num").text(this.error_list.length);
+    $("span.issue-warning-num").text(this.warning_list.length);
     if (this.warning_list.length <= 0 && this.error_list.length <= 0) {
-      $("ul.issue-list").append("<li>問題はありません</li>");
+      $("ul.issue-list").append(`<li>${LOCATE.issue.clear}</li>`);
     } else {
       this.error_list.forEach((val) => {
         $("ul.issue-list").append(
           $("<li>").append(
             $("<img>").attr({
-              src: "img/error.svg",
+              src: "./img/error.svg",
               alt: "",
-              width: "19px",
-              height: "19px",
+              width: "24px",
+              height: "24px",
             }),
             $("<p>").text(val[0])
           )
@@ -122,10 +178,10 @@ class Issue {
         $("ul.issue-list").append(
           $("<li>").append(
             $("<img>").attr({
-              src: "img/warning.svg",
+              src: "./img/warning.svg",
               alt: "",
-              width: "19px",
-              height: "19px",
+              width: "24px",
+              height: "24px",
             }),
             $("<p>").text(val[0])
           )
@@ -172,7 +228,7 @@ function isUUID(uuid = "") {
 window.addEventListener("beforeunload", (event) => {
   if (isChanged) {
     event.preventDefault();
-    event.returnValue = "このページを離れようとしています。";
+    event.returnValue = LOCATE.window.page_leave;
   }
 });
 
@@ -413,6 +469,30 @@ $("#author-delete").on("click", function () {
   $("div.authors_list>.author_name:last-child").remove();
   onChangedJSON();
 });
+// preview切替ボタンのアニメーション
+let btn_anim = new Animation(
+  new KeyframeEffect(
+    document.getElementsByClassName("preview-toggle-text")[0],
+    [
+      { transform: "rotate(0deg)" },
+      { transform: "rotate(180deg)" },
+      { transform: "rotate(360deg)" },
+    ],
+    { duration: 500, direction: "alternate", easing: "ease" }
+  )
+);
+// preview表示の切替
+document.getElementById("toggle-preview").addEventListener("click", (ev) => {
+  document.getElementsByClassName("preview-ore-ui-card")[0].classList.toggle("hide");
+  document.getElementsByClassName("preview-card")[0].classList.toggle("hide");
+  is_ore_ui = !is_ore_ui;
+  btn_anim.play();
+});
+// ore uiのdetails切替
+document.getElementById("preview-ore-ui-summary").addEventListener("click", (event) => {
+  document.getElementById("preview-ore-ui-toggle").classList.toggle("close");
+  document.getElementById("preview-ore-ui-details").classList.toggle("close");
+});
 // イシューリスト開閉
 $("#issue-control").on("click", function () {
   const control_bar_img = $("div.issue-status-label svg");
@@ -571,7 +651,7 @@ function importJsonFile() {
   try {
     file_reader.readAsText(data);
   } catch (e) {
-    window.alert("このファイルはmanifest.jsonではありません。manifest.jsonを選択してください。");
+    window.alert(LOCATE.import.not_manifest);
     console.error("error:" + e);
   }
 }
@@ -799,59 +879,71 @@ function setTabControls(className = "", stat = [0, 0, 0]) {
 }
 // 実表示
 function updateDisplayPreview() {
-  // タイトル
+  // タイトルと説明を取得
   let title = /**@type {string} */ ($("#header_pack_name").val());
-  if (title == "") title = "名前がありません";
-  else if (title.match(/\\/g) != null) {
-    let split_text = title.split("\\\\");
-    let result = "";
-    for (let index = 0; index < split_text.length; index++) {
-      let i = split_text[index].indexOf("\\n");
-      if (index >= 1) result += `\\\\`;
-      if (i != -1) {
-        result += `${
-          split_text[index].slice(0, split_text[index].indexOf("\\n") - split_text[index].length) +
-          "\u2026"
-        }`;
-        break;
-      } else {
-        result += `${split_text[index]}`;
-      }
-    }
-    title = result;
-  }
-  // $("#card-title").html(MinecraftText.toHTML(title));
-  $("#card-title").text(title);
-  // 説明
   let description = /**@type {string} */ ($("#header_description").val());
-  if (description == "") description = "§c不明なパックの説明";
-  else if (description.match(/\\/g) != null) {
-    let position = 0;
-    let i = 0;
-    let result = "";
-    let split_text = description.split("\\\\");
-    for (let index = 0; index < split_text.length; index++) {
-      do {
-        i++;
-        position = split_text[index].indexOf("\\n", position + 1);
-        if (position == -1) break;
-      } while (i < 3);
-      if (index >= 1) result += `\\\\`;
-      if (position != -1) {
-        result += `${
-          split_text[index].slice(0, position + 1 - split_text[index].length) + "\u2026"
-        }`;
-        break;
-      } else {
-        result += `${split_text[index]}`;
+  // OreUIの場合
+  if (is_ore_ui) {
+    title = title.replace(/\s+|\\n/g, " ").replace(/§[0-9a-gklmnor]/g, "");
+    $("#ore-ui-card-title").text(title);
+    $("#ore-ui-card-description").text(
+      description.replace(/\s+|\\n/g, " ").replace(/§[0-9a-gklmnor]/g, "")
+    );
+  } else {
+    // タイトル
+    if (title == "") title = LOCATE.display_preview.no_title;
+    else if (title.match(/\\/g) != null) {
+      let split_text = title.split("\\\\");
+      let result = "";
+      for (let index = 0; index < split_text.length; index++) {
+        let i = split_text[index].indexOf("\\n");
+        if (index >= 1) result += `\\\\`;
+        if (i != -1) {
+          result += `${
+            split_text[index].slice(
+              0,
+              split_text[index].indexOf("\\n") - split_text[index].length
+            ) + "\u2026"
+          }`;
+          break;
+        } else {
+          result += `${split_text[index]}`;
+        }
       }
+      title = result;
     }
-    description = result;
+    // $("#card-title").html(MinecraftText.toHTML(title));
+    $("#card-title").text(title);
+    // 説明
+    if (description == "") description = LOCATE.display_preview.no_description;
+    else if (description.match(/\\/g) != null) {
+      let position = 0;
+      let i = 0;
+      let result = "";
+      let split_text = description.split("\\\\");
+      for (let index = 0; index < split_text.length; index++) {
+        do {
+          i++;
+          position = split_text[index].indexOf("\\n", position + 1);
+          if (position == -1) break;
+        } while (i < 3);
+        if (index >= 1) result += `\\\\`;
+        if (position != -1) {
+          result += `${
+            split_text[index].slice(0, position + 1 - split_text[index].length) + "\u2026"
+          }`;
+          break;
+        } else {
+          result += `${split_text[index]}`;
+        }
+      }
+      description = result;
+    }
+    // $("#card-description").html(MinecraftText.toHTML(description));
+    // MinecraftText.refeashObfuscate();
+    $("#card-description").text(description);
+    MCFormat.formatAll();
   }
-  // $("#card-description").html(MinecraftText.toHTML(description));
-  // MinecraftText.refeashObfuscate();
-  $("#card-description").text(description);
-  MCFormat.formatAll();
 }
 // モジュールタイプ変更
 function setSelectRestriction() {
@@ -979,7 +1071,7 @@ function checkIssue() {
       if (element_val > 1 || Number($("#header_min_engine_version_minor").val()) >= 13) {
         //1.13以上は警告
         issue_control.addWarning(
-          "[Header:min engine version] フォーマットバージョン1では1.13より低いバージョンに設定する必要があります。これより高いバージョンはフォーマットバージョン2でサポートしています。",
+          `[Header:min engine version] ${LOCATE.issue.text.header_min_engine_version_higher}`,
           element.parent().find("input")
         );
       }
@@ -988,7 +1080,7 @@ function checkIssue() {
       if (element_val <= 1 && Number($("#header_min_engine_version_minor").val()) < 13) {
         // 1.12以下はエラー
         issue_control.addError(
-          "[Header:min engine version] version1.12以下を指定することはできません。",
+          `[Header:min engine version] ${LOCATE.issue.text.header_min_engine_version_lower}`,
           element.parent().find("input")
         );
       }
@@ -998,7 +1090,7 @@ function checkIssue() {
       ) {
         // 1.12以下はエラー
         issue_control.addError(
-          "[Header:base game version] version1.12以下を指定することはできません。",
+          `[Header:base game version] ${LOCATE.issue.text.header_base_game_version_lower}`,
           $("#header_base_game_version_major").parent().find("input")
         );
       }
@@ -1008,42 +1100,33 @@ function checkIssue() {
   element_val = element.val();
   if (element_val == "") {
     //名前がありません
-    issue_control.addWarning(
-      '[Header:name] 名前が空です。名前が空の場合、"名前がありません"と表示されます。',
-      element
-    );
+    issue_control.addWarning(`[Header:name] ${LOCATE.issue.text.header_name_empty}`, element);
   } else if (element_val.toString().replace(/\\\\/g, "").slice(-1) == "\\") {
     //名前の最後の文字がバックスラッシュ
-    issue_control.addError(
-      '[Header:name] 最後の文字がバックスラッシュ"\\"です。エスケープ文字にするか消去してください。',
-      element
-    );
+    issue_control.addError(`[Header:name] ${LOCATE.issue.text.last_character_backslash}`, element);
   }
   element = $("#header_description");
   element_val = element.val();
   if (element_val == "") {
     //説明がありません
     issue_control.addWarning(
-      '[Header:description] 説明がありません。説明が空の場合、"不明なパックの説明"と表示されます。',
+      `[Header:description] ${LOCATE.issue.text.header_description_empty}`,
       element
     );
   } else if (element_val.toString().replace(/\\\\/g, "").slice(-1) == "\\") {
     //説明の最後の文字がバックスラッシュ
     issue_control.addError(
-      '[Header:description] 最後の文字がバックスラッシュ"\\"です。エスケープ文字にするか消去してください。',
+      `[Header:description] ${LOCATE.issue.text.last_character_backslash}`,
       element
     );
   }
   element = $("#header_uuid");
   element_val = element.val();
   if (element_val == "") {
-    issue_control.addError(`[Header:uuid] UUIDが空です。UUIDを入力してください。`, element);
+    issue_control.addError(`[Header:uuid] ${LOCATE.issue.text.uuid_empty}`, element);
   } else if (!isUUID(element_val)) {
     //UUIDではありません
-    issue_control.addError(
-      "[Header:uuid] 入力されている文字列は有効なUUIDではありません。",
-      element
-    );
+    issue_control.addError(`[Header:uuid] ${LOCATE.issue.text.uuid_not_valid}`, element);
   }
   // モジュール
   const modules_length = $(".modules.tab-children").length;
@@ -1054,13 +1137,15 @@ function checkIssue() {
     let module_type = element.val();
     if (module_type == null) {
       issue_control.addError(
-        `[Modules:${i}:type] typeがnullになっています。typeを選択してください。`,
+        `[Modules:${i}:type] ${LOCATE.issue.text.modules_module_null}`,
         element
       );
     }
     if (module_type == "javascript" || module_type == "plugin") {
       issue_control.addWarning(
-        `[Modules:${i}:type] "${module_type}"は過去のバージョンでサポートされたtypeです。最新バージョンでは動作しません。"script"を使用してください。`,
+        `[Modules:${i}:type] ${LOCATE.issue.text.modules_module_past_versions
+          .split(/%s/)
+          .join(module_type)}`,
         element
       );
     }
@@ -1068,24 +1153,24 @@ function checkIssue() {
     element_val = element.val();
     if (element_val == "") {
       // 説明がありません
-      issue_control.addWarning(`[Modules:${i}:description] 説明がありません。`, element);
+      issue_control.addWarning(
+        `[Modules:${i}:description] ${LOCATE.issue.text.modules_description_empty}`,
+        element
+      );
     } else if (element_val.replace(/\\\\/g, "").slice(-1) == "\\") {
       //最後の文字がバックスラッシュ
       issue_control.addError(
-        `[Modules:${i}:description] 最後の文字がバックスラッシュ"\\"です。エスケープ文字にするか消去してください。`,
+        `[Modules:${i}:description] ${LOCATE.issue.text.last_character_backslash}`,
         element
       );
     }
     element = $(`.modules.tab-content-list > div:nth-child(${c_num}) #modules_uuid`);
     element_val = element.val();
     if (element_val == "") {
-      issue_control.addError(`[Modules:${i}:uuid] UUIDが空です。UUIDを入力してください。`, element);
+      issue_control.addError(`[Modules:${i}:uuid] ${LOCATE.issue.text.uuid_empty}`, element);
     } else if (!isUUID(element_val)) {
       //UUIDではありません
-      issue_control.addError(
-        `[Modules:${i}:uuid] 入力されている文字列は有効なUUIDではありません。`,
-        element
-      );
+      issue_control.addError(`[Modules:${i}:uuid] ${LOCATE.issue.text.uuid_not_valid}`, element);
     }
     if (module_type == "script" || module_type == "javascript" || module_type == "plugin") {
       element = $(`.modules.tab-content-list > div:nth-child(${c_num}) #modules_entry`);
@@ -1093,13 +1178,13 @@ function checkIssue() {
       if (element_val == "") {
         //空です
         issue_control.addError(
-          `[Modules:${i}:entry] プライマリファイルが指定されていません`,
+          `[Modules:${i}:entry] ${LOCATE.issue.text.modules_not_specified}`,
           element
         );
       } else if (!element_val.match(/\.js$/)) {
         //JSではありません
         issue_control.addError(
-          `[Modules:${i}:entry] 指定されたファイルは .js の拡張子を持っていません。 プライマリファイルはJavaScriptファイル以外をサポートしません。`,
+          `[Modules:${i}:entry] ${LOCATE.issue.text.modules_not_extension}`,
           element
         );
       }
@@ -1114,14 +1199,16 @@ function checkIssue() {
       );
       element_val = element.val();
       if (element_val == "") {
-        issue_control.addError(
-          `[Dependencies:${i}:uuid] UUIDが空です。UUIDを入力してください。`,
+        issue_control.addWarning(
+          `[Dependencies:${i}:uuid/module_name] ${LOCATE.issue.text.dependencies_uuid_module_name_empty}`,
           element
         );
+      } else if (VANILLA_SCRIPT_MODULES.some((str) => str == element_val)) {
+        // module_nameを指定しているとき
       } else if (!isUUID(element_val)) {
-        //UUIDではありません
-        issue_control.addError(
-          `[Dependencies:${i}:uuid] 入力されている文字列は有効なUUIDではありません。`,
+        // 有効なUUID/module_nameではありません
+        issue_control.addWarning(
+          `[Dependencies:${i}:uuid/module_name] ${LOCATE.issue.text.dependencies_uuid_module_name_uuid_not_valid}`,
           element
         );
       }
@@ -1131,11 +1218,12 @@ function checkIssue() {
     if (
       !$("#experimental_custom_ui").is(":checked") &&
       !$("#chemistry").is(":checked") &&
-      !$("#raytracing").is(":checked")
+      !$("#raytracing").is(":checked") &&
+      !$("#script_eval").is(":checked")
     ) {
       //空です
       issue_control.addWarning(
-        "[Capabilities] 一つも項目が選択されていません。",
+        `[Capabilities] ${LOCATE.issue.text.capabilities_not_selected}`,
         $(".capabilities_list>input")
       );
     }
@@ -1148,28 +1236,34 @@ function checkIssue() {
         element_val = element.val();
         if (element_val == "") {
           // 名前が空です。
-          issue_control.addWarning(`[Metadata:author:${i}] 名前が空です。`, element);
+          issue_control.addWarning(
+            `[Metadata:author:${i}] ${LOCATE.issue.text.name_empty}`,
+            element
+          );
         } else if (element_val.replace(/\\\\/g, "").slice(-1) == "\\") {
           //名前の最後の文字がバックスラッシュ
           issue_control.addError(
-            `[Metadata:author:${i}] 最後の文字がバックスラッシュ"\\"です。消去するかエスケープ文字にして再登録してください。`,
+            `[Metadata:author:${i}] ${LOCATE.issue.text.last_character_backslash}`,
             element
           );
         }
       }
     } else {
       // 名前が一つもありません。
-      issue_control.addWarning("[Metadata:author] 名前が一つもありません。", $("div.add_author"));
+      issue_control.addWarning(
+        `[Metadata:author] ${LOCATE.issue.text.metadata_author_not_one}`,
+        $("div.add_author")
+      );
     }
     element = $("#metadata_url");
     element_val = element.val();
     if (element_val == "") {
       //URLがありません
-      issue_control.addWarning("[Metadata:url] URLが入力されていません。", element);
+      issue_control.addWarning(`[Metadata:url] ${LOCATE.issue.text.metadata_url_empty}`, element);
     } else if (element_val.replace(/\\\\/g, "").slice(-1) == "\\") {
       //urlの最後の文字がバックスラッシュ
       issue_control.addError(
-        '[Metadata:url] 最後の文字がバックスラッシュ"\\"です。エスケープ文字にするか消去してください。',
+        `[Metadata:url] ${LOCATE.issue.text.last_character_backslash}`,
         element
       );
     }
@@ -1177,11 +1271,14 @@ function checkIssue() {
     element_val = element.val();
     if (element_val == "") {
       //Licenseがありません
-      issue_control.addWarning("[Metadata:license] ライセンスが入力されていません。", element);
+      issue_control.addWarning(
+        `[Metadata:license] ${LOCATE.issue.text.metadata_license_empty}`,
+        element
+      );
     } else if (element_val.toString().replace(/\\\\/g, "").slice(-1) == "\\") {
       //ライセンスの最後の文字がバックスラッシュ
       issue_control.addError(
-        '[Metadata:license] 最後の文字がバックスラッシュ"\\"です。エスケープ文字にするか消去してください。',
+        `[Metadata:license] ${LOCATE.issue.text.last_character_backslash}`,
         element
       );
     }
@@ -1193,16 +1290,19 @@ function checkIssue() {
       const tab_content = $(`div.subpacks.tab-content-list > div:nth-child(${child_num})`);
       element = tab_content.find("#subpacks_folder_name");
       if (element.val() == "") {
-        issue_control.addError(`[Subpacks:${i}:folder_name] フォルダー名が空です。`, element);
+        issue_control.addError(
+          `[Subpacks:${i}:folder_name] ${LOCATE.issue.text.subpacks_folder_empty}`,
+          element
+        );
       }
       element = tab_content.find("#subpacks_name");
       element_val = element.val().toString();
       if (element_val == "") {
-        issue_control.addError(`[Subpacks:${i}:name] 名前が空です。`, element);
+        issue_control.addError(`[Subpacks:${i}:name] ${LOCATE.issue.text.name_empty}`, element);
       } else if (element_val.replace(/\\\\/g, "").slice(-1) == "\\") {
         //名前の最後の文字がバックスラッシュ
         issue_control.addError(
-          `[Subpacks:${i}:name] 最後の文字がバックスラッシュ"\\"です。エスケープ文字にするか消去してください。`,
+          `[Subpacks:${i}:name] ${LOCATE.issue.text.last_character_backslash}`,
           element
         );
       }
@@ -1210,6 +1310,7 @@ function checkIssue() {
   }
   issue_control.setIssueList();
 }
+
 // エラー時のテキスト
 function setErrorText(text = "", message = "") {
   let messageText = "有効なjsonではありません。";
@@ -1218,29 +1319,18 @@ function setErrorText(text = "", message = "") {
   const splitText = message.split(" ");
   const lineIndex = splitText.findIndex((element) => element == "line");
   const positionIndex = splitText.findIndex((element) => element == "position");
+  const lineText = text.split(/\n/g);
   if (lineIndex != -1) {
     const line = parseInt(splitText[lineIndex + 1], 10);
-    const getBeginningOfLineIndex = (maxLine) => {
-      let lastIndex = 0;
-      for (let i = 1; i < maxLine; i++) {
-        lastIndex = text.indexOf("\n", lastIndex) + 1;
-      }
-      return lastIndex;
-    };
-    const prevLineIndex = getBeginningOfLineIndex(line - 1);
-    const LineLastIndex = getBeginningOfLineIndex(line + 1) - 1;
-    messageText += `\n${line - 1}~${line}行で問題が発生しました。\n${text.substring(
-      prevLineIndex,
-      LineLastIndex
-    )}`;
+    messageText += `\n${line}行目で問題が発生しました。\n${lineText
+      .slice(line - 2, line + 1)
+      .join("\n")}`;
   } else if (positionIndex != -1) {
     const position = splitText[positionIndex + 1];
-    const prevLineIndex = text.lastIndexOf("\n", text.lastIndexOf("\n", position) - 1) + 1;
-    const prevLineNum = text.substr(0, prevLineIndex).match(/\n/g)?.length ?? 0 + 1;
-    messageText += `\n${prevLineNum}~${prevLineNum + 1}行で問題が発生しました。\n${text.substring(
-      prevLineIndex,
-      text.indexOf("\n", position - 1)
-    )}`;
+    const LineNum = text.substring(0, position).match(/\n/g)?.length + 1 ?? 0 + 1;
+    messageText += `\n${LineNum}行目で問題が発生しました。\n${lineText
+      .slice(LineNum - 2, LineNum + 1)
+      .join("\n")}`;
   }
   return messageText;
 }
@@ -1277,10 +1367,7 @@ async function setJSONData(json_text = "") {
     $("#header_pack_name").val(header?.["name"] ?? "");
     $("#header_description").val(header?.["description"] ?? "");
     $("#header_uuid").val(header?.["pack_id"] ?? "");
-    const header_version = (header?.["packs_version"] ?? "1.0.0").split(".");
-    $("#header_version_major").val(header_version?.[0] ?? 1);
-    $("#header_version_minor").val(header_version?.[1] ?? 0);
-    $("#header_version_patch").val(header_version?.[2] ?? 0);
+    $("#header_version").val(header?.["packs_version"] ?? "1.0.0");
 
     if (header["modules"] != null) {
       for (let i = 0; i < header["modules"].length; i++) {
@@ -1304,9 +1391,7 @@ async function setJSONData(json_text = "") {
         const tab_content = $(`div.dependencies.tab-content-list > div:nth-child(${i + 1})`);
         tab_content.find("#dependencies_uuid").val(dependency?.["uuid"] ?? "");
         const modules_version = (dependency?.["version"] ?? "1.0.0").split(".");
-        tab_content.find("#dependencies_version_major").val(modules_version?.[0] ?? 1);
-        tab_content.find("#dependencies_version_minor").val(modules_version?.[1] ?? 0);
-        tab_content.find("#dependencies_version_patch").val(modules_version?.[2] ?? 0);
+        $("#dependencies_version").val(modules_version ?? "1.0.0");
       }
     }
     onChangedJSON();
@@ -1314,9 +1399,13 @@ async function setJSONData(json_text = "") {
   }
   $("#header_pack_name").val(json_data["header"]?.["name"] ?? "");
   $("#header_description").val(json_data["header"]?.["description"] ?? "");
-  $("#header_version_major").val(json_data["header"]?.["version"]?.[0] ?? 1);
-  $("#header_version_minor").val(json_data["header"]?.["version"]?.[1] ?? 0);
-  $("#header_version_patch").val(json_data["header"]?.["version"]?.[2] ?? 0);
+  if (typeof json_data["header"]?.["version"] == "string") {
+    $("#header_version").val(json_data["header"]?.["version"]);
+  } else if (Array.isArray(json_data["header"]?.["version"])) {
+    $("#header_version").val(json_data["header"]?.["version"].join("."));
+  } else {
+    $("#header_version").val("1.0.0");
+  }
   $("#header_min_engine_version_major").val(json_data["header"]?.["min_engine_version"]?.[0] ?? 1);
   $("#header_min_engine_version_minor").val(json_data["header"]?.["min_engine_version"]?.[1] ?? 13);
   $("#header_min_engine_version_patch").val(json_data["header"]?.["min_engine_version"]?.[2] ?? 0);
@@ -1352,10 +1441,16 @@ async function setJSONData(json_text = "") {
       if (0 < i) addTab("dependencies");
       const dependency = json_data["dependencies"][i];
       const tab_content = $(`div.dependencies.tab-content-list > div:nth-child(${i + 1})`);
-      tab_content.find("#dependencies_uuid").val(dependency?.["uuid"] ?? "");
-      tab_content.find("#dependencies_version_major").val(dependency?.["version"]?.[0] ?? 1);
-      tab_content.find("#dependencies_version_minor").val(dependency?.["version"]?.[1] ?? 0);
-      tab_content.find("#dependencies_version_patch").val(dependency?.["version"]?.[2] ?? 0);
+      tab_content
+        .find("#dependencies_uuid")
+        .val(dependency?.["uuid"] ?? dependency?.["module_name"] ?? "");
+      if (typeof dependency?.["version"] == "string") {
+        tab_content.find("#dependencies_version").val(dependency?.["version"]);
+      } else if (Array.isArray(dependency?.["version"])) {
+        tab_content.find("#dependencies_version").val(dependency?.["version"].join("."));
+      } else {
+        tab_content.find("#dependencies_version").val("1.0.0-e");
+      }
     }
   }
   if (json_data?.["capabilities"]) {
@@ -1370,6 +1465,9 @@ async function setJSONData(json_text = "") {
           break;
         case "raytracing":
           $("#raytracing").prop("checked", true);
+          break;
+        case "script_eval":
+          $("#script_eval").prop("checked", true);
           break;
         default:
           break;
@@ -1416,11 +1514,20 @@ function getJSONData() {
   json_raw["header"] = new Object();
   json_raw["header"]["name"] = DataReplacer.register($("#header_pack_name").val());
   json_raw["header"]["description"] = DataReplacer.register($("#header_description").val());
-  json_raw["header"]["version"] = DataReplacer.register([
-    Number($("#header_version_major").val()),
-    Number($("#header_version_minor").val()),
-    Number($("#header_version_patch").val()),
-  ]);
+  let version_raw = $("#header_version").val();
+  if (new RegExp(/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/).test(version_raw)) {
+    json_raw["header"]["version"] = DataReplacer.register(
+      version_raw.split(/\./).map((v) => Number(v))
+    );
+  } else if (
+    new RegExp(
+      /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
+    ).test(version_raw)
+  ) {
+    json_raw["header"]["version"] = version_raw;
+  } else {
+    json_raw["header"]["version"] = DataReplacer.register([1, 0, 0]);
+  }
   json_raw["header"]["uuid"] = $("#header_uuid").val();
   json_raw["header"]["platform_locked"] = $("#header_platform_locked").is(":checked")
     ? true
@@ -1479,12 +1586,26 @@ function getJSONData() {
       const child_num = i + 1;
       const tab_content = $(`div.dependencies.tab-content-list > div:nth-child(${child_num})`);
       json_raw["dependencies"][i] = new Object();
-      json_raw["dependencies"][i]["uuid"] = tab_content.find("#dependencies_uuid").val();
-      json_raw["dependencies"][i]["version"] = DataReplacer.register([
-        Number(tab_content.find("#dependencies_version_major").val()),
-        Number(tab_content.find("#dependencies_version_minor").val()),
-        Number(tab_content.find("#dependencies_version_patch").val()),
-      ]);
+      let name_raw = tab_content.find("#dependencies_uuid").val();
+      if (isUUID(name_raw)) {
+        json_raw["dependencies"][i]["uuid"] = name_raw;
+      } else {
+        json_raw["dependencies"][i]["module_name"] = name_raw;
+      }
+      let version_raw = tab_content.find("#dependencies_version").val();
+      if (new RegExp(/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/).test(version_raw)) {
+        json_raw["dependencies"][i]["version"] = DataReplacer.register(
+          version_raw.split(/\./).map((v) => Number(v))
+        );
+      } else if (
+        new RegExp(
+          /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
+        ).test(version_raw)
+      ) {
+        json_raw["dependencies"][i]["version"] = version_raw;
+      } else {
+        json_raw["dependencies"][i]["version"] = DataReplacer.register([1, 0, 0]);
+      }
     }
   }
   if (is_capabilities_enable && $("div.capabilities_list div input").is(":checked")) {
@@ -1497,6 +1618,9 @@ function getJSONData() {
     }
     if ($("#raytracing").is(":checked")) {
       json_raw["capabilities"].push("raytracing");
+    }
+    if ($("#script_eval").is(":checked")) {
+      json_raw["capabilities"].push("script_eval");
     }
   }
   json_raw["metadata"] = new Object();

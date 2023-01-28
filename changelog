@@ -173,16 +173,27 @@
 - シンプルエディタで自動入力されるmodules descriptionの不自然な空白の修正
 - 選択不可能なモジュールのエラーチェックが発生する不具合の修正
 - インポート時に空のauthor欄ができてしまう問題の修正
+1.9.0
+- Ore UI導入画面の追加
+- 404ページの追加
+- マスクアイコンの追加
+- エラー/注意アイコン変更
+- 1.19.30対応 "version"のString対応
+- "dependencies"->"version"のString対応
+- capabilities "script_eval"対応
+- 1.19.30対応 dependencies->"module_name"に対応
+- 読み込みファイルのエラー位置表示を改善
 
 TODO
 - ウェルカムスクリーン
 - UI上でのインストールボタン
-- Ore UI導入画面再現
 - 壊れたjson抽出
 - IndexedDBでjson保存
-- 404
 - フォームのリセット
 - 多言語化
 - 左右のパディングバランス調整
 - 難読化パックjsonの読み込み
 - phone ランドマーク対策
+- ダウンロード/保存/コピーアイコン化
+- "generated_with"短縮オプション
+- 画像のD&D

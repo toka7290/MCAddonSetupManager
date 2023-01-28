@@ -32,7 +32,7 @@
   --color-focus-text: #fff;
   --color-focus-foreground: rgba(0, 0, 0, 0.75);
   --color-focus-background: rgba(0, 0, 0, 0.4);
-  --color-display-preview-background: rgba(0, 0, 0, 0.85);
+  --color-display-preview-background: #232323;
 
   --color-add: #0969cf;
   --color-remove: #cf0909;
