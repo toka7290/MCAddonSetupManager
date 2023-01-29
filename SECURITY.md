@@ -6,8 +6,8 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
-| lastest   | :white_check_mark: |
-| < lastest   | :x:                |
+| latest   | :white_check_mark: |
+| < latest   | :x:                |
 
 ## Reporting a Vulnerability(脆弱性の報告)
 
