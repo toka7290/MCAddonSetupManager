@@ -46,3 +46,10 @@ Minecraft の管理画面や JSON のプレビューがあります。
 ## 脆弱性の報告
 
 詳細は[セキュリティポリシー](https://github.com/toka7290/MCAddonSetupManager/blob/main/SECURITY.md)ページにしたがってください
+
+## プロジェクトへの貢献(contribute)
+
+このプロジェクトへの貢献はだれでも行うことができます．
+
+詳細は[貢献について](https://github.com/toka7290/MCAddonSetupManager/blob/main/CONTRIBUTING.md)をご覧ください。
+
