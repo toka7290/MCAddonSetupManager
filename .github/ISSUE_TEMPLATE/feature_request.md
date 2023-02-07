@@ -1,20 +1,21 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
-
+name: 機能の提案と要望
+about: 新しい機能の提案や要望をする
+title: "req: [概要]"
+labels: 提案(enhancement)
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+## 該当ファイル(特定のファイルの場合)
+<!-- 
+既存のファイルについての提案の場合，ファイルのPathを書いてください
+新規ファイルの場合は，この節を消してください
+例) 
+MCAddonSetupManager/CONTRIBUTING.md
+ -->
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+## リクエスト/提案内容
+<!-- 
+機能の提案や要望について内容を詳細に書いてください。
+またその提案の背景や目的などがあれば書いてください。
+ -->
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
