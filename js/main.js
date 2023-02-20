@@ -1218,8 +1218,9 @@ function checkIssue() {
     if (
       !$("#experimental_custom_ui").is(":checked") &&
       !$("#chemistry").is(":checked") &&
-      !$("#raytracing").is(":checked") &&
-      !$("#script_eval").is(":checked")
+      !$("#raytraced").is(":checked") &&
+      !$("#script_eval").is(":checked") &&
+      !$("#editorExtension").is(":checked")
     ) {
       //空です
       issue_control.addWarning(
@@ -1463,11 +1464,14 @@ async function setJSONData(json_text = "") {
         case "chemistry":
           $("#chemistry").prop("checked", true);
           break;
-        case "raytracing":
-          $("#raytracing").prop("checked", true);
+        case "raytraced":
+          $("#raytraced").prop("checked", true);
           break;
         case "script_eval":
           $("#script_eval").prop("checked", true);
+          break;
+        case "editorExtension":
+          $("#editorExtension").prop("checked", true);
           break;
         default:
           break;
@@ -1616,11 +1620,14 @@ function getJSONData() {
     if ($("#chemistry").is(":checked")) {
       json_raw["capabilities"].push("chemistry");
     }
-    if ($("#raytracing").is(":checked")) {
-      json_raw["capabilities"].push("raytracing");
+    if ($("#raytraced").is(":checked")) {
+      json_raw["capabilities"].push("raytraced");
     }
     if ($("#script_eval").is(":checked")) {
       json_raw["capabilities"].push("script_eval");
+    }
+    if ($("#editorExtension").is(":checked")) {
+      json_raw["capabilities"].push("editorExtension");
     }
   }
   json_raw["metadata"] = new Object();

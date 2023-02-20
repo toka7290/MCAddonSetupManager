@@ -183,6 +183,9 @@
 - capabilities "script_eval"対応
 - 1.19.30対応 dependencies->"module_name"に対応
 - 読み込みファイルのエラー位置表示を改善
+1.19.1
+- raytracedのオプション選択が間違っていた問題の修正
+- editorExtensionの対応
 
 TODO
 - ウェルカムスクリーン
