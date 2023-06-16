@@ -27,7 +27,7 @@ var file_handle = undefined;
 // 無効なインデックス
 var disabled_module_index = [];
 // バージョン
-const VERSION = "1.8.0";
+const VERSION = "1.9.1";
 // generated with object
 var generated_with = {};
 // Locate text
