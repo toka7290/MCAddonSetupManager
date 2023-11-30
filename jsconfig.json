@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "module": "commonJS",
-    "target": "ES2023",
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM", "WebWorker"],
     "baseUrl": "."
   },
   "typeAcquisition": {

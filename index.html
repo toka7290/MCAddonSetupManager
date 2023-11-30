@@ -72,7 +72,7 @@
         </div>
         <div class="title">
           <h1>Manifest Generator</h1>
-          <p>version: 1.9.1</p>
+          <p>version: 1.9.2</p>
         </div>
         <div class="header-menu">
           <div class="menu_button file_load_button disabled">
@@ -210,7 +210,7 @@
             <img src="img/icon.svg" alt="" width="180px" height="180px">
             <div class="about-title">
               <h2><span class="sub_title">TokaTools</span>Manifest Generator</h2>
-              <p>version: 1.9.1</p>
+              <p>version: 1.9.2</p>
             </div>
             <div class="about-description">
               <p>Minecraft Bedrock Edition (BE) でアドオン(リソースパック、ビヘイビアパック、ワールドテンプレート、スキンパック等)で必須となる manifest.json を生成するツールです。</p>
@@ -665,6 +665,19 @@
                 </label>
               </div>
               <div class="capabilities_list" title="このパックで追加の機能を有効にします。">
+                <div class="value-element" title="物理ベースレンダリング(PBR)を有効化します。">
+                  <div class="value-checkbox">
+                    <input type="checkbox" name="pbr" id="pbr" class="invisible_Control" disabled>
+                    <label for="pbr" class="checkbox-body">
+                      <div class="checkbox-body-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="checkbox-body-checkMark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      </div>
+                      <p class="checkbox-body-text">pbr</p>
+                    </label>
+                  </div>
+                </div>
                 <div class="value-element" title="カスタムUI機能を有効化します。">
                   <div class="value-checkbox">
                     <input type="checkbox" name="experimental_custom_ui" id="experimental_custom_ui" class="invisible_Control" disabled>

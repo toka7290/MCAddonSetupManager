@@ -27,7 +27,7 @@ var file_handle = undefined;
 // 無効なインデックス
 var disabled_module_index = [];
 // バージョン
-const VERSION = "1.8.0";
+const VERSION = "1.9.1";
 // generated with object
 var generated_with = {};
 // Locate text
@@ -1216,6 +1216,7 @@ function checkIssue() {
   }
   if (is_capabilities_enable) {
     if (
+      !$("#pbr").is(":checked") &&
       !$("#experimental_custom_ui").is(":checked") &&
       !$("#chemistry").is(":checked") &&
       !$("#raytraced").is(":checked") &&
@@ -1458,6 +1459,9 @@ async function setJSONData(json_text = "") {
     $("#capabilities_enable").prop("checked", true);
     for (const capabilities of json_data["capabilities"]) {
       switch (capabilities) {
+        case "pbr":
+          $("#pbr").prop("checked", true);
+          break;
         case "experimental_custom_ui":
           $("#experimental_custom_ui").prop("checked", true);
           break;
@@ -1614,6 +1618,9 @@ function getJSONData() {
   }
   if (is_capabilities_enable && $("div.capabilities_list div input").is(":checked")) {
     json_raw["capabilities"] = new Array();
+    if ($("#pbr").is(":checked")) {
+      json_raw["capabilities"].push("pbr");
+    }
     if ($("#experimental_custom_ui").is(":checked")) {
       json_raw["capabilities"].push("experimental_custom_ui");
     }
