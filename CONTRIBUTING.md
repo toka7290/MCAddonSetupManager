@@ -23,3 +23,8 @@ TokaTools Manifest Generator (MCAddonSetupManager)の貢献について考えて
 [Issue]([https://github.com/toka7290/MCAddonSetupManager/issues](https://github.com/toka7290/MCAddonSetupManager/issues/new?assignees=&labels=%E6%8F%90%E6%A1%88%28enhancement%29&template=feature_request.md&title=req%3A+%5B%E6%A6%82%E8%A6%81%5D))
 にて受け付けています。
 
+## コードの修正
+
+フォークしたリポジトリで作業した内容を本リポジトリにマージする際はプルリクエストを発行してください。
+マージリクエスト先は[dev](https://github.com/toka7290/MCAddonSetupManager/tree/dev)ブランチを指定してください。
+タイトルおよび、説明にはマージ内容がリクエストが理解できるよう記述してください。
