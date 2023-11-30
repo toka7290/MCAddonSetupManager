@@ -10,7 +10,7 @@
       },
       "args": [
         "-jar",
-        ".\\closure-compiler-v20220502.jar",
+        ".\\closure-compiler-v20230103.jar",
         "--js=..\\js\\main.js",
         "--js_output_file=..\\js\\main.min.js",
         "--compilation_level=ADVANCED_OPTIMIZATIONS",

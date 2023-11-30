@@ -1,4 +1,4 @@
-const CACHE_VERSION = "20230220-1";
+const CACHE_VERSION = "20231130-1";
 const CACHE_NAME = `${registration.scope}!${CACHE_VERSION}`;
 var urlsToCache = [
   `${registration.scope}`,
